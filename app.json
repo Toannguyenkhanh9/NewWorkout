@@ -1,4 +1,8 @@
 {
   "name": "Workout",
-  "displayName": "Workout"
+  "displayName": "Workout",
+    "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-5425858352547326~3931875123",
+    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
+  }
 }

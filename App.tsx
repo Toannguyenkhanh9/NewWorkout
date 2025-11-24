@@ -1,45 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect, useState } from 'react';
+import './src/i18n';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SubscriptionProvider } from './src/iap/SubscriptionProvider';
+import { AppNavigator } from './src/AppNavigator';
+import OnboardingProfileScreen from './src/screens/OnboardingProfileScreen';
+import mobileAds from 'react-native-google-mobile-ads';
+import { preloadRewarded } from './src/ads/rewarded';
+import { ToastProvider } from './src/ui/Toast';
+const ONBOARD_DONE = 'onboarding:done';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+export default function App() {
+  const [ready, setReady] = useState(false);
+  const [needsOnboard, setNeedsOnboard] = useState(false);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  useEffect(() => {
+    (async () => {
+      try {
+        await mobileAds().initialize();
+        preloadRewarded();
+        const ok = await AsyncStorage.getItem(ONBOARD_DONE);
+        setNeedsOnboard(!ok);
+      } finally {
+        setReady(true);
+      }
+    })();
+  }, []);
+
+  if (!ready) return null;
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <ToastProvider>
+        <SubscriptionProvider>
+          {needsOnboard ? (
+            <OnboardingProfileScreen onDone={() => setNeedsOnboard(false)} />
+          ) : (
+            <NavigationContainer>
+              <AppNavigator />
+            </NavigationContainer>
+          )}
+        </SubscriptionProvider>
+      </ToastProvider>
     </SafeAreaProvider>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
