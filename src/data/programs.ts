@@ -594,6 +594,135 @@ const Insanity: PlanItem[] = [
   W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60), // 62
   W('hiit', 'Fit Test',                     'index1.html',   25), // 63
 ];
+const HipHopAbs: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 1
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 2
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 3
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 4
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 5
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 6
+  { type: 'rest' },                                                  // 7 (Off)
+
+  // Week 2 (Day 8–14)
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 8
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 9
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 10
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 11
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 12
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 13
+  { type: 'rest' },                                                  // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 15
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 16
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40), // 17
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 18
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 19
+  W('lower', 'Hips, Buns & Thighs',                'hindex3.html', 30), // 20
+  { type: 'rest' },                                                  // 21 (Off)
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 22
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 23
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex5.html',40), // 24
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 25
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 26
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40), // 27
+  { type: 'rest' },                                                  // 28 (Off)
+];
+const FourWeeksOfThePrep: PlanItem[] = [
+  // Week 1
+  W('upper', 'Push',                'w4index8.html', 45), // Mon
+  W('lower', 'Legs',                'w4index5.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('hiit',  'Endurance & Agility', 'w4index3.html', 40), // Thu
+  W('upper', 'Pull',                'w4index6.html', 45), // Fri
+  W('full',  'Full Body Tempo',     'w4index1.html', 40), // Sat
+  W('core',  'Range And Repair',    'w4index9.html', 30), // Sun
+
+  // Week 2
+  W('full',  'Total Body Push/Pull','w4index10.html', 45), // Mon
+  W('full',  'Strength & Power',    'w4index7.html',  45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('core',  'Cardio & Core',       'w4index2.html',  35), // Thu
+  W('full',  'Isometrics',          'w4index4.html',  40), // Fri
+  W('full',  'The Crucible',        'w4index11.html', 50), // Sat
+  W('core',  'Range And Repair',    'w4index9.html',  30), // Sun
+
+  // Week 3 (same pattern as Week 1)
+  W('upper', 'Push',                'w4index8.html', 45), // Mon
+  W('lower', 'Legs',                'w4index5.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('hiit',  'Endurance & Agility', 'w4index3.html', 40), // Thu
+  W('upper', 'Pull',                'w4index6.html', 45), // Fri
+  W('full',  'Full Body Tempo',     'w4index1.html', 40), // Sat
+  W('core',  'Range And Repair',    'w4index9.html', 30), // Sun
+
+  // Week 4 (same pattern as Week 2)
+  W('full',  'Total Body Push/Pull','w4index10.html', 45), // Mon
+  W('full',  'Strength & Power',    'w4index7.html',  45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('core',  'Cardio & Core',       'w4index2.html',  35), // Thu
+  W('full',  'Isometrics',          'w4index4.html',  40), // Fri
+  W('full',  'The Crucible',        'w4index11.html', 50), // Sat
+  W('core',  'Range And Repair',    'w4index9.html',  30), // Sun
+];
+const SixWeeksOfTheWork: PlanItem[] = [
+  // Week 1
+  W('upper', 'Push',                'w61index1.html', 45), // Mon
+  W('lower', 'Legs',                'w61index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('hiit',  'Endurance & Agility', 'w61index3.html', 40), // Thu
+  W('upper', 'Pull',                'w61index4.html', 45), // Fri
+  W('full',  'Full Body Tempo',     'w61index5.html', 45), // Sat
+  W('core',  'Range And Repair',    'w61index6.html', 30), // Sun
+
+  // Week 2
+  W('full',  'Total Body Push/Pull','w62index1.html', 45), // Mon
+  W('full',  'Strength & Power',    'w62index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('core',  'Cardio & Core',       'w62index3.html', 35), // Thu
+  W('full',  'Isometrics',          'w62index4.html', 40), // Fri
+  W('full',  'The Crucible',        'w62index5.html', 50), // Sat
+  W('core',  'Range And Repair',    'w62index6.html', 30), // Sun
+
+  // Week 3
+  W('upper', 'Push',                'w63index1.html', 45), // Mon
+  W('lower', 'Legs',                'w63index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('hiit',  'Endurance & Agility', 'w63index3.html', 40), // Thu
+  W('upper', 'Pull',                'w63index4.html', 45), // Fri
+  W('full',  'Full Body Tempo',     'w63index5.html', 45), // Sat
+  W('core',  'Range And Repair',    'w63index6.html', 30), // Sun
+
+  // Week 4
+  W('full',  'Total Body Push/Pull','w64index1.html', 45), // Mon
+  W('full',  'Strength & Power',    'w64index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('core',  'Cardio & Core',       'w64index3.html', 35), // Thu
+  W('full',  'Isometrics',          'w64index4.html', 40), // Fri
+  W('full',  'The Crucible',        'w64index5.html', 50), // Sat
+  W('core',  'Range And Repair',    'w64index6.html', 30), // Sun
+
+  // Week 5
+  W('upper', 'Push',                'w65index1.html', 45), // Mon
+  W('lower', 'Legs',                'w65index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('hiit',  'Endurance & Agility', 'w65index3.html', 40), // Thu
+  W('upper', 'Pull',                'w65index4.html', 45), // Fri
+  W('full',  'Full Body Tempo',     'w65index5.html', 45), // Sat
+  W('core',  'Range And Repair',    'w65index6.html', 30), // Sun
+
+  // Week 6
+  W('full',  'Total Body Push/Pull','w66index1.html', 45), // Mon
+  W('full',  'Strength & Power',    'w66index2.html', 45), // Tue
+  { type: 'rest' },                                           // Wed (Off)
+  W('core',  'Cardio & Core',       'w66index3.html', 35), // Thu
+  W('full',  'Isometrics',          'w66index4.html', 40), // Fri
+  W('full',  'The Crucible',        'w66index5.html', 50), // Sat
+  W('core',  'Range And Repair',    'w66index6.html', 30), // Sun,
+];
 
 
 export const PROGRAMS: WorkoutProgram[] = [
@@ -636,6 +765,30 @@ export const PROGRAMS: WorkoutProgram[] = [
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/icon_fullbody.jpg'),
     plan: P90X2
+  },
+  {
+    id: 'HipHopAbs',
+    titleKey: 'Hip Hop Abs',
+    durationDays: HipHopAbs.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/icon_fullbody.jpg'),
+    plan: HipHopAbs
+  },
+  {
+    id: 'FourWeeksOfThePrep',
+    titleKey: '4 Weeks Of The Prep',
+    durationDays: FourWeeksOfThePrep.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/icon_fullbody.jpg'),
+    plan: FourWeeksOfThePrep
+  },
+  {
+    id: 'SixWeeksOfTheWork',
+    titleKey: '6 Weeks Of The Work',
+    durationDays: SixWeeksOfTheWork.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/icon_fullbody.jpg'),
+    plan: SixWeeksOfTheWork
   }
 ];
 
