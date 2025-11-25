@@ -1,12 +1,11 @@
 // FILE: src/screens/MainScreen.tsx
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ImageBackground,
   StatusBar,
-  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +16,7 @@ import { getActiveIds } from '../store/activePrograms';
 import { AdBanner } from '../components/AdBanner';
 import { shouldPromptNow } from '../weight/weightStore';
 import { WeightPrompt } from '../components/WeightPrompt';
+import { ActiveProgramsCard, ActiveItem } from '../components/ActiveProgramsCard';
 
 const BG = require('../../assets/images/bg_main.jpg');
 const BMI_KEY = 'user:bmi';
@@ -26,7 +26,7 @@ export const MainScreen: React.FC<any> = () => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
 
-  const [active, setActive] = useState<WorkoutProgram[]>([]);
+  const [activePrograms, setActivePrograms] = useState<WorkoutProgram[]>([]);
   const [progress, setProgress] = useState<Record<string, number>>({});
   const [showWeight, setShowWeight] = useState(false);
 
@@ -68,7 +68,7 @@ export const MainScreen: React.FC<any> = () => {
       (async () => {
         const ids = await getActiveIds();
         const list = PROGRAMS.filter(p => ids.includes(p.id));
-        setActive(list);
+        setActivePrograms(list);
         await computeProgress(ids);
 
         // Load tóm tắt sức khỏe (BMI + advice)
@@ -80,8 +80,20 @@ export const MainScreen: React.FC<any> = () => {
     }, [computeProgress, loadHealthAdvice]),
   );
 
-  const openProgram = (p: WorkoutProgram) => {
-    navigation.navigate('ProgramDetail', { programId: p.id });
+  const items: ActiveItem[] = useMemo(
+    () =>
+      activePrograms.map(p => ({
+        id: p.id,
+        title: t(p.titleKey) as string,
+        daysDone: progress[p.id] ?? 0,
+        daysTotal: p.durationDays,
+        icon: p.icon,
+      })),
+    [activePrograms, progress, t],
+  );
+
+  const openProgramById = (programId: string) => {
+    navigation.navigate('ProgramDetail', { programId });
   };
 
   return (
@@ -91,7 +103,7 @@ export const MainScreen: React.FC<any> = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.headingWrap}>
-            <Text style={styles.appName}>{t('appName')}</Text>
+            <Text style={styles.appName}>FulseFit</Text>
             <Text style={styles.subtitle}>{t('home.subtitle')}</Text>
           </View>
 
@@ -110,38 +122,12 @@ export const MainScreen: React.FC<any> = () => {
 
           {/* ==== Phần dưới được đẩy xuống đáy ==== */}
           <View style={styles.bottomArea}>
-            <Text style={styles.sectionTitle}>
-              {t('home.activeTitle', 'Đang tập luyện')}
-            </Text>
-
-            {active.length === 0 ? (
-              <View style={styles.emptyBox}>
-                <Text style={styles.emptyTitle}>
-                  {t('home.noActive', 'Chưa có chương trình đang tập')}
-                </Text>
-                <Text style={styles.emptyDesc}>
-                  {t('home.goWorkout', 'Vào tab Workout để chọn chương trình')}
-                </Text>
-              </View>
-            ) : (
-              active.map(p => {
-                const done = progress[p.id] ?? 0;
-                const total = p.durationDays;
-                return (
-                  <TouchableOpacity
-                    key={p.id}
-                    style={styles.activeCard}
-                    onPress={() => openProgram(p)}
-                    activeOpacity={0.9}
-                  >
-                    <Text style={styles.activeTitle}>{t(p.titleKey)}</Text>
-                    <Text style={styles.activeSub}>
-                      {done}/{total} {t('home.daysSuffix', { count: total })}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })
-            )}
+            {/* Thẻ thu gọn “Đang tập luyện” */}
+            <ActiveProgramsCard
+              items={items}
+              onOpenProgram={openProgramById}
+              title={t('home.activeTitle', 'Đang tập luyện')}
+            />
 
             <View style={{ marginTop: 10 }}>
               <AdBanner />
@@ -216,41 +202,6 @@ const styles = StyleSheet.create({
 
   // --- bottom pinned ---
   bottomArea: { marginTop: 'auto', paddingTop: 8, paddingBottom: 6 },
-  sectionTitle: {
-    color: '#FFFFFF',
-    fontWeight: '900',
-    fontSize: 16,
-    marginBottom: 8,
-    textShadowColor: 'rgba(0,0,0,0.35)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
-  },
-
-  emptyBox: {
-    backgroundColor: 'rgba(255,255,255,0.92)',
-    borderRadius: 14,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-  },
-  emptyTitle: { color: '#0B1220', fontWeight: '900' },
-  emptyDesc: { color: '#334155', marginTop: 6 },
-
-  activeCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 14,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#E6EEF6',
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
-  },
-  activeTitle: { color: '#0B1220', fontWeight: '900', fontSize: 16 },
-  activeSub: { color: '#0F766E', marginTop: 4, fontWeight: '700' },
 
   footer: {
     textAlign: 'center',

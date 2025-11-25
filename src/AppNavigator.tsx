@@ -38,7 +38,13 @@ const SettingsStack = () => (
     <Stack.Screen name="WeightChart" component={WeightChartScreen} options={{ title: 'Theo dõi cân nặng' }} />
   </Stack.Navigator>
 );
-
+const WorkoutStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="WorkoutHome" component={WorkoutScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="ProgramDetail" component={ProgramDetailScreen} options={{ title: 'Program' }} />
+    <Stack.Screen name="WorkoutVideo" component={WorkoutVideoScreen} options={{ title: 'Workout' }} />
+  </Stack.Navigator>
+);
 export const AppNavigator: React.FC = () => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -67,11 +73,11 @@ export const AppNavigator: React.FC = () => {
       <Tab.Screen
         name="Main"
         component={MainStack}
-        options={{ tabBarLabel: t('tabs.main'), tabBarIcon: ({ color }) => <Text style={{ color }}>🏠</Text> }}
+        options={{ tabBarLabel: 'FulseFit', tabBarIcon: ({ color }) => <Text style={{ color }}>🏠</Text> }}
       />
       <Tab.Screen
         name="Workout"
-        component={WorkoutScreen}
+        component={WorkoutStack}
         options={{ tabBarLabel: t('tabs.workout', 'Workout'), tabBarIcon: ({ color }) => <Text style={{ color }}>🏋️‍♂️</Text> }}
       />
       <Tab.Screen

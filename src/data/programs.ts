@@ -731,7 +731,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Insanity',
     durationDays: Insanity.length, // = số ngày bạn nhập
     iconColor: '#FF6B6B',
-    icon: require('../../assets/images/icon_fatburn.jpg'),
+    icon: require('../../assets/images/Insanity.jpg'),
     plan: Insanity
   },
   {
@@ -739,7 +739,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Insanity Max 30',
     durationDays: Max30.length, // = số ngày bạn nhập
     iconColor: '#FF6B6B',
-    icon: require('../../assets/images/icon_fatburn.jpg'),
+    icon: require('../../assets/images/max301.png'),
     plan: Max30
   },
   {
@@ -747,7 +747,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Focus T25',
     durationDays: FocusT25.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/FocusT25.png'),
     plan: FocusT25
   },
   {
@@ -755,7 +755,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'P90X1',
     durationDays: P90X1.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/P90X1.jpg'),
     plan: P90X1
   },
   {
@@ -763,7 +763,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'P90X2',
     durationDays: P90X2.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/P90X2.jpg'),
     plan: P90X2
   },
   {
@@ -771,7 +771,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Hip Hop Abs',
     durationDays: HipHopAbs.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/HHA_hero_mobile.jpg'),
     plan: HipHopAbs
   },
   {
@@ -779,7 +779,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: '4 Weeks Of The Prep',
     durationDays: FourWeeksOfThePrep.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/4week.jpg'),
     plan: FourWeeksOfThePrep
   },
   {
@@ -787,7 +787,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: '6 Weeks Of The Work',
     durationDays: SixWeeksOfTheWork.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/icon_fullbody.jpg'),
+    icon: require('../../assets/images/6week.jpg'),
     plan: SixWeeksOfTheWork
   }
 ];

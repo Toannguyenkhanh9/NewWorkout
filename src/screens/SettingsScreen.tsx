@@ -86,7 +86,6 @@ export const SettingsScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('more.title', 'More')}</Text>
       <Text style={styles.caption}>{t('settings.choose')}</Text>
 
       {/* Ngôn ngữ */}
