@@ -78,7 +78,7 @@ export const ActiveProgramsCard: React.FC<Props> = ({
             {title || t('main.activeNow', 'Đang tập luyện')}
           </Text>
           <Text style={styles.subtitle}>
-            {total ? summary : t('main.noActive', 'Chưa có chương trình đang tập')}
+            {total ? summary : t('home.noActive', 'Chưa có chương trình đang tập')}
           </Text>
         </View>
         <Animated.Text style={[styles.chev, { transform: [{ rotate: spin }] }]}>›</Animated.Text>

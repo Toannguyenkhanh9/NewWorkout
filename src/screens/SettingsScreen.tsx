@@ -121,24 +121,10 @@ export const SettingsScreen: React.FC = () => {
         <Text style={styles.chev}>›</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[styles.row, styles.rowActive]} onPress={() => navigation.navigate('WeightChart')}>
-  <Text style={styles.lang}>📈 Theo dõi cân nặng</Text>
+  <Text style={styles.lang}>📈 {t('tabs.weightChart', 'Weight Chart')}</Text>
   <Text style={styles.chev}>›</Text>
 </TouchableOpacity>
 
-<TouchableOpacity style={[styles.row, styles.rowActive]} onPress={async () => {
-  await AsyncStorage.removeItem('ads:trialStartAt'); // bỏ trial
-  preloadRewarded();
-  const ok = await showRewarded();
-  console.log('Rewarded result:', ok);
-}}>
-  <Text style={styles.lang}>🧪 Test Rewarded (bỏ trial)</Text>
-</TouchableOpacity>
-
-<TouchableOpacity style={[styles.row, styles.rowActive]} onPress={async () => {
-  await AsyncStorage.removeItem('ads:trialStartAt');
-}}>
-  <Text style={styles.lang}>♻️ Reset 7-day trial</Text>
-</TouchableOpacity>
       {/* Modal chọn ngôn ngữ */}
       <Modal
         visible={showLangPicker}

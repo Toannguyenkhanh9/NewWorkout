@@ -80,7 +80,7 @@ onPress={() => {
           <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
             <Text style={styles.h1}>{t('tabs.workout', 'Workout')}</Text>
             <Text style={styles.sub}>
-              {t('workout.pickOne', 'Chọn một giáo án để bắt đầu')}
+              {t('workouts.pickOne', 'Chọn một giáo án để bắt đầu')}
             </Text>
           </View>
         }

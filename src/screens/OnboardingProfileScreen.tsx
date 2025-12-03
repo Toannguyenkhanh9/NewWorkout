@@ -7,6 +7,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
+
 type Gender = 'male' | 'female' | 'other';
 type Goal =
   | 'lose_weight'   // Giảm cân
@@ -43,6 +44,7 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
   const [bmiLabel, setBmiLabel] = useState<string>('');
   const [advice, setAdvice] = useState<string>('');
   const { t } = useTranslation();
+
   const setField = <K extends keyof UserProfile>(k: K, v: UserProfile[K]) =>
     setData(p => ({ ...p, [k]: v }));
 
@@ -57,7 +59,7 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
 
   const allOk = basicOk && metricOk && !!data.goal;
 
- function bmiCategory(heightCm?: number, weightKg?: number) {
+  function bmiCategory(heightCm?: number, weightKg?: number) {
     if (!heightCm || !weightKg) return { bmi: null as number | null, key: '' as 'under'|'normal'|'over'|'obese'|'' };
     const h = heightCm / 100;
     const bmi = +(weightKg / (h * h)).toFixed(1);
@@ -68,7 +70,8 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
     else key = 'obese';
     return { bmi, key };
   }
-function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'|'', p: UserProfile) {
+
+  function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'|'', p: UserProfile) {
     const lines: string[] = [];
     const labelMap: Record<string, string> = {
       under: t('onboard.bmi_label_under'),
@@ -138,8 +141,8 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
         {/* Header */}
         <View style={s.header}>
-          <Text style={s.title}>Bắt đầu nhé 👋</Text>
-          <Text style={s.subtitle}>Điền vài thông tin để mình gợi ý giáo án phù hợp</Text>
+          <Text style={s.title}>{t('onboard.title')}</Text>
+          <Text style={s.subtitle}>{t('onboard.subtitle')}</Text>
           <View style={s.steps}>
             <Dot active={step >= 1} />
             <Dot active={step >= 2} />
@@ -155,40 +158,40 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
         >
           {step === 1 && (
             <View>
-              <Label>Họ và tên *</Label>
+              <Label>{t('onboard.name')}</Label>
               <Input
-                placeholder="VD: Nguyễn Văn A"
+                placeholder=""
                 value={data.name}
                 onChangeText={v => setField('name', v)}
               />
 
               <View style={s.row}>
                 <View style={s.col}>
-                  <Label>Tuổi *</Label>
+                  <Label>{t('onboard.age')}</Label>
                   <Input
-                    placeholder="VD: 28"
+                    placeholder=""
                     keyboardType="number-pad"
                     value={data.age ? String(data.age) : ''}
                     onChangeText={v => setField('age', v ? parseInt(v, 10) || undefined : undefined)}
                   />
                 </View>
                 <View style={s.col}>
-                  <Label>Giới tính *</Label>
+                  <Label>{t('onboard.gender')}</Label>
                   <Segment
                     value={data.gender}
                     options={[
-                      { key: 'male', label: 'Nam' },
-                      { key: 'female', label: 'Nữ' },
-                      { key: 'other', label: 'Khác' },
+                      { key: 'male', label: t('onboard.gender_male') },
+                      { key: 'female', label: t('onboard.gender_female') },
+                      { key: 'other', label: t('onboard.gender_other') },
                     ]}
                     onChange={g => setField('gender', g as Gender)}
                   />
                 </View>
               </View>
 
-              <Label>Tình trạng sức khỏe</Label>
+              <Label>{t('onboard.health')}</Label>
               <Input
-                placeholder="VD: Huyết áp cao/đau lưng nhẹ/không có bệnh nền…"
+                placeholder=""
                 value={data.healthNote || ''}
                 onChangeText={v => setField('healthNote', v)}
                 multiline
@@ -201,18 +204,18 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
             <View>
               <View style={s.row}>
                 <View style={s.col}>
-                  <Label>Chiều cao (cm) *</Label>
+                  <Label>{t('onboard.height')}</Label>
                   <Input
-                    placeholder="VD: 170"
+                    placeholder="Eg: 170"
                     keyboardType="number-pad"
                     value={data.heightCm ? String(data.heightCm) : ''}
                     onChangeText={v => setField('heightCm', v ? parseFloat(v) || undefined : undefined)}
                   />
                 </View>
                 <View style={s.col}>
-                  <Label>Cân nặng (kg) *</Label>
+                  <Label>{t('onboard.weight')}</Label>
                   <Input
-                    placeholder="VD: 65.5"
+                    placeholder="Eg: 65.5"
                     keyboardType="decimal-pad"
                     value={data.weightKg ? String(data.weightKg) : ''}
                     onChangeText={v => setField('weightKg', v ? parseFloat(v) || undefined : undefined)}
@@ -221,7 +224,7 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
               </View>
 
               <View style={[s.row, { alignItems: 'center', marginTop: 12 }]}>
-                <Text style={[s.label, { marginBottom: 0 }]}>Có chấn thương không?</Text>
+                <Text style={[s.label, { marginBottom: 0 }]}>{t('onboard.injured_q')}</Text>
                 <SwitchLike
                   value={!!data.injured}
                   onToggle={(v) => setField('injured', v)}
@@ -230,9 +233,9 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
 
               {data.injured ? (
                 <>
-                  <Label>Mô tả chấn thương</Label>
+                  <Label>{t('onboard.injury_note')}</Label>
                   <Input
-                    placeholder="VD: Đau gối trái, hạn chế squat sâu…"
+                    placeholder=""
                     value={data.injuryNote || ''}
                     onChangeText={v => setField('injuryNote', v)}
                     multiline
@@ -245,17 +248,17 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
 
           {step === 3 && (
             <View>
-              <Label>Mục tiêu hiện tại *</Label>
+              <Label>{t('onboard.goal')}</Label>
               <ChipGroup
                 value={data.goal}
                 onChange={g => setField('goal', g as Goal)}
                 options={[
-                  { key: 'lose_weight', label: 'Giảm cân' },
-                  { key: 'build_muscle', label: 'Tăng cơ' },
-                  { key: 'maintain', label: 'Duy trì' },
-                  { key: 'recomp', label: 'Giảm mỡ + tăng cơ' },
-                  { key: 'endurance', label: 'Sức bền' },
-                  { key: 'flexibility', label: 'Dẻo dai' },
+                  { key: 'lose_weight', label: t('onboard.goals.lose_weight') },
+                  { key: 'build_muscle', label: t('onboard.goals.build_muscle') },
+                  { key: 'maintain', label:  t('onboard.goals.maintain') },
+                  { key: 'recomp', label:  t('onboard.goals.recomp') },
+                  { key: 'endurance', label:  t('onboard.goals.endurance') },
+                  { key: 'flexibility', label:  t('onboard.goals.flexibility') },
                 ]}
               />
 
@@ -268,7 +271,7 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
         <View style={s.footer}>
           {step > 1 ? (
             <TouchableOpacity style={[s.footBtn, s.ghost]} onPress={() => setStep((s) => (s === 3 ? 2 : 1))}>
-              <Text style={[s.footTxt, { color: '#0F172A' }]}>Quay lại</Text>
+              <Text style={[s.footTxt, { color: '#0F172A' }]}>{t('onboard.back')}</Text>
             </TouchableOpacity>
           ) : (
             <View style={{ width: '48%' }} />
@@ -276,12 +279,12 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
 
           {step < 3 ? (
             <TouchableOpacity
-              style={[s.footBtn, basicOk && step === 1 ? s.primary : metricOk && step === 2 ? s.primary : s.disabled]}
+              style={[s.footBtn, (step === 1 && basicOk) || (step === 2 && metricOk) ? s.primary : s.disabled]}
               onPress={() => setStep((s) => (s === 1 ? 2 : 3))}
               disabled={(step === 1 && !basicOk) || (step === 2 && !metricOk)}
             >
               <Text style={[s.footTxt, { color: (step === 1 && basicOk) || (step === 2 && metricOk) ? '#fff' : '#94A3B8' }]}>
-                Tiếp tục
+               {t('onboard.next')}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -291,7 +294,7 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
               disabled={!allOk || saving}
             >
               <Text style={[s.footTxt, { color: allOk ? '#fff' : '#94A3B8' }]}>
-                {saving ? 'Đang lưu...' : 'Hoàn tất'}
+                {saving ? t('onboard.saving') : t('onboard.finish')}
               </Text>
             </TouchableOpacity>
           )}
@@ -303,7 +306,7 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
         <View style={s.modalWrap}>
           <View style={s.backdrop} />
           <View style={s.resultCard}>
-            <Text style={s.resultTitle}>Tổng quan sức khỏe</Text>
+            <Text style={s.resultTitle}> {t('onboard.bmi_result_title')}</Text>
             <Text style={s.resultBMI}>
               BMI: {bmiValue ?? '—'} {bmiLabel ? `(${bmiLabel})` : ''}
             </Text>
@@ -311,7 +314,7 @@ function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'
               <Text style={s.adviceText}>{advice}</Text>
             </View>
             <TouchableOpacity style={[s.footBtn, s.primary, { marginTop: 10 }]} onPress={finishAndEnterApp}>
-              <Text style={[s.footTxt, { color: '#fff' }]}>Bắt đầu luyện tập</Text>
+              <Text style={[s.footTxt, { color: '#fff' }]}>{t('onboard.start_training')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -381,13 +384,17 @@ const SwitchLike: React.FC<{ value: boolean; onToggle: (v: boolean) => void }> =
   </TouchableOpacity>
 );
 
-const TipCard = () => (
-  <View style={s.tip}>
-    <Text style={s.tipTitle}>Mẹo nhanh</Text>
-    <Text style={s.tipTxt}>• Nếu có chấn thương, hãy ưu tiên bài tập nhẹ và tăng dần cường độ.</Text>
-    <Text style={s.tipTxt}>• Cân nặng nên cập nhật 3 ngày/lần để theo dõi tiến độ.</Text>
-  </View>
-);
+// ✅ FIX: Hook useTranslation gọi bên trong TipCard (component riêng)
+const TipCard: React.FC = () => {
+  const { t } = useTranslation();
+  return (
+    <View style={s.tip}>
+      <Text style={s.tipTitle}>{t('onboard.tip_title')}</Text>
+      <Text style={s.tipTxt}>{t('onboard.tip_1')}</Text>
+      <Text style={s.tipTxt}>{t('onboard.tip_2')}</Text>
+    </View>
+  );
+};
 
 /* ---------- Styles (Light) ---------- */
 const s = StyleSheet.create({

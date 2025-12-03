@@ -14,6 +14,11 @@ const base = {
     guide: 'Guide',
     premium: 'Premium',
     settings: 'Settings',
+    workout : 'Workout',
+    more : "More",
+    program : "Program",
+    profile : "User Profile",
+    weightChart : "Weight Chart"
   },
   home: {
     title: 'Choose your workout plan',
@@ -22,6 +27,8 @@ const base = {
     program90: '90-Day Full Body Program',
     daysSuffix: '{{count}} days',
     health_overview: 'Health overview',
+    activeTitle: "Practicing",
+    noActive: 'There is no program currently training.'
   },
   program: {
     daysPrefix: 'Day {{day}} • {{weekday}}',
@@ -35,6 +42,7 @@ const base = {
     upper: 'Chest - Shoulder - Arms',
     lower: 'Glutes - Legs',
     core: 'Abs & Core',
+    pickOne : "Choose a lesson plan to get started"
   },
   nutrition: {
     title: 'Nutrition',
@@ -125,6 +133,7 @@ const base = {
     advice_healthnote:
       '• Monitor noted health conditions and adjust intensity accordingly.',
     start_training: 'Start training',
+
   },
   weight: {
     prompt_title: 'Update weight',
@@ -136,6 +145,45 @@ const base = {
     chart_empty:
       'No data yet. The app will periodically remind you to log your weight.',
   },
+  UserProfile: {
+    title: "User Profile",
+    subtitle: "Enter your info to get personalized workout recommendations",
+
+    name_label: "Full name *",
+    name_ph: "e.g., John Doe",
+
+    age_label: "Age",
+    age_ph: "e.g., 28",
+    gender_label: "Gender",
+    gender_male: "Male",
+    gender_female: "Female",
+    gender_other: "Other",
+    height_label: "Height (cm)",
+    height_ph: "e.g., 170",
+    weight_label: "Weight (kg)",
+    weight_ph: "e.g., 65",
+    bmi: "BMI",
+    bmi_label_under: "Underweight",
+    bmi_label_normal: "Normal",
+    bmi_label_over: "Overweight",
+    bmi_label_obese: "Obese",
+    health_label: "Health status",
+    health_ph: "e.g., Blood pressure stable, sleeping well, returning to training…",
+
+    injured_q: "Any injuries?",
+    injury_label: "Injury details",
+    injury_ph: "e.g., Left knee pain, limit deep squats; shoulder pain during press…",
+    hint_fill_hw: "Enter height & weight to get suggestions.",
+    rec_injured: "Recommendation: prioritize light CORE/Upper sessions with more Rest days.",
+    rec_overweight: "Recommendation: Fat-loss plan (light → moderate HIIT) alternating with Lower/Core.",
+    rec_general: "Recommendation: Full-body plan (foundational strength + Core).",
+    loading: "Loading…",
+    save_success_title: "Saved",
+    save_error_title: "Error",
+    save_error_msg: "Couldn't save your data. Please try again.",
+    btn_delete: "Delete",
+    btn_save: "Save"
+  }
 };
 
 const vi = {
@@ -155,6 +203,7 @@ const vi = {
     program90: 'Giáo án Toàn thân 90 ngày',
     daysSuffix: '{{count}} ngày',
     health_overview: 'Tổng quan sức khỏe',
+    activeTitle: "Đang tập luyện"
   },
   program: {
     daysPrefix: 'Ngày {{day}} • {{weekday}}',
@@ -1521,7 +1570,7 @@ i18n.use(initReactI18next).init({
   try {
     const saved = await AsyncStorage.getItem(LANG_KEY);
     if (saved) i18n.changeLanguage(saved);
-  } catch {}
+  } catch { }
 })();
 
 export { LANG_KEY };
