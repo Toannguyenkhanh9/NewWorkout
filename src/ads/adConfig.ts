@@ -1,20 +1,20 @@
+// src/ads/adConfig.ts
+import { Platform } from 'react-native';
+import { TestIds } from 'react-native-google-mobile-ads';
+
 export const ADMOB = {
   android: {
-    appId: 'ca-app-pub-7270703936050310~2107283736', // TODO: App ID
-    rewarded: __DEV__
-      ? 'ca-app-pub-3940256099942544/5224354917' // test rewarded
-      : 'ca-app-pub-3940256099942544/5224354917',
-    banner: __DEV__
-      ? 'ca-app-pub-3940256099942544/6300978111' // test banner
-      : 'ca-app-pub-3940256099942544/6300978111',
+    appId: 'ca-app-pub-7270703936050310~4564431234',
+    banner: __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxx/your_banner_id',
+    rewarded: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-xxx/your_rewarded_id',
+    interstitial: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxx/your_interstitial_id',
   },
   ios: {
-    appId: 'ca-app-pub-xxxxxxxxxxxxxxxx~zzzzzzzzzz', // TODO: App ID
-    rewarded: __DEV__
-      ? 'ca-app-pub-3940256099942544/1712485313' // test rewarded
-      : 'ca-app-pub-xxxxxxxxxxxxxxxx/cccccccccc',
-    banner: __DEV__
-      ? 'ca-app-pub-3940256099942544/2934735716' // test banner
-      : 'ca-app-pub-xxxxxxxxxxxxxxxx/dddddddddd',
+    appId: 'ca-app-pub-xxxxxxxx~xxxxxxxx',
+    banner: __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxx/your_banner_id',
+    rewarded: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-xxx/your_rewarded_id',
+    interstitial: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxx/your_interstitial_id',
   },
-} as const;
+};
+
+export const BANNER_UNIT = Platform.OS === 'android' ? ADMOB.android.banner : ADMOB.ios.banner;

@@ -1,28 +1,26 @@
+// src/components/AdBanner.tsx
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { Platform } from 'react-native';
-import { ADMOB } from '../ads/adConfig';
-import { canShowBanner } from '../ads/adGate';
-import { useSubscription } from '../iap/SubscriptionProvider';
-
-const unitId = Platform.OS === 'android' ? ADMOB.android.banner : ADMOB.ios.banner;
+import { View, useWindowDimensions } from 'react-native';
+import { BannerAd, BannerAdSize, AdEventType } from 'react-native-google-mobile-ads';
+import { BANNER_UNIT } from '../ads/adConfig';
+// import { canShowBanner } from '../ads/adGate'; // bật lại khi cần
 
 export const AdBanner: React.FC = () => {
-  const { isPremium } = useSubscription?.() || { isPremium: false };
-  const [show, setShow] = useState(false);
+  const { width } = useWindowDimensions();
+  const [visible, setVisible] = useState(true); // để chắc chắn thấy test banner
 
-  useEffect(() => {
-    (async () => {
-      //setShow(await canShowBanner(isPremium));
-      setShow(true);
-    })();
-  }, [isPremium]);
+  if (!visible) return null;
 
-  if (!show) return null;
   return (
-    <View style={{ alignItems: 'center' }}>
-      <BannerAd unitId={unitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
+    <View style={{ alignItems: 'center', minHeight: 60 }}>
+      <BannerAd
+        unitId={BANNER_UNIT}
+        // Adaptive cần width đo được:
+        size={BannerAdSize.FULL_BANNER}
+        requestOptions={{ requestNonPersonalizedAdsOnly: true }}
+        onAdLoaded={() => console.log('Banner loaded')}
+        onAdFailedToLoad={(e) => console.log('Banner failed', e)}
+      />
     </View>
   );
 };

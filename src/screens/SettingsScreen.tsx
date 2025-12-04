@@ -107,7 +107,7 @@ export const SettingsScreen: React.FC = () => {
 
       {/* Hồ sơ */}
       <TouchableOpacity style={[styles.row, styles.rowActive]} onPress={() => navigation.navigate('UserProfile')}>
-        <Text style={styles.lang}>👤 {t('profile.title', 'Hồ sơ người dùng')}</Text>
+        <Text style={styles.lang}>👤 {t('UserProfile.title', 'Hồ sơ người dùng')}</Text>
         <Text style={styles.chev}>›</Text>
       </TouchableOpacity>
 
