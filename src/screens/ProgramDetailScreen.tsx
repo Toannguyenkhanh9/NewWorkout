@@ -10,7 +10,7 @@ import { markActive } from '../store/activePrograms';
 import { gateWorkout } from '../ads/adGate';
 import { useSubscription } from '../iap/SubscriptionProvider';
 import { useToast } from '../ui/Toast';
-
+import { trackWorkoutTapAndMaybeAsk } from '../review/rate';
 type Section = { title: string; data: WorkoutDay[] };
 
 export const ProgramDetailScreen: React.FC = () => {
@@ -69,11 +69,12 @@ export const ProgramDetailScreen: React.FC = () => {
 
   const onPressDay = async (day: WorkoutDay) => {
     if (day.isRest) return;
-    const ok = await gateWorkout({ isPremium, startTrialOnFirstUse: false });
+    const ok = await gateWorkout({ isPremium, startTrialOnFirstUse: true });
     if (!ok) {
          toast.show(t('ads.need_full', 'Bạn cần xem hết quảng cáo để tiếp tục'));
       return;
     }
+     trackWorkoutTapAndMaybeAsk();
     const updated = { ...completedDays, [day.id]: true };
     setCompletedDays(updated);
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
@@ -112,9 +113,9 @@ export const ProgramDetailScreen: React.FC = () => {
         stickySectionHeadersEnabled
         contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
       />
-      <View style={{ paddingHorizontal: 16 }}>
+      {/* <View style={{ paddingHorizontal: 16 }}>
         <AdBanner />
-      </View>
+      </View> */}
     </View>
   );
 };
