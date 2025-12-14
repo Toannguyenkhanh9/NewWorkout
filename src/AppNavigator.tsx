@@ -10,6 +10,7 @@ import i18n from './i18n';
 
 import { MainScreen } from './screens/MainScreen';
 import { NutritionScreen } from './screens/NutritionScreen';
+import PdfViewerScreen from './screens/PdfViewerScreen';
 import { GuideScreen } from './screens/GuideScreen';
 import { PremiumScreen } from './screens/PremiumScreen';
 import { ProgramDetailScreen } from './screens/ProgramDetailScreen';
@@ -71,7 +72,12 @@ const MainStack: React.FC = () => {
     </Stack.Navigator>
   );
 };
-
+const NutritionStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="NutritionHome" component={NutritionScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="PdfViewer" component={PdfViewerScreen} options={{ title: 'Nutrition PDF' }} />
+  </Stack.Navigator>
+);
 // More/Settings stack: đưa Guide & Premium vào đây
 const SettingsStack: React.FC = () => {
   const { t } = useTranslation();
@@ -139,7 +145,7 @@ export const AppNavigator: React.FC = () => {
       />
       <Tab.Screen
         name="Nutrition"
-        component={NutritionScreen}
+        component={NutritionStack}
         options={{ tabBarLabel: t('tabs.nutrition'), tabBarIcon: ({ color }) => <Text style={{ color }}>🥗</Text> }}
       />
       {/* Guide & Premium chuyển sang tab More */}
