@@ -1,8 +1,15 @@
 // FILE: src/screens/OnboardingProfileScreen.tsx
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView,
-  KeyboardAvoidingView, Platform, Modal
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,12 +17,12 @@ import { useTranslation } from 'react-i18next';
 
 type Gender = 'male' | 'female' | 'other';
 type Goal =
-  | 'lose_weight'   // Giảm cân
-  | 'build_muscle'  // Tăng cơ
-  | 'maintain'      // Duy trì
-  | 'recomp'        // Giảm mỡ + tăng cơ
-  | 'endurance'     // Sức bền
-  | 'flexibility';  // Dẻo dai
+  | 'lose_weight' // Giảm cân
+  | 'build_muscle' // Tăng cơ
+  | 'maintain' // Duy trì
+  | 'recomp' // Giảm mỡ + tăng cơ
+  | 'endurance' // Sức bền
+  | 'flexibility'; // Dẻo dai
 
 export type UserProfile = {
   name: string;
@@ -34,7 +41,11 @@ const ONBOARD_DONE = 'onboarding:done';
 const BMI_KEY = 'user:bmi';
 const RECO_KEY = 'user:recommendation';
 
-export default function OnboardingProfileScreen({ onDone }: { onDone?: () => void }) {
+export default function OnboardingProfileScreen({
+  onDone,
+}: {
+  onDone?: () => void;
+}) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [data, setData] = useState<UserProfile>({ name: '', injured: false });
   const [saving, setSaving] = useState(false);
@@ -48,22 +59,21 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
   const setField = <K extends keyof UserProfile>(k: K, v: UserProfile[K]) =>
     setData(p => ({ ...p, [k]: v }));
 
-  const basicOk =
-    data.name.trim().length >= 2 &&
-    !!data.gender &&
-    !!data.age;
+  const basicOk = data.name.trim().length >= 2 && !!data.gender && !!data.age;
 
-  const metricOk =
-    !!data.heightCm &&
-    !!data.weightKg;
+  const metricOk = !!data.heightCm && !!data.weightKg;
 
   const allOk = basicOk && metricOk && !!data.goal;
 
   function bmiCategory(heightCm?: number, weightKg?: number) {
-    if (!heightCm || !weightKg) return { bmi: null as number | null, key: '' as 'under'|'normal'|'over'|'obese'|'' };
+    if (!heightCm || !weightKg)
+      return {
+        bmi: null as number | null,
+        key: '' as 'under' | 'normal' | 'over' | 'obese' | '',
+      };
     const h = heightCm / 100;
     const bmi = +(weightKg / (h * h)).toFixed(1);
-    let key: 'under'|'normal'|'over'|'obese' = 'normal';
+    let key: 'under' | 'normal' | 'over' | 'obese' = 'normal';
     if (bmi < 18.5) key = 'under';
     else if (bmi < 25) key = 'normal';
     else if (bmi < 30) key = 'over';
@@ -71,13 +81,17 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
     return { bmi, key };
   }
 
-  function buildAdvice(bmi: number | null, catKey: 'under'|'normal'|'over'|'obese'|'', p: UserProfile) {
+  function buildAdvice(
+    bmi: number | null,
+    catKey: 'under' | 'normal' | 'over' | 'obese' | '',
+    p: UserProfile,
+  ) {
     const lines: string[] = [];
     const labelMap: Record<string, string> = {
       under: t('onboard.bmi_label_under'),
       normal: t('onboard.bmi_label_normal'),
       over: t('onboard.bmi_label_over'),
-      obese: t('onboard.bmi_label_obese')
+      obese: t('onboard.bmi_label_obese'),
     };
     const label = catKey ? labelMap[catKey] : '';
 
@@ -117,18 +131,24 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
       const adv = buildAdvice(bmi, key, data);
 
       setBmiValue(bmi);
-      setBmiLabel(key ? {
-        under: t('onboard.bmi_label_under'),
-        normal: t('onboard.bmi_label_normal'),
-        over: t('onboard.bmi_label_over'),
-        obese: t('onboard.bmi_label_obese'),
-      }[key] : '');
+      setBmiLabel(
+        key
+          ? {
+              under: t('onboard.bmi_label_under'),
+              normal: t('onboard.bmi_label_normal'),
+              over: t('onboard.bmi_label_over'),
+              obese: t('onboard.bmi_label_obese'),
+            }[key]
+          : '',
+      );
 
       setAdvice(adv);
       if (bmi !== null) await AsyncStorage.setItem(BMI_KEY, String(bmi));
       await AsyncStorage.setItem(RECO_KEY, adv);
       setShowResult(true);
-    } finally { setSaving(false); }
+    } finally {
+      setSaving(false);
+    }
   };
 
   const finishAndEnterApp = async () => {
@@ -138,7 +158,10 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
 
   return (
     <SafeAreaView style={s.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+      >
         {/* Header */}
         <View style={s.header}>
           <Text style={s.title}>{t('onboard.title')}</Text>
@@ -172,7 +195,12 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
                     placeholder=""
                     keyboardType="number-pad"
                     value={data.age ? String(data.age) : ''}
-                    onChangeText={v => setField('age', v ? parseInt(v, 10) || undefined : undefined)}
+                    onChangeText={v =>
+                      setField(
+                        'age',
+                        v ? parseInt(v, 10) || undefined : undefined,
+                      )
+                    }
                   />
                 </View>
                 <View style={s.col}>
@@ -209,7 +237,12 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
                     placeholder="Eg: 170"
                     keyboardType="number-pad"
                     value={data.heightCm ? String(data.heightCm) : ''}
-                    onChangeText={v => setField('heightCm', v ? parseFloat(v) || undefined : undefined)}
+                    onChangeText={v =>
+                      setField(
+                        'heightCm',
+                        v ? parseFloat(v) || undefined : undefined,
+                      )
+                    }
                   />
                 </View>
                 <View style={s.col}>
@@ -218,16 +251,23 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
                     placeholder="Eg: 65.5"
                     keyboardType="decimal-pad"
                     value={data.weightKg ? String(data.weightKg) : ''}
-                    onChangeText={v => setField('weightKg', v ? parseFloat(v) || undefined : undefined)}
+                    onChangeText={v =>
+                      setField(
+                        'weightKg',
+                        v ? parseFloat(v) || undefined : undefined,
+                      )
+                    }
                   />
                 </View>
               </View>
 
               <View style={[s.row, { alignItems: 'center', marginTop: 12 }]}>
-                <Text style={[s.label, { marginBottom: 0 }]}>{t('onboard.injured_q')}</Text>
+                <Text style={[s.label, { marginBottom: 0 }]}>
+                  {t('onboard.injured_q')}
+                </Text>
                 <SwitchLike
                   value={!!data.injured}
-                  onToggle={(v) => setField('injured', v)}
+                  onToggle={v => setField('injured', v)}
                 />
               </View>
 
@@ -254,11 +294,14 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
                 onChange={g => setField('goal', g as Goal)}
                 options={[
                   { key: 'lose_weight', label: t('onboard.goals.lose_weight') },
-                  { key: 'build_muscle', label: t('onboard.goals.build_muscle') },
-                  { key: 'maintain', label:  t('onboard.goals.maintain') },
-                  { key: 'recomp', label:  t('onboard.goals.recomp') },
-                  { key: 'endurance', label:  t('onboard.goals.endurance') },
-                  { key: 'flexibility', label:  t('onboard.goals.flexibility') },
+                  {
+                    key: 'build_muscle',
+                    label: t('onboard.goals.build_muscle'),
+                  },
+                  { key: 'maintain', label: t('onboard.goals.maintain') },
+                  { key: 'recomp', label: t('onboard.goals.recomp') },
+                  { key: 'endurance', label: t('onboard.goals.endurance') },
+                  { key: 'flexibility', label: t('onboard.goals.flexibility') },
                 ]}
               />
 
@@ -270,8 +313,13 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
         {/* Footer actions */}
         <View style={s.footer}>
           {step > 1 ? (
-            <TouchableOpacity style={[s.footBtn, s.ghost]} onPress={() => setStep((s) => (s === 3 ? 2 : 1))}>
-              <Text style={[s.footTxt, { color: '#0F172A' }]}>{t('onboard.back')}</Text>
+            <TouchableOpacity
+              style={[s.footBtn, s.ghost]}
+              onPress={() => setStep(s => (s === 3 ? 2 : 1))}
+            >
+              <Text style={[s.footTxt, { color: '#0F172A' }]}>
+                {t('onboard.back')}
+              </Text>
             </TouchableOpacity>
           ) : (
             <View style={{ width: '48%' }} />
@@ -279,12 +327,27 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
 
           {step < 3 ? (
             <TouchableOpacity
-              style={[s.footBtn, (step === 1 && basicOk) || (step === 2 && metricOk) ? s.primary : s.disabled]}
-              onPress={() => setStep((s) => (s === 1 ? 2 : 3))}
+              style={[
+                s.footBtn,
+                (step === 1 && basicOk) || (step === 2 && metricOk)
+                  ? s.primary
+                  : s.disabled,
+              ]}
+              onPress={() => setStep(s => (s === 1 ? 2 : 3))}
               disabled={(step === 1 && !basicOk) || (step === 2 && !metricOk)}
             >
-              <Text style={[s.footTxt, { color: (step === 1 && basicOk) || (step === 2 && metricOk) ? '#fff' : '#94A3B8' }]}>
-               {t('onboard.next')}
+              <Text
+                style={[
+                  s.footTxt,
+                  {
+                    color:
+                      (step === 1 && basicOk) || (step === 2 && metricOk)
+                        ? '#fff'
+                        : '#94A3B8',
+                  },
+                ]}
+              >
+                {t('onboard.next')}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -302,7 +365,12 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
       </KeyboardAvoidingView>
 
       {/* Modal kết quả BMI + lời khuyên */}
-      <Modal visible={showResult} transparent animationType="fade" onRequestClose={() => setShowResult(false)}>
+      <Modal
+        visible={showResult}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowResult(false)}
+      >
         <View style={s.modalWrap}>
           <View style={s.backdrop} />
           <View style={s.resultCard}>
@@ -313,8 +381,10 @@ export default function OnboardingProfileScreen({ onDone }: { onDone?: () => voi
             <View style={s.adviceBox}>
               <Text style={s.adviceText}>{advice}</Text>
             </View>
-            <TouchableOpacity style={[s.footBtn, s.primary, { marginTop: 10 }]} onPress={finishAndEnterApp}>
-              <Text style={[s.footTxt, { color: '#fff' }]}>{t('onboard.start_training')}</Text>
+            <TouchableOpacity style={s.modalBtn} onPress={finishAndEnterApp}>
+              <Text style={s.modalBtnText}>
+                {t('onboard.start_training', 'Start training')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -328,7 +398,7 @@ const Label: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <Text style={s.label}>{children}</Text>
 );
 
-const Input: React.FC<React.ComponentProps<typeof TextInput>> = (props) => (
+const Input: React.FC<React.ComponentProps<typeof TextInput>> = props => (
   <TextInput
     {...props}
     placeholderTextColor="#9CA3AF"
@@ -345,8 +415,14 @@ const Segment: React.FC<{
     {options.map(o => {
       const active = value === o.key;
       return (
-        <TouchableOpacity key={o.key} onPress={() => onChange(o.key)} style={[s.segmentItem, active && s.segmentActive]}>
-          <Text style={[s.segmentText, active && s.segmentTextActive]}>{o.label}</Text>
+        <TouchableOpacity
+          key={o.key}
+          onPress={() => onChange(o.key)}
+          style={[s.segmentItem, active && s.segmentActive]}
+        >
+          <Text style={[s.segmentText, active && s.segmentTextActive]}>
+            {o.label}
+          </Text>
         </TouchableOpacity>
       );
     })}
@@ -374,7 +450,10 @@ const ChipGroup: React.FC<{
   </View>
 );
 
-const SwitchLike: React.FC<{ value: boolean; onToggle: (v: boolean) => void }> = ({ value, onToggle }) => (
+const SwitchLike: React.FC<{
+  value: boolean;
+  onToggle: (v: boolean) => void;
+}> = ({ value, onToggle }) => (
   <TouchableOpacity
     onPress={() => onToggle(!value)}
     style={[s.switch, value && s.switchOn]}
@@ -414,7 +493,7 @@ const s = StyleSheet.create({
     paddingVertical: 10,
     color: '#0F172A',
     fontSize: 14,
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   row: { flexDirection: 'row', gap: 12 },
@@ -427,41 +506,75 @@ const s = StyleSheet.create({
     padding: 3,
     borderWidth: 1,
     borderColor: '#E2E8F0',
-    marginBottom: 10
+    marginBottom: 10,
   },
-  segmentItem: { flex: 1, borderRadius: 10, paddingVertical: 8, alignItems: 'center' },
+  segmentItem: {
+    flex: 1,
+    borderRadius: 10,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
   segmentActive: { backgroundColor: '#10B981' },
   segmentText: { color: '#334155', fontWeight: '700' },
   segmentTextActive: { color: '#fff' },
 
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
   chip: {
-    paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999,
-    backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E5E7EB'
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
   chipActive: { backgroundColor: '#ECFDF5', borderColor: '#10B981' },
   chipTxt: { color: '#0F172A', fontWeight: '700' },
   chipTxtActive: { color: '#065F46' },
 
   switch: {
-    width: 52, height: 32, borderRadius: 999, backgroundColor: '#CBD5E1',
-    padding: 3, justifyContent: 'center'
+    width: 52,
+    height: 32,
+    borderRadius: 999,
+    backgroundColor: '#CBD5E1',
+    padding: 3,
+    justifyContent: 'center',
   },
   switchOn: { backgroundColor: '#10B981' },
-  switchDot: { width: 26, height: 26, borderRadius: 999, backgroundColor: '#FFFFFF', transform: [{ translateX: 0 }] },
+  switchDot: {
+    width: 26,
+    height: 26,
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
+    transform: [{ translateX: 0 }],
+  },
   switchDotOn: { transform: [{ translateX: 20 }] },
 
   tip: {
-    marginTop: 14, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, borderColor: '#E5E7EB', padding: 12
+    marginTop: 14,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    padding: 12,
   },
   tipTitle: { color: '#0F172A', fontWeight: '900', marginBottom: 6 },
   tipTxt: { color: '#475569', marginTop: 2 },
 
   footer: {
-    flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingBottom: 16, paddingTop: 6,
-    backgroundColor: '#F6F7FB'
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    paddingTop: 6,
+    backgroundColor: '#F6F7FB',
   },
-  footBtn: { flex: 1, paddingVertical: 12, borderRadius: 12, alignItems: 'center', borderWidth: 1 },
+  footBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
   primary: { backgroundColor: '#10B981', borderColor: '#10B981' },
   disabled: { backgroundColor: '#F1F5F9', borderColor: '#E5E7EB' },
   ghost: { backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' },
@@ -469,7 +582,10 @@ const s = StyleSheet.create({
 
   // Modal kết quả
   modalWrap: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.35)' },
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+  },
   resultCard: {
     width: '88%',
     backgroundColor: '#FFFFFF',
@@ -477,14 +593,51 @@ const s = StyleSheet.create({
     padding: 16,
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    shadowColor: '#0F172A', shadowOpacity: 0.08, shadowRadius: 10, shadowOffset: { width: 0, height: 6 }, elevation: 4,
+    shadowColor: '#0F172A',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 4,
   },
   resultTitle: { fontSize: 18, fontWeight: '900', color: '#0F172A' },
   resultBMI: { marginTop: 6, color: '#0F172A', fontWeight: '800' },
-  adviceBox: { marginTop: 10, backgroundColor: '#F8FAFC', borderRadius: 12, padding: 12, borderWidth: 1, borderColor: '#E2E8F0' },
+  adviceBox: {
+    marginTop: 10,
+    backgroundColor: '#F8FAFC',
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
   adviceText: { color: '#334155' },
+  modalBtn: {
+    marginTop: 10,
+    alignSelf: 'stretch',
+    backgroundColor: '#10B981',
+    borderColor: '#10B981',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 12,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalBtnText: {
+    color: '#fff',
+    fontWeight: '800',
+    fontSize: 16,
+  },
 });
 
 function Dot({ active }: { active: boolean }) {
-  return <View style={{ width: 26, height: 6, borderRadius: 999, backgroundColor: active ? '#10B981' : '#E5E7EB' }} />;
+  return (
+    <View
+      style={{
+        width: 26,
+        height: 6,
+        borderRadius: 999,
+        backgroundColor: active ? '#10B981' : '#E5E7EB',
+      }}
+    />
+  );
 }

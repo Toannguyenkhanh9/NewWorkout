@@ -79,7 +79,7 @@ android {
 
     namespace "com.workout"
     defaultConfig {
-        applicationId "com.workout"
+        applicationId "com.nexus.FulseFit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -129,9 +129,9 @@ export const MainScreen: React.FC<any> = () => {
               title={t('home.activeTitle', 'Đang tập luyện')}
             />
 
-            <View style={{ marginTop: 10 }}>
+            {/* <View style={{ marginTop: 10 }}>
               <AdBanner />
-            </View>
+            </View> */}
 
             <Text style={styles.footer}>
               {t('footer.devBy', { name: 'Kevin' })}

@@ -44,10 +44,6 @@ const base = {
     core: 'Abs & Core',
     pickOne : "Choose a lesson plan to get started"
   },
-  nutrition: {
-    title: 'Nutrition',
-    content: 'Suggested macros, water intake, and sample meals for each plan.',
-  },
   guide: {
     title: 'Guide',
     content:
@@ -183,6 +179,60 @@ const base = {
     save_error_msg: "Couldn't save your data. Please try again.",
     btn_delete: "Delete",
     btn_save: "Save"
+  },
+  nutrition: {
+    title: "Nutrition Guide",
+    subtitle: "Simple, portion-based eating to support your training.",
+    sections: {
+      how: {
+        title: "How it works",
+        bullets: [
+          "Portion-based plan using food groups.",
+          "Balanced macros for energy and recovery.",
+          "Daily shake counts as 1 protein portion."
+        ]
+      },
+      plan: {
+        title: "Find your plan",
+        bullets: [
+          "Choose Plan A–E by body size & goal.",
+          "Each plan = fixed portions per group/day.",
+          "Adjust slightly if you feel too hungry or too full."
+        ]
+      },
+      foods: {
+        title: "Food lists (top choices)",
+        bullets: [
+          "Veggies & fruits first; whole, colorful, high-fiber.",
+          "Lean proteins; smart carbs like oats, brown rice, sweet potato.",
+          "Healthy fats: avocado, nuts, seeds, olive oil."
+        ]
+      },
+      samples: {
+        title: "Sample day ideas",
+        bullets: [
+          "Breakfast: yogurt + berries + oats.",
+          "Lunch: chicken or tofu bowl, veg + rice/quinoa.",
+          "Dinner: fish + greens + sweet potato."
+        ]
+      },
+      drinks: {
+        title: "Beverages / coffee & tea",
+        bullets: [
+          "Water target: ~ half body-weight (lb) in oz per day.",
+          "Coffee/tea is fine; limit sugar/creamers.",
+          "Skip sugary drinks and alcohol when possible."
+        ]
+      },
+      success: {
+        title: "Set yourself up for success",
+        bullets: [
+          "Meal-prep proteins, wash & portion veggies.",
+          "Pack snacks: fruit, nuts, bars.",
+          "Eat slowly, sleep well, be consistent."
+        ]
+      }
+    }
   }
 };
 
@@ -218,9 +268,59 @@ const vi = {
     lower: 'Mông - Đùi - Chân',
     core: 'Cơ bụng & Core',
   },
-  nutrition: {
-    title: 'Dinh dưỡng',
-    content: 'Gợi ý khẩu phần, protein, nước, và thực đơn mẫu theo giáo án.',
+ nutrition: {
+    title: "Hướng dẫn dinh dưỡng",
+    subtitle: "Ăn theo khẩu phần đơn giản để hỗ trợ việc tập luyện.",
+    sections: {
+      how: {
+        title: "Nguyên tắc",
+        bullets: [
+          "Chia theo nhóm thực phẩm (khẩu phần).",
+          "Cân bằng đạm-bột-chất béo cho năng lượng & phục hồi.",
+          "Sinh tố/Shake tính như 1 khẩu phần đạm."
+        ]
+      },
+      plan: {
+        title: "Chọn kế hoạch",
+        bullets: [
+          "Chọn Plan A–E theo thể trạng & mục tiêu.",
+          "Mỗi plan quy định số khẩu phần/ngày.",
+          "Điều chỉnh nhẹ nếu quá đói hoặc quá no."
+        ]
+      },
+      foods: {
+        title: "Danh sách thực phẩm",
+        bullets: [
+          "Ưu tiên rau quả tươi, toàn phần, giàu chất xơ.",
+          "Đạm nạc; tinh bột tốt: yến mạch, gạo lứt, khoai lang.",
+          "Chất béo tốt: bơ, hạt, dầu ô-liu."
+        ]
+      },
+      samples: {
+        title: "Gợi ý 1 ngày",
+        bullets: [
+          "Sáng: sữa chua + dâu + yến mạch.",
+          "Trưa: ức gà/tofu + rau + cơm/quinoa.",
+          "Tối: cá + rau xanh + khoai lang."
+        ]
+      },
+      drinks: {
+        title: "Đồ uống / cà phê & trà",
+        bullets: [
+          "Nước: ~ nửa cân nặng (lb) đổi ra oz mỗi ngày.",
+          "Uống cà phê/trà được; hạn chế đường/kem.",
+          "Tránh nước ngọt & rượu khi có thể."
+        ]
+      },
+      success: {
+        title: "Mẹo duy trì",
+        bullets: [
+          "Chuẩn bị sẵn đạm; rửa & chia sẵn rau.",
+          "Mang theo snack: trái cây, hạt, thanh năng lượng.",
+          "Ăn chậm, ngủ đủ, kiên định."
+        ]
+      }
+    }
   },
   guide: {
     title: 'Hướng dẫn',
