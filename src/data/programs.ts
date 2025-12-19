@@ -1,6 +1,6 @@
 // FILE: src/data/programs.ts
 
-export type WorkoutSessionKey = 'rest' | 'hiit' | 'upper' | 'lower' | 'core';
+export type WorkoutSessionKey = 'rest' | 'hiit' | 'upper' | 'lower' | 'core' | 'full';
 
 export type PlanItem =
   | { type: 'rest' }
@@ -723,6 +723,59 @@ const SixWeeksOfTheWork: PlanItem[] = [
   W('full',  'The Crucible',        'w66index5.html', 50), // Sat
   W('core',  'Range And Repair',    'w66index6.html', 30), // Sun,
 ];
+const Transform20: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Burn',                 'tindex1.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex2.html', 30), // 2
+  W('core',  'Stronger',                          'tindex3.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex4.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex5.html', 30), // 5
+  W('core',  'Balanced',                          'tindex6.html', 25), // 6
+  { type: 'rest' },                                                  // 7 (Off)
+
+  // Week 2 (Day 8–14)
+  W('hiit',  'Burn',                 'tindex7.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex8.html', 30), // 2
+  W('core',  'Stronger',                          'tindex9.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex10.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex11.html', 30), // 5
+  W('core',  'Balanced',                          'tindex12.html', 25), // 6
+  { type: 'rest' },                                                 // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('hiit',  'Burn',                 'tindex13.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex14.html', 30), // 2
+  W('core',  'Stronger',                          'tindex15.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex16.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex17.html', 30), // 5
+  W('core',  'Balanced',                          'tindex18.html', 25), // 6
+  { type: 'rest' },                                                  // 21 (Off)
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' }, 
+    // Week 5 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' }, 
+    // Week 6 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' },                                                  // 28 (Off)
+];
 
 
 export const PROGRAMS: WorkoutProgram[] = [
@@ -739,7 +792,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Insanity Max 30',
     durationDays: Max30.length, // = số ngày bạn nhập
     iconColor: '#FF6B6B',
-    icon: require('../../assets/images/max301.png'),
+    icon: require('../../assets/images/insanitymax30.jpg'),
     plan: Max30
   },
   {
@@ -747,7 +800,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     titleKey: 'Focus T25',
     durationDays: FocusT25.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/FocusT25.png'),
+    icon: require('../../assets/images/focust25.jpg'),
     plan: FocusT25
   },
   {
@@ -789,6 +842,14 @@ export const PROGRAMS: WorkoutProgram[] = [
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/6week.jpg'),
     plan: SixWeeksOfTheWork
+  },
+    {
+    id: 'Transform20',
+    titleKey: 'Transform:20',
+    durationDays: Transform20.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/transform20.jpg'),
+    plan: Transform20
   }
 ];
 
