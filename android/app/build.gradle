@@ -82,8 +82,9 @@ android {
         applicationId "com.nexus.FulseFit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 11
         versionName "1.0"
+        missingDimensionStrategy 'store', 'play'
     }
     signingConfigs {
         debug {

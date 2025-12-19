@@ -36,7 +36,7 @@ const enNavigator = {
       weightChart: 'Weight Tracking',
     },
     tabs: {
-      main: 'PulseFit',
+      main: 'Insanity Deluxe Edition',
       workout: 'Workout',
       nutrition: 'Nutrition',
       more: 'More',

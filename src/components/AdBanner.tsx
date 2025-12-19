@@ -21,6 +21,7 @@ export const AdBanner: React.FC = () => {
 
   useEffect(() => {
     let mounted = true;
+
     (async () => {
       try {
         const ok = await canShowBanner(isPremium);
@@ -29,6 +30,7 @@ export const AdBanner: React.FC = () => {
         if (mounted) setVisible(false);
       }
     })();
+
     return () => {
       mounted = false;
     };
@@ -45,10 +47,11 @@ export const AdBanner: React.FC = () => {
         onAdLoaded={() => console.log('Banner loaded')}
         onAdFailedToLoad={(e) => {
           console.log('Banner failed', e);
-          // Ẩn vùng trống nếu tải thất bại
           setVisible(false);
         }}
       />
     </View>
   );
 };
+
+export default AdBanner;

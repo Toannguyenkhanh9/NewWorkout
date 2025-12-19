@@ -1,4 +1,3 @@
-// src/screens/WorkoutScreen.tsx
 import React from 'react';
 import {
   View,
@@ -8,14 +7,18 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { PROGRAMS } from '../data/programs';
-
+import { useSubscription } from '../iap/SubscriptionProvider';
+import { isTrialActive } from '../ads/trial';
+import { ensureTrialAccess } from '../ads/trial';
 export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { isPremium } = useSubscription?.() || { isPremium: false };
 
   const { width } = Dimensions.get('window');
   const COLS = 2;
@@ -23,50 +26,89 @@ export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
   const GAP = 12;
   const tileWidth = Math.floor((width - HPAD * 2 - GAP * (COLS - 1)) / COLS);
 
-const renderItem = ({ item, index }: any) => {
-  const isLeft = index % 2 === 0;
+  const goPremium = () => {
+    try {
+      navigation.getParent()?.navigate('Settings', {
+        screen: 'Premium',
+      });
+    } catch {
+      navigation.navigate('Premium');
+    }
+  };
 
-  // ✅ Lấy tiêu đề từ title hoặc titleKey
-  const programTitle =
-    item.title ?? (item.titleKey ? t(item.titleKey) : item.id);
+const openProgram = async (item: any) => {
+  let trial = false;
 
-  return (
-    <TouchableOpacity
-      style={[
-        styles.tile,
-        { width: tileWidth, marginRight: isLeft ? GAP : 0, marginBottom: 14 },
-      ]}
-      activeOpacity={0.85}
-onPress={() => {
-  // thử điều hướng trong stack hiện tại
+  if (!isPremium) {
+    trial = await ensureTrialAccess();
+  }
+
+  const locked = !!item.premium && !isPremium && !trial;
+
+  if (locked) {
+    Alert.alert(
+      t('premium.lockedTitle', 'Premium required'),
+      t(
+        'premium.lockedText',
+        'This program is available for Premium users only. Upgrade to continue.'
+      ),
+      [
+        { text: t('common.cancel', 'Cancel'), style: 'cancel' },
+        {
+          text: t('premium.cta', 'Upgrade now'),
+          onPress: goPremium,
+        },
+      ]
+    );
+    return;
+  }
+
   try {
     navigation.navigate('ProgramDetail' as never, { programId: item.id } as never);
   } catch {
-    // fallback: điều hướng qua parent Tab tới stack Workout rồi vào ProgramDetail
     navigation.getParent()?.navigate('Workout', {
       screen: 'ProgramDetail',
       params: { programId: item.id },
     } as never);
   }
-}}
-    >
-      <View style={styles.thumbWrap}>
-        <Image source={item.icon} style={styles.thumb} resizeMode="cover" />
-        <View style={styles.playBadge}>
-          <Text style={styles.playIcon}>▶</Text>
-        </View>
-      </View>
-
-      {/* ✅ Dùng programTitle thay vì item.title */}
-      <Text style={styles.tileTitle} numberOfLines={2}>
-        {programTitle}
-      </Text>
-      <Text style={styles.tileDays}>
-        {item.durationDays} {t('workout.days', 'days')}
-      </Text>
-    </TouchableOpacity>
-  );
 };
+
+  const renderItem = ({ item, index }: any) => {
+    const isLeft = index % 2 === 0;
+    const programTitle = item.title ?? (item.titleKey ? t(item.titleKey) : item.id);
+
+    return (
+      <TouchableOpacity
+        style={[
+          styles.tile,
+          { width: tileWidth, marginRight: isLeft ? GAP : 0, marginBottom: 14 },
+        ]}
+        activeOpacity={0.85}
+        onPress={() => openProgram(item)}
+      >
+        <View style={styles.thumbWrap}>
+          <Image source={item.icon} style={styles.thumb} resizeMode="cover" />
+
+          <View style={styles.playBadge}>
+            <Text style={styles.playIcon}>▶</Text>
+          </View>
+
+          {item.premium ? (
+            <View style={styles.premiumBadge}>
+              <Text style={styles.premiumBadgeText}>PREMIUM</Text>
+            </View>
+          ) : null}
+        </View>
+
+        <Text style={styles.tileTitle} numberOfLines={2}>
+          {programTitle}
+        </Text>
+        <Text style={styles.tileDays}>
+          {item.durationDays} {t('workouts.days', 'days')}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -99,7 +141,6 @@ const styles = StyleSheet.create({
 
   tile: { alignItems: 'center' },
 
-  // VUÔNG: aspectRatio = 1
   thumbWrap: {
     width: '100%',
     aspectRatio: 1,
@@ -130,7 +171,22 @@ const styles = StyleSheet.create({
   },
   playIcon: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
 
-  // Tên bài tập: to + đậm + canh giữa
+  premiumBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(245, 158, 11, 0.95)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
+  },
+  premiumBadgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+
   tileTitle: {
     textAlign: 'center',
     color: '#0F172A',
@@ -141,3 +197,5 @@ const styles = StyleSheet.create({
   },
   tileDays: { textAlign: 'center', color: '#64748B', fontSize: 12, marginTop: 2 },
 });
+
+export default WorkoutScreen;

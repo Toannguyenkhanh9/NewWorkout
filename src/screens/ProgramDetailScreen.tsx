@@ -11,6 +11,9 @@ import { gateWorkout } from '../ads/adGate';
 import { useSubscription } from '../iap/SubscriptionProvider';
 import { useToast } from '../ui/Toast';
 import { trackWorkoutTapAndMaybeAsk } from '../review/rate';
+import { markWorkoutActivity } from '../notifications/reminder';
+import { ensureTrialAccess } from '../ads/trial';
+import { Alert } from 'react-native';
 type Section = { title: string; data: WorkoutDay[] };
 
 export const ProgramDetailScreen: React.FC = () => {
@@ -46,7 +49,43 @@ export const ProgramDetailScreen: React.FC = () => {
       markActive(program.id).catch(() => {});
     }
   }, [navigation, program, t]);
+useEffect(() => {
+  (async () => {
+    if (!program) return;
 
+    let trial = false;
+
+    if (!isPremium) {
+      trial = await ensureTrialAccess();
+    }
+
+    const locked = !!program.premium && !isPremium && !trial;
+
+    if (locked) {
+      Alert.alert(
+        t('premium.lockedTitle', 'Premium required'),
+        t(
+          'premium.lockedText',
+          'This program is available for Premium users only. Upgrade to continue.'
+        ),
+        [
+          {
+            text: t('common.cancel', 'Cancel'),
+            style: 'cancel',
+            onPress: () => navigation.goBack(),
+          },
+          {
+            text: t('premium.cta', 'Upgrade now'),
+            onPress: () =>
+              navigation.getParent()?.navigate('Settings', {
+                screen: 'Premium',
+              }),
+          },
+        ]
+      );
+    }
+  })();
+}, [program, isPremium, navigation, t]);
   if (!program) {
     return (
       <View style={styles.container}>
@@ -67,25 +106,44 @@ export const ProgramDetailScreen: React.FC = () => {
     return out;
   }, [days, t]);
 
-  const onPressDay = async (day: WorkoutDay) => {
-    if (day.isRest) return;
-    const ok = await gateWorkout({ isPremium, startTrialOnFirstUse: true });
-    if (!ok) {
-         toast.show(t('ads.need_full', 'Bạn cần xem hết quảng cáo để tiếp tục'));
-      return;
-    }
-     trackWorkoutTapAndMaybeAsk();
-    const updated = { ...completedDays, [day.id]: true };
-    setCompletedDays(updated);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
-    navigation.navigate('WorkoutWeb', {
-      programId,
-      dayId: day.id,
-      sessionKey: day.sessionKey,
-      videoUrl: day.webUrl ?? day.videoUrl,
-      name : day.name
-    });
-  };
+const onPressDay = async (day: WorkoutDay) => {
+  if (day.isRest) return;
+
+  const result = await gateWorkout({
+    isPremium,
+    startTrialOnFirstUse: true,
+  });
+
+  if (result === 'closed') {
+    toast.show(t('ads.need_full', 'You need to watch the entire ad to continue'));
+    return;
+  }
+
+  if (result === 'not_ready') {
+    toast.show(t('ads.not_ready', 'Ad is loading, please try again in a few seconds'));
+    return;
+  }
+
+  if (result === 'error') {
+    toast.show(t('ads.load_failed', 'Unable to load ad, please try again'));
+    return;
+  }
+  await markWorkoutActivity();
+  // result === 'earned' hoặc 'pass'
+  trackWorkoutTapAndMaybeAsk();
+
+  const updated = { ...completedDays, [day.id]: true };
+  setCompletedDays(updated);
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
+
+  navigation.navigate('WorkoutWeb', {
+    programId,
+    dayId: day.id,
+    sessionKey: day.sessionKey,
+    videoUrl: day.webUrl ?? day.videoUrl,
+    name: day.name,
+  });
+};
 
   return (
     <View style={styles.container}>
@@ -113,9 +171,9 @@ export const ProgramDetailScreen: React.FC = () => {
         stickySectionHeadersEnabled
         contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
       />
-      {/* <View style={{ paddingHorizontal: 16 }}>
+       <View style={{ paddingHorizontal: 16 }}>
         <AdBanner />
-      </View> */}
+      </View> 
     </View>
   );
 };

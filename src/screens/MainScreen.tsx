@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ImageBackground,
   StatusBar,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -17,22 +18,27 @@ import { AdBanner } from '../components/AdBanner';
 import { shouldPromptNow } from '../weight/weightStore';
 import { WeightPrompt } from '../components/WeightPrompt';
 import { ActiveProgramsCard, ActiveItem } from '../components/ActiveProgramsCard';
+import { useSubscription } from '../iap/SubscriptionProvider';
+import { isTrialActive } from '../ads/trial';
+import { ensureTrialAccess } from '../ads/trial';
 
-const BG = require('../../assets/images/bg_main.jpg');
+
+const BG = require('../../assets/images/backgound.png');
 const BMI_KEY = 'user:bmi';
 const RECO_KEY = 'user:recommendation';
 
 export const MainScreen: React.FC<any> = () => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
+  const { isPremium } = useSubscription?.() || { isPremium: false };
 
   const [activePrograms, setActivePrograms] = useState<WorkoutProgram[]>([]);
   const [progress, setProgress] = useState<Record<string, number>>({});
   const [showWeight, setShowWeight] = useState(false);
 
-  // Advice state
   const [bmi, setBmi] = useState<number | null>(null);
   const [advice, setAdvice] = useState<string | null>(null);
+  
 
   const computeProgress = useCallback(async (ids: string[]) => {
     const obj: Record<string, number> = {};
@@ -70,11 +76,8 @@ export const MainScreen: React.FC<any> = () => {
         const list = PROGRAMS.filter(p => ids.includes(p.id));
         setActivePrograms(list);
         await computeProgress(ids);
-
-        // Load tóm tắt sức khỏe (BMI + advice)
         await loadHealthAdvice();
 
-        // Nhắc nhập cân nặng nếu đến kỳ
         if (await shouldPromptNow()) setShowWeight(true);
       })();
     }, [computeProgress, loadHealthAdvice]),
@@ -92,22 +95,58 @@ export const MainScreen: React.FC<any> = () => {
     [activePrograms, progress, t],
   );
 
-  const openProgramById = (programId: string) => {
-    navigation.navigate('ProgramDetail', { programId });
-  };
+const goPremium = () => {
+  try {
+    navigation.getParent()?.navigate('Settings', {
+      screen: 'Premium',
+    });
+  } catch {
+    navigation.navigate('Premium');
+  }
+};
 
+const openProgramById = async (programId: string) => {
+  const program = PROGRAMS.find(p => p.id === programId);
+  if (!program) return;
+
+  let trial = false;
+
+  if (!isPremium) {
+    trial = await ensureTrialAccess();
+  }
+
+  const locked = !!program.premium && !isPremium && !trial;
+
+  if (locked) {
+    Alert.alert(
+      t('premium.lockedTitle', 'Premium required'),
+      t(
+        'premium.lockedText',
+        'This program is available for Premium users only. Upgrade to continue.'
+      ),
+      [
+        { text: t('common.cancel', 'Cancel'), style: 'cancel' },
+        {
+          text: t('premium.cta', 'Upgrade now'),
+          onPress: goPremium,
+        },
+      ]
+    );
+    return;
+  }
+
+  navigation.navigate('ProgramDetail', { programId });
+};
   return (
     <ImageBackground source={BG} style={styles.bg}>
       <StatusBar barStyle="light-content" />
       <SafeAreaView edges={['top', 'left', 'right']} style={styles.safe}>
         <View style={styles.container}>
-          {/* Header */}
           <View style={styles.headingWrap}>
-            <Text style={styles.appName}>FulseFit</Text>
+            <Text style={styles.appName}>Insanity Deluxe Edition</Text>
             <Text style={styles.subtitle}>{t('home.subtitle')}</Text>
           </View>
 
-          {/* Advice card (BMI + lời khuyên) */}
           {advice ? (
             <View style={styles.adviceCard}>
               <Text style={styles.adviceTitle}>
@@ -120,18 +159,16 @@ export const MainScreen: React.FC<any> = () => {
             </View>
           ) : null}
 
-          {/* ==== Phần dưới được đẩy xuống đáy ==== */}
           <View style={styles.bottomArea}>
-            {/* Thẻ thu gọn “Đang tập luyện” */}
             <ActiveProgramsCard
               items={items}
               onOpenProgram={openProgramById}
               title={t('home.activeTitle', 'Đang tập luyện')}
             />
 
-            {/* <View style={{ marginTop: 10 }}>
+            <View style={{ marginTop: 10 }}>
               <AdBanner />
-            </View> */}
+            </View>
 
             <Text style={styles.footer}>
               {t('footer.devBy', { name: 'Kevin' })}
@@ -140,7 +177,6 @@ export const MainScreen: React.FC<any> = () => {
         </View>
       </SafeAreaView>
 
-      {/* Popup nhập cân nặng */}
       <WeightPrompt
         visible={showWeight}
         onClose={() => setShowWeight(false)}
@@ -159,7 +195,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 30,
     fontWeight: '900',
-    color: '#FFFFFF',
+    color: '#01010d',
     letterSpacing: 1.2,
     textAlign: 'center',
     textShadowColor: 'rgba(0,0,0,0.45)',
@@ -168,7 +204,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: '#FFFFFF',
+    color: '#080a71',
     opacity: 0.95,
     marginTop: 6,
     textAlign: 'center',
@@ -177,7 +213,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
 
-  // Advice card (trắng dễ đọc trên nền ảnh)
   adviceCard: {
     backgroundColor: 'rgba(255,255,255,0.96)',
     borderRadius: 16,
@@ -200,7 +235,6 @@ const styles = StyleSheet.create({
   adviceBMI: { color: '#065F46', fontWeight: '800', marginBottom: 4 },
   adviceText: { color: '#334155', lineHeight: 20 },
 
-  // --- bottom pinned ---
   bottomArea: { marginTop: 'auto', paddingTop: 8, paddingBottom: 6 },
 
   footer: {

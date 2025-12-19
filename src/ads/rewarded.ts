@@ -1,74 +1,141 @@
 // src/ads/rewarded.ts
 import {
   RewardedAd,
-  RewardedAdEventType,   // <-- dùng LOADED & EARNED_REWARD từ đây
-  AdEventType,           // <-- vẫn dùng CLOSED/ERROR/OPENED từ đây
+  RewardedAdEventType,
+  AdEventType,
+  TestIds,
 } from 'react-native-google-mobile-ads';
 import { Platform } from 'react-native';
 import { ADMOB } from './adConfig';
 
-const UNIT_ID = Platform.OS === 'android'
-  ? ADMOB.android.rewarded
-  : ADMOB.ios.rewarded;
+const UNIT_ID =
+  __DEV__
+    ? TestIds.REWARDED
+    : Platform.OS === 'android'
+      ? ADMOB.android.rewarded
+      : ADMOB.ios.rewarded;
 
-let ad: RewardedAd | null = null;
+let rewarded: RewardedAd | null = null;
 let loaded = false;
 let loading = false;
+let loadPromise: Promise<boolean> | null = null;
 
-function create() {
-  ad = RewardedAd.createForAdRequest(UNIT_ID, {
+function createAd() {
+  rewarded = RewardedAd.createForAdRequest(UNIT_ID, {
     requestNonPersonalizedAdsOnly: true,
   });
 
-  // ✅ ĐÚNG: dùng RewardedAdEventType.LOADED
-  ad.addAdEventListener(RewardedAdEventType.LOADED, () => {
-    console.log('[AD] rewarded loaded');
-    loaded = true;
-    loading = false;
-  });
-
-  // (tuỳ phiên bản lib, ERROR có thể là AdEventType.ERROR – vẫn OK)
-ad.addAdEventListener(AdEventType.ERROR, (e) => {
-  console.log('[AD] error', e);
-  loaded = false; loading = false;
-});
-
-  ad.load();
+  loaded = false;
   loading = true;
-}
 
-export function preloadRewarded() {
-  if (!ad && !loading) create();
-}
-
-export async function showRewarded(): Promise<boolean> {
-  if (!ad || (!loaded && !loading)) create();
-  if (!ad || !loaded) {
-    // Không có sẵn quảng cáo → cho qua để UX mượt
-    return true;
-  }
-
-  return new Promise<boolean>((resolve) => {
-    let earned = false;
-
-    const r1 = ad!.addAdEventListener(
-      RewardedAdEventType.EARNED_REWARD,   // ✅ sự kiện nhận thưởng
-      () => { earned = true; }
-    );
-
-    const r2 = ad!.addAdEventListener(
-      AdEventType.CLOSED,                  // ✅ đóng quảng cáo
+  loadPromise = new Promise((resolve) => {
+    const offLoaded = rewarded!.addAdEventListener(
+      RewardedAdEventType.LOADED,
       () => {
-        ad = null; loaded = false; loading = false;
-        preloadRewarded();
-        resolve(earned);                   // chỉ pass khi đã earn
-        r1(); r2();
+        loaded = true;
+        loading = false;
+        console.log('[rewarded] loaded');
+        offLoaded();
+        offError();
+        resolve(true);
       }
     );
 
-    ad!.show().catch(() => {
-      resolve(true);                       // lỗi khi show → không chặn
-      r1(); r2();
-    });
+    const offError = rewarded!.addAdEventListener(
+      AdEventType.ERROR,
+      (e) => {
+        loaded = false;
+        loading = false;
+        console.log('[rewarded] load error', e);
+        offLoaded();
+        offError();
+        resolve(false);
+      }
+    );
+  });
+
+  rewarded.load();
+  console.log('[rewarded] loading...');
+}
+
+export function preloadRewarded() {
+  if (!rewarded && !loading) {
+    createAd();
+  }
+}
+
+export async function ensureRewardedLoaded(timeoutMs = 4000): Promise<boolean> {
+  if (loaded && rewarded) return true;
+
+  if (!rewarded && !loading) {
+    createAd();
+  }
+
+  if (!loadPromise) return false;
+
+  const result = await Promise.race<boolean>([
+    loadPromise,
+    new Promise<boolean>((resolve) => setTimeout(() => resolve(false), timeoutMs)),
+  ]);
+
+  return result;
+}
+
+export type RewardedResult = 'earned' | 'closed' | 'not_ready' | 'error';
+
+export async function showRewarded(): Promise<RewardedResult> {
+  const ready = await ensureRewardedLoaded();
+  if (!ready || !rewarded || !loaded) {
+    console.log('[rewarded] not ready');
+    return 'not_ready';
+  }
+
+  return new Promise<RewardedResult>((resolve) => {
+    let earned = false;
+
+    const offEarn = rewarded!.addAdEventListener(
+      RewardedAdEventType.EARNED_REWARD,
+      () => {
+        earned = true;
+        console.log('[rewarded] earned reward');
+      }
+    );
+
+    const offClose = rewarded!.addAdEventListener(
+      AdEventType.CLOSED,
+      () => {
+        console.log('[rewarded] closed');
+        offEarn();
+        offClose();
+
+        // reset ad cũ và preload ad mới
+        rewarded = null;
+        loaded = false;
+        loading = false;
+        loadPromise = null;
+        preloadRewarded();
+
+        resolve(earned ? 'earned' : 'closed');
+      }
+    );
+
+    rewarded!
+      .show()
+      .then(() => {
+        console.log('[rewarded] show called');
+      })
+      .catch((e) => {
+        console.log('[rewarded] show failed', e);
+        offEarn();
+        offClose();
+
+        rewarded = null;
+        loaded = false;
+        loading = false;
+        loadPromise = null;
+        preloadRewarded();
+
+        resolve('error');
+      });
   });
 }

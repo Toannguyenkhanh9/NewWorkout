@@ -1,35 +1,30 @@
-import { isTrialActive, ensureTrialStarted } from './trial';
-import { showRewarded, preloadRewarded } from './rewarded';
+// src/ads/adGate.ts
+import { ensureTrialStarted, isTrialActive } from './trial';
+import { showRewarded, RewardedResult } from './rewarded';
 
-export type GateOptions = {
-  isPremium?: boolean;      // từ SubscriptionProvider
-  startTrialOnFirstUse?: boolean; // mặc định true → lần bấm đầu KHÔNG show ad
-};
+export async function gateWorkout({
+  isPremium,
+  startTrialOnFirstUse = true,
+}: {
+  isPremium?: boolean;
+  startTrialOnFirstUse?: boolean;
+}): Promise<RewardedResult | 'pass'> {
+  if (isPremium) return 'pass';
 
-export async function canShowBanner(isPremium?: boolean) {
-  if (isPremium) return false;
-  return !(await isTrialActive());
-}
-
-// Gọi khi người dùng bấm vào 1 bài tập
-export async function gateWorkout(opts: GateOptions = {}): Promise<boolean> {
-  const { isPremium, startTrialOnFirstUse = true } = opts;
-  if (isPremium) return true;
-
-  // Nếu chưa có trial → bắt đầu trial và cho vào tập ngay (không show ad)
-  if (!(await isTrialActive())) {
-    if (startTrialOnFirstUse) {
-      await ensureTrialStarted();
-      preloadRewarded();
-      return true;
-    }
-    // Nếu bạn muốn bắt xem 1 quảng cáo rồi mới bắt đầu trial, set startTrialOnFirstUse=false
+  if (startTrialOnFirstUse) {
+    await ensureTrialStarted();
   }
 
-  // Trial còn hiệu lực → không show quảng cáo
-  if (await isTrialActive()) return true;
+  const active = await isTrialActive();
+  if (active) return 'pass';
 
-  // Hết trial + chưa Premium → chặn bằng rewarded
-  const ok = await showRewarded();
-  return ok;
+  return await showRewarded();
+}
+
+// ✅ thêm lại hàm này cho banner
+export async function canShowBanner(isPremium?: boolean): Promise<boolean> {
+  if (isPremium) return false;
+
+  const active = await isTrialActive();
+  return !active;
 }

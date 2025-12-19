@@ -1,6 +1,6 @@
 // FILE: src/data/programs.ts
 
-export type WorkoutSessionKey = 'rest' | 'hiit' | 'upper' | 'lower' | 'core';
+export type WorkoutSessionKey = 'rest' | 'hiit' | 'upper' | 'lower' | 'core' | 'full';
 
 export type PlanItem =
   | { type: 'rest' }
@@ -34,7 +34,8 @@ export interface WorkoutProgram {
   durationDays: number;  // = plan.length để tương thích UI cũ
   iconColor: string;
   icon: any;             // require(image)
-  plan: PlanItem[];      // <-- danh sách ngày bạn nhập, không lặp
+  plan: PlanItem[]; 
+   premium?: boolean;     // <-- danh sách ngày bạn nhập, không lặp
 }
 
 // Helper tạo item workout nhanh
@@ -723,8 +724,211 @@ const SixWeeksOfTheWork: PlanItem[] = [
   W('full',  'The Crucible',        'w66index5.html', 50), // Sat
   W('core',  'Range And Repair',    'w66index6.html', 30), // Sun,
 ];
+const Transform20: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Burn',                 'tindex1.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex2.html', 30), // 2
+  W('core',  'Stronger',                          'tindex3.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex4.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex5.html', 30), // 5
+  W('core',  'Balanced',                          'tindex6.html', 25), // 6
+  { type: 'rest' },                                                  // 7 (Off)
 
+  // Week 2 (Day 8–14)
+  W('hiit',  'Burn',                 'tindex7.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex8.html', 30), // 2
+  W('core',  'Stronger',                          'tindex9.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex10.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex11.html', 30), // 5
+  W('core',  'Balanced',                          'tindex12.html', 25), // 6
+  { type: 'rest' },                                                 // 14 (Off)
 
+  // Week 3 (Day 15–21)
+  W('hiit',  'Burn',                 'tindex13.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex14.html', 30), // 2
+  W('core',  'Stronger',                          'tindex15.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex16.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex17.html', 30), // 5
+  W('core',  'Balanced',                          'tindex18.html', 25), // 6
+  { type: 'rest' },                                                  // 21 (Off)
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' }, 
+    // Week 5 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' }, 
+    // Week 6 (Day 22–28)
+  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  { type: 'rest' },                                                  // 28 (Off)
+];
+const Asymum1: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 1
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 2
+  W('core',  'Back to Core',                          'aindex6.html', 25), // 3
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 4
+  { type: 'rest' }, 
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 5
+  W('core',  'Strength',                          'aindex4.html', 25), // 6
+                                                 // 7 (Off)
+  // Week 2 (Day 8–14)
+  W('hiit',  'Back to Core',                 'aindex6.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Relief',                          'aindex3.html', 25), // 3
+  W('hiit',  'Game Day',                 'aindex5.html', 30), // 4
+  W('hiit',  'Back to Core',                 'aindex4.html', 30), // 5
+  W('core',  'Strength',                          'aindex4.html', 25), // 6
+  W('core',  'Relief',                          'aindex3.html', 25), // 6                                            // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Strength',                          'aindex4.html', 25), // 3
+  W('hiit',  'Relief',                 'aindex3.html', 30), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
+  W('core',  'Vertical Plyo',                          'aindex2.html', 25), // 6
+  W('hiit',  'Back to Core',                 'aindex4.html', 30), // 5
+
+  // Week 4 (Day 22–28)
+  { type: 'rest' }, 
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 2
+  W('core',  'Strength',                          'aindex4.html', 25), // 3
+  W('hiit',  'Game Day',                 'aindex5.html', 30), // 4
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 5
+  W('core',  'Back to Core',                          'aindex4.html', 25), // 6
+  W('hiit',  'Relief',                 'aindex3.html', 30), // 4                                                 // 28 (Off)
+];
+const Asymum2: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
+  W('core',  'Power Legs',                          'aindex11.html', 25), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  { type: 'rest' }, 
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+                                                 // 7 (Off)
+  // Week 2 (Day 8–14)
+  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
+  W('core',  'Power Legs',                          'aindex11.html', 25), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  { type: 'rest' }, 
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+                                                 // 7 (Off)                                         // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
+  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  { type: 'rest' }, 
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+                                                 // 7 (Off)
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
+  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  { type: 'rest' }, 
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6                                       // 28 (Off)
+];
+const AsymumInsanity: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Pure Cardio',                 'index5.html', 30), // 1
+  W('hiit',  'Max Interval Plyo',                 'index9.html', 30), // 2
+  W('core',  'Max Interval Circuit',                          'index15.html', 25), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 5
+  { type: 'rest' }, 
+  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+                                                 // 7 (Off)
+  // Week 2 (Day 8–14)
+  W('hiit',  'Pure Cardio',                 'index5.html', 30), // 1
+  W('hiit',  'Plyo Cardio Circuit',                 'index2.html', 30), // 2
+  W('core',  'Relief',                          'aindex3.html', 25), // 3
+  { type: 'rest' }, 
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+  W('hiit',  'Max Cardio Conditioning',                 'index10.html', 30), // 5
+  W('core',  'Max Recovery',                          'index11.html', 25), // 6
+                                                 // 7 (Off)                                         // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('hiit',  'Back to Core ',                 'aindex6.html', 30), // 1
+  W('hiit',  'Max Interval Circuit',                 'index15.html', 30), // 2
+  W('core',  'Strength',                          'aindex4.html', 25), // 3
+  W('hiit',  'Relief',                 'aindex3.html', 30), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
+  W('core',  'Strength',                          'aindex4.html', 25), // 6
+  { type: 'rest' }, 
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 1
+  W('hiit',  'Max Interval Circuit',                 'index15.html', 30), // 2
+  W('core',  'Speed & Agility',                          'aindex1.html', 25), // 3
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
+  W('core',  'Relief',                          'aindex3.html', 25), // 6    
+   { type: 'rest' }, 
+];
+const AsymumP90x: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit',  'Chest & Back',                 'pindex12.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
+  W('hiit',  'Yoga X',                 'pindex9.html', 30), // 4
+  W('hiit',  'Legs And Back',                 'pindex3.html', 30), // 5
+  W('core',  'Speed & Agility',                          'aindex1.html', 25), // 6
+  { type: 'rest' }, 
+  // Week 2 (Day 8–14)
+  W('hiit',  'Back And Biceps',                 'pindex5.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+  W('hiit',  'Legs And Back',                 'pindex3.html', 30), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  { type: 'rest' },                                     // 14 (Off)
+
+  // Week 3 (Day 15–21)
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  { type: 'rest' }, 
+
+  // Week 4 (Day 22–28)
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
+  W('core',  'Back to Core',                          'aindex4.html', 25), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+  W('hiit',  'Strength',                 'aindex4.html', 30), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  W('hiit',  'Yoga X',                 'pindex9.html', 30), // 4
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
+    W('hiit', 'Fit Test',                     'index1.html',  25), // 1
+];
 export const PROGRAMS: WorkoutProgram[] = [
     {
     id: 'insanity',
@@ -732,23 +936,27 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: Insanity.length, // = số ngày bạn nhập
     iconColor: '#FF6B6B',
     icon: require('../../assets/images/Insanity.jpg'),
-    plan: Insanity
+    plan: Insanity,
+    premium: false,
+    
   },
   {
     id: 'max30',
     titleKey: 'Insanity Max 30',
     durationDays: Max30.length, // = số ngày bạn nhập
     iconColor: '#FF6B6B',
-    icon: require('../../assets/images/max301.png'),
-    plan: Max30
+    icon: require('../../assets/images/insanitymax30.jpg'),
+    plan: Max30,
+    premium: false,
   },
   {
     id: 'focust25',
     titleKey: 'Focus T25',
     durationDays: FocusT25.length,
     iconColor: '#4ECDC4',
-    icon: require('../../assets/images/FocusT25.png'),
-    plan: FocusT25
+    icon: require('../../assets/images/focust25.jpg'),
+    plan: FocusT25,
+    premium: false,
   },
   {
     id: 'P90X1',
@@ -756,7 +964,8 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: P90X1.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/P90X1.jpg'),
-    plan: P90X1
+    plan: P90X1,
+    premium: false,
   },
   {
     id: 'P90X2',
@@ -764,7 +973,8 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: P90X2.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/P90X2.jpg'),
-    plan: P90X2
+    plan: P90X2,
+    premium: false,
   },
   {
     id: 'HipHopAbs',
@@ -772,7 +982,8 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: HipHopAbs.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/HHA_hero_mobile.jpg'),
-    plan: HipHopAbs
+    plan: HipHopAbs,
+    premium: false,
   },
   {
     id: 'FourWeeksOfThePrep',
@@ -780,7 +991,8 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: FourWeeksOfThePrep.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/4week.jpg'),
-    plan: FourWeeksOfThePrep
+    plan: FourWeeksOfThePrep,
+    premium: true,
   },
   {
     id: 'SixWeeksOfTheWork',
@@ -788,7 +1000,53 @@ export const PROGRAMS: WorkoutProgram[] = [
     durationDays: SixWeeksOfTheWork.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/6week.jpg'),
-    plan: SixWeeksOfTheWork
+    plan: SixWeeksOfTheWork,
+    premium: true,
+  },
+    {
+    id: 'Transform20',
+    titleKey: 'Transform 20',
+    durationDays: Transform20.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/transform20.jpg'),
+    plan: Transform20,
+    premium: true,
+  },
+  {
+    id: 'TheAsylum1',
+    titleKey: 'The Asylum 1',
+    durationDays: Asymum1.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/theasylum1.png'),
+    plan: Asymum1,
+    premium: true,
+  },
+    {
+    id: 'TheAsylum2',
+    titleKey: 'The Asylum 2',
+    durationDays: Asymum2.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/theasylum2.png'),
+    plan: Asymum2,
+    premium: true,
+  },
+   {
+    id: 'TheAsyluminsanity',
+    titleKey: 'The Asylum & Insanity',
+    durationDays: AsymumInsanity.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/theasyluminsanity.png'),
+    plan: AsymumInsanity,
+    premium: true,
+  },
+     {
+    id: 'TheAsylump90x',
+    titleKey: 'The Asylum & P90X',
+    durationDays: AsymumP90x.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/theasylump90x.png'),
+    plan: AsymumP90x,
+    premium: true,
   }
 ];
 
