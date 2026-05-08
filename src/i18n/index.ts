@@ -999,8 +999,10 @@ todayWorkout: {
   restTitle: 'Hoy es un día de recuperación',
   restText: 'Tómate un descanso, estira suavemente, bebe agua y prepárate para tu próximo entrenamiento.'
 },
-// es
-// es
+common: {
+  on: 'ACTIVADO',
+  off: 'DESACTIVADO'
+},
 history: {
   title: 'Historial de entrenamiento',
   screenTitle: 'Historial de entrenamiento',
@@ -1363,6 +1365,10 @@ todayWorkout: {
   restText: 'Faites une pause, étirez-vous doucement, buvez de l’eau et préparez-vous pour votre prochain entraînement.'
 },
 // fr
+common: {
+  on: 'ACTIVÉ',
+  off: 'DÉSACTIVÉ'
+},
 history: {
   title: "Historique d'entraînement",
   screenTitle: "Historique d'entraînement",
@@ -1724,6 +1730,10 @@ todayWorkout: {
   restText: 'Mach eine Pause, dehne dich leicht, trinke Wasser und bereite dich auf dein nächstes Training vor.'
 },
 // de
+common: {
+  on: 'EIN',
+  off: 'AUS'
+},
 history: {
   title: 'Trainingsverlauf',
   screenTitle: 'Trainingsverlauf',
@@ -2094,6 +2104,10 @@ todayWorkout: {
   restText: '休息一下，轻柔拉伸，喝点水，为下一次训练做好准备。'
 },
 // zh
+common: {
+  on: '开启',
+  off: '关闭'
+},
 history: {
   title: '训练历史',
   screenTitle: '训练历史',
@@ -2454,6 +2468,11 @@ todayWorkout: {
   startNow: '今すぐ始める',
   restTitle: '今日は回復日です',
   restText: '少し休んで、軽くストレッチし、水分をとって、次のワークアウトに備えましょう。'
+},
+// ja
+common: {
+  on: 'オン',
+  off: 'オフ'
 },
 // ja
 history: {
@@ -2818,6 +2837,11 @@ todayWorkout: {
   restText: '잠시 쉬고, 가볍게 스트레칭하고, 물을 마시며 다음 운동을 준비하세요.'
 },
 // ko
+common: {
+  on: '켜짐',
+  off: '꺼짐'
+},
+// ko
 history: {
   title: '운동 기록',
   screenTitle: '운동 기록',
@@ -3180,6 +3204,10 @@ todayWorkout: {
   restText: 'Отдохните, слегка потянитесь, попейте воды и подготовьтесь к следующей тренировке.'
 },
 // ru
+common: {
+  on: 'ВКЛ',
+  off: 'ВЫКЛ'
+},
 history: {
   title: 'История тренировок',
   screenTitle: 'История тренировок',
@@ -3542,6 +3570,10 @@ todayWorkout: {
   restText: 'خذ قسطًا من الراحة، وتمدد بلطف، واشرب الماء، واستعد لتمرينك التالي.'
 },
 // ar
+common: {
+  on: 'تشغيل',
+  off: 'إيقاف'
+},
 history: {
   title: 'سجل التمارين',
   screenTitle: 'سجل التمارين',
@@ -3905,6 +3937,10 @@ todayWorkout: {
   restText: 'थोड़ा आराम करें, हल्का स्ट्रेच करें, पानी पिएं और अपने अगले वर्कआउट के लिए तैयार हों।'
 },
 // hi
+common: {
+  on: 'चालू',
+  off: 'बंद'
+},
 history: {
   title: 'वर्कआउट इतिहास',
   screenTitle: 'वर्कआउट इतिहास',
@@ -4264,6 +4300,11 @@ todayWorkout: {
   startNow: 'เริ่มเลย',
   restTitle: 'วันนี้เป็นวันฟื้นฟูร่างกาย',
   restText: 'พักสักหน่อย ยืดเหยียดเบา ๆ ดื่มน้ำ และเตรียมพร้อมสำหรับการออกกำลังกายครั้งถัดไป'
+},
+// th
+common: {
+  on: 'เปิด',
+  off: 'ปิด'
 },
 // th
 history: {
@@ -4629,6 +4670,11 @@ todayWorkout: {
   restText: 'Beristirahatlah, lakukan peregangan ringan, minum air, dan bersiaplah untuk latihan berikutnya.'
 },
 // id
+common: {
+  on: 'AKTIF',
+  off: 'NONAKTIF'
+},
+// id
 history: {
   title: 'Riwayat latihan',
   screenTitle: 'Riwayat latihan',
@@ -4989,6 +5035,11 @@ todayWorkout: {
   startNow: 'Mula sekarang',
   restTitle: 'Hari ini ialah hari pemulihan',
   restText: 'Berehatlah, lakukan regangan ringan, minum air dan bersedia untuk senaman anda yang seterusnya.'
+},
+// ms
+common: {
+  on: 'HIDUP',
+  off: 'MATI'
 },
 // ms
 history: {
@@ -5353,6 +5404,11 @@ todayWorkout: {
   restText: 'Magpahinga muna, mag-stretch nang marahan, uminom ng tubig, at maghanda para sa susunod mong workout.'
 },
 // fil
+common: {
+  on: 'BUKAS',
+  off: 'SARADO'
+},
+// fil
 history: {
   title: 'Kasaysayan ng workout',
   screenTitle: 'Kasaysayan ng workout',
@@ -5715,6 +5771,11 @@ todayWorkout: {
   restText: 'Faça uma pausa, alongue-se suavemente, beba água e prepare-se para o seu próximo treino.'
 },
 // pt
+common: {
+  on: 'ATIVADO',
+  off: 'DESATIVADO'
+},
+// pt
 history: {
   title: 'Histórico de treinos',
   screenTitle: 'Histórico de treinos',
@@ -5780,7 +5841,6 @@ function detectLang(): string {
 }
 
 i18n.use(initReactI18next).init({
-  compatibilityJSON: 'v3',
   lng: detectLang(),
   fallbackLng: 'en',
   resources,

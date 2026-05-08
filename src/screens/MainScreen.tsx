@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 30,
     fontWeight: '900',
-    color: '#FFFFFF',
+    color: '#33e06dff',
     letterSpacing: 1.2,
     textAlign: 'center',
     textShadowColor: 'rgba(0,0,0,0.45)',
@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    color: '#FFFFFF',
+    color: '#1d1b1bff',
     opacity: 0.95,
     marginTop: 6,
     textAlign: 'center',
