@@ -14,6 +14,8 @@ import { trackWorkoutTapAndMaybeAsk } from '../review/rate';
 import { markWorkoutActivity } from '../notifications/reminder';
 import { ensureTrialAccess } from '../ads/trial';
 import { Alert } from 'react-native';
+import { markSessionCompleted } from '../store/progressStats';
+import { addWorkoutHistory } from '../store/workoutHistory';
 type Section = { title: string; data: WorkoutDay[] };
 
 export const ProgramDetailScreen: React.FC = () => {
@@ -128,13 +130,25 @@ const onPressDay = async (day: WorkoutDay) => {
     toast.show(t('ads.load_failed', 'Unable to load ad, please try again'));
     return;
   }
+
   await markWorkoutActivity();
-  // result === 'earned' hoặc 'pass'
   trackWorkoutTapAndMaybeAsk();
 
+  const wasCompleted = !!completedDays[day.id];
   const updated = { ...completedDays, [day.id]: true };
   setCompletedDays(updated);
   AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
+
+if (!wasCompleted) {
+  await markSessionCompleted(programId, day.id);
+
+await addWorkoutHistory({
+  programId,
+  dayId: day.id,
+  workoutName: day.name || `Day ${day.dayNumber || ''}`.trim(),
+  durationMin: (day as any).durationMin,
+});
+}
 
   navigation.navigate('WorkoutWeb', {
     programId,

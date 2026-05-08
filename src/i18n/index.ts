@@ -43,61 +43,61 @@ const base = {
     lower: 'Glutes - Legs',
     core: 'Abs & Core',
     pickOne: 'Choose a lesson plan to get started',
-    day : 'days'
+    day: 'days'
   },
-guide: {
-  title: 'How to Use PulseFit',
-  subtitle: 'Follow these simple steps to start your workout journey.',
+  guide: {
+    title: 'How to Use PulseFit',
+    subtitle: 'Follow these simple steps to start your workout journey.',
 
-  steps: {
-    step1: {
-      badge: 'Step 1',
-      title: 'Enter your personal information',
-      desc: 'Fill in your height, weight, health condition, goals, and other basic information. The app will calculate your BMI and provide health advice to help you get started safely.'
+    steps: {
+      step1: {
+        badge: 'Step 1',
+        title: 'Enter your personal information',
+        desc: 'Fill in your height, weight, health condition, goals, and other basic information. The app will calculate your BMI and provide health advice to help you get started safely.'
+      },
+      step2: {
+        badge: 'Step 2',
+        title: 'Choose a suitable workout program',
+        desc: 'Browse the available workout programs and pick the one that best matches your fitness level, goals, and preferences.'
+      },
+      step3: {
+        badge: 'Step 3',
+        title: 'Select your workout day',
+        desc: 'Open the selected program and choose the training day you want to follow. You can continue step by step based on the workout schedule.'
+      },
+      step4: {
+        badge: 'Step 4',
+        title: 'Train with the video',
+        desc: 'Follow the workout video to exercise correctly. You can rotate your phone horizontally to watch the video in full screen for a better experience.'
+      }
     },
-    step2: {
-      badge: 'Step 2',
-      title: 'Choose a suitable workout program',
-      desc: 'Browse the available workout programs and pick the one that best matches your fitness level, goals, and preferences.'
-    },
-    step3: {
-      badge: 'Step 3',
-      title: 'Select your workout day',
-      desc: 'Open the selected program and choose the training day you want to follow. You can continue step by step based on the workout schedule.'
-    },
-    step4: {
-      badge: 'Step 4',
-      title: 'Train with the video',
-      desc: 'Follow the workout video to exercise correctly. You can rotate your phone horizontally to watch the video in full screen for a better experience.'
-    }
+
+    noteTitle: 'Note',
+    note: 'Stay consistent with your training schedule to achieve the best results.'
   },
+  premium: {
+    title: 'Upgrade Premium',
+    removeAds: 'Remove ads',
+    allPrograms: 'Unlock the full experience',
+    active: 'Premium is active',
+    restore: 'Restore purchases',
+    restoreTitle: 'Restore purchases',
+    restoreSuccess: 'Premium restored successfully.',
+    restoreEmpty: 'No Premium purchase found.',
+    errorTitle: 'Purchase failed',
+    errorText: 'Unable to complete purchase.',
+    productUnavailable: 'Premium product not found. Please check Play Console / App Store setup.',
+    subUnavailable: 'Monthly subscription not found. Please check Play Console / App Store setup.',
+    loading: 'Loading...',
 
-  noteTitle: 'Note',
-  note: 'Stay consistent with your training schedule to achieve the best results.'
-},
-premium: {
-  title: 'Upgrade Premium',
-  removeAds: 'Remove ads',
-  allPrograms: 'Unlock the full experience',
-  active: 'Premium is active',
-  restore: 'Restore purchases',
-  restoreTitle: 'Restore purchases',
-  restoreSuccess: 'Premium restored successfully.',
-  restoreEmpty: 'No Premium purchase found.',
-  errorTitle: 'Purchase failed',
-  errorText: 'Unable to complete purchase.',
-  productUnavailable: 'Premium product not found. Please check Play Console / App Store setup.',
-  subUnavailable: 'Monthly subscription not found. Please check Play Console / App Store setup.',
-  loading: 'Loading...',
+    monthlyTitle: 'Monthly Premium',
+    monthlyDesc: 'Auto-renews every month to keep Premium active',
+    subscribeMonthly: 'Subscribe monthly',
 
-  monthlyTitle: 'Monthly Premium',
-  monthlyDesc: 'Auto-renews every month to keep Premium active',
-  subscribeMonthly: 'Subscribe monthly',
-
-  lifetimeTitle: 'Lifetime Premium',
-  lifetimeDesc: 'One-time payment, keep Premium forever',
-  buyLifetime: 'Buy lifetime'
-},
+    lifetimeTitle: 'Lifetime Premium',
+    lifetimeDesc: 'One-time payment, keep Premium forever',
+    buyLifetime: 'Buy lifetime'
+  },
   video: {
     loading: 'Loading video...',
     play: 'Start workout',
@@ -226,61 +226,75 @@ premium: {
     btn_delete: 'Delete',
     btn_save: 'Save',
   },
-  nutrition: {
-    title: 'Nutrition Guide',
-    subtitle: 'Simple, portion-based eating to support your training.',
-    sections: {
-      how: {
-        title: 'How it works',
-        bullets: [
-          'Portion-based plan using food groups.',
-          'Balanced macros for energy and recovery.',
-          'Daily shake counts as 1 protein portion.',
-        ],
-      },
-      plan: {
-        title: 'Find your plan',
-        bullets: [
-          'Choose Plan A–E by body size & goal.',
-          'Each plan = fixed portions per group/day.',
-          'Adjust slightly if you feel too hungry or too full.',
-        ],
-      },
-      foods: {
-        title: 'Food lists (top choices)',
-        bullets: [
-          'Veggies & fruits first; whole, colorful, high-fiber.',
-          'Lean proteins; smart carbs like oats, brown rice, sweet potato.',
-          'Healthy fats: avocado, nuts, seeds, olive oil.',
-        ],
-      },
-      samples: {
-        title: 'Sample day ideas',
-        bullets: [
-          'Breakfast: yogurt + berries + oats.',
-          'Lunch: chicken or tofu bowl, veg + rice/quinoa.',
-          'Dinner: fish + greens + sweet potato.',
-        ],
-      },
-      drinks: {
-        title: 'Beverages / coffee & tea',
-        bullets: [
-          'Water target: ~ half body-weight (lb) in oz per day.',
-          'Coffee/tea is fine; limit sugar/creamers.',
-          'Skip sugary drinks and alcohol when possible.',
-        ],
-      },
-      success: {
-        title: 'Set yourself up for success',
-        bullets: [
-          'Meal-prep proteins, wash & portion veggies.',
-          'Pack snacks: fruit, nuts, bars.',
-          'Eat slowly, sleep well, be consistent.',
-        ],
-      },
+  dashboard: { title: 'Progress Dashboard', streak: 'Streak', thisWeek: 'This week', total: 'Total', completedPrograms: 'Completed', lastWorkout: 'Last workout' }, recommend: { title: 'Recommended for you', start: 'Start this plan' }, nutrition: { title: 'Nutrition', subtitle: 'Your daily targets are personalized based on your current profile and goal.', noProfileTitle: 'Complete your profile first', noProfileText: 'Add your height, weight and goal to get calorie, macro and hydration recommendations.', targets: 'Daily targets', calories: 'Calories', water: 'Water', macros: 'Macro split', protein: 'Protein', carbs: 'Carbs', fats: 'Fats', sampleMeals: 'Sample meal plan', tips: 'Tips' },
+beginner: {
+  modeTitle: 'Beginner mode',
+  modeDesc: 'Simple explanations and quick guidance for new users.',
+  glossaryTitle: 'Beginner guide',
+  terms: {
+    restDay: {
+      title: 'Rest day',
+      desc: 'A recovery day. Your body rests and rebuilds, so do not skip it.'
     },
-  },
-
+    warmUp: {
+      title: 'Warm-up',
+      desc: 'Light movement before training to prepare your body and reduce injury risk.'
+    },
+    cooldown: {
+      title: 'Cooldown',
+      desc: 'Easy movement or stretching after training to help your body recover.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'High-Intensity Interval Training: short bursts of hard work followed by short rest.'
+    },
+    rep: {
+      title: 'Rep',
+      desc: 'One complete movement of an exercise. Example: one squat = one rep.'
+    },
+    set: {
+      title: 'Set',
+      desc: 'A group of reps. Example: 10 squats done together = 1 set.'
+    }
+  }
+},
+todayWorkout: {
+  title: "Today's workout",
+  fallback: 'Workout',
+  startNow: 'Start now',
+  restTitle: 'Today is a recovery day',
+  restText: 'Take a break, stretch gently, drink water, and get ready for your next workout.'
+},
+common: {
+  on: 'ON',
+  off: 'OFF'
+},
+history: {
+  title: 'Workout History',
+  screenTitle: 'Workout History',
+  thisWeek: 'This week',
+  minutes: 'Minutes',
+  totalWorkouts: 'Workouts',
+  empty: 'No completed workouts yet.',
+  viewAll: 'View all',
+  filter7: '7 days',
+  filter30: '30 days',
+  filterAll: 'All'
+},
+achievements: {
+  title: 'Achievements'
+},
+challenges: {
+  title: 'Challenges',
+  start7: 'Start 7-day challenge',
+  start30: 'Start 30-day challenge',
+  complete: 'Challenge completed',
+  daysLeft: '{{count}} day(s) left',
+  starter7Title: '7-Day Starter Challenge',
+  starter7Desc: 'Complete 5 workouts in 7 days.',
+  consistency30Title: '30-Day Consistency Challenge',
+  consistency30Desc: 'Complete 20 workouts in 30 days.'
+}
 };
 
 const vi = {
@@ -316,7 +330,7 @@ const vi = {
     health_overview: 'Tổng quan sức khỏe',
     activeTitle: 'Đang tập luyện',
   },
-program: {
+  program: {
     daysPrefix: 'Ngày {{day}} • {{weekday}}',
     weekTitle: 'Tuần {{n}}',
     completed: 'Đã hoàn thành',
@@ -329,62 +343,62 @@ program: {
     lower: 'Mông - Đùi',
     core: 'Bụng & Core',
     pickOne: 'Chọn một giáo án để bắt đầu',
-    days : 'ngày'
+    days: 'ngày'
   },
-guide: {
-  title: 'Hướng dẫn sử dụng PulseFit',
-  subtitle: 'Làm theo các bước đơn giản sau để bắt đầu hành trình tập luyện của bạn.',
+  guide: {
+    title: 'Hướng dẫn sử dụng PulseFit',
+    subtitle: 'Làm theo các bước đơn giản sau để bắt đầu hành trình tập luyện của bạn.',
 
-  steps: {
-    step1: {
-      badge: 'Bước 1',
-      title: 'Nhập thông tin cá nhân',
-      desc: 'Điền chiều cao, cân nặng, tình trạng sức khỏe, mục tiêu và các thông tin cơ bản khác. Ứng dụng sẽ tính chỉ số BMI và đưa ra lời khuyên về sức khỏe để bạn bắt đầu an toàn hơn.'
+    steps: {
+      step1: {
+        badge: 'Bước 1',
+        title: 'Nhập thông tin cá nhân',
+        desc: 'Điền chiều cao, cân nặng, tình trạng sức khỏe, mục tiêu và các thông tin cơ bản khác. Ứng dụng sẽ tính chỉ số BMI và đưa ra lời khuyên về sức khỏe để bạn bắt đầu an toàn hơn.'
+      },
+      step2: {
+        badge: 'Bước 2',
+        title: 'Chọn chương trình luyện tập phù hợp',
+        desc: 'Xem danh sách các chương trình luyện tập và chọn chương trình phù hợp nhất với thể trạng, mục tiêu và sở thích của bạn.'
+      },
+      step3: {
+        badge: 'Bước 3',
+        title: 'Chọn ngày tập',
+        desc: 'Mở chương trình đã chọn và chọn ngày tập mà bạn muốn thực hiện. Bạn có thể tập lần lượt theo lịch trình đã sắp xếp.'
+      },
+      step4: {
+        badge: 'Bước 4',
+        title: 'Tập luyện theo video',
+        desc: 'Làm theo video hướng dẫn để tập đúng động tác. Bạn có thể xoay ngang màn hình điện thoại để xem video toàn màn hình rõ hơn.'
+      }
     },
-    step2: {
-      badge: 'Bước 2',
-      title: 'Chọn chương trình luyện tập phù hợp',
-      desc: 'Xem danh sách các chương trình luyện tập và chọn chương trình phù hợp nhất với thể trạng, mục tiêu và sở thích của bạn.'
-    },
-    step3: {
-      badge: 'Bước 3',
-      title: 'Chọn ngày tập',
-      desc: 'Mở chương trình đã chọn và chọn ngày tập mà bạn muốn thực hiện. Bạn có thể tập lần lượt theo lịch trình đã sắp xếp.'
-    },
-    step4: {
-      badge: 'Bước 4',
-      title: 'Tập luyện theo video',
-      desc: 'Làm theo video hướng dẫn để tập đúng động tác. Bạn có thể xoay ngang màn hình điện thoại để xem video toàn màn hình rõ hơn.'
-    }
+
+    noteTitle: 'Chú ý',
+    note: 'Hãy duy trì tập luyện đều đặn để đạt kết quả tốt nhất.'
   },
+  // vi
+  premium: {
+    title: 'Nâng cấp Premium',
+    removeAds: 'Xóa quảng cáo',
+    allPrograms: 'Mở khóa toàn bộ trải nghiệm',
+    active: 'Premium đang hoạt động',
+    restore: 'Khôi phục giao dịch',
+    restoreTitle: 'Khôi phục giao dịch',
+    restoreSuccess: 'Đã khôi phục Premium thành công.',
+    restoreEmpty: 'Không tìm thấy giao dịch Premium.',
+    errorTitle: 'Mua hàng thất bại',
+    errorText: 'Không thể hoàn tất giao dịch.',
+    productUnavailable: 'Không tìm thấy sản phẩm Premium. Vui lòng kiểm tra Play Console / App Store.',
+    subUnavailable: 'Không tìm thấy gói thuê bao tháng. Vui lòng kiểm tra Play Console / App Store.',
+    loading: 'Đang tải...',
 
-  noteTitle: 'Chú ý',
-  note: 'Hãy duy trì tập luyện đều đặn để đạt kết quả tốt nhất.'
-},
-// vi
-premium: {
-  title: 'Nâng cấp Premium',
-  removeAds: 'Xóa quảng cáo',
-  allPrograms: 'Mở khóa toàn bộ trải nghiệm',
-  active: 'Premium đang hoạt động',
-  restore: 'Khôi phục giao dịch',
-  restoreTitle: 'Khôi phục giao dịch',
-  restoreSuccess: 'Đã khôi phục Premium thành công.',
-  restoreEmpty: 'Không tìm thấy giao dịch Premium.',
-  errorTitle: 'Mua hàng thất bại',
-  errorText: 'Không thể hoàn tất giao dịch.',
-  productUnavailable: 'Không tìm thấy sản phẩm Premium. Vui lòng kiểm tra Play Console / App Store.',
-  subUnavailable: 'Không tìm thấy gói thuê bao tháng. Vui lòng kiểm tra Play Console / App Store.',
-  loading: 'Đang tải...',
+    monthlyTitle: 'Premium theo tháng',
+    monthlyDesc: 'Tự động gia hạn mỗi tháng để duy trì Premium',
+    subscribeMonthly: 'Đăng ký theo tháng',
 
-  monthlyTitle: 'Premium theo tháng',
-  monthlyDesc: 'Tự động gia hạn mỗi tháng để duy trì Premium',
-  subscribeMonthly: 'Đăng ký theo tháng',
-
-  lifetimeTitle: 'Premium trọn đời',
-  lifetimeDesc: 'Thanh toán một lần, sử dụng Premium mãi mãi',
-  buyLifetime: 'Mua trọn đời'
-},
+    lifetimeTitle: 'Premium trọn đời',
+    lifetimeDesc: 'Thanh toán một lần, sử dụng Premium mãi mãi',
+    buyLifetime: 'Mua trọn đời'
+  },
   video: {
     loading: 'Đang tải video...',
     play: 'Bắt đầu tập',
@@ -513,62 +527,149 @@ premium: {
     btn_delete: 'Xóa',
     btn_save: 'Lưu',
   },
-  nutrition: {
-    title: 'Hướng dẫn dinh dưỡng',
-    subtitle: 'Ăn uống đơn giản theo khẩu phần để hỗ trợ quá trình tập luyện.',
-    sections: {
-      how: {
-        title: 'Cách thực hiện',
-        bullets: [
-          'Kế hoạch dựa trên khẩu phần sử dụng các nhóm thực phẩm.',
-          'Cân bằng các chất đa lượng (macro) cho năng lượng và phục hồi.',
-          'Mỗi ly whey/shake hàng ngày được tính là 1 khẩu phần protein.',
-        ],
-      },
-      plan: {
-        title: 'Tìm kế hoạch của bạn',
-        bullets: [
-          'Chọn Kế hoạch A–E theo kích thước cơ thể & mục tiêu.',
-          'Mỗi kế hoạch = số lượng khẩu phần cố định cho từng nhóm/ngày.',
-          'Điều chỉnh nhẹ nếu bạn cảm thấy quá đói hoặc quá no.',
-        ],
-      },
-      foods: {
-        title: 'Danh sách thực phẩm (lựa chọn tốt nhất)',
-        bullets: [
-          'Ưu tiên rau củ & trái cây; thực phẩm toàn phần, nhiều màu sắc, giàu chất xơ.',
-          'Protein nạc; tinh bột tốt như yến mạch, gạo lứt, khoai lang.',
-          'Chất béo tốt: bơ, các loại hạt, dầu ô liu.',
-        ],
-      },
-      samples: {
-        title: 'Ý tưởng thực đơn mẫu',
-        bullets: [
-          'Bữa sáng: sữa chua + quả mọng + yến mạch.',
-          'Bữa trưa: cơm gà hoặc đậu phụ, rau + gạo/hạt diêm mạch.',
-          'Bữa tối: cá + rau xanh + khoai lang.',
-        ],
-      },
-      drinks: {
-        title: 'Đồ uống / cà phê & trà',
-        bullets: [
-          'Mục tiêu nước: ~ một nửa trọng lượng cơ thể (lb) quy ra oz mỗi ngày (hoặc ~40ml/kg).',
-          'Cà phê/trà đều được; hạn chế đường/kem béo.',
-          'Bỏ qua đồ uống có đường và rượu bia khi có thể.',
-        ],
-      },
-      success: {
-        title: 'Chuẩn bị để thành công',
-        bullets: [
-          'Chuẩn bị trước protein (meal-prep), rửa & chia sẵn rau củ.',
-          'Mang theo đồ ăn nhẹ: trái cây, các loại hạt, thanh năng lượng.',
-          'Ăn chậm, ngủ đủ giấc, kiên trì.',
-        ],
-      },
-    },
-  },
-  
   // vi
+  dashboard: {
+    title: 'Bảng tiến độ',
+    streak: 'Chuỗi liên tiếp',
+    thisWeek: 'Tuần này',
+    total: 'Tổng cộng',
+    completedPrograms: 'Đã hoàn thành',
+    lastWorkout: 'Buổi tập gần nhất'
+  },
+  recommend: {
+    title: 'Gợi ý cho bạn',
+    start: 'Bắt đầu giáo án này'
+  },
+  nutrition: {
+    title: 'Dinh dưỡng',
+    subtitle: 'Mục tiêu hằng ngày của bạn được cá nhân hóa dựa trên hồ sơ hiện tại và mục tiêu của bạn.',
+    noProfileTitle: 'Hãy hoàn thành hồ sơ trước',
+    noProfileText: 'Thêm chiều cao, cân nặng và mục tiêu để nhận gợi ý về calories, macro và lượng nước.',
+    targets: 'Mục tiêu hằng ngày',
+    calories: 'Calories',
+    water: 'Nước',
+    macros: 'Tỷ lệ macro',
+    protein: 'Protein',
+    carbs: 'Carb',
+    fats: 'Chất béo',
+    sampleMeals: 'Gợi ý thực đơn',
+    tips: 'Mẹo'
+  },
+  filters: {
+    all: 'All',
+
+    levelTitle: 'Level',
+    level: {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+    },
+
+    goalTitle: 'Focus',
+    goal: {
+      lose_weight: 'Lose weight',
+      build_muscle: 'Build muscle',
+      cardio: 'Cardio',
+      core: 'Core',
+      mobility: 'Mobility',
+    },
+
+    equipmentTitle: 'Equipment',
+    equipment: {
+      no_equipment: 'No equipment',
+      with_equipment: 'With equipment',
+    },
+
+    durationTitle: 'Duration',
+    duration: {
+      short: 'Short',
+      medium: 'Medium',
+      long: 'Long',
+    },
+
+    noResultsTitle: 'No matching programs',
+    noResultsText: 'Try changing one or more filters.',
+  },
+// vi
+beginner: {
+  modeTitle: 'Chế độ người mới',
+  modeDesc: 'Giải thích đơn giản và hướng dẫn nhanh cho người dùng mới.',
+  glossaryTitle: 'Hướng dẫn cho người mới',
+  terms: {
+    restDay: {
+      title: 'Ngày nghỉ',
+      desc: 'Đây là ngày phục hồi. Cơ thể của bạn nghỉ ngơi và tái tạo, vì vậy đừng bỏ qua.'
+    },
+    warmUp: {
+      title: 'Khởi động',
+      desc: 'Các động tác nhẹ trước khi tập để chuẩn bị cơ thể và giảm nguy cơ chấn thương.'
+    },
+    cooldown: {
+      title: 'Thả lỏng',
+      desc: 'Các động tác nhẹ hoặc giãn cơ sau khi tập để giúp cơ thể phục hồi tốt hơn.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Bài tập cường độ cao ngắt quãng: những khoảng tập nặng ngắn xen kẽ với thời gian nghỉ ngắn.'
+    },
+    rep: {
+      title: 'Rep',
+      desc: 'Một lần thực hiện hoàn chỉnh của một động tác. Ví dụ: 1 lần squat = 1 rep.'
+    },
+    set: {
+      title: 'Set',
+      desc: 'Một nhóm rep. Ví dụ: 10 lần squat thực hiện liên tiếp = 1 set.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Buổi tập hôm nay',
+  fallback: 'Bài tập',
+  startNow: 'Bắt đầu ngay',
+  restTitle: 'Hôm nay là ngày phục hồi',
+  restText: 'Hãy nghỉ ngơi, giãn cơ nhẹ, uống nước và chuẩn bị cho buổi tập tiếp theo.'
+},
+
+common: {
+  on: 'BẬT',
+  off: 'TẮT'
+},
+// vi
+history: {
+  title: 'Lịch sử tập luyện',
+  screenTitle: 'Lịch sử tập luyện',
+  thisWeek: 'Tuần này',
+  minutes: 'Phút',
+  totalWorkouts: 'Buổi tập',
+  empty: 'Chưa có buổi tập nào hoàn thành.',
+  viewAll: 'Xem tất cả',
+  filter7: '7 ngày',
+  filter30: '30 ngày',
+  filterAll: 'Tất cả'
+},
+achievements: {
+  title: 'Thành tích',
+  firstWorkout: 'Buổi tập đầu tiên',
+  tenWorkouts: '10 buổi tập',
+  twentyfiveWorkouts: '25 buổi tập',
+  streak3: 'Chuỗi 3 ngày',
+  streak7: 'Chuỗi 7 ngày',
+  week4: '4 buổi tập trong tuần này',
+  finishProgram: 'Hoàn thành 1 chương trình'
+},
+challenges: {
+  title: 'Thử thách',
+  intro: 'Bắt đầu một thử thách ngắn để duy trì sự đều đặn.',
+  start7: 'Bắt đầu thử thách 7 ngày',
+  start30: 'Bắt đầu thử thách 30 ngày',
+  complete: 'Đã hoàn thành thử thách',
+  daysLeft: 'Còn {{count}} ngày',
+  starter7Title: 'Thử thách khởi động 7 ngày',
+  starter7Desc: 'Hoàn thành 5 buổi tập trong 7 ngày.',
+  consistency30Title: 'Thử thách duy trì 30 ngày',
+  consistency30Desc: 'Hoàn thành 20 buổi tập trong 30 ngày.'
+}
+
 
 };
 
@@ -588,16 +689,16 @@ const es = {
     weightChart: 'Gráfico de Peso',
   },
   home: {
-  title: 'Escolha seu plano de treino',
-  subtitle: 'Escolha um programa e treine diariamente',
-  program60: 'Programa de Queima de Gordura 60 Dias',
-  program90: 'Programa de Corpo Inteiro 90 Dias',
-  daysSuffix: '{{count}} dias',
-  health_overview: 'Visão geral da saúde',
-  activeTitle: 'Em andamento', // Hoặc 'Treinando'
-  noActive: 'Não há nenhum programa em treinamento no momento.',
-},
-program: {
+    title: 'Escolha seu plano de treino',
+    subtitle: 'Escolha um programa e treine diariamente',
+    program60: 'Programa de Queima de Gordura 60 Dias',
+    program90: 'Programa de Corpo Inteiro 90 Dias',
+    daysSuffix: '{{count}} dias',
+    health_overview: 'Visão geral da saúde',
+    activeTitle: 'Em andamento', // Hoặc 'Treinando'
+    noActive: 'Não há nenhum programa em treinamento no momento.',
+  },
+  program: {
     daysPrefix: 'Dia {{day}} • {{weekday}}',
     weekTitle: 'Semana {{n}}',
     completed: 'Concluído',
@@ -612,36 +713,36 @@ program: {
     pickOne: 'Escolha um plano para começar',
     days: 'Día',
   },
-guide: {
-  title: 'Cómo usar PulseFit',
-  subtitle: 'Sigue estos sencillos pasos para comenzar tu rutina de entrenamiento.',
+  guide: {
+    title: 'Cómo usar PulseFit',
+    subtitle: 'Sigue estos sencillos pasos para comenzar tu rutina de entrenamiento.',
 
-  steps: {
-    step1: {
-      badge: 'Paso 1',
-      title: 'Introduce tu información personal',
-      desc: 'Completa tu altura, peso, estado de salud, objetivos y otra información básica. La aplicación calculará tu IMC y te dará consejos de salud para ayudarte a comenzar de forma segura.'
+    steps: {
+      step1: {
+        badge: 'Paso 1',
+        title: 'Introduce tu información personal',
+        desc: 'Completa tu altura, peso, estado de salud, objetivos y otra información básica. La aplicación calculará tu IMC y te dará consejos de salud para ayudarte a comenzar de forma segura.'
+      },
+      step2: {
+        badge: 'Paso 2',
+        title: 'Elige un programa de entrenamiento adecuado',
+        desc: 'Explora los programas disponibles y elige el que mejor se adapte a tu nivel físico, objetivos y preferencias.'
+      },
+      step3: {
+        badge: 'Paso 3',
+        title: 'Selecciona tu día de entrenamiento',
+        desc: 'Abre el programa elegido y selecciona el día de entrenamiento que deseas seguir. Puedes avanzar paso a paso según el calendario del programa.'
+      },
+      step4: {
+        badge: 'Paso 4',
+        title: 'Entrena con el video',
+        desc: 'Sigue el video de entrenamiento para ejercitarte correctamente. Puedes girar el teléfono horizontalmente para ver el video en pantalla completa y tener una mejor experiencia.'
+      }
     },
-    step2: {
-      badge: 'Paso 2',
-      title: 'Elige un programa de entrenamiento adecuado',
-      desc: 'Explora los programas disponibles y elige el que mejor se adapte a tu nivel físico, objetivos y preferencias.'
-    },
-    step3: {
-      badge: 'Paso 3',
-      title: 'Selecciona tu día de entrenamiento',
-      desc: 'Abre el programa elegido y selecciona el día de entrenamiento que deseas seguir. Puedes avanzar paso a paso según el calendario del programa.'
-    },
-    step4: {
-      badge: 'Paso 4',
-      title: 'Entrena con el video',
-      desc: 'Sigue el video de entrenamiento para ejercitarte correctamente. Puedes girar el teléfono horizontalmente para ver el video en pantalla completa y tener una mejor experiencia.'
-    }
+
+    noteTitle: 'Nota',
+    note: 'Mantén la constancia en tu entrenamiento para obtener los mejores resultados.'
   },
-
-  noteTitle: 'Nota',
-  note: 'Mantén la constancia en tu entrenamiento para obtener los mejores resultados.'
-},
   video: {
     loading: 'Carregando vídeo...',
     play: 'Iniciar treino',
@@ -770,84 +871,169 @@ guide: {
     btn_delete: 'Excluir',
     btn_save: 'Salvar',
   },
+  // es
+  dashboard: {
+    title: 'Panel de progreso',
+    streak: 'Racha',
+    thisWeek: 'Esta semana',
+    total: 'Total',
+    completedPrograms: 'Completado',
+    lastWorkout: 'Último entrenamiento'
+  },
+  recommend: {
+    title: 'Recomendado para ti',
+    start: 'Comenzar este plan'
+  },
   nutrition: {
-    title: 'Guia Nutricional',
-    subtitle: 'Alimentação simples baseada em porções para apoiar seu treino.',
-    sections: {
-      how: {
-        title: 'Como funciona',
-        bullets: [
-          'Plano baseado em porções usando grupos alimentares.',
-          'Macros equilibrados para energia e recuperação.',
-          'O shake diário conta como 1 porção de proteína.',
-        ],
-      },
-      plan: {
-        title: 'Encontre seu plano',
-        bullets: [
-          'Escolha o Plano A–E por tamanho corporal e objetivo.',
-          'Cada plano = porções fixas por grupo/dia.',
-          'Ajuste levemente se sentir muita fome ou estiver muito cheio.',
-        ],
-      },
-      foods: {
-        title: 'Lista de alimentos (melhores escolhas)',
-        bullets: [
-          'Vegetais e frutas primeiro; integrais, coloridos, ricos em fibras.',
-          'Proteínas magras; carboidratos inteligentes como aveia, arroz integral, batata doce.',
-          'Gorduras saudáveis: abacate, nozes, sementes, azeite.',
-        ],
-      },
-      samples: {
-        title: 'Ideias para o dia',
-        bullets: [
-          'Café da manhã: iogurte + frutas vermelhas + aveia.',
-          'Almoço: bowl de frango ou tofu, vegetais + arroz/quinoa.',
-          'Jantar: peixe + folhas verdes + batata doce.',
-        ],
-      },
-      drinks: {
-        title: 'Bebidas / café e chá',
-        bullets: [
-          'Meta de água: ~ metade do peso corporal (lb) em onças por dia (ou ~35ml/kg).',
-          'Café/chá é ok; limite açúcar/cremes.',
-          'Evite bebidas açucaradas e álcool sempre que possível.',
-        ],
-      },
-      success: {
-        title: 'Prepare-se para o sucesso',
-        bullets: [
-          'Prepare proteínas antecipadamente (marmitas), lave e porcione vegetais.',
-          'Leve lanches: frutas, nozes, barras.',
-          'Coma devagar, durma bem, seja consistente.',
-        ],
-      },
-    },
+    title: 'Nutrición',
+    subtitle: 'Tus objetivos diarios se personalizan según tu perfil actual y tu meta.',
+    noProfileTitle: 'Completa primero tu perfil',
+    noProfileText: 'Agrega tu altura, peso y objetivo para obtener recomendaciones de calorías, macronutrientes e hidratación.',
+    targets: 'Objetivos diarios',
+    calories: 'Calorías',
+    water: 'Agua',
+    macros: 'Distribución de macros',
+    protein: 'Proteína',
+    carbs: 'Carbohidratos',
+    fats: 'Grasas',
+    sampleMeals: 'Plan de comidas de ejemplo',
+    tips: 'Consejos'
   },
   // es
+  // es
+  premium: {
+    title: 'Actualizar a Premium',
+    removeAds: 'Eliminar anuncios',
+    allPrograms: 'Desbloquea la experiencia completa',
+    active: 'Premium está activo',
+    restore: 'Restaurar compras',
+    restoreTitle: 'Restaurar compras',
+    restoreSuccess: 'Premium restaurado correctamente.',
+    restoreEmpty: 'No se encontró ninguna compra Premium.',
+    errorTitle: 'Compra fallida',
+    errorText: 'No se pudo completar la compra.',
+    productUnavailable: 'No se encontró el producto Premium. Verifica la configuración de Play Console / App Store.',
+    subUnavailable: 'No se encontró la suscripción mensual. Verifica la configuración de Play Console / App Store.',
+    loading: 'Cargando...',
+
+    monthlyTitle: 'Premium mensual',
+    monthlyDesc: 'Se renueva automáticamente cada mes para mantener Premium activo',
+    subscribeMonthly: 'Suscribirse mensualmente',
+
+    lifetimeTitle: 'Premium de por vida',
+    lifetimeDesc: 'Pago único, mantén Premium para siempre',
+    buyLifetime: 'Comprar de por vida'
+  },
+  // es
+  filters: {
+    all: 'Todos',
+
+    levelTitle: 'Nivel',
+    level: {
+      beginner: 'Principiante',
+      intermediate: 'Intermedio',
+      advanced: 'Avanzado',
+    },
+
+    goalTitle: 'Enfoque',
+    goal: {
+      lose_weight: 'Perder peso',
+      build_muscle: 'Ganar músculo',
+      cardio: 'Cardio',
+      core: 'Core',
+      mobility: 'Movilidad',
+    },
+
+    equipmentTitle: 'Equipo',
+    equipment: {
+      no_equipment: 'Sin equipo',
+      with_equipment: 'Con equipo',
+    },
+
+    durationTitle: 'Duración',
+    duration: {
+      short: 'Corta',
+      medium: 'Media',
+      long: 'Larga',
+    },
+
+    noResultsTitle: 'No hay programas coincidentes',
+    noResultsText: 'Prueba cambiar uno o más filtros.',
+  },
+  // es
+beginner: {
+  modeTitle: 'Modo principiante',
+  modeDesc: 'Explicaciones sencillas y guía rápida para nuevos usuarios.',
+  glossaryTitle: 'Guía para principiantes',
+  terms: {
+    restDay: {
+      title: 'Día de descanso',
+      desc: 'Es un día de recuperación. Tu cuerpo descansa y se reconstruye, así que no lo omitas.'
+    },
+    warmUp: {
+      title: 'Calentamiento',
+      desc: 'Movimiento ligero antes de entrenar para preparar tu cuerpo y reducir el riesgo de lesiones.'
+    },
+    cooldown: {
+      title: 'Vuelta a la calma',
+      desc: 'Movimiento suave o estiramientos después de entrenar para ayudar a tu cuerpo a recuperarse.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Entrenamiento de intervalos de alta intensidad: ráfagas cortas de trabajo intenso seguidas de descansos breves.'
+    },
+    rep: {
+      title: 'Repetición',
+      desc: 'Un movimiento completo de un ejercicio. Ejemplo: una sentadilla = una repetición.'
+    },
+    set: {
+      title: 'Serie',
+      desc: 'Un grupo de repeticiones. Ejemplo: 10 sentadillas seguidas = 1 serie.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Entrenamiento de hoy',
+  fallback: 'Entrenamiento',
+  startNow: 'Empezar ahora',
+  restTitle: 'Hoy es un día de recuperación',
+  restText: 'Tómate un descanso, estira suavemente, bebe agua y prepárate para tu próximo entrenamiento.'
+},
 // es
-premium: {
-  title: 'Actualizar a Premium',
-  removeAds: 'Eliminar anuncios',
-  allPrograms: 'Desbloquea la experiencia completa',
-  active: 'Premium está activo',
-  restore: 'Restaurar compras',
-  restoreTitle: 'Restaurar compras',
-  restoreSuccess: 'Premium restaurado correctamente.',
-  restoreEmpty: 'No se encontró ninguna compra Premium.',
-  errorTitle: 'Compra fallida',
-  errorText: 'No se pudo completar la compra.',
-  productUnavailable: 'No se encontró el producto Premium. Verifica la configuración de Play Console / App Store.',
-  subUnavailable: 'No se encontró la suscripción mensual. Verifica la configuración de Play Console / App Store.',
-  loading: 'Cargando...',
-
-  monthlyTitle: 'Premium mensual',
-  monthlyDesc: 'Se renueva automáticamente cada mes para mantener Premium activo',
-  subscribeMonthly: 'Suscribirse mensualmente',
-
-  lifetimeTitle: 'Premium de por vida',
-  lifetimeDesc: 'Pago único, mantén Premium para siempre',
-  buyLifetime: 'Comprar de por vida'
+// es
+history: {
+  title: 'Historial de entrenamiento',
+  screenTitle: 'Historial de entrenamiento',
+  thisWeek: 'Esta semana',
+  minutes: 'Minutos',
+  totalWorkouts: 'Entrenamientos',
+  empty: 'Aún no hay entrenamientos completados.',
+  viewAll: 'Ver todo',
+  filter7: '7 días',
+  filter30: '30 días',
+  filterAll: 'Todos'
+},
+achievements: {
+  title: 'Logros',
+  firstWorkout: 'Primer entrenamiento',
+  tenWorkouts: '10 entrenamientos',
+  twentyfiveWorkouts: '25 entrenamientos',
+  streak3: 'Racha de 3 días',
+  streak7: 'Racha de 7 días',
+  week4: '4 entrenamientos esta semana',
+  finishProgram: 'Completa 1 programa'
+},
+challenges: {
+  title: 'Desafíos',
+  intro: 'Empieza un desafío corto para mantener la constancia.',
+  start7: 'Iniciar desafío de 7 días',
+  start30: 'Iniciar desafío de 30 días',
+  complete: 'Desafío completado',
+  daysLeft: 'Quedan {{count}} día(s)',
+  starter7Title: 'Desafío inicial de 7 días',
+  starter7Desc: 'Completa 5 entrenamientos en 7 días.',
+  consistency30Title: 'Desafío de constancia de 30 días',
+  consistency30Desc: 'Completa 20 entrenamientos en 30 días.'
 }
 };
 const fr = {
@@ -865,16 +1051,16 @@ const fr = {
     weightChart: 'Graphique de poids',
   },
   home: {
-  title: 'Choisissez votre plan d’entraînement',
-  subtitle: 'Sélectionnez un programme et entraînez-vous chaque jour',
-  program60: 'Programme Brûle-graisse 60 jours',
-  program90: 'Programme Corps complet 90 jours',
-  daysSuffix: '{{count}} jours',
-  health_overview: 'Bilan santé',
-  activeTitle: 'En cours', 
-  noActive: 'Aucun programme n’est suivi actuellement.',
-},
-program: {
+    title: 'Choisissez votre plan d’entraînement',
+    subtitle: 'Sélectionnez un programme et entraînez-vous chaque jour',
+    program60: 'Programme Brûle-graisse 60 jours',
+    program90: 'Programme Corps complet 90 jours',
+    daysSuffix: '{{count}} jours',
+    health_overview: 'Bilan santé',
+    activeTitle: 'En cours',
+    noActive: 'Aucun programme n’est suivi actuellement.',
+  },
+  program: {
     daysPrefix: 'Jour {{day}} • {{weekday}}',
     weekTitle: 'Semaine {{n}}',
     completed: 'Terminé',
@@ -889,37 +1075,37 @@ program: {
     pickOne: 'Choisissez un programme pour commencer',
     days: 'Jour',
   },
-// es
-guide: {
-  title: 'Cómo usar PulseFit',
-  subtitle: 'Sigue estos sencillos pasos para comenzar tu rutina de entrenamiento.',
+  // es
+  guide: {
+    title: 'Cómo usar PulseFit',
+    subtitle: 'Sigue estos sencillos pasos para comenzar tu rutina de entrenamiento.',
 
-  steps: {
-    step1: {
-      badge: 'Paso 1',
-      title: 'Introduce tu información personal',
-      desc: 'Completa tu altura, peso, estado de salud, objetivos y otra información básica. La aplicación calculará tu IMC y te dará consejos de salud para ayudarte a comenzar de forma segura.'
+    steps: {
+      step1: {
+        badge: 'Paso 1',
+        title: 'Introduce tu información personal',
+        desc: 'Completa tu altura, peso, estado de salud, objetivos y otra información básica. La aplicación calculará tu IMC y te dará consejos de salud para ayudarte a comenzar de forma segura.'
+      },
+      step2: {
+        badge: 'Paso 2',
+        title: 'Elige un programa de entrenamiento adecuado',
+        desc: 'Explora los programas disponibles y elige el que mejor se adapte a tu nivel físico, objetivos y preferencias.'
+      },
+      step3: {
+        badge: 'Paso 3',
+        title: 'Selecciona tu día de entrenamiento',
+        desc: 'Abre el programa elegido y selecciona el día de entrenamiento que deseas seguir. Puedes avanzar paso a paso según el calendario del programa.'
+      },
+      step4: {
+        badge: 'Paso 4',
+        title: 'Entrena con el video',
+        desc: 'Sigue el video de entrenamiento para ejercitarte correctamente. Puedes girar el teléfono horizontalmente para ver el video en pantalla completa y tener una mejor experiencia.'
+      }
     },
-    step2: {
-      badge: 'Paso 2',
-      title: 'Elige un programa de entrenamiento adecuado',
-      desc: 'Explora los programas disponibles y elige el que mejor se adapte a tu nivel físico, objetivos y preferencias.'
-    },
-    step3: {
-      badge: 'Paso 3',
-      title: 'Selecciona tu día de entrenamiento',
-      desc: 'Abre el programa elegido y selecciona el día de entrenamiento que deseas seguir. Puedes avanzar paso a paso según el calendario del programa.'
-    },
-    step4: {
-      badge: 'Paso 4',
-      title: 'Entrena con el video',
-      desc: 'Sigue el video de entrenamiento para ejercitarte correctamente. Puedes girar el teléfono horizontalmente para ver el video en pantalla completa y tener una mejor experiencia.'
-    }
+
+    noteTitle: 'Nota',
+    note: 'Mantén la constancia en tu entrenamiento para obtener los mejores resultados.'
   },
-
-  noteTitle: 'Nota',
-  note: 'Mantén la constancia en tu entrenamiento para obtener los mejores resultados.'
-},
   video: {
     loading: 'Chargement...',
     play: 'Commencer l’entraînement',
@@ -1048,85 +1234,169 @@ guide: {
     btn_delete: 'Supprimer',
     btn_save: 'Enregistrer',
   },
+  // fr
+  dashboard: {
+    title: 'Tableau de progression',
+    streak: 'Série',
+    thisWeek: 'Cette semaine',
+    total: 'Total',
+    completedPrograms: 'Terminés',
+    lastWorkout: 'Dernier entraînement'
+  },
+  recommend: {
+    title: 'Recommandé pour vous',
+    start: 'Commencer ce programme'
+  },
   nutrition: {
-    title: 'Guide Nutrition',
-    subtitle: 'Manger simplement avec des portions pour soutenir l’entraînement.',
-    sections: {
-      how: {
-        title: 'Comment ça marche',
-        bullets: [
-          'Plan basé sur des portions par groupes alimentaires.',
-          'Macros équilibrées pour l’énergie et la récupération.',
-          'Le shake quotidien compte comme 1 portion de protéine.',
-        ],
-      },
-      plan: {
-        title: 'Trouvez votre plan',
-        bullets: [
-          'Choisissez Plan A–E selon taille & objectif.',
-          'Chaque plan = portions fixes par groupe/jour.',
-          'Ajustez légèrement si vous avez trop faim ou êtes trop plein.',
-        ],
-      },
-      foods: {
-        title: 'Liste d’aliments (meilleurs choix)',
-        bullets: [
-          'Légumes & fruits en priorité ; entiers, colorés, riches en fibres.',
-          'Protéines maigres ; bons glucides comme avoine, riz complet, patate douce.',
-          'Bonnes graisses : avocat, noix, graines, huile d’olive.',
-        ],
-      },
-      samples: {
-        title: 'Idées de journée type',
-        bullets: [
-          'Pt-déj : yaourt + baies + avoine.',
-          'Déjeuner : bol poulet ou tofu, légumes + riz/quinoa.',
-          'Dîner : poisson + légumes verts + patate douce.',
-        ],
-      },
-      drinks: {
-        title: 'Boissons / café & thé',
-        bullets: [
-          'Cible eau : ~ moitié du poids (livres) en onces/jour (ou ~35ml/kg).',
-          'Café/thé ok ; limiter sucre/crème.',
-          'Éviter boissons sucrées et alcool si possible.',
-        ],
-      },
-      success: {
-        title: 'Préparez votre succès',
-        bullets: [
-          'Préparez vos protéines (meal-prep), lavez & dosez les légumes.',
-          'Snacks : fruits, noix, barres.',
-          'Mangez lentement, dormez bien, soyez constant.',
-        ],
-      },
-    },
+    title: 'Nutrition',
+    subtitle: 'Vos objectifs quotidiens sont personnalisés selon votre profil actuel et votre objectif.',
+    noProfileTitle: 'Complétez d’abord votre profil',
+    noProfileText: 'Ajoutez votre taille, votre poids et votre objectif pour obtenir des recommandations de calories, de macros et d’hydratation.',
+    targets: 'Objectifs quotidiens',
+    calories: 'Calories',
+    water: 'Eau',
+    macros: 'Répartition des macros',
+    protein: 'Protéines',
+    carbs: 'Glucides',
+    fats: 'Lipides',
+    sampleMeals: 'Exemple de plan de repas',
+    tips: 'Conseils'
   },
   // fr
-// fr
-premium: {
-  title: 'Passer à Premium',
-  removeAds: 'Supprimer les publicités',
-  allPrograms: 'Débloquez l’expérience complète',
-  active: 'Premium est actif',
-  restore: 'Restaurer les achats',
-  restoreTitle: 'Restaurer les achats',
-  restoreSuccess: 'Premium restauré avec succès.',
-  restoreEmpty: 'Aucun achat Premium trouvé.',
-  errorTitle: 'Échec de l’achat',
-  errorText: 'Impossible de finaliser l’achat.',
-  productUnavailable: 'Produit Premium introuvable. Veuillez vérifier la configuration de Play Console / App Store.',
-  subUnavailable: 'Abonnement mensuel introuvable. Veuillez vérifier la configuration de Play Console / App Store.',
-  loading: 'Chargement...',
+  // fr
+  premium: {
+    title: 'Passer à Premium',
+    removeAds: 'Supprimer les publicités',
+    allPrograms: 'Débloquez l’expérience complète',
+    active: 'Premium est actif',
+    restore: 'Restaurer les achats',
+    restoreTitle: 'Restaurer les achats',
+    restoreSuccess: 'Premium restauré avec succès.',
+    restoreEmpty: 'Aucun achat Premium trouvé.',
+    errorTitle: 'Échec de l’achat',
+    errorText: 'Impossible de finaliser l’achat.',
+    productUnavailable: 'Produit Premium introuvable. Veuillez vérifier la configuration de Play Console / App Store.',
+    subUnavailable: 'Abonnement mensuel introuvable. Veuillez vérifier la configuration de Play Console / App Store.',
+    loading: 'Chargement...',
 
-  monthlyTitle: 'Premium mensuel',
-  monthlyDesc: 'Renouvellement automatique chaque mois pour garder Premium actif',
-  subscribeMonthly: 'S’abonner mensuellement',
+    monthlyTitle: 'Premium mensuel',
+    monthlyDesc: 'Renouvellement automatique chaque mois pour garder Premium actif',
+    subscribeMonthly: 'S’abonner mensuellement',
 
-  lifetimeTitle: 'Premium à vie',
-  lifetimeDesc: 'Paiement unique, gardez Premium pour toujours',
-  buyLifetime: 'Acheter à vie'
+    lifetimeTitle: 'Premium à vie',
+    lifetimeDesc: 'Paiement unique, gardez Premium pour toujours',
+    buyLifetime: 'Acheter à vie'
+  },
+  // fr
+  filters: {
+    all: 'Tous',
+
+    levelTitle: 'Niveau',
+    level: {
+      beginner: 'Débutant',
+      intermediate: 'Intermédiaire',
+      advanced: 'Avancé',
+    },
+
+    goalTitle: 'Objectif',
+    goal: {
+      lose_weight: 'Perte de poids',
+      build_muscle: 'Prise de muscle',
+      cardio: 'Cardio',
+      core: 'Abdos',
+      mobility: 'Mobilité',
+    },
+
+    equipmentTitle: 'Équipement',
+    equipment: {
+      no_equipment: 'Sans équipement',
+      with_equipment: 'Avec équipement',
+    },
+
+    durationTitle: 'Durée',
+    duration: {
+      short: 'Courte',
+      medium: 'Moyenne',
+      long: 'Longue',
+    },
+
+    noResultsTitle: 'Aucun programme correspondant',
+    noResultsText: 'Essayez de modifier un ou plusieurs filtres.',
+  },
+  // fr
+beginner: {
+  modeTitle: 'Mode débutant',
+  modeDesc: 'Des explications simples et un guide rapide pour les nouveaux utilisateurs.',
+  glossaryTitle: 'Guide du débutant',
+  terms: {
+    restDay: {
+      title: 'Jour de repos',
+      desc: 'C’est un jour de récupération. Votre corps se repose et se reconstruit, alors ne le sautez pas.'
+    },
+    warmUp: {
+      title: 'Échauffement',
+      desc: 'Mouvements légers avant l’entraînement pour préparer votre corps et réduire le risque de blessure.'
+    },
+    cooldown: {
+      title: 'Retour au calme',
+      desc: 'Mouvements faciles ou étirements après l’entraînement pour aider votre corps à récupérer.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Entraînement fractionné à haute intensité : de courtes phases d’effort intense suivies de courtes pauses.'
+    },
+    rep: {
+      title: 'Répétition',
+      desc: 'Un mouvement complet d’un exercice. Exemple : un squat = une répétition.'
+    },
+    set: {
+      title: 'Série',
+      desc: 'Un groupe de répétitions. Exemple : 10 squats effectués ensemble = 1 série.'
+    }
+  }
 },
+todayWorkout: {
+  title: 'Entraînement du jour',
+  fallback: 'Entraînement',
+  startNow: 'Commencer maintenant',
+  restTitle: 'Aujourd’hui est un jour de récupération',
+  restText: 'Faites une pause, étirez-vous doucement, buvez de l’eau et préparez-vous pour votre prochain entraînement.'
+},
+// fr
+history: {
+  title: "Historique d'entraînement",
+  screenTitle: "Historique d'entraînement",
+  thisWeek: 'Cette semaine',
+  minutes: 'Minutes',
+  totalWorkouts: 'Entraînements',
+  empty: "Aucun entraînement terminé pour l'instant.",
+  viewAll: 'Voir tout',
+  filter7: '7 jours',
+  filter30: '30 jours',
+  filterAll: 'Tous'
+},
+achievements: {
+  title: 'Succès',
+  firstWorkout: 'Premier entraînement',
+  tenWorkouts: '10 entraînements',
+  twentyfiveWorkouts: '25 entraînements',
+  streak3: 'Série de 3 jours',
+  streak7: 'Série de 7 jours',
+  week4: '4 entraînements cette semaine',
+  finishProgram: 'Terminer 1 programme'
+},
+challenges: {
+  title: 'Défis',
+  intro: 'Commencez un défi court pour rester régulier.',
+  start7: 'Commencer le défi de 7 jours',
+  start30: 'Commencer le défi de 30 jours',
+  complete: 'Défi terminé',
+  daysLeft: 'Il reste {{count}} jour(s)',
+  starter7Title: 'Défi débutant de 7 jours',
+  starter7Desc: 'Terminez 5 entraînements en 7 jours.',
+  consistency30Title: 'Défi régularité de 30 jours',
+  consistency30Desc: 'Terminez 20 entraînements en 30 jours.'
+}
 };
 const de = {
   ...base,
@@ -1143,16 +1413,16 @@ const de = {
     weightChart: 'Gewichtsverlauf', // Nghĩa là "Diễn biến cân nặng", tự nhiên hơn 'Gewichtsdiagramm'
   },
   home: {
-  title: 'Wähle deinen Trainingsplan',
-  subtitle: 'Wähle ein Programm und trainiere täglich',
-  program60: '60-Tage Fettverbrennungs-Programm',
-  program90: '90-Tage Ganzkörper-Programm',
-  daysSuffix: '{{count}} Tage',
-  health_overview: 'Gesundheitsübersicht',
-  activeTitle: 'In Arbeit', // Hoặc 'Aktiv'
-  noActive: 'Derzeit wird kein Programm trainiert.',
-},
-program: {
+    title: 'Wähle deinen Trainingsplan',
+    subtitle: 'Wähle ein Programm und trainiere täglich',
+    program60: '60-Tage Fettverbrennungs-Programm',
+    program90: '90-Tage Ganzkörper-Programm',
+    daysSuffix: '{{count}} Tage',
+    health_overview: 'Gesundheitsübersicht',
+    activeTitle: 'In Arbeit', // Hoặc 'Aktiv'
+    noActive: 'Derzeit wird kein Programm trainiert.',
+  },
+  program: {
     daysPrefix: 'Tag {{day}} • {{weekday}}',
     weekTitle: 'Woche {{n}}',
     completed: 'Abgeschlossen',
@@ -1167,36 +1437,36 @@ program: {
     pickOne: 'Wähle einen Plan, um zu starten',
     days: 'Tag',
   },
-guide: {
-  title: 'So verwendest du PulseFit',
-  subtitle: 'Folge diesen einfachen Schritten, um mit deinem Training zu beginnen.',
+  guide: {
+    title: 'So verwendest du PulseFit',
+    subtitle: 'Folge diesen einfachen Schritten, um mit deinem Training zu beginnen.',
 
-  steps: {
-    step1: {
-      badge: 'Schritt 1',
-      title: 'Gib deine persönlichen Daten ein',
-      desc: 'Trage Größe, Gewicht, Gesundheitszustand, Ziele und weitere grundlegende Informationen ein. Die App berechnet deinen BMI und gibt dir Gesundheitstipps für einen sicheren Start.'
+    steps: {
+      step1: {
+        badge: 'Schritt 1',
+        title: 'Gib deine persönlichen Daten ein',
+        desc: 'Trage Größe, Gewicht, Gesundheitszustand, Ziele und weitere grundlegende Informationen ein. Die App berechnet deinen BMI und gibt dir Gesundheitstipps für einen sicheren Start.'
+      },
+      step2: {
+        badge: 'Schritt 2',
+        title: 'Wähle ein passendes Trainingsprogramm',
+        desc: 'Sieh dir die verfügbaren Programme an und wähle das aus, das am besten zu deinem Fitnesslevel, deinen Zielen und deinen Vorlieben passt.'
+      },
+      step3: {
+        badge: 'Schritt 3',
+        title: 'Wähle deinen Trainingstag',
+        desc: 'Öffne das ausgewählte Programm und wähle den Trainingstag, dem du folgen möchtest. Du kannst den Plan Schritt für Schritt abarbeiten.'
+      },
+      step4: {
+        badge: 'Schritt 4',
+        title: 'Trainiere mit dem Video',
+        desc: 'Folge dem Trainingsvideo, um korrekt zu trainieren. Du kannst dein Handy ins Querformat drehen, um das Video im Vollbild anzusehen.'
+      }
     },
-    step2: {
-      badge: 'Schritt 2',
-      title: 'Wähle ein passendes Trainingsprogramm',
-      desc: 'Sieh dir die verfügbaren Programme an und wähle das aus, das am besten zu deinem Fitnesslevel, deinen Zielen und deinen Vorlieben passt.'
-    },
-    step3: {
-      badge: 'Schritt 3',
-      title: 'Wähle deinen Trainingstag',
-      desc: 'Öffne das ausgewählte Programm und wähle den Trainingstag, dem du folgen möchtest. Du kannst den Plan Schritt für Schritt abarbeiten.'
-    },
-    step4: {
-      badge: 'Schritt 4',
-      title: 'Trainiere mit dem Video',
-      desc: 'Folge dem Trainingsvideo, um korrekt zu trainieren. Du kannst dein Handy ins Querformat drehen, um das Video im Vollbild anzusehen.'
-    }
+
+    noteTitle: 'Hinweis',
+    note: 'Bleibe konsequent bei deinem Trainingsplan, um die besten Ergebnisse zu erzielen.'
   },
-
-  noteTitle: 'Hinweis',
-  note: 'Bleibe konsequent bei deinem Trainingsplan, um die besten Ergebnisse zu erzielen.'
-},
   video: {
     loading: 'Video lädt...',
     play: 'Training starten',
@@ -1325,84 +1595,168 @@ guide: {
     btn_delete: 'Löschen',
     btn_save: 'Speichern',
   },
+  // de
+  dashboard: {
+    title: 'Fortschrittsübersicht',
+    streak: 'Serie',
+    thisWeek: 'Diese Woche',
+    total: 'Gesamt',
+    completedPrograms: 'Abgeschlossen',
+    lastWorkout: 'Letztes Training'
+  },
+  recommend: {
+    title: 'Empfohlen für dich',
+    start: 'Diesen Plan starten'
+  },
   nutrition: {
-    title: 'Ernährungsguide',
-    subtitle: 'Einfache, portionsbasierte Ernährung zur Unterstützung deines Trainings.',
-    sections: {
-      how: {
-        title: 'So funktioniert’s',
-        bullets: [
-          'Plan basierend auf Portionen und Lebensmittelgruppen.',
-          'Ausgewogene Makros für Energie und Erholung.',
-          'Der tägliche Shake zählt als 1 Protein-Portion.',
-        ],
-      },
-      plan: {
-        title: 'Finde deinen Plan',
-        bullets: [
-          'Wähle Plan A–E nach Körpergröße & Ziel.',
-          'Jeder Plan = feste Anzahl Portionen pro Gruppe/Tag.',
-          'Passe leicht an, wenn du zu hungrig oder zu satt bist.',
-        ],
-      },
-      foods: {
-        title: 'Lebensmittelliste (Top-Wahl)',
-        bullets: [
-          'Gemüse & Obst zuerst; vollwertig, bunt, ballaststoffreich.',
-          'Magere Proteine; gute Kohlenhydrate wie Hafer, Naturreis, Süßkartoffel.',
-          'Gesunde Fette: Avocado, Nüsse, Samen, Olivenöl.',
-        ],
-      },
-      samples: {
-        title: 'Beispiel-Tag',
-        bullets: [
-          'Frühstück: Joghurt + Beeren + Haferflocken.',
-          'Mittag: Hähnchen- oder Tofu-Bowl, Gemüse + Reis/Quinoa.',
-          'Abend: Fisch + grünes Gemüse + Süßkartoffel.',
-        ],
-      },
-      drinks: {
-        title: 'Getränke / Kaffee & Tee',
-        bullets: [
-          'Wasserziel: ~ halbes Körpergewicht (lbs) in Unzen pro Tag (oder ~35ml/kg).',
-          'Kaffee/Tee ist ok; Zucker/Sahne begrenzen.',
-          'Vermeide zuckerhaltige Getränke und Alkohol, wenn möglich.',
-        ],
-      },
-      success: {
-        title: 'Bereite dich auf Erfolg vor',
-        bullets: [
-          'Bereite Proteine vor (Meal Prep), wasche & portioniere Gemüse.',
-          'Snacks einpacken: Obst, Nüsse, Riegel.',
-          'Langsam essen, gut schlafen, konsequent bleiben.',
-        ],
-      },
-    },
+    title: 'Ernährung',
+    subtitle: 'Deine täglichen Ziele werden basierend auf deinem aktuellen Profil und deinem Ziel personalisiert.',
+    noProfileTitle: 'Vervollständige zuerst dein Profil',
+    noProfileText: 'Füge Größe, Gewicht und Ziel hinzu, um Empfehlungen für Kalorien, Makros und Flüssigkeitszufuhr zu erhalten.',
+    targets: 'Tägliche Ziele',
+    calories: 'Kalorien',
+    water: 'Wasser',
+    macros: 'Makroverteilung',
+    protein: 'Protein',
+    carbs: 'Kohlenhydrate',
+    fats: 'Fette',
+    sampleMeals: 'Beispiel-Ernährungsplan',
+    tips: 'Tipps'
   },
   // de
+  // de
+  premium: {
+    title: 'Auf Premium upgraden',
+    removeAds: 'Werbung entfernen',
+    allPrograms: 'Das volle Erlebnis freischalten',
+    active: 'Premium ist aktiv',
+    restore: 'Käufe wiederherstellen',
+    restoreTitle: 'Käufe wiederherstellen',
+    restoreSuccess: 'Premium erfolgreich wiederhergestellt.',
+    restoreEmpty: 'Kein Premium-Kauf gefunden.',
+    errorTitle: 'Kauf fehlgeschlagen',
+    errorText: 'Der Kauf konnte nicht abgeschlossen werden.',
+    productUnavailable: 'Premium-Produkt nicht gefunden. Bitte prüfen Sie die Play Console / App Store-Konfiguration.',
+    subUnavailable: 'Monatliches Abo nicht gefunden. Bitte prüfen Sie die Play Console / App Store-Konfiguration.',
+    loading: 'Wird geladen...',
+
+    monthlyTitle: 'Monatliches Premium',
+    monthlyDesc: 'Verlängert sich jeden Monat automatisch, um Premium aktiv zu halten',
+    subscribeMonthly: 'Monatlich abonnieren',
+
+    lifetimeTitle: 'Premium auf Lebenszeit',
+    lifetimeDesc: 'Einmalige Zahlung, Premium für immer behalten',
+    buyLifetime: 'Lebenslang kaufen'
+  },
+  // de
+  filters: {
+    all: 'Alle',
+
+    levelTitle: 'Niveau',
+    level: {
+      beginner: 'Anfänger',
+      intermediate: 'Mittelstufe',
+      advanced: 'Fortgeschritten',
+    },
+
+    goalTitle: 'Fokus',
+    goal: {
+      lose_weight: 'Abnehmen',
+      build_muscle: 'Muskeln aufbauen',
+      cardio: 'Cardio',
+      core: 'Core',
+      mobility: 'Mobilität',
+    },
+
+    equipmentTitle: 'Ausrüstung',
+    equipment: {
+      no_equipment: 'Ohne Geräte',
+      with_equipment: 'Mit Geräten',
+    },
+
+    durationTitle: 'Dauer',
+    duration: {
+      short: 'Kurz',
+      medium: 'Mittel',
+      long: 'Lang',
+    },
+
+    noResultsTitle: 'Keine passenden Programme',
+    noResultsText: 'Versuchen Sie, einen oder mehrere Filter zu ändern.',
+  },
+  // de
+beginner: {
+  modeTitle: 'Anfängermodus',
+  modeDesc: 'Einfache Erklärungen und schnelle Hilfe für neue Nutzer.',
+  glossaryTitle: 'Anfängerleitfaden',
+  terms: {
+    restDay: {
+      title: 'Ruhetag',
+      desc: 'Ein Erholungstag. Dein Körper ruht sich aus und baut sich wieder auf, also überspringe ihn nicht.'
+    },
+    warmUp: {
+      title: 'Aufwärmen',
+      desc: 'Leichte Bewegung vor dem Training, um deinen Körper vorzubereiten und das Verletzungsrisiko zu verringern.'
+    },
+    cooldown: {
+      title: 'Abkühlen',
+      desc: 'Leichte Bewegung oder Dehnen nach dem Training, damit sich dein Körper besser erholen kann.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Hochintensives Intervalltraining: kurze Phasen harter Belastung, gefolgt von kurzen Pausen.'
+    },
+    rep: {
+      title: 'Wiederholung',
+      desc: 'Eine vollständige Ausführung einer Übung. Beispiel: eine Kniebeuge = eine Wiederholung.'
+    },
+    set: {
+      title: 'Satz',
+      desc: 'Eine Gruppe von Wiederholungen. Beispiel: 10 Kniebeugen am Stück = 1 Satz.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Heutiges Training',
+  fallback: 'Training',
+  startNow: 'Jetzt starten',
+  restTitle: 'Heute ist ein Erholungstag',
+  restText: 'Mach eine Pause, dehne dich leicht, trinke Wasser und bereite dich auf dein nächstes Training vor.'
+},
 // de
-premium: {
-  title: 'Auf Premium upgraden',
-  removeAds: 'Werbung entfernen',
-  allPrograms: 'Das volle Erlebnis freischalten',
-  active: 'Premium ist aktiv',
-  restore: 'Käufe wiederherstellen',
-  restoreTitle: 'Käufe wiederherstellen',
-  restoreSuccess: 'Premium erfolgreich wiederhergestellt.',
-  restoreEmpty: 'Kein Premium-Kauf gefunden.',
-  errorTitle: 'Kauf fehlgeschlagen',
-  errorText: 'Der Kauf konnte nicht abgeschlossen werden.',
-  productUnavailable: 'Premium-Produkt nicht gefunden. Bitte prüfen Sie die Play Console / App Store-Konfiguration.',
-  subUnavailable: 'Monatliches Abo nicht gefunden. Bitte prüfen Sie die Play Console / App Store-Konfiguration.',
-  loading: 'Wird geladen...',
-
-  monthlyTitle: 'Monatliches Premium',
-  monthlyDesc: 'Verlängert sich jeden Monat automatisch, um Premium aktiv zu halten',
-  subscribeMonthly: 'Monatlich abonnieren',
-
-  lifetimeTitle: 'Premium auf Lebenszeit',
-  lifetimeDesc: 'Einmalige Zahlung, Premium für immer behalten',
-  buyLifetime: 'Lebenslang kaufen'
+history: {
+  title: 'Trainingsverlauf',
+  screenTitle: 'Trainingsverlauf',
+  thisWeek: 'Diese Woche',
+  minutes: 'Minuten',
+  totalWorkouts: 'Workouts',
+  empty: 'Noch keine abgeschlossenen Workouts.',
+  viewAll: 'Alle anzeigen',
+  filter7: '7 Tage',
+  filter30: '30 Tage',
+  filterAll: 'Alle'
+},
+achievements: {
+  title: 'Erfolge',
+  firstWorkout: 'Erstes Workout',
+  tenWorkouts: '10 Workouts',
+  twentyfiveWorkouts: '25 Workouts',
+  streak3: '3-Tage-Serie',
+  streak7: '7-Tage-Serie',
+  week4: '4 Workouts diese Woche',
+  finishProgram: '1 Programm abschließen'
+},
+challenges: {
+  title: 'Challenges',
+  intro: 'Starte eine kurze Challenge, um dranzubleiben.',
+  start7: '7-Tage-Challenge starten',
+  start30: '30-Tage-Challenge starten',
+  complete: 'Challenge abgeschlossen',
+  daysLeft: '{{count}} Tag(e) übrig',
+  starter7Title: '7-Tage-Starter-Challenge',
+  starter7Desc: 'Schließe 5 Workouts in 7 Tagen ab.',
+  consistency30Title: '30-Tage-Konstanz-Challenge',
+  consistency30Desc: 'Schließe 20 Workouts in 30 Tagen ab.'
 }
 };
 const zh = {
@@ -1437,7 +1791,7 @@ const zh = {
     daysSuffix: '{{count}} 天',
     health_overview: '健康概览',
   },
-program: {
+  program: {
     daysPrefix: '第 {{day}} 天 • {{weekday}}',
     weekTitle: '第 {{n}} 周',
     completed: '已完成',
@@ -1452,37 +1806,37 @@ program: {
     pickOne: '选择一个计划开始',
     days: '天',
   },
-// zh
-guide: {
-  title: '如何使用 PulseFit',
-  subtitle: '按照以下简单步骤开始你的训练之旅。',
+  // zh
+  guide: {
+    title: '如何使用 PulseFit',
+    subtitle: '按照以下简单步骤开始你的训练之旅。',
 
-  steps: {
-    step1: {
-      badge: '步骤 1',
-      title: '输入个人信息',
-      desc: '填写你的身高、体重、健康状况、目标以及其他基本信息。应用会计算你的 BMI，并提供健康建议，帮助你更安全地开始训练。'
+    steps: {
+      step1: {
+        badge: '步骤 1',
+        title: '输入个人信息',
+        desc: '填写你的身高、体重、健康状况、目标以及其他基本信息。应用会计算你的 BMI，并提供健康建议，帮助你更安全地开始训练。'
+      },
+      step2: {
+        badge: '步骤 2',
+        title: '选择适合的训练计划',
+        desc: '浏览可用的训练计划，选择最适合你的体能水平、目标和偏好的计划。'
+      },
+      step3: {
+        badge: '步骤 3',
+        title: '选择训练日',
+        desc: '打开已选择的训练计划，并选择你要进行的训练日。你可以按照训练安排逐步完成。'
+      },
+      step4: {
+        badge: '步骤 4',
+        title: '跟随视频训练',
+        desc: '按照训练视频正确完成动作。你可以将手机横屏，以全屏方式观看视频，获得更好的体验。'
+      }
     },
-    step2: {
-      badge: '步骤 2',
-      title: '选择适合的训练计划',
-      desc: '浏览可用的训练计划，选择最适合你的体能水平、目标和偏好的计划。'
-    },
-    step3: {
-      badge: '步骤 3',
-      title: '选择训练日',
-      desc: '打开已选择的训练计划，并选择你要进行的训练日。你可以按照训练安排逐步完成。'
-    },
-    step4: {
-      badge: '步骤 4',
-      title: '跟随视频训练',
-      desc: '按照训练视频正确完成动作。你可以将手机横屏，以全屏方式观看视频，获得更好的体验。'
-    }
+
+    noteTitle: '注意',
+    note: '请坚持规律训练，以获得最佳效果。'
   },
-
-  noteTitle: '注意',
-  note: '请坚持规律训练，以获得最佳效果。'
-},
   video: {
     loading: '视频加载中...',
     play: '开始训练',
@@ -1611,85 +1965,169 @@ guide: {
     btn_delete: '删除',
     btn_save: '保存',
   },
+  // zh
+  dashboard: {
+    title: '进度面板',
+    streak: '连续天数',
+    thisWeek: '本周',
+    total: '总计',
+    completedPrograms: '已完成',
+    lastWorkout: '上次训练'
+  },
+  recommend: {
+    title: '为你推荐',
+    start: '开始此计划'
+  },
   nutrition: {
-    title: '营养指南',
-    subtitle: '简单、基于份量的饮食法，助您提升训练效果。',
-    sections: {
-      how: {
-        title: '如何运作',
-        bullets: [
-          '基于食物类别的份量控制计划。',
-          '均衡宏量营养素 (Macros)，提供能量并促进恢复。',
-          '每日蛋白粉/奶昔计为 1 份蛋白质。',
-        ],
-      },
-      plan: {
-        title: '找到您的计划',
-        bullets: [
-          '根据体型和目标选择计划 A–E。',
-          '每个计划 = 每日各类别固定份数。',
-          '如果太饿或太撑，可微调。',
-        ],
-      },
-      foods: {
-        title: '食物清单 (首选推荐)',
-        bullets: [
-          '蔬菜和水果优先；全天然、多彩、高纤维。',
-          '瘦蛋白；优质碳水如燕麦、糙米、红薯。',
-          '健康脂肪：牛油果、坚果、种子、橄榄油。',
-        ],
-      },
-      samples: {
-        title: '一日食谱示例',
-        bullets: [
-          '早餐：酸奶 + 浆果 + 燕麦。',
-          '午餐：鸡肉或豆腐波奇饭 (Bowl)，蔬菜 + 米饭/藜麦。',
-          '晚餐：鱼 + 绿叶菜 + 红薯。',
-        ],
-      },
-      drinks: {
-        title: '饮料 / 咖啡 & 茶',
-        bullets: [
-          '饮水目标：每日约体重 (磅) 一半的盎司数 (或约 35ml/kg)。',
-          '咖啡/茶可以喝；限制糖/奶精。',
-          '尽可能避免含糖饮料和酒精。',
-        ],
-      },
-      success: {
-        title: '成功秘诀',
-        bullets: [
-          '提前备餐 (Meal-prep) 蛋白质，清洗并分装蔬菜。',
-          '随身带零食：水果、坚果、能量棒。',
-          '细嚼慢咽，睡好觉，持之以恒。',
-        ],
-      },
-    },
+    title: '营养',
+    subtitle: '你的每日目标会根据你当前的个人资料和目标进行个性化调整。',
+    noProfileTitle: '请先完善个人资料',
+    noProfileText: '添加你的身高、体重和目标，以获得热量、营养素和补水建议。',
+    targets: '每日目标',
+    calories: '热量',
+    water: '饮水',
+    macros: '宏量营养分配',
+    protein: '蛋白质',
+    carbs: '碳水',
+    fats: '脂肪',
+    sampleMeals: '示例饮食计划',
+    tips: '建议'
   },
   // zh
-// zh
-premium: {
-  title: '升级到高级版',
-  removeAds: '移除广告',
-  allPrograms: '解锁完整体验',
-  active: '高级版已激活',
-  restore: '恢复购买',
-  restoreTitle: '恢复购买',
-  restoreSuccess: '高级版恢复成功。',
-  restoreEmpty: '未找到高级版购买记录。',
-  errorTitle: '购买失败',
-  errorText: '无法完成购买。',
-  productUnavailable: '未找到高级版产品。请检查 Play Console / App Store 设置。',
-  subUnavailable: '未找到月度订阅。请检查 Play Console / App Store 设置。',
-  loading: '加载中...',
+  // zh
+  premium: {
+    title: '升级到高级版',
+    removeAds: '移除广告',
+    allPrograms: '解锁完整体验',
+    active: '高级版已激活',
+    restore: '恢复购买',
+    restoreTitle: '恢复购买',
+    restoreSuccess: '高级版恢复成功。',
+    restoreEmpty: '未找到高级版购买记录。',
+    errorTitle: '购买失败',
+    errorText: '无法完成购买。',
+    productUnavailable: '未找到高级版产品。请检查 Play Console / App Store 设置。',
+    subUnavailable: '未找到月度订阅。请检查 Play Console / App Store 设置。',
+    loading: '加载中...',
 
-  monthlyTitle: '月度高级版',
-  monthlyDesc: '每月自动续订以保持高级版状态',
-  subscribeMonthly: '按月订阅',
+    monthlyTitle: '月度高级版',
+    monthlyDesc: '每月自动续订以保持高级版状态',
+    subscribeMonthly: '按月订阅',
 
-  lifetimeTitle: '终身高级版',
-  lifetimeDesc: '一次性付款，永久享受高级版',
-  buyLifetime: '购买终身版'
+    lifetimeTitle: '终身高级版',
+    lifetimeDesc: '一次性付款，永久享受高级版',
+    buyLifetime: '购买终身版'
+  },
+  // zh
+  filters: {
+    all: '全部',
+
+    levelTitle: '难度',
+    level: {
+      beginner: '初级',
+      intermediate: '中级',
+      advanced: '高级',
+    },
+
+    goalTitle: '重点',
+    goal: {
+      lose_weight: '减脂',
+      build_muscle: '增肌',
+      cardio: '有氧',
+      core: '核心',
+      mobility: '灵活性',
+    },
+
+    equipmentTitle: '器械',
+    equipment: {
+      no_equipment: '无器械',
+      with_equipment: '有器械',
+    },
+
+    durationTitle: '时长',
+    duration: {
+      short: '短',
+      medium: '中',
+      long: '长',
+    },
+
+    noResultsTitle: '没有匹配的训练计划',
+    noResultsText: '请尝试更改一个或多个筛选条件。',
+  },
+  // zh
+beginner: {
+  modeTitle: '新手模式',
+  modeDesc: '为新用户提供简单说明和快速指导。',
+  glossaryTitle: '新手指南',
+  terms: {
+    restDay: {
+      title: '休息日',
+      desc: '这是恢复日。你的身体会休息并重建，所以不要跳过。'
+    },
+    warmUp: {
+      title: '热身',
+      desc: '训练前进行轻度活动，以帮助身体做好准备并降低受伤风险。'
+    },
+    cooldown: {
+      title: '放松',
+      desc: '训练后进行轻度活动或拉伸，帮助身体恢复。'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: '高强度间歇训练：短时间高强度训练后接短暂休息。'
+    },
+    rep: {
+      title: '次数',
+      desc: '一次完整的动作。例子：一次深蹲 = 1 次。'
+    },
+    set: {
+      title: '组',
+      desc: '一组次数。例子：连续做 10 次深蹲 = 1 组。'
+    }
+  }
 },
+todayWorkout: {
+  title: '今日训练',
+  fallback: '训练',
+  startNow: '立即开始',
+  restTitle: '今天是恢复日',
+  restText: '休息一下，轻柔拉伸，喝点水，为下一次训练做好准备。'
+},
+// zh
+history: {
+  title: '训练历史',
+  screenTitle: '训练历史',
+  thisWeek: '本周',
+  minutes: '分钟',
+  totalWorkouts: '训练次数',
+  empty: '还没有已完成的训练。',
+  viewAll: '查看全部',
+  filter7: '7 天',
+  filter30: '30 天',
+  filterAll: '全部'
+},
+achievements: {
+  title: '成就',
+  firstWorkout: '首次训练',
+  tenWorkouts: '10 次训练',
+  twentyfiveWorkouts: '25 次训练',
+  streak3: '连续 3 天',
+  streak7: '连续 7 天',
+  week4: '本周 4 次训练',
+  finishProgram: '完成 1 个计划'
+},
+challenges: {
+  title: '挑战',
+  intro: '开始一个短期挑战来保持规律。',
+  start7: '开始 7 天挑战',
+  start30: '开始 30 天挑战',
+  complete: '挑战已完成',
+  daysLeft: '还剩 {{count}} 天',
+  starter7Title: '7 天入门挑战',
+  starter7Desc: '在 7 天内完成 5 次训练。',
+  consistency30Title: '30 天坚持挑战',
+  consistency30Desc: '在 30 天内完成 20 次训练。'
+}
 };
 const ja = {
   ...base,
@@ -1715,7 +2153,7 @@ const ja = {
     activeTitle: '進行中', // Đang tiến hành (Dịch thoát ý từ Practicing)
     noActive: '現在、進行中のプログラムはありません。', // Hiện không có chương trình nào đang thực hiện.
   },
-program: {
+  program: {
     daysPrefix: '{{day}}日目 • {{weekday}}',
     weekTitle: '{{n}}週目',
     completed: '完了',
@@ -1728,39 +2166,39 @@ program: {
     lower: 'お尻・脚',
     core: '腹筋 & 体幹', // Core dịch là "Taikan" (Thể cán) rất phổ biến
     pickOne: '開始するプランを選択',
-    days : '日'
+    days: '日'
   },
-// ja
-guide: {
-  title: 'PulseFit の使い方',
-  subtitle: '次の簡単な手順に従って、トレーニングを始めましょう。',
+  // ja
+  guide: {
+    title: 'PulseFit の使い方',
+    subtitle: '次の簡単な手順に従って、トレーニングを始めましょう。',
 
-  steps: {
-    step1: {
-      badge: 'ステップ 1',
-      title: '個人情報を入力する',
-      desc: '身長、体重、健康状態、目標などの基本情報を入力します。アプリが BMI を計算し、安全に始めるための健康アドバイスを表示します。'
+    steps: {
+      step1: {
+        badge: 'ステップ 1',
+        title: '個人情報を入力する',
+        desc: '身長、体重、健康状態、目標などの基本情報を入力します。アプリが BMI を計算し、安全に始めるための健康アドバイスを表示します。'
+      },
+      step2: {
+        badge: 'ステップ 2',
+        title: '自分に合ったトレーニングプログラムを選ぶ',
+        desc: '利用可能なプログラムを確認し、自分の体力レベル、目標、好みに最も合ったものを選びます。'
+      },
+      step3: {
+        badge: 'ステップ 3',
+        title: 'トレーニング日を選ぶ',
+        desc: '選択したプログラムを開き、実行したいトレーニング日を選びます。スケジュールに沿って順番に進められます。'
+      },
+      step4: {
+        badge: 'ステップ 4',
+        title: '動画に合わせてトレーニングする',
+        desc: 'トレーニング動画に従って正しく運動しましょう。より見やすくするために、スマートフォンを横向きにして全画面で視聴できます。'
+      }
     },
-    step2: {
-      badge: 'ステップ 2',
-      title: '自分に合ったトレーニングプログラムを選ぶ',
-      desc: '利用可能なプログラムを確認し、自分の体力レベル、目標、好みに最も合ったものを選びます。'
-    },
-    step3: {
-      badge: 'ステップ 3',
-      title: 'トレーニング日を選ぶ',
-      desc: '選択したプログラムを開き、実行したいトレーニング日を選びます。スケジュールに沿って順番に進められます。'
-    },
-    step4: {
-      badge: 'ステップ 4',
-      title: '動画に合わせてトレーニングする',
-      desc: 'トレーニング動画に従って正しく運動しましょう。より見やすくするために、スマートフォンを横向きにして全画面で視聴できます。'
-    }
+
+    noteTitle: '注意',
+    note: '最良の結果を得るために、継続してトレーニングを行いましょう。'
   },
-
-  noteTitle: '注意',
-  note: '最良の結果を得るために、継続してトレーニングを行いましょう。'
-},
   video: {
     loading: '動画を読み込み中...',
     play: 'ワークアウト開始',
@@ -1889,84 +2327,168 @@ guide: {
     btn_delete: '削除',
     btn_save: '保存',
   },
+  // ja
+  dashboard: {
+    title: '進捗ダッシュボード',
+    streak: '連続記録',
+    thisWeek: '今週',
+    total: '合計',
+    completedPrograms: '完了済み',
+    lastWorkout: '前回のトレーニング'
+  },
+  recommend: {
+    title: 'あなたへのおすすめ',
+    start: 'このプランを始める'
+  },
   nutrition: {
-    title: '栄養ガイド',
-    subtitle: 'トレーニングをサポートする、ポーション（分量）ベースのシンプルな食事法。',
-    sections: {
-      how: {
-        title: '仕組み',
-        bullets: [
-          '食品グループを使用したポーションベースのプラン。',
-          'エネルギーと回復のためのバランスの取れたマクロ栄養素。',
-          '毎日のプロテインシェイクはタンパク質1ポーションとしてカウント。',
-        ],
-      },
-      plan: {
-        title: 'プランを見つける',
-        bullets: [
-          '体格と目標に合わせてプランA〜Eを選択。',
-          '各プラン = グループごとの1日の固定ポーション数。',
-          '空腹感が強すぎたり、満腹すぎたりする場合は微調整してください。',
-        ],
-      },
-      foods: {
-        title: '食材リスト (おすすめ)',
-        bullets: [
-          '野菜と果物を最優先。未精製、色鮮やか、高食物繊維のもの。',
-          '低脂肪タンパク質。オート麦、玄米、サツマイモなどの良質な炭水化物。',
-          '健康的な脂質：アボカド、ナッツ、種子類、オリーブオイル。',
-        ],
-      },
-      samples: {
-        title: '1日の食事例',
-        bullets: [
-          '朝食：ヨーグルト + ベリー類 + オート麦。',
-          '昼食：チキンまたは豆腐のボウル、野菜 + ご飯/キヌア。',
-          '夕食：魚 + 緑黄色野菜 + サツマイモ。',
-        ],
-      },
-      drinks: {
-        title: '飲み物 / コーヒー & お茶',
-        bullets: [
-          '水分摂取目標：体重(lb)の半分をオンス換算で毎日摂取 (または約35ml/kg)。',
-          'コーヒー/お茶はOK。砂糖やクリームは控える。',
-          '可能な限り、甘い飲み物やアルコールは避ける。',
-        ],
-      },
-      success: {
-        title: '成功への準備',
-        bullets: [
-          'タンパク質の作り置き (Meal-prep)、野菜を洗って小分けにする。',
-          '間食を用意する：果物、ナッツ、プロテインバー。',
-          'ゆっくり食べ、よく眠り、継続する。',
-        ],
-      },
-    },
+    title: '栄養',
+    subtitle: '毎日の目標は、現在のプロフィールと目標に基づいて個別に調整されます。',
+    noProfileTitle: 'まずプロフィールを完成させてください',
+    noProfileText: '身長、体重、目標を追加すると、カロリー・マクロ・水分補給の提案を受け取れます。',
+    targets: '1日の目標',
+    calories: 'カロリー',
+    water: '水分',
+    macros: 'マクロ配分',
+    protein: 'たんぱく質',
+    carbs: '炭水化物',
+    fats: '脂質',
+    sampleMeals: '食事プラン例',
+    tips: 'ヒント'
   },
   // ja
+  // ja
+  premium: {
+    title: 'プレミアムにアップグレード',
+    removeAds: '広告を削除',
+    allPrograms: 'すべての機能を解放',
+    active: 'プレミアムは有効です',
+    restore: '購入を復元',
+    restoreTitle: '購入を復元',
+    restoreSuccess: 'プレミアムを正常に復元しました。',
+    restoreEmpty: 'プレミアム購入が見つかりませんでした。',
+    errorTitle: '購入に失敗しました',
+    errorText: '購入を完了できませんでした。',
+    productUnavailable: 'プレミアム商品が見つかりません。Play Console / App Store の設定を確認してください。',
+    subUnavailable: '月額サブスクリプションが見つかりません。Play Console / App Store の設定を確認してください。',
+    loading: '読み込み中...',
+
+    monthlyTitle: '月額プレミアム',
+    monthlyDesc: 'プレミアムを有効に保つため毎月自動更新されます',
+    subscribeMonthly: '月額で登録',
+
+    lifetimeTitle: '永久プレミアム',
+    lifetimeDesc: '一度の支払いで永久にプレミアムを利用',
+    buyLifetime: '永久版を購入'
+  },
+  // ja
+  filters: {
+    all: 'すべて',
+
+    levelTitle: 'レベル',
+    level: {
+      beginner: '初心者',
+      intermediate: '中級',
+      advanced: '上級',
+    },
+
+    goalTitle: '目的',
+    goal: {
+      lose_weight: '減量',
+      build_muscle: '筋力アップ',
+      cardio: '有酸素',
+      core: '体幹',
+      mobility: '柔軟性',
+    },
+
+    equipmentTitle: '器具',
+    equipment: {
+      no_equipment: '器具なし',
+      with_equipment: '器具あり',
+    },
+
+    durationTitle: '時間',
+    duration: {
+      short: '短い',
+      medium: '普通',
+      long: '長い',
+    },
+
+    noResultsTitle: '一致するプログラムがありません',
+    noResultsText: '1つ以上のフィルターを変更してみてください。',
+  },
+  // ja
+beginner: {
+  modeTitle: '初心者モード',
+  modeDesc: '新しいユーザー向けのシンプルな説明とクイックガイドです。',
+  glossaryTitle: '初心者ガイド',
+  terms: {
+    restDay: {
+      title: '休息日',
+      desc: '回復のための日です。体は休みながら再構築されるので、飛ばさないようにしましょう。'
+    },
+    warmUp: {
+      title: 'ウォームアップ',
+      desc: 'トレーニング前の軽い動きで、体を準備し、ケガのリスクを減らします。'
+    },
+    cooldown: {
+      title: 'クールダウン',
+      desc: 'トレーニング後の軽い動きやストレッチで、体の回復を助けます。'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: '高強度インターバルトレーニング：短い高強度運動と短い休憩を繰り返す方法です。'
+    },
+    rep: {
+      title: 'レップ',
+      desc: '1回の完全な動作のことです。例：スクワット1回 = 1レップ。'
+    },
+    set: {
+      title: 'セット',
+      desc: 'レップのまとまりです。例：スクワット10回をまとめて行う = 1セット。'
+    }
+  }
+},
+todayWorkout: {
+  title: '今日のワークアウト',
+  fallback: 'ワークアウト',
+  startNow: '今すぐ始める',
+  restTitle: '今日は回復日です',
+  restText: '少し休んで、軽くストレッチし、水分をとって、次のワークアウトに備えましょう。'
+},
 // ja
-premium: {
-  title: 'プレミアムにアップグレード',
-  removeAds: '広告を削除',
-  allPrograms: 'すべての機能を解放',
-  active: 'プレミアムは有効です',
-  restore: '購入を復元',
-  restoreTitle: '購入を復元',
-  restoreSuccess: 'プレミアムを正常に復元しました。',
-  restoreEmpty: 'プレミアム購入が見つかりませんでした。',
-  errorTitle: '購入に失敗しました',
-  errorText: '購入を完了できませんでした。',
-  productUnavailable: 'プレミアム商品が見つかりません。Play Console / App Store の設定を確認してください。',
-  subUnavailable: '月額サブスクリプションが見つかりません。Play Console / App Store の設定を確認してください。',
-  loading: '読み込み中...',
-
-  monthlyTitle: '月額プレミアム',
-  monthlyDesc: 'プレミアムを有効に保つため毎月自動更新されます',
-  subscribeMonthly: '月額で登録',
-
-  lifetimeTitle: '永久プレミアム',
-  lifetimeDesc: '一度の支払いで永久にプレミアムを利用',
-  buyLifetime: '永久版を購入'
+history: {
+  title: 'トレーニング履歴',
+  screenTitle: 'トレーニング履歴',
+  thisWeek: '今週',
+  minutes: '分',
+  totalWorkouts: 'ワークアウト',
+  empty: 'まだ完了したワークアウトはありません。',
+  viewAll: 'すべて見る',
+  filter7: '7日',
+  filter30: '30日',
+  filterAll: 'すべて'
+},
+achievements: {
+  title: '実績',
+  firstWorkout: '初回ワークアウト',
+  tenWorkouts: '10回のワークアウト',
+  twentyfiveWorkouts: '25回のワークアウト',
+  streak3: '3日連続',
+  streak7: '7日連続',
+  week4: '今週4回のワークアウト',
+  finishProgram: '1つのプログラムを完了'
+},
+challenges: {
+  title: 'チャレンジ',
+  intro: '継続するために短いチャレンジを始めましょう。',
+  start7: '7日チャレンジを開始',
+  start30: '30日チャレンジを開始',
+  complete: 'チャレンジ完了',
+  daysLeft: '残り{{count}}日',
+  starter7Title: '7日スターターチャレンジ',
+  starter7Desc: '7日間で5回のワークアウトを完了しましょう。',
+  consistency30Title: '30日継続チャレンジ',
+  consistency30Desc: '30日間で20回のワークアウトを完了しましょう。'
 }
 };
 const ko = {
@@ -1993,7 +2515,7 @@ const ko = {
     activeTitle: '진행 중', // Đang tiến hành (Dịch thoát ý từ "Practicing" để hợp ngữ cảnh trạng thái)
     noActive: '현재 진행 중인 프로그램이 없습니다.', // Hiện không có chương trình nào đang thực hiện.
   },
-program: {
+  program: {
     daysPrefix: '{{day}}일차 • {{weekday}}',
     weekTitle: '{{n}}주차',
     completed: '완료됨',
@@ -2006,39 +2528,39 @@ program: {
     lower: '하체: 엉덩이 - 다리',
     core: '복근 & 코어',
     pickOne: '시작할 플랜을 선택하세요',
-    days : '일'
+    days: '일'
   },
-// ko
-guide: {
-  title: 'PulseFit 사용 방법',
-  subtitle: '다음의 간단한 단계에 따라 운동을 시작하세요.',
+  // ko
+  guide: {
+    title: 'PulseFit 사용 방법',
+    subtitle: '다음의 간단한 단계에 따라 운동을 시작하세요.',
 
-  steps: {
-    step1: {
-      badge: '1단계',
-      title: '개인 정보를 입력하세요',
-      desc: '키, 몸무게, 건강 상태, 목표 및 기타 기본 정보를 입력하세요. 앱이 BMI를 계산하고 더 안전하게 시작할 수 있도록 건강 조언을 제공합니다.'
+    steps: {
+      step1: {
+        badge: '1단계',
+        title: '개인 정보를 입력하세요',
+        desc: '키, 몸무게, 건강 상태, 목표 및 기타 기본 정보를 입력하세요. 앱이 BMI를 계산하고 더 안전하게 시작할 수 있도록 건강 조언을 제공합니다.'
+      },
+      step2: {
+        badge: '2단계',
+        title: '적합한 운동 프로그램을 선택하세요',
+        desc: '사용 가능한 운동 프로그램을 살펴보고 자신의 체력 수준, 목표, 선호도에 가장 잘 맞는 프로그램을 선택하세요.'
+      },
+      step3: {
+        badge: '3단계',
+        title: '운동할 날짜를 선택하세요',
+        desc: '선택한 프로그램을 열고 따라 하고 싶은 운동 날짜를 선택하세요. 일정에 따라 차근차근 진행할 수 있습니다.'
+      },
+      step4: {
+        badge: '4단계',
+        title: '영상과 함께 운동하세요',
+        desc: '운동 영상을 보며 올바르게 따라 하세요. 더 좋은 시청 경험을 위해 휴대폰을 가로로 돌려 전체 화면으로 볼 수 있습니다.'
+      }
     },
-    step2: {
-      badge: '2단계',
-      title: '적합한 운동 프로그램을 선택하세요',
-      desc: '사용 가능한 운동 프로그램을 살펴보고 자신의 체력 수준, 목표, 선호도에 가장 잘 맞는 프로그램을 선택하세요.'
-    },
-    step3: {
-      badge: '3단계',
-      title: '운동할 날짜를 선택하세요',
-      desc: '선택한 프로그램을 열고 따라 하고 싶은 운동 날짜를 선택하세요. 일정에 따라 차근차근 진행할 수 있습니다.'
-    },
-    step4: {
-      badge: '4단계',
-      title: '영상과 함께 운동하세요',
-      desc: '운동 영상을 보며 올바르게 따라 하세요. 더 좋은 시청 경험을 위해 휴대폰을 가로로 돌려 전체 화면으로 볼 수 있습니다.'
-    }
+
+    noteTitle: '참고',
+    note: '최고의 결과를 얻으려면 꾸준히 운동을 계속하세요.'
   },
-
-  noteTitle: '참고',
-  note: '최고의 결과를 얻으려면 꾸준히 운동을 계속하세요.'
-},
   video: {
     loading: '동영상 로딩 중...',
     play: '운동 시작',
@@ -2167,84 +2689,168 @@ guide: {
     btn_delete: '삭제',
     btn_save: '저장',
   },
+  // ko
+  dashboard: {
+    title: '진행 대시보드',
+    streak: '연속 기록',
+    thisWeek: '이번 주',
+    total: '전체',
+    completedPrograms: '완료됨',
+    lastWorkout: '최근 운동'
+  },
+  recommend: {
+    title: '추천 프로그램',
+    start: '이 플랜 시작하기'
+  },
   nutrition: {
-    title: '영양 가이드',
-    subtitle: '운동 효과를 높이는 간단한 포션(분량) 기반 식단.',
-    sections: {
-      how: {
-        title: '진행 방법',
-        bullets: [
-          '식품군을 활용한 포션 기반 플랜.',
-          '에너지와 회복을 위한 균형 잡힌 탄단지(매크로).', // "탄단지" là từ lóng rất phổ biến cho Carbs/Protein/Fat
-          '매일 마시는 쉐이크는 단백질 1포션으로 계산.',
-        ],
-      },
-      plan: {
-        title: '나만의 플랜 찾기',
-        bullets: [
-          '체형과 목표에 따라 플랜 A~E 선택.',
-          '각 플랜 = 하루에 섭취할 그룹별 고정 포션 수.',
-          '너무 배고프거나 배부르면 약간 조절하세요.',
-        ],
-      },
-      foods: {
-        title: '식품 리스트 (추천)',
-        bullets: [
-          '채소와 과일 우선; 가공되지 않은, 다채로운 색깔, 고식이섬유.',
-          '저지방 단백질; 오트밀, 현미, 고구마 같은 건강한 탄수화물.',
-          '건강한 지방: 아보카도, 견과류, 씨앗류, 올리브유.',
-        ],
-      },
-      samples: {
-        title: '하루 식단 예시',
-        bullets: [
-          '아침: 요거트 + 베리류 + 오트밀.',
-          '점심: 닭가슴살 또는 두부 보울(Bowl), 채소 + 밥/퀴노아.',
-          '저녁: 생선 + 녹색 채소 + 고구마.',
-        ],
-      },
-      drinks: {
-        title: '음료 / 커피 & 차',
-        bullets: [
-          '수분 섭취 목표: 하루 체중(lb)의 절반을 온스로 (또는 약 35ml/kg).',
-          '커피/차는 괜찮음; 설탕/프림 자제.',
-          '가능하면 가당 음료와 술은 피하세요.',
-        ],
-      },
-      success: {
-        title: '성공을 위한 팁',
-        bullets: [
-          '단백질 미리 준비(밀프렙), 채소는 씻어서 소분하기.',
-          '간식 챙기기: 과일, 견과류, 프로틴 바.',
-          '천천히 먹기, 숙면 취하기, 꾸준히 하기.',
-        ],
-      },
-    },
+    title: '영양',
+    subtitle: '현재 프로필과 목표를 바탕으로 일일 목표가 개인 맞춤형으로 설정됩니다.',
+    noProfileTitle: '먼저 프로필을 완성하세요',
+    noProfileText: '칼로리, 매크로, 수분 섭취 추천을 받으려면 키, 몸무게, 목표를 추가하세요.',
+    targets: '일일 목표',
+    calories: '칼로리',
+    water: '물',
+    macros: '매크로 비율',
+    protein: '단백질',
+    carbs: '탄수화물',
+    fats: '지방',
+    sampleMeals: '예시 식단',
+    tips: '팁'
   },
   // ko
+  // ko
+  premium: {
+    title: '프리미엄으로 업그레이드',
+    removeAds: '광고 제거',
+    allPrograms: '전체 경험 잠금 해제',
+    active: '프리미엄이 활성화되었습니다',
+    restore: '구매 복원',
+    restoreTitle: '구매 복원',
+    restoreSuccess: '프리미엄이 성공적으로 복원되었습니다.',
+    restoreEmpty: '프리미엄 구매 내역을 찾을 수 없습니다.',
+    errorTitle: '구매 실패',
+    errorText: '구매를 완료할 수 없습니다.',
+    productUnavailable: '프리미엄 상품을 찾을 수 없습니다. Play Console / App Store 설정을 확인하세요.',
+    subUnavailable: '월간 구독 상품을 찾을 수 없습니다. Play Console / App Store 설정을 확인하세요.',
+    loading: '로딩 중...',
+
+    monthlyTitle: '월간 프리미엄',
+    monthlyDesc: '프리미엄을 유지하기 위해 매월 자동 갱신됩니다',
+    subscribeMonthly: '월간 구독',
+
+    lifetimeTitle: '평생 프리미엄',
+    lifetimeDesc: '한 번 결제로 평생 프리미엄 이용',
+    buyLifetime: '평생 이용 구매'
+  },
+  // ko
+  filters: {
+    all: '전체',
+
+    levelTitle: '레벨',
+    level: {
+      beginner: '초급',
+      intermediate: '중급',
+      advanced: '고급',
+    },
+
+    goalTitle: '목표',
+    goal: {
+      lose_weight: '체중 감량',
+      build_muscle: '근육 증가',
+      cardio: '유산소',
+      core: '코어',
+      mobility: '유연성',
+    },
+
+    equipmentTitle: '장비',
+    equipment: {
+      no_equipment: '장비 없음',
+      with_equipment: '장비 있음',
+    },
+
+    durationTitle: '시간',
+    duration: {
+      short: '짧음',
+      medium: '중간',
+      long: '김',
+    },
+
+    noResultsTitle: '일치하는 프로그램이 없습니다',
+    noResultsText: '하나 이상의 필터를 변경해 보세요.',
+  },
+  // ko
+beginner: {
+  modeTitle: '초보자 모드',
+  modeDesc: '새로운 사용자를 위한 간단한 설명과 빠른 안내입니다.',
+  glossaryTitle: '초보자 가이드',
+  terms: {
+    restDay: {
+      title: '휴식일',
+      desc: '회복을 위한 날입니다. 몸이 쉬면서 다시 회복되므로 건너뛰지 마세요.'
+    },
+    warmUp: {
+      title: '워밍업',
+      desc: '운동 전에 가벼운 움직임으로 몸을 준비하고 부상 위험을 줄입니다.'
+    },
+    cooldown: {
+      title: '쿨다운',
+      desc: '운동 후 가벼운 움직임이나 스트레칭으로 몸이 회복되도록 돕습니다.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: '고강도 인터벌 트레이닝: 짧은 시간 강하게 운동하고 짧게 쉬는 방식입니다.'
+    },
+    rep: {
+      title: '반복',
+      desc: '운동 동작 1회를 의미합니다. 예: 스쿼트 1번 = 1회.'
+    },
+    set: {
+      title: '세트',
+      desc: '반복의 묶음입니다. 예: 스쿼트 10회를 연속으로 하면 1세트입니다.'
+    }
+  }
+},
+todayWorkout: {
+  title: '오늘의 운동',
+  fallback: '운동',
+  startNow: '지금 시작',
+  restTitle: '오늘은 회복하는 날입니다',
+  restText: '잠시 쉬고, 가볍게 스트레칭하고, 물을 마시며 다음 운동을 준비하세요.'
+},
 // ko
-premium: {
-  title: '프리미엄으로 업그레이드',
-  removeAds: '광고 제거',
-  allPrograms: '전체 경험 잠금 해제',
-  active: '프리미엄이 활성화되었습니다',
-  restore: '구매 복원',
-  restoreTitle: '구매 복원',
-  restoreSuccess: '프리미엄이 성공적으로 복원되었습니다.',
-  restoreEmpty: '프리미엄 구매 내역을 찾을 수 없습니다.',
-  errorTitle: '구매 실패',
-  errorText: '구매를 완료할 수 없습니다.',
-  productUnavailable: '프리미엄 상품을 찾을 수 없습니다. Play Console / App Store 설정을 확인하세요.',
-  subUnavailable: '월간 구독 상품을 찾을 수 없습니다. Play Console / App Store 설정을 확인하세요.',
-  loading: '로딩 중...',
-
-  monthlyTitle: '월간 프리미엄',
-  monthlyDesc: '프리미엄을 유지하기 위해 매월 자동 갱신됩니다',
-  subscribeMonthly: '월간 구독',
-
-  lifetimeTitle: '평생 프리미엄',
-  lifetimeDesc: '한 번 결제로 평생 프리미엄 이용',
-  buyLifetime: '평생 이용 구매'
+history: {
+  title: '운동 기록',
+  screenTitle: '운동 기록',
+  thisWeek: '이번 주',
+  minutes: '분',
+  totalWorkouts: '운동',
+  empty: '아직 완료한 운동이 없습니다.',
+  viewAll: '전체 보기',
+  filter7: '7일',
+  filter30: '30일',
+  filterAll: '전체'
+},
+achievements: {
+  title: '업적',
+  firstWorkout: '첫 운동',
+  tenWorkouts: '운동 10회',
+  twentyfiveWorkouts: '운동 25회',
+  streak3: '3일 연속',
+  streak7: '7일 연속',
+  week4: '이번 주 운동 4회',
+  finishProgram: '프로그램 1개 완료'
+},
+challenges: {
+  title: '챌린지',
+  intro: '꾸준함을 유지하기 위해 짧은 챌린지를 시작하세요.',
+  start7: '7일 챌린지 시작',
+  start30: '30일 챌린지 시작',
+  complete: '챌린지 완료',
+  daysLeft: '{{count}}일 남음',
+  starter7Title: '7일 스타터 챌린지',
+  starter7Desc: '7일 동안 운동 5회를 완료하세요.',
+  consistency30Title: '30일 꾸준함 챌린지',
+  consistency30Desc: '30일 동안 운동 20회를 완료하세요.'
 }
 };
 const ru = {
@@ -2271,7 +2877,7 @@ const ru = {
     activeTitle: 'Текущая', // (Chương trình) Hiện tại / Đang tập
     noActive: 'Нет активных программ.', // Không có chương trình nào đang hoạt động.
   },
-program: {
+  program: {
     daysPrefix: 'День {{day}} • {{weekday}}',
     weekTitle: 'Неделя {{n}}',
     completed: 'Выполнено',
@@ -2284,39 +2890,39 @@ program: {
     lower: 'Ягодицы - Ноги',       // Низ тела
     core: 'Пресс и Кор',           // "Кор" (Core) là thuật ngữ chuẩn
     pickOne: 'Выберите план, чтобы начать',
-    days : 'день'
+    days: 'день'
   },
-// ru
-guide: {
-  title: 'Как пользоваться PulseFit',
-  subtitle: 'Следуйте этим простым шагам, чтобы начать свой тренировочный путь.',
+  // ru
+  guide: {
+    title: 'Как пользоваться PulseFit',
+    subtitle: 'Следуйте этим простым шагам, чтобы начать свой тренировочный путь.',
 
-  steps: {
-    step1: {
-      badge: 'Шаг 1',
-      title: 'Введите личную информацию',
-      desc: 'Укажите свой рост, вес, состояние здоровья, цели и другие основные данные. Приложение рассчитает ваш ИМТ и даст рекомендации по здоровью, чтобы вы могли начать безопасно.'
+    steps: {
+      step1: {
+        badge: 'Шаг 1',
+        title: 'Введите личную информацию',
+        desc: 'Укажите свой рост, вес, состояние здоровья, цели и другие основные данные. Приложение рассчитает ваш ИМТ и даст рекомендации по здоровью, чтобы вы могли начать безопасно.'
+      },
+      step2: {
+        badge: 'Шаг 2',
+        title: 'Выберите подходящую программу тренировок',
+        desc: 'Просмотрите доступные программы и выберите ту, которая лучше всего соответствует вашему уровню подготовки, целям и предпочтениям.'
+      },
+      step3: {
+        badge: 'Шаг 3',
+        title: 'Выберите день тренировки',
+        desc: 'Откройте выбранную программу и выберите тренировочный день, который хотите выполнить. Вы можете двигаться шаг за шагом по расписанию программы.'
+      },
+      step4: {
+        badge: 'Шаг 4',
+        title: 'Тренируйтесь по видео',
+        desc: 'Следуйте видео, чтобы выполнять упражнения правильно. Вы можете повернуть телефон горизонтально, чтобы смотреть видео в полноэкранном режиме.'
+      }
     },
-    step2: {
-      badge: 'Шаг 2',
-      title: 'Выберите подходящую программу тренировок',
-      desc: 'Просмотрите доступные программы и выберите ту, которая лучше всего соответствует вашему уровню подготовки, целям и предпочтениям.'
-    },
-    step3: {
-      badge: 'Шаг 3',
-      title: 'Выберите день тренировки',
-      desc: 'Откройте выбранную программу и выберите тренировочный день, который хотите выполнить. Вы можете двигаться шаг за шагом по расписанию программы.'
-    },
-    step4: {
-      badge: 'Шаг 4',
-      title: 'Тренируйтесь по видео',
-      desc: 'Следуйте видео, чтобы выполнять упражнения правильно. Вы можете повернуть телефон горизонтально, чтобы смотреть видео в полноэкранном режиме.'
-    }
+
+    noteTitle: 'Примечание',
+    note: 'Тренируйтесь регулярно, чтобы достичь наилучших результатов.'
   },
-
-  noteTitle: 'Примечание',
-  note: 'Тренируйтесь регулярно, чтобы достичь наилучших результатов.'
-},
   video: {
     loading: 'Загрузка видео...',
     play: 'Начать тренировку',
@@ -2445,85 +3051,169 @@ guide: {
     btn_delete: 'Удалить',
     btn_save: 'Сохранить',
   },
+  // ru
+  dashboard: {
+    title: 'Панель прогресса',
+    streak: 'Серия',
+    thisWeek: 'На этой неделе',
+    total: 'Всего',
+    completedPrograms: 'Завершено',
+    lastWorkout: 'Последняя тренировка'
+  },
+  recommend: {
+    title: 'Рекомендовано для вас',
+    start: 'Начать этот план'
+  },
   nutrition: {
-    title: 'Гайд по питанию',
-    subtitle: 'Простое питание порциями для поддержки тренировок.',
-    sections: {
-      how: {
-        title: 'Как это работает',
-        bullets: [
-          'План основан на порциях по группам продуктов.',
-          'Сбалансированные БЖУ для энергии и восстановления.', // БЖУ = Белки, Жиры, Углеводы (Macros)
-          'Ежедневный протеиновый коктейль считается за 1 порцию белка.',
-        ],
-      },
-      plan: {
-        title: 'Ваш план',
-        bullets: [
-          'Выберите План A–E по параметрам тела и цели.',
-          'Каждый план = фиксированные порции групп продуктов в день.',
-          'Слегка скорректируйте, если чувствуете сильный голод или переедание.',
-        ],
-      },
-      foods: {
-        title: 'Список продуктов (лучший выбор)',
-        bullets: [
-          'Овощи и фрукты в приоритете; цельные, цветные, богатые клетчаткой.',
-          'Постные белки; правильные углеводы (овсянка, бурый рис, батат).',
-          'Полезные жиры: авокадо, орехи, семена, оливковое масло.',
-        ],
-      },
-      samples: {
-        title: 'Пример меню на день',
-        bullets: [
-          'Завтрак: йогурт + ягоды + овсянка.',
-          'Обед: боул с курицей или тофу, овощи + рис/киноа.',
-          'Ужин: рыба + зелень + батат.',
-        ],
-      },
-      drinks: {
-        title: 'Напитки / кофе и чай',
-        bullets: [
-          'Норма воды: ~30-35 мл на кг веса тела в день.', // Quy đổi đơn vị lb/oz sang chuẩn metric thường dùng ở Nga
-          'Кофе/чай можно; ограничьте сахар/сливки.',
-          'По возможности исключите сладкие напитки и алкоголь.',
-        ],
-      },
-      success: {
-        title: 'Настрой на успех',
-        bullets: [
-          'Готовьте белки заранее (мил-преп), мойте и делите овощи.',
-          'Берите снеки: фрукты, орехи, батончики.',
-          'Ешьте медленно, спите хорошо, будьте последовательны.',
-        ],
-      },
-    },
+    title: 'Питание',
+    subtitle: 'Ваши ежедневные цели персонализируются на основе вашего текущего профиля и цели.',
+    noProfileTitle: 'Сначала заполните профиль',
+    noProfileText: 'Добавьте рост, вес и цель, чтобы получить рекомендации по калориям, макроэлементам и воде.',
+    targets: 'Ежедневные цели',
+    calories: 'Калории',
+    water: 'Вода',
+    macros: 'Баланс макроэлементов',
+    protein: 'Белки',
+    carbs: 'Углеводы',
+    fats: 'Жиры',
+    sampleMeals: 'Пример плана питания',
+    tips: 'Советы'
   },
   // ru
+  // ru
+  premium: {
+    title: 'Перейти на Premium',
+    removeAds: 'Убрать рекламу',
+    allPrograms: 'Открыть полный доступ',
+    active: 'Premium активен',
+    restore: 'Восстановить покупки',
+    restoreTitle: 'Восстановить покупки',
+    restoreSuccess: 'Premium успешно восстановлен.',
+    restoreEmpty: 'Покупка Premium не найдена.',
+    errorTitle: 'Ошибка покупки',
+    errorText: 'Не удалось завершить покупку.',
+    productUnavailable: 'Продукт Premium не найден. Проверьте настройки Play Console / App Store.',
+    subUnavailable: 'Месячная подписка не найдена. Проверьте настройки Play Console / App Store.',
+    loading: 'Загрузка...',
+
+    monthlyTitle: 'Ежемесячный Premium',
+    monthlyDesc: 'Автоматически продлевается каждый месяц, чтобы Premium оставался активным',
+    subscribeMonthly: 'Подписаться на месяц',
+
+    lifetimeTitle: 'Premium навсегда',
+    lifetimeDesc: 'Разовая оплата, Premium навсегда',
+    buyLifetime: 'Купить навсегда'
+  },
+  // ru
+  filters: {
+    all: 'Все',
+
+    levelTitle: 'Уровень',
+    level: {
+      beginner: 'Начальный',
+      intermediate: 'Средний',
+      advanced: 'Продвинутый',
+    },
+
+    goalTitle: 'Фокус',
+    goal: {
+      lose_weight: 'Похудение',
+      build_muscle: 'Набор мышц',
+      cardio: 'Кардио',
+      core: 'Кор',
+      mobility: 'Мобильность',
+    },
+
+    equipmentTitle: 'Оборудование',
+    equipment: {
+      no_equipment: 'Без оборудования',
+      with_equipment: 'С оборудованием',
+    },
+
+    durationTitle: 'Длительность',
+    duration: {
+      short: 'Короткая',
+      medium: 'Средняя',
+      long: 'Длинная',
+    },
+
+    noResultsTitle: 'Подходящих программ не найдено',
+    noResultsText: 'Попробуйте изменить один или несколько фильтров.',
+  },
+  // ru
+beginner: {
+  modeTitle: 'Режим для новичков',
+  modeDesc: 'Простые объяснения и быстрые подсказки для новых пользователей.',
+  glossaryTitle: 'Гид для новичков',
+  terms: {
+    restDay: {
+      title: 'День отдыха',
+      desc: 'Это день восстановления. Ваше тело отдыхает и восстанавливается, поэтому не пропускайте его.'
+    },
+    warmUp: {
+      title: 'Разминка',
+      desc: 'Лёгкие движения перед тренировкой, чтобы подготовить тело и снизить риск травм.'
+    },
+    cooldown: {
+      title: 'Заминка',
+      desc: 'Лёгкие движения или растяжка после тренировки, чтобы помочь телу восстановиться.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Высокоинтенсивная интервальная тренировка: короткие периоды тяжёлой нагрузки с коротким отдыхом.'
+    },
+    rep: {
+      title: 'Повтор',
+      desc: 'Одно полное выполнение упражнения. Пример: один присед = один повтор.'
+    },
+    set: {
+      title: 'Подход',
+      desc: 'Группа повторений. Пример: 10 приседаний подряд = 1 подход.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Тренировка на сегодня',
+  fallback: 'Тренировка',
+  startNow: 'Начать сейчас',
+  restTitle: 'Сегодня день восстановления',
+  restText: 'Отдохните, слегка потянитесь, попейте воды и подготовьтесь к следующей тренировке.'
+},
 // ru
-premium: {
-  title: 'Перейти на Premium',
-  removeAds: 'Убрать рекламу',
-  allPrograms: 'Открыть полный доступ',
-  active: 'Premium активен',
-  restore: 'Восстановить покупки',
-  restoreTitle: 'Восстановить покупки',
-  restoreSuccess: 'Premium успешно восстановлен.',
-  restoreEmpty: 'Покупка Premium не найдена.',
-  errorTitle: 'Ошибка покупки',
-  errorText: 'Не удалось завершить покупку.',
-  productUnavailable: 'Продукт Premium не найден. Проверьте настройки Play Console / App Store.',
-  subUnavailable: 'Месячная подписка не найдена. Проверьте настройки Play Console / App Store.',
-  loading: 'Загрузка...',
-
-  monthlyTitle: 'Ежемесячный Premium',
-  monthlyDesc: 'Автоматически продлевается каждый месяц, чтобы Premium оставался активным',
-  subscribeMonthly: 'Подписаться на месяц',
-
-  lifetimeTitle: 'Premium навсегда',
-  lifetimeDesc: 'Разовая оплата, Premium навсегда',
-  buyLifetime: 'Купить навсегда'
-}
+history: {
+  title: 'История тренировок',
+  screenTitle: 'История тренировок',
+  thisWeek: 'На этой неделе',
+  minutes: 'Минуты',
+  totalWorkouts: 'Тренировки',
+  empty: 'Пока нет завершённых тренировок.',
+  viewAll: 'Показать всё',
+  filter7: '7 дней',
+  filter30: '30 дней',
+  filterAll: 'Все'
+},
+achievements: {
+  title: 'Достижения',
+  firstWorkout: 'Первая тренировка',
+  tenWorkouts: '10 тренировок',
+  twentyfiveWorkouts: '25 тренировок',
+  streak3: 'Серия 3 дня',
+  streak7: 'Серия 7 дней',
+  week4: '4 тренировки на этой неделе',
+  finishProgram: 'Завершить 1 программу'
+},
+challenges: {
+  title: 'Испытания',
+  intro: 'Начните короткое испытание, чтобы сохранять регулярность.',
+  start7: 'Начать испытание на 7 дней',
+  start30: 'Начать испытание на 30 дней',
+  complete: 'Испытание завершено',
+  daysLeft: 'Осталось {{count}} дн.',
+  starter7Title: 'Стартовое испытание на 7 дней',
+  starter7Desc: 'Выполните 5 тренировок за 7 дней.',
+  consistency30Title: 'Испытание на 30 дней',
+  consistency30Desc: 'Выполните 20 тренировок за 30 дней.'
+},
 };
 const ar = {
   ...base,
@@ -2549,7 +3239,7 @@ const ar = {
     activeTitle: 'قيد التنفيذ', // Đang thực hiện / Đang diễn ra
     noActive: 'لا يوجد برنامج نشط حالياً.', // Hiện không có chương trình nào đang hoạt động.
   },
-program: {
+  program: {
     daysPrefix: 'اليوم {{day}} • {{weekday}}',
     weekTitle: 'الأسبوع {{n}}',
     completed: 'مكتمل',
@@ -2562,39 +3252,39 @@ program: {
     lower: 'أرداف - أرجل',
     core: 'عضلات البطن والجذع', // Core = جذع (Jith')
     pickOne: 'اختر خطة للبدء',
-    days : 'days'
+    days: 'days'
   },
-// ar
-guide: {
-  title: 'كيفية استخدام PulseFit',
-  subtitle: 'اتبع هذه الخطوات البسيطة لبدء رحلتك الرياضية.',
+  // ar
+  guide: {
+    title: 'كيفية استخدام PulseFit',
+    subtitle: 'اتبع هذه الخطوات البسيطة لبدء رحلتك الرياضية.',
 
-  steps: {
-    step1: {
-      badge: 'الخطوة 1',
-      title: 'أدخل معلوماتك الشخصية',
-      desc: 'أدخل الطول والوزن والحالة الصحية والأهداف وغيرها من المعلومات الأساسية. سيحسب التطبيق مؤشر كتلة الجسم ويقدم لك نصائح صحية لمساعدتك على البدء بأمان.'
+    steps: {
+      step1: {
+        badge: 'الخطوة 1',
+        title: 'أدخل معلوماتك الشخصية',
+        desc: 'أدخل الطول والوزن والحالة الصحية والأهداف وغيرها من المعلومات الأساسية. سيحسب التطبيق مؤشر كتلة الجسم ويقدم لك نصائح صحية لمساعدتك على البدء بأمان.'
+      },
+      step2: {
+        badge: 'الخطوة 2',
+        title: 'اختر برنامج تمرين مناسب',
+        desc: 'تصفح برامج التمرين المتاحة واختر البرنامج الأنسب لمستوى لياقتك وأهدافك وتفضيلاتك.'
+      },
+      step3: {
+        badge: 'الخطوة 3',
+        title: 'اختر يوم التمرين',
+        desc: 'افتح البرنامج الذي اخترته وحدد يوم التمرين الذي تريد اتباعه. يمكنك التقدم خطوة بخطوة وفقًا لجدول التمرين.'
+      },
+      step4: {
+        badge: 'الخطوة 4',
+        title: 'تمرن مع الفيديو',
+        desc: 'اتبع فيديو التمرين لأداء التمارين بشكل صحيح. يمكنك تدوير الهاتف أفقيًا لمشاهدة الفيديو بملء الشاشة للحصول على تجربة أفضل.'
+      }
     },
-    step2: {
-      badge: 'الخطوة 2',
-      title: 'اختر برنامج تمرين مناسب',
-      desc: 'تصفح برامج التمرين المتاحة واختر البرنامج الأنسب لمستوى لياقتك وأهدافك وتفضيلاتك.'
-    },
-    step3: {
-      badge: 'الخطوة 3',
-      title: 'اختر يوم التمرين',
-      desc: 'افتح البرنامج الذي اخترته وحدد يوم التمرين الذي تريد اتباعه. يمكنك التقدم خطوة بخطوة وفقًا لجدول التمرين.'
-    },
-    step4: {
-      badge: 'الخطوة 4',
-      title: 'تمرن مع الفيديو',
-      desc: 'اتبع فيديو التمرين لأداء التمارين بشكل صحيح. يمكنك تدوير الهاتف أفقيًا لمشاهدة الفيديو بملء الشاشة للحصول على تجربة أفضل.'
-    }
+
+    noteTitle: 'ملاحظة',
+    note: 'حافظ على التمرين المنتظم لتحقيق أفضل النتائج.'
   },
-
-  noteTitle: 'ملاحظة',
-  note: 'حافظ على التمرين المنتظم لتحقيق أفضل النتائج.'
-},
   video: {
     loading: 'جاري تحميل الفيديو...',
     play: 'ابدأ التمرين',
@@ -2723,111 +3413,195 @@ guide: {
     btn_delete: 'حذف',
     btn_save: 'حفظ',
   },
+  // ar
+  dashboard: {
+    title: 'لوحة التقدم',
+    streak: 'سلسلة الأيام',
+    thisWeek: 'هذا الأسبوع',
+    total: 'الإجمالي',
+    completedPrograms: 'المكتمل',
+    lastWorkout: 'آخر تمرين'
+  },
+  recommend: {
+    title: 'موصى به لك',
+    start: 'ابدأ هذه الخطة'
+  },
   nutrition: {
-    title: 'دليل التغذية',
-    subtitle: 'نظام غذائي بسيط يعتمد على الحصص لدعم تدريبك.',
-    sections: {
-      how: {
-        title: 'كيف يعمل',
-        bullets: [
-          'خطة تعتمد على الحصص باستخدام المجموعات الغذائية.',
-          'توازن العناصر الغذائية الكبرى (الماكروز) للطاقة والاستشفاء.',
-          'مخفوق البروتين اليومي يُحسب كحصّة بروتين واحدة.',
-        ],
-      },
-      plan: {
-        title: 'ابحث عن خطتك',
-        bullets: [
-          'اختر الخطة A–E حسب حجم الجسم والهدف.',
-          'كل خطة = عدد حصص ثابت لكل مجموعة/يوم.',
-          'قم بالتعديل قليلاً إذا كنت تشعر بالجوع الشديد أو الامتلاء.',
-        ],
-      },
-      foods: {
-        title: 'قائمة الأطعمة (أفضل الخيارات)',
-        bullets: [
-          'الخضروات والفواكه أولاً؛ كاملة، ملونة، وغنية بالألياف.',
-          'البروتينات الخالية من الدهون؛ الكربوهيدرات الذكية مثل الشوفان، الأرز البني، البطاطا الحلوة.',
-          'الدهون الصحية: الأفوكادو، المكسرات، البذور، زيت الزيتون.',
-        ],
-      },
-      samples: {
-        title: 'أفكار ليوم نموذجي',
-        bullets: [
-          'الإفطار: زبادي + توت + شوفان.',
-          'الغداء: وعاء دجاج أو توفو، خضار + أرز/كينوا.',
-          'العشاء: سمك + خضروات ورقية + بطاطا الحلوة.',
-        ],
-      },
-      drinks: {
-        title: 'المشروبات / القهوة والشاي',
-        bullets: [
-          'هدف الماء: ~ نصف وزن الجسم (بالباوند) بالأونصة يومياً (أو ~35 مل/كجم).',
-          'القهوة/الشاي مسموح؛ قلل السكر/المبيضات.',
-          'تجنب المشروبات السكرية والكحول قدر الإمكان.',
-        ],
-      },
-      success: {
-        title: 'جهز نفسك للنجاح',
-        bullets: [
-          'جهز البروتين مسبقاً (Meal-prep)، اغسل وقسم الخضروات.',
-          'احزم وجبات خفيفة: فواكه، مكسرات، ألواح طاقة.',
-          'كل ببطء، نم جيداً، وكن منتظماً.',
-        ],
-      },
-    },
+    title: 'التغذية',
+    subtitle: 'يتم تخصيص أهدافك اليومية بناءً على ملفك الحالي وهدفك.',
+    noProfileTitle: 'أكمل ملفك الشخصي أولاً',
+    noProfileText: 'أضف طولك ووزنك وهدفك للحصول على توصيات للسعرات والماكروز والترطيب.',
+    targets: 'الأهداف اليومية',
+    calories: 'السعرات',
+    water: 'الماء',
+    macros: 'توزيع الماكروز',
+    protein: 'البروتين',
+    carbs: 'الكربوهيدرات',
+    fats: 'الدهون',
+    sampleMeals: 'خطة وجبات نموذجية',
+    tips: 'نصائح'
   },
   // ar
+  // ar
+  premium: {
+    title: 'الترقية إلى بريميوم',
+    removeAds: 'إزالة الإعلانات',
+    allPrograms: 'افتح التجربة الكاملة',
+    active: 'بريميوم مفعل',
+    restore: 'استعادة المشتريات',
+    restoreTitle: 'استعادة المشتريات',
+    restoreSuccess: 'تمت استعادة بريميوم بنجاح.',
+    restoreEmpty: 'لم يتم العثور على أي عملية شراء لبريميوم.',
+    errorTitle: 'فشل الشراء',
+    errorText: 'تعذر إكمال عملية الشراء.',
+    productUnavailable: 'لم يتم العثور على منتج بريميوم. يرجى التحقق من إعدادات Play Console / App Store.',
+    subUnavailable: 'لم يتم العثور على الاشتراك الشهري. يرجى التحقق من إعدادات Play Console / App Store.',
+    loading: 'جارٍ التحميل...',
+
+    monthlyTitle: 'بريميوم الشهري',
+    monthlyDesc: 'يتجدد تلقائيًا كل شهر للحفاظ على تفعيل بريميوم',
+    subscribeMonthly: 'اشترك شهريًا',
+
+    lifetimeTitle: 'بريميوم مدى الحياة',
+    lifetimeDesc: 'دفعة واحدة، واحصل على بريميوم مدى الحياة',
+    buyLifetime: 'اشترِ مدى الحياة'
+  },
+  // ar
+  filters: {
+    all: 'الكل',
+
+    levelTitle: 'المستوى',
+    level: {
+      beginner: 'مبتدئ',
+      intermediate: 'متوسط',
+      advanced: 'متقدم',
+    },
+
+    goalTitle: 'التركيز',
+    goal: {
+      lose_weight: 'إنقاص الوزن',
+      build_muscle: 'بناء العضلات',
+      cardio: 'كارديو',
+      core: 'العضلات الأساسية',
+      mobility: 'المرونة',
+    },
+
+    equipmentTitle: 'المعدات',
+    equipment: {
+      no_equipment: 'بدون معدات',
+      with_equipment: 'مع معدات',
+    },
+
+    durationTitle: 'المدة',
+    duration: {
+      short: 'قصيرة',
+      medium: 'متوسطة',
+      long: 'طويلة',
+    },
+
+    noResultsTitle: 'لا توجد برامج مطابقة',
+    noResultsText: 'حاول تغيير عامل تصفية واحد أو أكثر.',
+  },
+  // ar
+beginner: {
+  modeTitle: 'وضع المبتدئين',
+  modeDesc: 'شروحات بسيطة وإرشادات سريعة للمستخدمين الجدد.',
+  glossaryTitle: 'دليل المبتدئين',
+  terms: {
+    restDay: {
+      title: 'يوم الراحة',
+      desc: 'إنه يوم للتعافي. يرتاح جسمك ويعيد بناء نفسه، لذلك لا تتجاهله.'
+    },
+    warmUp: {
+      title: 'الإحماء',
+      desc: 'حركة خفيفة قبل التمرين لتحضير الجسم وتقليل خطر الإصابة.'
+    },
+    cooldown: {
+      title: 'التهدئة',
+      desc: 'حركة سهلة أو تمارين إطالة بعد التمرين لمساعدة الجسم على التعافي.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'تدريب الفترات عالي الشدة: فترات قصيرة من الجهد القوي تتبعها راحات قصيرة.'
+    },
+    rep: {
+      title: 'تكرار',
+      desc: 'حركة كاملة واحدة للتمرين. مثال: قرفصاء واحدة = تكرار واحد.'
+    },
+    set: {
+      title: 'مجموعة',
+      desc: 'مجموعة من التكرارات. مثال: 10 مرات قرفصاء متتالية = مجموعة واحدة.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'تمرين اليوم',
+  fallback: 'تمرين',
+  startNow: 'ابدأ الآن',
+  restTitle: 'اليوم هو يوم تعافٍ',
+  restText: 'خذ قسطًا من الراحة، وتمدد بلطف، واشرب الماء، واستعد لتمرينك التالي.'
+},
 // ar
-premium: {
-  title: 'الترقية إلى بريميوم',
-  removeAds: 'إزالة الإعلانات',
-  allPrograms: 'افتح التجربة الكاملة',
-  active: 'بريميوم مفعل',
-  restore: 'استعادة المشتريات',
-  restoreTitle: 'استعادة المشتريات',
-  restoreSuccess: 'تمت استعادة بريميوم بنجاح.',
-  restoreEmpty: 'لم يتم العثور على أي عملية شراء لبريميوم.',
-  errorTitle: 'فشل الشراء',
-  errorText: 'تعذر إكمال عملية الشراء.',
-  productUnavailable: 'لم يتم العثور على منتج بريميوم. يرجى التحقق من إعدادات Play Console / App Store.',
-  subUnavailable: 'لم يتم العثور على الاشتراك الشهري. يرجى التحقق من إعدادات Play Console / App Store.',
-  loading: 'جارٍ التحميل...',
-
-  monthlyTitle: 'بريميوم الشهري',
-  monthlyDesc: 'يتجدد تلقائيًا كل شهر للحفاظ على تفعيل بريميوم',
-  subscribeMonthly: 'اشترك شهريًا',
-
-  lifetimeTitle: 'بريميوم مدى الحياة',
-  lifetimeDesc: 'دفعة واحدة، واحصل على بريميوم مدى الحياة',
-  buyLifetime: 'اشترِ مدى الحياة'
+history: {
+  title: 'سجل التمارين',
+  screenTitle: 'سجل التمارين',
+  thisWeek: 'هذا الأسبوع',
+  minutes: 'دقائق',
+  totalWorkouts: 'التمارين',
+  empty: 'لا توجد تمارين مكتملة حتى الآن.',
+  viewAll: 'عرض الكل',
+  filter7: '7 أيام',
+  filter30: '30 يومًا',
+  filterAll: 'الكل'
+},
+achievements: {
+  title: 'الإنجازات',
+  firstWorkout: 'أول تمرين',
+  tenWorkouts: '10 تمارين',
+  twentyfiveWorkouts: '25 تمرينًا',
+  streak3: 'سلسلة 3 أيام',
+  streak7: 'سلسلة 7 أيام',
+  week4: '4 تمارين هذا الأسبوع',
+  finishProgram: 'إكمال برنامج واحد'
+},
+challenges: {
+  title: 'التحديات',
+  intro: 'ابدأ تحديًا قصيرًا للحفاظ على الاستمرارية.',
+  start7: 'ابدأ تحدي 7 أيام',
+  start30: 'ابدأ تحدي 30 يومًا',
+  complete: 'تم إكمال التحدي',
+  daysLeft: 'متبقي {{count}} يوم',
+  starter7Title: 'تحدي البداية لمدة 7 أيام',
+  starter7Desc: 'أكمل 5 تمارين خلال 7 أيام.',
+  consistency30Title: 'تحدي الاستمرارية لمدة 30 يومًا',
+  consistency30Desc: 'أكمل 20 تمرينًا خلال 30 يومًا.'
 }
 };
 const hi = {
   ...base,
-tabs: {
-  main: 'होम',                // Home (Phiên âm từ tiếng Anh, phổ biến nhất trong app)
-  nutrition: 'पोषण',          // Dinh dưỡng
-  guide: 'गाइड',              // Hướng dẫn (Phiên âm)
-  premium: 'प्रीमियम',        // Premium (Phiên âm)
-  settings: 'सेटिंग्स',       // Cài đặt (Phiên âm)
-  workout: 'वर्कआउट',         // Tập luyện (Phiên âm)
-  more: 'अधिक',               // Thêm/Khác
-  program: 'प्रोग्राम',       // Chương trình (Phiên âm)
-  profile: 'प्रोफ़ाइल',       // Hồ sơ (Phiên âm)
-  weightChart: 'वजन चार्ट',   // Biểu đồ cân nặng
-},
-home: {
-  title: 'अपना वर्कआउट प्लान चुनें', // Chọn kế hoạch tập luyện của bạn
-  subtitle: 'एक प्रोग्राम चुनें और रोज़ ट्रेनिंग करें', // Chọn một chương trình và tập luyện hàng ngày
-  program60: '60-दिवसीय फैट बर्न',  // Đốt mỡ 60 ngày (Giữ 'Fat Burn' phiên âm sẽ tự nhiên hơn 'Vasa Jalana')
-  program90: '90-दिवसीय फुल बॉडी',  // Toàn thân 90 ngày
-  daysSuffix: '{{count}} दिन',      // Ngày
-  health_overview: 'स्वास्थ्य अवलोकन', // Tổng quan sức khỏe
-  activeTitle: 'जारी है',           // Đang diễn ra/Đang thực hiện (Dịch thoát ý từ Practicing)
-  noActive: 'वर्तमान में कोई प्रोग्राम सक्रिय नहीं है', // Hiện không có chương trình nào đang hoạt động.
-},
-program: {
+  tabs: {
+    main: 'होम',                // Home (Phiên âm từ tiếng Anh, phổ biến nhất trong app)
+    nutrition: 'पोषण',          // Dinh dưỡng
+    guide: 'गाइड',              // Hướng dẫn (Phiên âm)
+    premium: 'प्रीमियम',        // Premium (Phiên âm)
+    settings: 'सेटिंग्स',       // Cài đặt (Phiên âm)
+    workout: 'वर्कआउट',         // Tập luyện (Phiên âm)
+    more: 'अधिक',               // Thêm/Khác
+    program: 'प्रोग्राम',       // Chương trình (Phiên âm)
+    profile: 'प्रोफ़ाइल',       // Hồ sơ (Phiên âm)
+    weightChart: 'वजन चार्ट',   // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'अपना वर्कआउट प्लान चुनें', // Chọn kế hoạch tập luyện của bạn
+    subtitle: 'एक प्रोग्राम चुनें और रोज़ ट्रेनिंग करें', // Chọn một chương trình và tập luyện hàng ngày
+    program60: '60-दिवसीय फैट बर्न',  // Đốt mỡ 60 ngày (Giữ 'Fat Burn' phiên âm sẽ tự nhiên hơn 'Vasa Jalana')
+    program90: '90-दिवसीय फुल बॉडी',  // Toàn thân 90 ngày
+    daysSuffix: '{{count}} दिन',      // Ngày
+    health_overview: 'स्वास्थ्य अवलोकन', // Tổng quan sức khỏe
+    activeTitle: 'जारी है',           // Đang diễn ra/Đang thực hiện (Dịch thoát ý từ Practicing)
+    noActive: 'वर्तमान में कोई प्रोग्राम सक्रिय नहीं है', // Hiện không có chương trình nào đang hoạt động.
+  },
+  program: {
     daysPrefix: 'दिन {{day}} • {{weekday}}', // Day
     weekTitle: 'सप्ताह {{n}}', // Week
     completed: 'पूरा हुआ', // Completed
@@ -2840,39 +3614,39 @@ program: {
     lower: 'कूल्हे - पैर', // Glutes - Legs
     core: 'एब्स (Abs) और कोर', // Abs & Core
     pickOne: 'शुरू करने के लिए एक प्लान चुनें',
-days: 'दिन',
+    days: 'दिन',
   },
-// hi
-guide: {
-  title: 'PulseFit का उपयोग कैसे करें',
-  subtitle: 'अपनी वर्कआउट यात्रा शुरू करने के लिए इन आसान चरणों का पालन करें।',
+  // hi
+  guide: {
+    title: 'PulseFit का उपयोग कैसे करें',
+    subtitle: 'अपनी वर्कआउट यात्रा शुरू करने के लिए इन आसान चरणों का पालन करें।',
 
-  steps: {
-    step1: {
-      badge: 'चरण 1',
-      title: 'अपनी व्यक्तिगत जानकारी दर्ज करें',
-      desc: 'अपनी लंबाई, वजन, स्वास्थ्य स्थिति, लक्ष्य और अन्य बुनियादी जानकारी भरें। ऐप आपका BMI निकालेगा और आपको सुरक्षित शुरुआत के लिए स्वास्थ्य सलाह देगा।'
+    steps: {
+      step1: {
+        badge: 'चरण 1',
+        title: 'अपनी व्यक्तिगत जानकारी दर्ज करें',
+        desc: 'अपनी लंबाई, वजन, स्वास्थ्य स्थिति, लक्ष्य और अन्य बुनियादी जानकारी भरें। ऐप आपका BMI निकालेगा और आपको सुरक्षित शुरुआत के लिए स्वास्थ्य सलाह देगा।'
+      },
+      step2: {
+        badge: 'चरण 2',
+        title: 'उपयुक्त वर्कआउट प्रोग्राम चुनें',
+        desc: 'उपलब्ध वर्कआउट प्रोग्राम देखें और अपने फिटनेस स्तर, लक्ष्यों और पसंद के अनुसार सबसे उपयुक्त प्रोग्राम चुनें।'
+      },
+      step3: {
+        badge: 'चरण 3',
+        title: 'अपना वर्कआउट दिन चुनें',
+        desc: 'चुने गए प्रोग्राम को खोलें और वह दिन चुनें जिसे आप करना चाहते हैं। आप शेड्यूल के अनुसार चरण दर चरण आगे बढ़ सकते हैं।'
+      },
+      step4: {
+        badge: 'चरण 4',
+        title: 'वीडियो के साथ वर्कआउट करें',
+        desc: 'सही तरीके से अभ्यास करने के लिए वर्कआउट वीडियो का पालन करें। बेहतर अनुभव के लिए आप अपना फोन क्षैतिज घुमा कर वीडियो को फुल स्क्रीन में देख सकते हैं।'
+      }
     },
-    step2: {
-      badge: 'चरण 2',
-      title: 'उपयुक्त वर्कआउट प्रोग्राम चुनें',
-      desc: 'उपलब्ध वर्कआउट प्रोग्राम देखें और अपने फिटनेस स्तर, लक्ष्यों और पसंद के अनुसार सबसे उपयुक्त प्रोग्राम चुनें।'
-    },
-    step3: {
-      badge: 'चरण 3',
-      title: 'अपना वर्कआउट दिन चुनें',
-      desc: 'चुने गए प्रोग्राम को खोलें और वह दिन चुनें जिसे आप करना चाहते हैं। आप शेड्यूल के अनुसार चरण दर चरण आगे बढ़ सकते हैं।'
-    },
-    step4: {
-      badge: 'चरण 4',
-      title: 'वीडियो के साथ वर्कआउट करें',
-      desc: 'सही तरीके से अभ्यास करने के लिए वर्कआउट वीडियो का पालन करें। बेहतर अनुभव के लिए आप अपना फोन क्षैतिज घुमा कर वीडियो को फुल स्क्रीन में देख सकते हैं।'
-    }
+
+    noteTitle: 'नोट',
+    note: 'सबसे अच्छे परिणाम पाने के लिए नियमित रूप से अभ्यास करते रहें।'
   },
-
-  noteTitle: 'नोट',
-  note: 'सबसे अच्छे परिणाम पाने के लिए नियमित रूप से अभ्यास करते रहें।'
-},
   video: {
     loading: 'वीडियो लोड हो रहा है...',
     play: 'वर्कआउट शुरू करें',
@@ -3001,110 +3775,195 @@ guide: {
     btn_delete: 'हटाएं',
     btn_save: 'सेव करें',
   },
+  // hi
+  dashboard: {
+    title: 'प्रगति डैशबोर्ड',
+    streak: 'लगातार दिन',
+    thisWeek: 'इस सप्ताह',
+    total: 'कुल',
+    completedPrograms: 'पूर्ण',
+    lastWorkout: 'पिछला वर्कआउट'
+  },
+  recommend: {
+    title: 'आपके लिए सुझाया गया',
+    start: 'यह प्लान शुरू करें'
+  },
   nutrition: {
-    title: 'न्यूट्रिशन गाइड',
-    subtitle: 'आपकी ट्रेनिंग को सपोर्ट करने के लिए सरल, पोर्शन-आधारित खानपान।',
-    sections: {
-      how: {
-        title: 'यह कैसे काम करता है',
-        bullets: [
-          'फूड ग्रुप्स का उपयोग करके पोर्शन-आधारित प्लान।',
-          'एनर्जी और रिकवरी के लिए संतुलित मैक्रोज़ (Macros)।',
-          'डेली शेक (Shake) को 1 प्रोटीन पोर्शन माना जाता है।',
-        ],
-      },
-      plan: {
-        title: 'अपना प्लान खोजें',
-        bullets: [
-          'शरीर के आकार और लक्ष्य के अनुसार प्लान A–E चुनें।',
-          'हर प्लान = प्रति ग्रुप/दिन के लिए निश्चित पोर्शन।',
-          'यदि आपको बहुत भूख लगे या पेट भरा हुआ लगे, तो थोड़ा एडजस्ट करें।',
-        ],
-      },
-      foods: {
-        title: 'फूड लिस्ट (बेहतरीन विकल्प)',
-        bullets: [
-          'सब्जियां और फल पहले; साबुत, रंगीन, हाई-फाइबर।',
-          'लीन प्रोटीन; अच्छे कार्ब्स जैसे ओट्स, ब्राउन राइस, शकरकंद।',
-          'हेल्दी फैट्स: एवोकैडो, नट्स, बीज, जैतून का तेल।',
-        ],
-      },
-      samples: {
-        title: 'एक दिन का उदाहरण',
-        bullets: [
-          'नाश्ता: दही + बेरीज + ओट्स।',
-          'लंच: चिकन या टोफू बाउल, सब्जी + चावल/किनोआ।',
-          'डिनर: मछली + हरी सब्जियां + शकरकंद।',
-        ],
-      },
-      drinks: {
-        title: 'पेय पदार्थ / कॉफी और चाय',
-        bullets: [
-          'पानी का लक्ष्य: ~ शरीर के वजन (lb) का आधा, औंस में प्रति दिन (या ~35ml/kg)।',
-          'कॉफी/चाय ठीक है; चीनी/creamer कम करें।',
-          'जब संभव हो तो मीठे पेय और शराब से बचें।',
-        ],
-      },
-      success: {
-        title: 'सफलता की तैयारी',
-        bullets: [
-          'प्रोटीन पहले से तैयार करें (Meal-prep), सब्जियां धोकर रखें।',
-          'स्नैक्स पैक करें: फल, नट्स, बार।',
-          'धीरे खाएं, अच्छी नींद लें, निरंतर रहें।',
-        ],
-      },
-    },
+    title: 'पोषण',
+    subtitle: 'आपके दैनिक लक्ष्य आपकी वर्तमान प्रोफ़ाइल और लक्ष्य के आधार पर व्यक्तिगत रूप से तय किए जाते हैं।',
+    noProfileTitle: 'पहले अपनी प्रोफ़ाइल पूरी करें',
+    noProfileText: 'कैलोरी, मैक्रो और हाइड्रेशन सुझाव पाने के लिए अपनी लंबाई, वजन और लक्ष्य जोड़ें।',
+    targets: 'दैनिक लक्ष्य',
+    calories: 'कैलोरी',
+    water: 'पानी',
+    macros: 'मैक्रो विभाजन',
+    protein: 'प्रोटीन',
+    carbs: 'कार्ब्स',
+    fats: 'वसा',
+    sampleMeals: 'उदाहरण भोजन योजना',
+    tips: 'सुझाव'
   },
   // hi
+  // hi
+  premium: {
+    title: 'प्रीमियम में अपग्रेड करें',
+    removeAds: 'विज्ञापन हटाएँ',
+    allPrograms: 'पूरा अनुभव अनलॉक करें',
+    active: 'प्रीमियम सक्रिय है',
+    restore: 'खरीदारी पुनर्स्थापित करें',
+    restoreTitle: 'खरीदारी पुनर्स्थापित करें',
+    restoreSuccess: 'प्रीमियम सफलतापूर्वक पुनर्स्थापित हो गया।',
+    restoreEmpty: 'कोई प्रीमियम खरीद नहीं मिली।',
+    errorTitle: 'खरीद विफल रही',
+    errorText: 'खरीद पूरी नहीं हो सकी।',
+    productUnavailable: 'प्रीमियम प्रोडक्ट नहीं मिला। कृपया Play Console / App Store सेटअप जाँचें।',
+    subUnavailable: 'मासिक सदस्यता नहीं मिली। कृपया Play Console / App Store सेटअप जाँचें।',
+    loading: 'लोड हो रहा है...',
+
+    monthlyTitle: 'मासिक प्रीमियम',
+    monthlyDesc: 'प्रीमियम सक्रिय रखने के लिए हर महीने अपने आप नवीनीकृत होता है',
+    subscribeMonthly: 'मासिक सदस्यता लें',
+
+    lifetimeTitle: 'आजीवन प्रीमियम',
+    lifetimeDesc: 'एक बार भुगतान करें, हमेशा के लिए प्रीमियम पाएँ',
+    buyLifetime: 'आजीवन खरीदें'
+  },
+  // ar
+  // hi
+  filters: {
+    all: 'सभी',
+
+    levelTitle: 'स्तर',
+    level: {
+      beginner: 'शुरुआती',
+      intermediate: 'मध्यम',
+      advanced: 'उन्नत',
+    },
+
+    goalTitle: 'फोकस',
+    goal: {
+      lose_weight: 'वजन घटाना',
+      build_muscle: 'मांसपेशी बढ़ाना',
+      cardio: 'कार्डियो',
+      core: 'कोर',
+      mobility: 'लचीलापन',
+    },
+
+    equipmentTitle: 'उपकरण',
+    equipment: {
+      no_equipment: 'बिना उपकरण',
+      with_equipment: 'उपकरण के साथ',
+    },
+
+    durationTitle: 'अवधि',
+    duration: {
+      short: 'कम',
+      medium: 'मध्यम',
+      long: 'लंबी',
+    },
+
+    noResultsTitle: 'कोई मेल खाने वाला प्रोग्राम नहीं मिला',
+    noResultsText: 'एक या अधिक फ़िल्टर बदलकर देखें।',
+  },
+  // hi
+beginner: {
+  modeTitle: 'बिगिनर मोड',
+  modeDesc: 'नए उपयोगकर्ताओं के लिए आसान समझ और त्वरित मार्गदर्शन।',
+  glossaryTitle: 'शुरुआती गाइड',
+  terms: {
+    restDay: {
+      title: 'आराम का दिन',
+      desc: 'यह रिकवरी का दिन है। आपका शरीर आराम करता है और खुद को दोबारा बनाता है, इसलिए इसे न छोड़ें।'
+    },
+    warmUp: {
+      title: 'वार्म-अप',
+      desc: 'वर्कआउट से पहले हल्की गतिविधि ताकि शरीर तैयार हो जाए और चोट का जोखिम कम हो।'
+    },
+    cooldown: {
+      title: 'कूलडाउन',
+      desc: 'वर्कआउट के बाद हल्की गतिविधि या स्ट्रेचिंग जिससे शरीर को रिकवरी में मदद मिले।'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'हाई-इंटेंसिटी इंटरवल ट्रेनिंग: थोड़े समय की तेज मेहनत के बाद छोटा आराम।'
+    },
+    rep: {
+      title: 'रेप',
+      desc: 'किसी व्यायाम की एक पूरी चाल। उदाहरण: एक स्क्वाट = एक रेप।'
+    },
+    set: {
+      title: 'सेट',
+      desc: 'रेप्स का एक समूह। उदाहरण: 10 स्क्वाट लगातार करना = 1 सेट।'
+    }
+  }
+},
+todayWorkout: {
+  title: 'आज का वर्कआउट',
+  fallback: 'वर्कआउट',
+  startNow: 'अभी शुरू करें',
+  restTitle: 'आज रिकवरी का दिन है',
+  restText: 'थोड़ा आराम करें, हल्का स्ट्रेच करें, पानी पिएं और अपने अगले वर्कआउट के लिए तैयार हों।'
+},
 // hi
-premium: {
-  title: 'प्रीमियम में अपग्रेड करें',
-  removeAds: 'विज्ञापन हटाएँ',
-  allPrograms: 'पूरा अनुभव अनलॉक करें',
-  active: 'प्रीमियम सक्रिय है',
-  restore: 'खरीदारी पुनर्स्थापित करें',
-  restoreTitle: 'खरीदारी पुनर्स्थापित करें',
-  restoreSuccess: 'प्रीमियम सफलतापूर्वक पुनर्स्थापित हो गया।',
-  restoreEmpty: 'कोई प्रीमियम खरीद नहीं मिली।',
-  errorTitle: 'खरीद विफल रही',
-  errorText: 'खरीद पूरी नहीं हो सकी।',
-  productUnavailable: 'प्रीमियम प्रोडक्ट नहीं मिला। कृपया Play Console / App Store सेटअप जाँचें।',
-  subUnavailable: 'मासिक सदस्यता नहीं मिली। कृपया Play Console / App Store सेटअप जाँचें।',
-  loading: 'लोड हो रहा है...',
-
-  monthlyTitle: 'मासिक प्रीमियम',
-  monthlyDesc: 'प्रीमियम सक्रिय रखने के लिए हर महीने अपने आप नवीनीकृत होता है',
-  subscribeMonthly: 'मासिक सदस्यता लें',
-
-  lifetimeTitle: 'आजीवन प्रीमियम',
-  lifetimeDesc: 'एक बार भुगतान करें, हमेशा के लिए प्रीमियम पाएँ',
-  buyLifetime: 'आजीवन खरीदें'
+history: {
+  title: 'वर्कआउट इतिहास',
+  screenTitle: 'वर्कआउट इतिहास',
+  thisWeek: 'इस सप्ताह',
+  minutes: 'मिनट',
+  totalWorkouts: 'वर्कआउट',
+  empty: 'अभी तक कोई पूरा वर्कआउट नहीं है।',
+  viewAll: 'सभी देखें',
+  filter7: '7 दिन',
+  filter30: '30 दिन',
+  filterAll: 'सभी'
+},
+achievements: {
+  title: 'उपलब्धियाँ',
+  firstWorkout: 'पहला वर्कआउट',
+  tenWorkouts: '10 वर्कआउट',
+  twentyfiveWorkouts: '25 वर्कआउट',
+  streak3: '3-दिन की लगातार श्रृंखला',
+  streak7: '7-दिन की लगातार श्रृंखला',
+  week4: 'इस सप्ताह 4 वर्कआउट',
+  finishProgram: '1 प्रोग्राम पूरा करें'
+},
+challenges: {
+  title: 'चैलेंज',
+  intro: 'नियमित बने रहने के लिए एक छोटा चैलेंज शुरू करें।',
+  start7: '7-दिन का चैलेंज शुरू करें',
+  start30: '30-दिन का चैलेंज शुरू करें',
+  complete: 'चैलेंज पूरा हुआ',
+  daysLeft: '{{count}} दिन बाकी',
+  starter7Title: '7-दिन शुरुआती चैलेंज',
+  starter7Desc: '7 दिनों में 5 वर्कआउट पूरे करें।',
+  consistency30Title: '30-दिन नियमितता चैलेंज',
+  consistency30Desc: '30 दिनों में 20 वर्कआउट पूरे करें।'
 }
 };
 const th = {
-tabs: {
-  main: 'หน้าหลัก',           // Trang chủ (Main Page)
-  nutrition: 'โภชนาการ',       // Dinh dưỡng
-  guide: 'คำแนะนำ',           // Hướng dẫn (Hoặc dùng từ 'คู่มือ' - Manual)
-  premium: 'พรีเมียม',         // Premium (Phiên âm tiếng Anh, rất phổ biến)
-  settings: 'การตั้งค่า',      // Cài đặt
-  workout: 'ออกกำลังกาย',      // Tập luyện
-  more: 'เพิ่มเติม',           // Thêm/Khác
-  program: 'โปรแกรม',          // Chương trình
-  profile: 'โปรไฟล์',          // Hồ sơ (Phiên âm, dùng phổ biến hơn 'ข้อมูลส่วนตัว')
-  weightChart: 'กราฟน้ำหนัก',  // Biểu đồ cân nặng
-},
-home: {
-  title: 'เลือกแผนการออกกำลังกาย', // Chọn kế hoạch tập luyện
-  subtitle: 'เลือกโปรแกรมและฝึกซ้อมทุกวัน', // Chọn chương trình và tập mỗi ngày
-  program60: 'เบิร์นไขมัน 60 วัน', // Đốt mỡ 60 ngày (Dùng từ 'Burn' phiên âm rất tự nhiên trong giới gym Thái)
-  program90: 'บริหารทั่วร่างกาย 90 วัน', // Toàn thân 90 ngày
-  daysSuffix: '{{count}} วัน',    // Ngày (Tiếng Thái không chia số nhiều)
-  health_overview: 'ภาพรวมสุขภาพ', // Tổng quan sức khỏe
-  activeTitle: 'กำลังดำเนินการ',   // Đang thực hiện / In Progress (Dịch thoát ý từ Practicing)
-  noActive: 'ไม่มีโปรแกรมที่กำลังฝึกในขณะนี้', // Hiện không có chương trình nào đang tập.
-},
-program: {
+  tabs: {
+    main: 'หน้าหลัก',           // Trang chủ (Main Page)
+    nutrition: 'โภชนาการ',       // Dinh dưỡng
+    guide: 'คำแนะนำ',           // Hướng dẫn (Hoặc dùng từ 'คู่มือ' - Manual)
+    premium: 'พรีเมียม',         // Premium (Phiên âm tiếng Anh, rất phổ biến)
+    settings: 'การตั้งค่า',      // Cài đặt
+    workout: 'ออกกำลังกาย',      // Tập luyện
+    more: 'เพิ่มเติม',           // Thêm/Khác
+    program: 'โปรแกรม',          // Chương trình
+    profile: 'โปรไฟล์',          // Hồ sơ (Phiên âm, dùng phổ biến hơn 'ข้อมูลส่วนตัว')
+    weightChart: 'กราฟน้ำหนัก',  // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'เลือกแผนการออกกำลังกาย', // Chọn kế hoạch tập luyện
+    subtitle: 'เลือกโปรแกรมและฝึกซ้อมทุกวัน', // Chọn chương trình và tập mỗi ngày
+    program60: 'เบิร์นไขมัน 60 วัน', // Đốt mỡ 60 ngày (Dùng từ 'Burn' phiên âm rất tự nhiên trong giới gym Thái)
+    program90: 'บริหารทั่วร่างกาย 90 วัน', // Toàn thân 90 ngày
+    daysSuffix: '{{count}} วัน',    // Ngày (Tiếng Thái không chia số nhiều)
+    health_overview: 'ภาพรวมสุขภาพ', // Tổng quan sức khỏe
+    activeTitle: 'กำลังดำเนินการ',   // Đang thực hiện / In Progress (Dịch thoát ý từ Practicing)
+    noActive: 'ไม่มีโปรแกรมที่กำลังฝึกในขณะนี้', // Hiện không có chương trình nào đang tập.
+  },
+  program: {
     daysPrefix: 'วันที่ {{day}} • {{weekday}}',
     weekTitle: 'สัปดาห์ที่ {{n}}',
     completed: 'เสร็จสิ้น',
@@ -3119,37 +3978,37 @@ program: {
     pickOne: 'เลือกแผนการฝึกเพื่อเริ่มต้น',
     days: 'วัน',
   },
-// th
-guide: {
-  title: 'วิธีใช้ PulseFit',
-  subtitle: 'ทำตามขั้นตอนง่าย ๆ เหล่านี้เพื่อเริ่มต้นการออกกำลังกายของคุณ',
+  // th
+  guide: {
+    title: 'วิธีใช้ PulseFit',
+    subtitle: 'ทำตามขั้นตอนง่าย ๆ เหล่านี้เพื่อเริ่มต้นการออกกำลังกายของคุณ',
 
-  steps: {
-    step1: {
-      badge: 'ขั้นตอนที่ 1',
-      title: 'กรอกข้อมูลส่วนตัว',
-      desc: 'กรอกส่วนสูง น้ำหนัก สถานะสุขภาพ เป้าหมาย และข้อมูลพื้นฐานอื่น ๆ แอปจะคำนวณค่า BMI และให้คำแนะนำด้านสุขภาพเพื่อช่วยให้คุณเริ่มต้นได้อย่างปลอดภัย'
+    steps: {
+      step1: {
+        badge: 'ขั้นตอนที่ 1',
+        title: 'กรอกข้อมูลส่วนตัว',
+        desc: 'กรอกส่วนสูง น้ำหนัก สถานะสุขภาพ เป้าหมาย และข้อมูลพื้นฐานอื่น ๆ แอปจะคำนวณค่า BMI และให้คำแนะนำด้านสุขภาพเพื่อช่วยให้คุณเริ่มต้นได้อย่างปลอดภัย'
+      },
+      step2: {
+        badge: 'ขั้นตอนที่ 2',
+        title: 'เลือกโปรแกรมออกกำลังกายที่เหมาะสม',
+        desc: 'ดูโปรแกรมออกกำลังกายที่มีอยู่และเลือกโปรแกรมที่เหมาะกับระดับความฟิต เป้าหมาย และความชอบของคุณมากที่สุด'
+      },
+      step3: {
+        badge: 'ขั้นตอนที่ 3',
+        title: 'เลือกวันออกกำลังกาย',
+        desc: 'เปิดโปรแกรมที่เลือกแล้วเลือกวันที่คุณต้องการฝึก คุณสามารถทำตามตารางทีละขั้นตอนได้'
+      },
+      step4: {
+        badge: 'ขั้นตอนที่ 4',
+        title: 'ออกกำลังกายตามวิดีโอ',
+        desc: 'ทำตามวิดีโอออกกำลังกายเพื่อฝึกได้อย่างถูกต้อง คุณสามารถหมุนหน้าจอเป็นแนวนอนเพื่อดูวิดีโอแบบเต็มหน้าจอได้'
+      }
     },
-    step2: {
-      badge: 'ขั้นตอนที่ 2',
-      title: 'เลือกโปรแกรมออกกำลังกายที่เหมาะสม',
-      desc: 'ดูโปรแกรมออกกำลังกายที่มีอยู่และเลือกโปรแกรมที่เหมาะกับระดับความฟิต เป้าหมาย และความชอบของคุณมากที่สุด'
-    },
-    step3: {
-      badge: 'ขั้นตอนที่ 3',
-      title: 'เลือกวันออกกำลังกาย',
-      desc: 'เปิดโปรแกรมที่เลือกแล้วเลือกวันที่คุณต้องการฝึก คุณสามารถทำตามตารางทีละขั้นตอนได้'
-    },
-    step4: {
-      badge: 'ขั้นตอนที่ 4',
-      title: 'ออกกำลังกายตามวิดีโอ',
-      desc: 'ทำตามวิดีโอออกกำลังกายเพื่อฝึกได้อย่างถูกต้อง คุณสามารถหมุนหน้าจอเป็นแนวนอนเพื่อดูวิดีโอแบบเต็มหน้าจอได้'
-    }
+
+    noteTitle: 'หมายเหตุ',
+    note: 'ออกกำลังกายอย่างสม่ำเสมอเพื่อให้ได้ผลลัพธ์ที่ดีที่สุด'
   },
-
-  noteTitle: 'หมายเหตุ',
-  note: 'ออกกำลังกายอย่างสม่ำเสมอเพื่อให้ได้ผลลัพธ์ที่ดีที่สุด'
-},
   video: {
     loading: 'กำลังโหลดวิดีโอ...',
     play: 'เริ่มการฝึก',
@@ -3278,111 +4137,195 @@ guide: {
     btn_delete: 'ลบ',
     btn_save: 'บันทึก',
   },
+  // th
+  dashboard: {
+    title: 'แดชบอร์ดความคืบหน้า',
+    streak: 'สถิติต่อเนื่อง',
+    thisWeek: 'สัปดาห์นี้',
+    total: 'รวม',
+    completedPrograms: 'เสร็จแล้ว',
+    lastWorkout: 'การออกกำลังกายล่าสุด'
+  },
+  recommend: {
+    title: 'แนะนำสำหรับคุณ',
+    start: 'เริ่มแผนนี้'
+  },
   nutrition: {
-    title: 'คู่มือโภชนาการ',
-    subtitle: 'การกินแบบง่ายๆ โดยกะปริมาณ (Portion) เพื่อช่วยการฝึกของคุณ',
-    sections: {
-      how: {
-        title: 'วิธีการทำงาน',
-        bullets: [
-          'แผนแบบกะปริมาณโดยใช้กลุ่มอาหาร',
-          'สมดุลสารอาหารหลัก (Macros) เพื่อพลังงานและการฟื้นฟู',
-          'เครื่องดื่มโปรตีน/เชคประจำวัน นับเป็นโปรตีน 1 ส่วน',
-        ],
-      },
-      plan: {
-        title: 'ค้นหาแผนของคุณ',
-        bullets: [
-          'เลือกแผน A–E ตามขนาดร่างกายและเป้าหมาย',
-          'แต่ละแผน = จำนวนส่วนที่กำหนดต่อกลุ่ม/วัน',
-          'ปรับเปลี่ยนเล็กน้อยหากรู้สึกหิวมากหรืออิ่มเกินไป',
-        ],
-      },
-      foods: {
-        title: 'รายการอาหาร (ทางเลือกที่ดีที่สุด)',
-        bullets: [
-          'ผัก & ผลไม้มาก่อน; เต็มเมล็ด, หลากสี, ใยอาหารสูง',
-          'โปรตีนไขมันต่ำ; คาร์บดี เช่น ข้าวโอ๊ต, ข้าวกล้อง, มันหวาน',
-          'ไขมันดี: อะโวคาโด, ถั่ว, เมล็ดพืช, น้ำมันมะกอก',
-        ],
-      },
-      samples: {
-        title: 'ตัวอย่างเมนู 1 วัน',
-        bullets: [
-          'มื้อเช้า: โยเกิร์ต + เบอร์รี่ + ข้าวโอ๊ต',
-          'มื้อเที่ยง: ข้าวหน้าไก่หรือเต้าหู้, ผัก + ข้าว/ควินัว',
-          'มื้อเย็น: ปลา + ผักใบเขียว + มันหวาน',
-        ],
-      },
-      drinks: {
-        title: 'เครื่องดื่ม / กาแฟ & ชา',
-        bullets: [
-          'เป้าหมายน้ำดื่ม: ~ ครึ่งหนึ่งของน้ำหนักตัว (ปอนด์) เป็นออนซ์ต่อวัน (หรือ ~35 มล./กก.)',
-          'กาแฟ/ชา ดื่มได้; จำกัดน้ำตาล/ครีมเทียม',
-          'เลี่ยงเครื่องดื่มรสหวานและแอลกอฮอล์ถ้าเป็นไปได้',
-        ],
-      },
-      success: {
-        title: 'เตรียมตัวให้พร้อมสู่ความสำเร็จ',
-        bullets: [
-          'เตรียมโปรตีนล่วงหน้า (Meal-prep), ล้าง & แบ่งผัก',
-          'พกของว่างติดตัว: ผลไม้, ถั่ว, บาร์ธัญพืช',
-          'กินช้าๆ, นอนให้พอ, และทำอย่างสม่ำเสมอ',
-        ],
-      },
-    },
+    title: 'โภชนาการ',
+    subtitle: 'เป้าหมายประจำวันของคุณจะถูกปรับให้เหมาะกับโปรไฟล์และเป้าหมายปัจจุบันของคุณ',
+    noProfileTitle: 'กรุณากรอกโปรไฟล์ให้ครบก่อน',
+    noProfileText: 'เพิ่มส่วนสูง น้ำหนัก และเป้าหมายของคุณเพื่อรับคำแนะนำเรื่องแคลอรี่ แมคโคร และการดื่มน้ำ',
+    targets: 'เป้าหมายประจำวัน',
+    calories: 'แคลอรี่',
+    water: 'น้ำ',
+    macros: 'สัดส่วนแมคโคร',
+    protein: 'โปรตีน',
+    carbs: 'คาร์บ',
+    fats: 'ไขมัน',
+    sampleMeals: 'แผนมื้ออาหารตัวอย่าง',
+    tips: 'เคล็ดลับ'
   },
   // th
+  // th
+  premium: {
+    title: 'อัปเกรดเป็นพรีเมียม',
+    removeAds: 'ลบโฆษณา',
+    allPrograms: 'ปลดล็อกประสบการณ์ทั้งหมด',
+    active: 'พรีเมียมเปิดใช้งานแล้ว',
+    restore: 'กู้คืนการซื้อ',
+    restoreTitle: 'กู้คืนการซื้อ',
+    restoreSuccess: 'กู้คืนพรีเมียมสำเร็จแล้ว',
+    restoreEmpty: 'ไม่พบการซื้อพรีเมียม',
+    errorTitle: 'การซื้อไม่สำเร็จ',
+    errorText: 'ไม่สามารถดำเนินการซื้อให้เสร็จสิ้นได้',
+    productUnavailable: 'ไม่พบสินค้า Premium กรุณาตรวจสอบการตั้งค่า Play Console / App Store',
+    subUnavailable: 'ไม่พบแพ็กเกจสมัครสมาชิกรายเดือน กรุณาตรวจสอบการตั้งค่า Play Console / App Store',
+    loading: 'กำลังโหลด...',
+
+    monthlyTitle: 'พรีเมียมรายเดือน',
+    monthlyDesc: 'ต่ออายุอัตโนมัติทุกเดือนเพื่อคงสถานะพรีเมียม',
+    subscribeMonthly: 'สมัครรายเดือน',
+
+    lifetimeTitle: 'พรีเมียมตลอดชีพ',
+    lifetimeDesc: 'จ่ายครั้งเดียว ใช้งานพรีเมียมได้ตลอดไป',
+    buyLifetime: 'ซื้อตลอดชีพ'
+  },
+  // th
+  filters: {
+    all: 'ทั้งหมด',
+
+    levelTitle: 'ระดับ',
+    level: {
+      beginner: 'ผู้เริ่มต้น',
+      intermediate: 'ปานกลาง',
+      advanced: 'ขั้นสูง',
+    },
+
+    goalTitle: 'เป้าหมาย',
+    goal: {
+      lose_weight: 'ลดน้ำหนัก',
+      build_muscle: 'สร้างกล้ามเนื้อ',
+      cardio: 'คาร์ดิโอ',
+      core: 'แกนกลางลำตัว',
+      mobility: 'ความยืดหยุ่น',
+    },
+
+    equipmentTitle: 'อุปกรณ์',
+    equipment: {
+      no_equipment: 'ไม่ใช้อุปกรณ์',
+      with_equipment: 'ใช้อุปกรณ์',
+    },
+
+    durationTitle: 'ระยะเวลา',
+    duration: {
+      short: 'สั้น',
+      medium: 'ปานกลาง',
+      long: 'ยาว',
+    },
+
+    noResultsTitle: 'ไม่พบโปรแกรมที่ตรงกัน',
+    noResultsText: 'ลองเปลี่ยนตัวกรองอย่างน้อยหนึ่งรายการ',
+  },
+  // th
+beginner: {
+  modeTitle: 'โหมดผู้เริ่มต้น',
+  modeDesc: 'คำอธิบายง่าย ๆ และคำแนะนำแบบรวดเร็วสำหรับผู้ใช้ใหม่',
+  glossaryTitle: 'คู่มือสำหรับผู้เริ่มต้น',
+  terms: {
+    restDay: {
+      title: 'วันพัก',
+      desc: 'เป็นวันฟื้นฟู ร่างกายของคุณจะได้พักและซ่อมแซมตัวเอง ดังนั้นอย่าข้ามวันพัก'
+    },
+    warmUp: {
+      title: 'วอร์มอัป',
+      desc: 'การเคลื่อนไหวเบา ๆ ก่อนออกกำลังกาย เพื่อเตรียมร่างกายและลดความเสี่ยงการบาดเจ็บ'
+    },
+    cooldown: {
+      title: 'คูลดาวน์',
+      desc: 'การเคลื่อนไหวเบา ๆ หรือการยืดเหยียดหลังออกกำลังกาย เพื่อช่วยให้ร่างกายฟื้นตัว'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'การออกกำลังกายแบบเข้มข้นเป็นช่วง ๆ: ช่วงสั้น ๆ ที่ออกแรงหนักสลับกับการพักสั้น ๆ'
+    },
+    rep: {
+      title: 'ครั้ง',
+      desc: 'การทำท่าออกกำลังกายครบหนึ่งครั้ง ตัวอย่าง: สควอต 1 ครั้ง = 1 rep'
+    },
+    set: {
+      title: 'เซต',
+      desc: 'กลุ่มของจำนวนครั้ง ตัวอย่าง: สควอต 10 ครั้งต่อเนื่อง = 1 เซต'
+    }
+  }
+},
+todayWorkout: {
+  title: 'การออกกำลังกายวันนี้',
+  fallback: 'การออกกำลังกาย',
+  startNow: 'เริ่มเลย',
+  restTitle: 'วันนี้เป็นวันฟื้นฟูร่างกาย',
+  restText: 'พักสักหน่อย ยืดเหยียดเบา ๆ ดื่มน้ำ และเตรียมพร้อมสำหรับการออกกำลังกายครั้งถัดไป'
+},
 // th
-premium: {
-  title: 'อัปเกรดเป็นพรีเมียม',
-  removeAds: 'ลบโฆษณา',
-  allPrograms: 'ปลดล็อกประสบการณ์ทั้งหมด',
-  active: 'พรีเมียมเปิดใช้งานแล้ว',
-  restore: 'กู้คืนการซื้อ',
-  restoreTitle: 'กู้คืนการซื้อ',
-  restoreSuccess: 'กู้คืนพรีเมียมสำเร็จแล้ว',
-  restoreEmpty: 'ไม่พบการซื้อพรีเมียม',
-  errorTitle: 'การซื้อไม่สำเร็จ',
-  errorText: 'ไม่สามารถดำเนินการซื้อให้เสร็จสิ้นได้',
-  productUnavailable: 'ไม่พบสินค้า Premium กรุณาตรวจสอบการตั้งค่า Play Console / App Store',
-  subUnavailable: 'ไม่พบแพ็กเกจสมัครสมาชิกรายเดือน กรุณาตรวจสอบการตั้งค่า Play Console / App Store',
-  loading: 'กำลังโหลด...',
-
-  monthlyTitle: 'พรีเมียมรายเดือน',
-  monthlyDesc: 'ต่ออายุอัตโนมัติทุกเดือนเพื่อคงสถานะพรีเมียม',
-  subscribeMonthly: 'สมัครรายเดือน',
-
-  lifetimeTitle: 'พรีเมียมตลอดชีพ',
-  lifetimeDesc: 'จ่ายครั้งเดียว ใช้งานพรีเมียมได้ตลอดไป',
-  buyLifetime: 'ซื้อตลอดชีพ'
+history: {
+  title: 'ประวัติการออกกำลังกาย',
+  screenTitle: 'ประวัติการออกกำลังกาย',
+  thisWeek: 'สัปดาห์นี้',
+  minutes: 'นาที',
+  totalWorkouts: 'การออกกำลังกาย',
+  empty: 'ยังไม่มีการออกกำลังกายที่เสร็จสิ้น',
+  viewAll: 'ดูทั้งหมด',
+  filter7: '7 วัน',
+  filter30: '30 วัน',
+  filterAll: 'ทั้งหมด'
+},
+achievements: {
+  title: 'ความสำเร็จ',
+  firstWorkout: 'การออกกำลังกายครั้งแรก',
+  tenWorkouts: 'ออกกำลังกาย 10 ครั้ง',
+  twentyfiveWorkouts: 'ออกกำลังกาย 25 ครั้ง',
+  streak3: 'ต่อเนื่อง 3 วัน',
+  streak7: 'ต่อเนื่อง 7 วัน',
+  week4: 'ออกกำลังกาย 4 ครั้งในสัปดาห์นี้',
+  finishProgram: 'จบ 1 โปรแกรม'
+},
+challenges: {
+  title: 'ชาเลนจ์',
+  intro: 'เริ่มชาเลนจ์สั้น ๆ เพื่อรักษาความสม่ำเสมอ',
+  start7: 'เริ่มชาเลนจ์ 7 วัน',
+  start30: 'เริ่มชาเลนจ์ 30 วัน',
+  complete: 'ทำชาเลนจ์สำเร็จแล้ว',
+  daysLeft: 'เหลืออีก {{count}} วัน',
+  starter7Title: 'ชาเลนจ์เริ่มต้น 7 วัน',
+  starter7Desc: 'ออกกำลังกายให้ครบ 5 ครั้งใน 7 วัน',
+  consistency30Title: 'ชาเลนจ์ความสม่ำเสมอ 30 วัน',
+  consistency30Desc: 'ออกกำลังกายให้ครบ 20 ครั้งใน 30 วัน'
 }
 };
 const id = {
   ...base,
-tabs: {
-  main: 'Beranda',             // "Beranda" (Home) phổ biến hơn "Utama" (Main) trong app
-  nutrition: 'Nutrisi',        // Dinh dưỡng
-  guide: 'Panduan',            // Hướng dẫn
-  premium: 'Premium',          // Premium
-  settings: 'Pengaturan',      // Cài đặt
-  workout: 'Latihan',          // Tập luyện
-  more: 'Lainnya',             // Khác/Thêm
-  program: 'Program',          // Chương trình
-  profile: 'Profil',           // Hồ sơ
-  weightChart: 'Grafik Berat', // Biểu đồ cân nặng
-},
-home: {
-  title: 'Pilih rencana latihanmu', // Chọn kế hoạch tập luyện của bạn
-  subtitle: 'Pilih program dan berlatih setiap hari', // Chọn chương trình và tập mỗi ngày
-  program60: 'Bakar Lemak 60 Hari', // Đốt mỡ 60 ngày
-  program90: 'Latihan Seluruh Tubuh 90 Hari', // Tập toàn thân 90 ngày
-  daysSuffix: '{{count}} hari',     // Ngày
-  health_overview: 'Ringkasan Kesehatan', // Tổng quan sức khỏe
-  activeTitle: 'Sedang Berjalan',   // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
-  noActive: 'Tidak ada program yang sedang berjalan.', // Không có chương trình nào đang chạy.
-},
-program: {
+  tabs: {
+    main: 'Beranda',             // "Beranda" (Home) phổ biến hơn "Utama" (Main) trong app
+    nutrition: 'Nutrisi',        // Dinh dưỡng
+    guide: 'Panduan',            // Hướng dẫn
+    premium: 'Premium',          // Premium
+    settings: 'Pengaturan',      // Cài đặt
+    workout: 'Latihan',          // Tập luyện
+    more: 'Lainnya',             // Khác/Thêm
+    program: 'Program',          // Chương trình
+    profile: 'Profil',           // Hồ sơ
+    weightChart: 'Grafik Berat', // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'Pilih rencana latihanmu', // Chọn kế hoạch tập luyện của bạn
+    subtitle: 'Pilih program dan berlatih setiap hari', // Chọn chương trình và tập mỗi ngày
+    program60: 'Bakar Lemak 60 Hari', // Đốt mỡ 60 ngày
+    program90: 'Latihan Seluruh Tubuh 90 Hari', // Tập toàn thân 90 ngày
+    daysSuffix: '{{count}} hari',     // Ngày
+    health_overview: 'Ringkasan Kesehatan', // Tổng quan sức khỏe
+    activeTitle: 'Sedang Berjalan',   // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
+    noActive: 'Tidak ada program yang sedang berjalan.', // Không có chương trình nào đang chạy.
+  },
+  program: {
     daysPrefix: 'Hari {{day}} • {{weekday}}',
     weekTitle: 'Minggu {{n}}',
     completed: 'Selesai',
@@ -3397,37 +4340,37 @@ program: {
     pickOne: 'Pilih rencana latihan untuk memulai',
     days: 'Hari',
   },
-// id
-guide: {
-  title: 'Cara Menggunakan PulseFit',
-  subtitle: 'Ikuti langkah-langkah sederhana ini untuk memulai perjalanan latihan Anda.',
+  // id
+  guide: {
+    title: 'Cara Menggunakan PulseFit',
+    subtitle: 'Ikuti langkah-langkah sederhana ini untuk memulai perjalanan latihan Anda.',
 
-  steps: {
-    step1: {
-      badge: 'Langkah 1',
-      title: 'Masukkan informasi pribadi Anda',
-      desc: 'Isi tinggi badan, berat badan, kondisi kesehatan, tujuan, dan informasi dasar lainnya. Aplikasi akan menghitung BMI Anda dan memberikan saran kesehatan agar Anda bisa memulai dengan aman.'
+    steps: {
+      step1: {
+        badge: 'Langkah 1',
+        title: 'Masukkan informasi pribadi Anda',
+        desc: 'Isi tinggi badan, berat badan, kondisi kesehatan, tujuan, dan informasi dasar lainnya. Aplikasi akan menghitung BMI Anda dan memberikan saran kesehatan agar Anda bisa memulai dengan aman.'
+      },
+      step2: {
+        badge: 'Langkah 2',
+        title: 'Pilih program latihan yang sesuai',
+        desc: 'Telusuri program latihan yang tersedia dan pilih yang paling sesuai dengan tingkat kebugaran, tujuan, dan preferensi Anda.'
+      },
+      step3: {
+        badge: 'Langkah 3',
+        title: 'Pilih hari latihan',
+        desc: 'Buka program yang dipilih dan pilih hari latihan yang ingin Anda ikuti. Anda dapat melanjutkan langkah demi langkah sesuai jadwal latihan.'
+      },
+      step4: {
+        badge: 'Langkah 4',
+        title: 'Berlatih dengan video',
+        desc: 'Ikuti video latihan agar berolahraga dengan benar. Anda dapat memutar ponsel secara horizontal untuk menonton video dalam layar penuh agar pengalaman lebih baik.'
+      }
     },
-    step2: {
-      badge: 'Langkah 2',
-      title: 'Pilih program latihan yang sesuai',
-      desc: 'Telusuri program latihan yang tersedia dan pilih yang paling sesuai dengan tingkat kebugaran, tujuan, dan preferensi Anda.'
-    },
-    step3: {
-      badge: 'Langkah 3',
-      title: 'Pilih hari latihan',
-      desc: 'Buka program yang dipilih dan pilih hari latihan yang ingin Anda ikuti. Anda dapat melanjutkan langkah demi langkah sesuai jadwal latihan.'
-    },
-    step4: {
-      badge: 'Langkah 4',
-      title: 'Berlatih dengan video',
-      desc: 'Ikuti video latihan agar berolahraga dengan benar. Anda dapat memutar ponsel secara horizontal untuk menonton video dalam layar penuh agar pengalaman lebih baik.'
-    }
+
+    noteTitle: 'Catatan',
+    note: 'Berlatihlah secara konsisten untuk mendapatkan hasil terbaik.'
   },
-
-  noteTitle: 'Catatan',
-  note: 'Berlatihlah secara konsisten untuk mendapatkan hasil terbaik.'
-},
 
   video: {
     loading: 'Memuat video...',
@@ -3557,111 +4500,195 @@ guide: {
     btn_delete: 'Hapus',
     btn_save: 'Simpan',
   },
+  // id
+  dashboard: {
+    title: 'Dasbor progres',
+    streak: 'Streak',
+    thisWeek: 'Minggu ini',
+    total: 'Total',
+    completedPrograms: 'Selesai',
+    lastWorkout: 'Latihan terakhir'
+  },
+  recommend: {
+    title: 'Rekomendasi untuk Anda',
+    start: 'Mulai rencana ini'
+  },
   nutrition: {
-    title: 'Panduan Nutrisi',
-    subtitle: 'Makan sederhana berdasarkan porsi untuk mendukung latihan Anda.',
-    sections: {
-      how: {
-        title: 'Cara kerjanya',
-        bullets: [
-          'Rencana berbasis porsi menggunakan kelompok makanan.',
-          'Makro seimbang untuk energi dan pemulihan.',
-          'Shake harian dihitung sebagai 1 porsi protein.',
-        ],
-      },
-      plan: {
-        title: 'Temukan rencana Anda',
-        bullets: [
-          'Pilih Rencana A–E berdasarkan ukuran tubuh & tujuan.',
-          'Setiap rencana = porsi tetap per kelompok/hari.',
-          'Sesuaikan sedikit jika Anda merasa terlalu lapar atau terlalu kenyang.',
-        ],
-      },
-      foods: {
-        title: 'Daftar makanan (pilihan utama)',
-        bullets: [
-          'Sayuran & buah-buahan utama; utuh, berwarna, serat tinggi.',
-          'Protein tanpa lemak; karbohidrat pintar seperti oat, beras merah, ubi jalar.',
-          'Lemak sehat: alpukat, kacang-kacangan, biji-bijian, minyak zaitun.',
-        ],
-      },
-      samples: {
-        title: 'Ide contoh menu harian',
-        bullets: [
-          'Sarapan: yoghurt + buah beri + oat.',
-          'Makan siang: bowl ayam atau tahu, sayuran + nasi/quinoa.',
-          'Makan malam: ikan + sayuran hijau + ubi jalar.',
-        ],
-      },
-      drinks: {
-        title: 'Minuman / kopi & teh',
-        bullets: [
-          'Target air: ~35-40ml per kg berat badan per hari.',
-          'Kopi/teh boleh; batasi gula/krimer.',
-          'Hindari minuman manis dan alkohol jika memungkinkan.',
-        ],
-      },
-      success: {
-        title: 'Siapkan diri Anda untuk sukses',
-        bullets: [
-          'Siapkan protein (meal-prep), cuci & bagi porsi sayuran.',
-          'Siapkan camilan: buah, kacang-kacangan, bar nutrisi.',
-          'Makan perlahan, tidur yang cukup, tetap konsisten.',
-        ],
-      },
-    },
+    title: 'Nutrisi',
+    subtitle: 'Target harian Anda dipersonalisasi berdasarkan profil dan tujuan Anda saat ini.',
+    noProfileTitle: 'Lengkapi profil Anda terlebih dahulu',
+    noProfileText: 'Tambahkan tinggi badan, berat badan, dan tujuan Anda untuk mendapatkan rekomendasi kalori, makro, dan hidrasi.',
+    targets: 'Target harian',
+    calories: 'Kalori',
+    water: 'Air',
+    macros: 'Pembagian makro',
+    protein: 'Protein',
+    carbs: 'Karbohidrat',
+    fats: 'Lemak',
+    sampleMeals: 'Contoh rencana makan',
+    tips: 'Tips'
   },
   // id
+  // id
+  premium: {
+    title: 'Upgrade ke Premium',
+    removeAds: 'Hapus iklan',
+    allPrograms: 'Buka pengalaman penuh',
+    active: 'Premium aktif',
+    restore: 'Pulihkan pembelian',
+    restoreTitle: 'Pulihkan pembelian',
+    restoreSuccess: 'Premium berhasil dipulihkan.',
+    restoreEmpty: 'Tidak ada pembelian Premium yang ditemukan.',
+    errorTitle: 'Pembelian gagal',
+    errorText: 'Tidak dapat menyelesaikan pembelian.',
+    productUnavailable: 'Produk Premium tidak ditemukan. Silakan periksa pengaturan Play Console / App Store.',
+    subUnavailable: 'Langganan bulanan tidak ditemukan. Silakan periksa pengaturan Play Console / App Store.',
+    loading: 'Memuat...',
+
+    monthlyTitle: 'Premium Bulanan',
+    monthlyDesc: 'Diperpanjang otomatis setiap bulan agar Premium tetap aktif',
+    subscribeMonthly: 'Berlangganan bulanan',
+
+    lifetimeTitle: 'Premium Seumur Hidup',
+    lifetimeDesc: 'Bayar sekali, nikmati Premium selamanya',
+    buyLifetime: 'Beli seumur hidup'
+  },
+  // id
+  filters: {
+    all: 'Semua',
+
+    levelTitle: 'Level',
+    level: {
+      beginner: 'Pemula',
+      intermediate: 'Menengah',
+      advanced: 'Lanjutan',
+    },
+
+    goalTitle: 'Fokus',
+    goal: {
+      lose_weight: 'Menurunkan berat badan',
+      build_muscle: 'Membangun otot',
+      cardio: 'Kardio',
+      core: 'Core',
+      mobility: 'Mobilitas',
+    },
+
+    equipmentTitle: 'Peralatan',
+    equipment: {
+      no_equipment: 'Tanpa peralatan',
+      with_equipment: 'Dengan peralatan',
+    },
+
+    durationTitle: 'Durasi',
+    duration: {
+      short: 'Pendek',
+      medium: 'Sedang',
+      long: 'Panjang',
+    },
+
+    noResultsTitle: 'Tidak ada program yang cocok',
+    noResultsText: 'Coba ubah satu atau lebih filter.',
+  },
+  // id
+beginner: {
+  modeTitle: 'Mode pemula',
+  modeDesc: 'Penjelasan sederhana dan panduan cepat untuk pengguna baru.',
+  glossaryTitle: 'Panduan pemula',
+  terms: {
+    restDay: {
+      title: 'Hari istirahat',
+      desc: 'Ini adalah hari pemulihan. Tubuh Anda beristirahat dan membangun kembali dirinya, jadi jangan dilewatkan.'
+    },
+    warmUp: {
+      title: 'Pemanasan',
+      desc: 'Gerakan ringan sebelum latihan untuk mempersiapkan tubuh dan mengurangi risiko cedera.'
+    },
+    cooldown: {
+      title: 'Pendinginan',
+      desc: 'Gerakan ringan atau peregangan setelah latihan untuk membantu tubuh pulih.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Latihan interval intensitas tinggi: ledakan kerja keras singkat diikuti dengan istirahat singkat.'
+    },
+    rep: {
+      title: 'Repetisi',
+      desc: 'Satu gerakan lengkap dari sebuah latihan. Contoh: satu squat = satu repetisi.'
+    },
+    set: {
+      title: 'Set',
+      desc: 'Sekelompok repetisi. Contoh: 10 squat yang dilakukan bersama = 1 set.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Latihan hari ini',
+  fallback: 'Latihan',
+  startNow: 'Mulai sekarang',
+  restTitle: 'Hari ini adalah hari pemulihan',
+  restText: 'Beristirahatlah, lakukan peregangan ringan, minum air, dan bersiaplah untuk latihan berikutnya.'
+},
 // id
-premium: {
-  title: 'Upgrade ke Premium',
-  removeAds: 'Hapus iklan',
-  allPrograms: 'Buka pengalaman penuh',
-  active: 'Premium aktif',
-  restore: 'Pulihkan pembelian',
-  restoreTitle: 'Pulihkan pembelian',
-  restoreSuccess: 'Premium berhasil dipulihkan.',
-  restoreEmpty: 'Tidak ada pembelian Premium yang ditemukan.',
-  errorTitle: 'Pembelian gagal',
-  errorText: 'Tidak dapat menyelesaikan pembelian.',
-  productUnavailable: 'Produk Premium tidak ditemukan. Silakan periksa pengaturan Play Console / App Store.',
-  subUnavailable: 'Langganan bulanan tidak ditemukan. Silakan periksa pengaturan Play Console / App Store.',
-  loading: 'Memuat...',
-
-  monthlyTitle: 'Premium Bulanan',
-  monthlyDesc: 'Diperpanjang otomatis setiap bulan agar Premium tetap aktif',
-  subscribeMonthly: 'Berlangganan bulanan',
-
-  lifetimeTitle: 'Premium Seumur Hidup',
-  lifetimeDesc: 'Bayar sekali, nikmati Premium selamanya',
-  buyLifetime: 'Beli seumur hidup'
+history: {
+  title: 'Riwayat latihan',
+  screenTitle: 'Riwayat latihan',
+  thisWeek: 'Minggu ini',
+  minutes: 'Menit',
+  totalWorkouts: 'Latihan',
+  empty: 'Belum ada latihan yang selesai.',
+  viewAll: 'Lihat semua',
+  filter7: '7 hari',
+  filter30: '30 hari',
+  filterAll: 'Semua'
+},
+achievements: {
+  title: 'Pencapaian',
+  firstWorkout: 'Latihan pertama',
+  tenWorkouts: '10 latihan',
+  twentyfiveWorkouts: '25 latihan',
+  streak3: 'Streak 3 hari',
+  streak7: 'Streak 7 hari',
+  week4: '4 latihan minggu ini',
+  finishProgram: 'Selesaikan 1 program'
+},
+challenges: {
+  title: 'Tantangan',
+  intro: 'Mulai tantangan singkat agar tetap konsisten.',
+  start7: 'Mulai tantangan 7 hari',
+  start30: 'Mulai tantangan 30 hari',
+  complete: 'Tantangan selesai',
+  daysLeft: '{{count}} hari tersisa',
+  starter7Title: 'Tantangan pemula 7 hari',
+  starter7Desc: 'Selesaikan 5 latihan dalam 7 hari.',
+  consistency30Title: 'Tantangan konsistensi 30 hari',
+  consistency30Desc: 'Selesaikan 20 latihan dalam 30 hari.'
 }
 };
 const ms = {
   ...base,
-tabs: {
-  main: 'Utama',               // "Utama" là từ chuẩn cho trang chủ (khác với 'Beranda' của Indo)
-  nutrition: 'Nutrisi',        // Dinh dưỡng (Hoặc 'Pemakanan')
-  guide: 'Panduan',            // Hướng dẫn
-  premium: 'Premium',          // Premium
-  settings: 'Tetapan',         // "Tetapan" là từ chuẩn cho Cài đặt (khác với 'Pengaturan' của Indo)
-  workout: 'Senaman',          // "Senaman" (Workout) tự nhiên hơn 'Latihan' (Training) ở Malaysia
-  more: 'Lagi',                // Thêm/Khác
-  program: 'Program',          // Chương trình
-  profile: 'Profil',           // Hồ sơ
-  weightChart: 'Carta Berat',  // Biểu đồ cân nặng
-},
-home: {
-  title: 'Pilih pelan senaman anda', // Chọn kế hoạch tập luyện của bạn
-  subtitle: 'Pilih program dan berlatih setiap hari', // Chọn chương trình và tập hàng ngày
-  program60: 'Bakar Lemak 60 Hari',  // Chương trình đốt mỡ 60 ngày
-  program90: 'Seluruh Badan 90 Hari', // Toàn thân 90 ngày ('Badan' dùng phổ biến hơn 'Tubuh' ở MY)
-  daysSuffix: '{{count}} hari',      // Ngày
-  health_overview: 'Ringkasan Kesihatan', // Tổng quan sức khỏe
-  activeTitle: 'Sedang Berjalan',    // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
-  noActive: 'Tiada program yang sedang berjalan.', // Hiện không có chương trình nào đang chạy.
-},
-program: {
+  tabs: {
+    main: 'Utama',               // "Utama" là từ chuẩn cho trang chủ (khác với 'Beranda' của Indo)
+    nutrition: 'Nutrisi',        // Dinh dưỡng (Hoặc 'Pemakanan')
+    guide: 'Panduan',            // Hướng dẫn
+    premium: 'Premium',          // Premium
+    settings: 'Tetapan',         // "Tetapan" là từ chuẩn cho Cài đặt (khác với 'Pengaturan' của Indo)
+    workout: 'Senaman',          // "Senaman" (Workout) tự nhiên hơn 'Latihan' (Training) ở Malaysia
+    more: 'Lagi',                // Thêm/Khác
+    program: 'Program',          // Chương trình
+    profile: 'Profil',           // Hồ sơ
+    weightChart: 'Carta Berat',  // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'Pilih pelan senaman anda', // Chọn kế hoạch tập luyện của bạn
+    subtitle: 'Pilih program dan berlatih setiap hari', // Chọn chương trình và tập hàng ngày
+    program60: 'Bakar Lemak 60 Hari',  // Chương trình đốt mỡ 60 ngày
+    program90: 'Seluruh Badan 90 Hari', // Toàn thân 90 ngày ('Badan' dùng phổ biến hơn 'Tubuh' ở MY)
+    daysSuffix: '{{count}} hari',      // Ngày
+    health_overview: 'Ringkasan Kesihatan', // Tổng quan sức khỏe
+    activeTitle: 'Sedang Berjalan',    // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
+    noActive: 'Tiada program yang sedang berjalan.', // Hiện không có chương trình nào đang chạy.
+  },
+  program: {
     daysPrefix: 'Hari {{day}} • {{weekday}}',
     weekTitle: 'Minggu {{n}}',
     completed: 'Selesai',
@@ -3676,37 +4703,37 @@ program: {
     pickOne: 'Pilih pelan senaman untuk bermula',
     days: 'days',
   },
-// ms
-guide: {
-  title: 'Cara Menggunakan PulseFit',
-  subtitle: 'Ikuti langkah mudah ini untuk memulakan perjalanan senaman anda.',
+  // ms
+  guide: {
+    title: 'Cara Menggunakan PulseFit',
+    subtitle: 'Ikuti langkah mudah ini untuk memulakan perjalanan senaman anda.',
 
-  steps: {
-    step1: {
-      badge: 'Langkah 1',
-      title: 'Masukkan maklumat peribadi anda',
-      desc: 'Isi tinggi, berat, keadaan kesihatan, matlamat dan maklumat asas lain. Aplikasi akan mengira BMI anda dan memberi nasihat kesihatan untuk membantu anda bermula dengan selamat.'
+    steps: {
+      step1: {
+        badge: 'Langkah 1',
+        title: 'Masukkan maklumat peribadi anda',
+        desc: 'Isi tinggi, berat, keadaan kesihatan, matlamat dan maklumat asas lain. Aplikasi akan mengira BMI anda dan memberi nasihat kesihatan untuk membantu anda bermula dengan selamat.'
+      },
+      step2: {
+        badge: 'Langkah 2',
+        title: 'Pilih program senaman yang sesuai',
+        desc: 'Lihat program senaman yang tersedia dan pilih yang paling sesuai dengan tahap kecergasan, matlamat dan pilihan anda.'
+      },
+      step3: {
+        badge: 'Langkah 3',
+        title: 'Pilih hari senaman',
+        desc: 'Buka program yang dipilih dan pilih hari senaman yang ingin anda ikuti. Anda boleh meneruskan langkah demi langkah mengikut jadual latihan.'
+      },
+      step4: {
+        badge: 'Langkah 4',
+        title: 'Bersenam mengikut video',
+        desc: 'Ikuti video senaman untuk melakukan latihan dengan betul. Anda boleh memusingkan telefon secara melintang untuk menonton video dalam skrin penuh bagi pengalaman yang lebih baik.'
+      }
     },
-    step2: {
-      badge: 'Langkah 2',
-      title: 'Pilih program senaman yang sesuai',
-      desc: 'Lihat program senaman yang tersedia dan pilih yang paling sesuai dengan tahap kecergasan, matlamat dan pilihan anda.'
-    },
-    step3: {
-      badge: 'Langkah 3',
-      title: 'Pilih hari senaman',
-      desc: 'Buka program yang dipilih dan pilih hari senaman yang ingin anda ikuti. Anda boleh meneruskan langkah demi langkah mengikut jadual latihan.'
-    },
-    step4: {
-      badge: 'Langkah 4',
-      title: 'Bersenam mengikut video',
-      desc: 'Ikuti video senaman untuk melakukan latihan dengan betul. Anda boleh memusingkan telefon secara melintang untuk menonton video dalam skrin penuh bagi pengalaman yang lebih baik.'
-    }
+
+    noteTitle: 'Nota',
+    note: 'Kekalkan latihan secara konsisten untuk mendapatkan hasil yang terbaik.'
   },
-
-  noteTitle: 'Nota',
-  note: 'Kekalkan latihan secara konsisten untuk mendapatkan hasil yang terbaik.'
-},
   video: {
     loading: 'Memuatkan video...',
     play: 'Mula senaman',
@@ -3835,111 +4862,195 @@ guide: {
     btn_delete: 'Padam',
     btn_save: 'Simpan',
   },
+  // ms
+  dashboard: {
+    title: 'Papan pemantauan kemajuan',
+    streak: 'Rentetan',
+    thisWeek: 'Minggu ini',
+    total: 'Jumlah',
+    completedPrograms: 'Selesai',
+    lastWorkout: 'Senaman terakhir'
+  },
+  recommend: {
+    title: 'Disyorkan untuk anda',
+    start: 'Mulakan pelan ini'
+  },
   nutrition: {
-    title: 'Panduan Nutrisi',
-    subtitle: 'Pemakanan berasaskan porsi yang mudah untuk menyokong senaman anda.',
-    sections: {
-      how: {
-        title: 'Cara ia berfungsi',
-        bullets: [
-          'Pelan berasaskan porsi mengikut kumpulan makanan.',
-          'Makro seimbang untuk tenaga dan pemulihan.',
-          'Minuman protein (shake) dikira sebagai 1 porsi protein.',
-        ],
-      },
-      plan: {
-        title: 'Cari pelan anda',
-        bullets: [
-          'Pilih Pelan A–E mengikut saiz badan & matlamat.',
-          'Setiap pelan = porsi tetap mengikut kumpulan/hari.',
-          'Laraskan sedikit jika anda rasa terlalu lapar atau terlalu kenyang.',
-        ],
-      },
-      foods: {
-        title: 'Senarai makanan (pilihan terbaik)',
-        bullets: [
-          'Sayur & buah diutamakan; segar, berwarna-warni, tinggi serat.',
-          'Protein tanpa lemak; karbohidrat bijak seperti oat, nasi perang, ubi keledek.',
-          'Lemak sihat: avokado, kacang, bijian, minyak zaitun.',
-        ],
-      },
-      samples: {
-        title: 'Idea contoh hidangan harian',
-        bullets: [
-          'Sarapan: yogurt + beri + oat.',
-          'Makan tengah hari: mangkuk ayam atau tofu, sayur + nasi/quinoa.',
-          'Makan malam: ikan + sayur hijau + ubi keledek.',
-        ],
-      },
-      drinks: {
-        title: 'Minuman / kopi & teh',
-        bullets: [
-          'Sasaran air: ~35-40ml setiap kg berat badan sehari.',
-          'Kopi/teh dibenarkan; hadkan gula/krimer.',
-          'Elakkan minuman manis dan alkohol jika boleh.',
-        ],
-      },
-      success: {
-        title: 'Bersedia untuk berjaya',
-        bullets: [
-          'Sediakan protein lebih awal (meal-prep), basuh & bahagikan sayuran.',
-          'Sediakan snek: buah, kacang, bar nutrisi.',
-          'Makan perlahan-lahan, tidur secukupnya, kekal konsisten.',
-        ],
-      },
-    },
+    title: 'Pemakanan',
+    subtitle: 'Sasaran harian anda diperibadikan berdasarkan profil semasa dan matlamat anda.',
+    noProfileTitle: 'Lengkapkan profil anda dahulu',
+    noProfileText: 'Tambahkan tinggi, berat dan matlamat anda untuk mendapatkan cadangan kalori, makro dan hidrasi.',
+    targets: 'Sasaran harian',
+    calories: 'Kalori',
+    water: 'Air',
+    macros: 'Pembahagian makro',
+    protein: 'Protein',
+    carbs: 'Karbohidrat',
+    fats: 'Lemak',
+    sampleMeals: 'Pelan makanan contoh',
+    tips: 'Petua'
   },
   // ms
+  // ms
+  premium: {
+    title: 'Naik taraf ke Premium',
+    removeAds: 'Buang iklan',
+    allPrograms: 'Buka pengalaman penuh',
+    active: 'Premium aktif',
+    restore: 'Pulihkan pembelian',
+    restoreTitle: 'Pulihkan pembelian',
+    restoreSuccess: 'Premium berjaya dipulihkan.',
+    restoreEmpty: 'Tiada pembelian Premium ditemui.',
+    errorTitle: 'Pembelian gagal',
+    errorText: 'Tidak dapat melengkapkan pembelian.',
+    productUnavailable: 'Produk Premium tidak ditemui. Sila semak tetapan Play Console / App Store.',
+    subUnavailable: 'Langganan bulanan tidak ditemui. Sila semak tetapan Play Console / App Store.',
+    loading: 'Memuatkan...',
+
+    monthlyTitle: 'Premium Bulanan',
+    monthlyDesc: 'Diperbaharui secara automatik setiap bulan untuk mengekalkan Premium aktif',
+    subscribeMonthly: 'Langgan bulanan',
+
+    lifetimeTitle: 'Premium Sepanjang Hayat',
+    lifetimeDesc: 'Bayar sekali, nikmati Premium selamanya',
+    buyLifetime: 'Beli sepanjang hayat'
+  },
+  // ms
+  filters: {
+    all: 'Semua',
+
+    levelTitle: 'Tahap',
+    level: {
+      beginner: 'Permulaan',
+      intermediate: 'Pertengahan',
+      advanced: 'Lanjutan',
+    },
+
+    goalTitle: 'Fokus',
+    goal: {
+      lose_weight: 'Turun berat badan',
+      build_muscle: 'Bina otot',
+      cardio: 'Kardio',
+      core: 'Teras',
+      mobility: 'Mobiliti',
+    },
+
+    equipmentTitle: 'Peralatan',
+    equipment: {
+      no_equipment: 'Tanpa peralatan',
+      with_equipment: 'Dengan peralatan',
+    },
+
+    durationTitle: 'Tempoh',
+    duration: {
+      short: 'Pendek',
+      medium: 'Sederhana',
+      long: 'Panjang',
+    },
+
+    noResultsTitle: 'Tiada program yang sepadan',
+    noResultsText: 'Cuba ubah satu atau lebih penapis.',
+  },
+  // ms
+beginner: {
+  modeTitle: 'Mod pemula',
+  modeDesc: 'Penerangan ringkas dan panduan cepat untuk pengguna baharu.',
+  glossaryTitle: 'Panduan pemula',
+  terms: {
+    restDay: {
+      title: 'Hari rehat',
+      desc: 'Ini ialah hari pemulihan. Badan anda berehat dan membina semula dirinya, jadi jangan abaikannya.'
+    },
+    warmUp: {
+      title: 'Pemanasan',
+      desc: 'Pergerakan ringan sebelum bersenam untuk menyediakan badan dan mengurangkan risiko kecederaan.'
+    },
+    cooldown: {
+      title: 'Bertenang',
+      desc: 'Pergerakan mudah atau regangan selepas bersenam untuk membantu badan anda pulih.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Latihan Selang Intensiti Tinggi: tempoh singkat kerja berat diikuti dengan rehat singkat.'
+    },
+    rep: {
+      title: 'Ulangan',
+      desc: 'Satu pergerakan penuh bagi sesuatu senaman. Contoh: satu squat = satu ulangan.'
+    },
+    set: {
+      title: 'Set',
+      desc: 'Sekumpulan ulangan. Contoh: 10 squat yang dilakukan bersama = 1 set.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Senaman hari ini',
+  fallback: 'Senaman',
+  startNow: 'Mula sekarang',
+  restTitle: 'Hari ini ialah hari pemulihan',
+  restText: 'Berehatlah, lakukan regangan ringan, minum air dan bersedia untuk senaman anda yang seterusnya.'
+},
 // ms
-premium: {
-  title: 'Naik taraf ke Premium',
-  removeAds: 'Buang iklan',
-  allPrograms: 'Buka pengalaman penuh',
-  active: 'Premium aktif',
-  restore: 'Pulihkan pembelian',
-  restoreTitle: 'Pulihkan pembelian',
-  restoreSuccess: 'Premium berjaya dipulihkan.',
-  restoreEmpty: 'Tiada pembelian Premium ditemui.',
-  errorTitle: 'Pembelian gagal',
-  errorText: 'Tidak dapat melengkapkan pembelian.',
-  productUnavailable: 'Produk Premium tidak ditemui. Sila semak tetapan Play Console / App Store.',
-  subUnavailable: 'Langganan bulanan tidak ditemui. Sila semak tetapan Play Console / App Store.',
-  loading: 'Memuatkan...',
-
-  monthlyTitle: 'Premium Bulanan',
-  monthlyDesc: 'Diperbaharui secara automatik setiap bulan untuk mengekalkan Premium aktif',
-  subscribeMonthly: 'Langgan bulanan',
-
-  lifetimeTitle: 'Premium Sepanjang Hayat',
-  lifetimeDesc: 'Bayar sekali, nikmati Premium selamanya',
-  buyLifetime: 'Beli sepanjang hayat'
+history: {
+  title: 'Sejarah senaman',
+  screenTitle: 'Sejarah senaman',
+  thisWeek: 'Minggu ini',
+  minutes: 'Minit',
+  totalWorkouts: 'Senaman',
+  empty: 'Belum ada senaman yang selesai.',
+  viewAll: 'Lihat semua',
+  filter7: '7 hari',
+  filter30: '30 hari',
+  filterAll: 'Semua'
+},
+achievements: {
+  title: 'Pencapaian',
+  firstWorkout: 'Senaman pertama',
+  tenWorkouts: '10 senaman',
+  twentyfiveWorkouts: '25 senaman',
+  streak3: 'Rentetan 3 hari',
+  streak7: 'Rentetan 7 hari',
+  week4: '4 senaman minggu ini',
+  finishProgram: 'Lengkapkan 1 program'
+},
+challenges: {
+  title: 'Cabaran',
+  intro: 'Mulakan cabaran pendek untuk kekal konsisten.',
+  start7: 'Mulakan cabaran 7 hari',
+  start30: 'Mulakan cabaran 30 hari',
+  complete: 'Cabaran selesai',
+  daysLeft: '{{count}} hari lagi',
+  starter7Title: 'Cabaran permulaan 7 hari',
+  starter7Desc: 'Lengkapkan 5 senaman dalam 7 hari.',
+  consistency30Title: 'Cabaran konsisten 30 hari',
+  consistency30Desc: 'Lengkapkan 20 senaman dalam 30 hari.'
 }
 };
 const fil = {
   ...base,
-tabs: {
-  main: 'Home',                // Trong UI Filipino, "Home" tự nhiên hơn "Pangunahin" (nghe quá trang trọng)
-  nutrition: 'Nutrisyon',      // Dinh dưỡng
-  guide: 'Gabay',              // Hướng dẫn
-  premium: 'Premium',          // Giữ nguyên (Từ mượn phổ biến)
-  settings: 'Mga Setting',     // Cài đặt
-  workout: 'Ehersisyo',        // Tập luyện/Thể dục
-  more: 'Iba pa',              // Xem thêm/Khác
-  program: 'Programa',         // Chương trình
-  profile: 'Profile',          // Hồ sơ (Từ "Propayl" ít dùng trong văn viết UI)
-  weightChart: 'Tsart ng Timbang', // Biểu đồ cân nặng
-},
-home: {
-  title: 'Piliin ang iyong plano', // Chọn kế hoạch của bạn
-  subtitle: 'Pumili ng programa at mag-ensayo araw-araw', // Chọn chương trình và tập luyện hàng ngày
-  program60: '60-Araw na Pagsusunog ng Taba', // Đốt mỡ 60 ngày
-  program90: '90-Araw para sa Buong Katawan', // 90 ngày cho toàn thân
-  daysSuffix: '{{count}} na araw', // Ngày (dùng 'na' để nối số và danh từ)
-  health_overview: 'Lagay ng Kalusugan', // Tổng quan/Tình trạng sức khỏe
-  activeTitle: 'Kasalukuyang Ginagawa', // Đang thực hiện (Dịch thoát ý từ Practicing)
-  noActive: 'Walang kasalukuyang programang ginagawa.', // Hiện không có chương trình nào đang thực hiện.
-},
-program: {
+  tabs: {
+    main: 'Home',                // Trong UI Filipino, "Home" tự nhiên hơn "Pangunahin" (nghe quá trang trọng)
+    nutrition: 'Nutrisyon',      // Dinh dưỡng
+    guide: 'Gabay',              // Hướng dẫn
+    premium: 'Premium',          // Giữ nguyên (Từ mượn phổ biến)
+    settings: 'Mga Setting',     // Cài đặt
+    workout: 'Ehersisyo',        // Tập luyện/Thể dục
+    more: 'Iba pa',              // Xem thêm/Khác
+    program: 'Programa',         // Chương trình
+    profile: 'Profile',          // Hồ sơ (Từ "Propayl" ít dùng trong văn viết UI)
+    weightChart: 'Tsart ng Timbang', // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'Piliin ang iyong plano', // Chọn kế hoạch của bạn
+    subtitle: 'Pumili ng programa at mag-ensayo araw-araw', // Chọn chương trình và tập luyện hàng ngày
+    program60: '60-Araw na Pagsusunog ng Taba', // Đốt mỡ 60 ngày
+    program90: '90-Araw para sa Buong Katawan', // 90 ngày cho toàn thân
+    daysSuffix: '{{count}} na araw', // Ngày (dùng 'na' để nối số và danh từ)
+    health_overview: 'Lagay ng Kalusugan', // Tổng quan/Tình trạng sức khỏe
+    activeTitle: 'Kasalukuyang Ginagawa', // Đang thực hiện (Dịch thoát ý từ Practicing)
+    noActive: 'Walang kasalukuyang programang ginagawa.', // Hiện không có chương trình nào đang thực hiện.
+  },
+  program: {
     daysPrefix: 'Araw {{day}} • {{weekday}}',
     weekTitle: 'Linggo {{n}}',
     completed: 'Tapos na',
@@ -3954,37 +5065,37 @@ program: {
     pickOne: 'Pumili ng lesson plan para makapagsimula',
     days: 'Araw',
   },
-// fil
-guide: {
-  title: 'Paano Gamitin ang PulseFit',
-  subtitle: 'Sundin ang mga simpleng hakbang na ito para simulan ang iyong workout journey.',
+  // fil
+  guide: {
+    title: 'Paano Gamitin ang PulseFit',
+    subtitle: 'Sundin ang mga simpleng hakbang na ito para simulan ang iyong workout journey.',
 
-  steps: {
-    step1: {
-      badge: 'Hakbang 1',
-      title: 'Ilagay ang iyong personal na impormasyon',
-      desc: 'Ilagay ang iyong taas, timbang, kondisyon sa kalusugan, mga layunin, at iba pang pangunahing impormasyon. Kakalkulahin ng app ang iyong BMI at magbibigay ng payong pangkalusugan upang makatulong sa ligtas na pagsisimula.'
+    steps: {
+      step1: {
+        badge: 'Hakbang 1',
+        title: 'Ilagay ang iyong personal na impormasyon',
+        desc: 'Ilagay ang iyong taas, timbang, kondisyon sa kalusugan, mga layunin, at iba pang pangunahing impormasyon. Kakalkulahin ng app ang iyong BMI at magbibigay ng payong pangkalusugan upang makatulong sa ligtas na pagsisimula.'
+      },
+      step2: {
+        badge: 'Hakbang 2',
+        title: 'Pumili ng angkop na workout program',
+        desc: 'Tingnan ang mga available na workout program at piliin ang pinakaangkop sa iyong fitness level, layunin, at kagustuhan.'
+      },
+      step3: {
+        badge: 'Hakbang 3',
+        title: 'Piliin ang araw ng workout',
+        desc: 'Buksan ang napiling programa at piliin ang araw ng workout na gusto mong sundan. Maaari kang magpatuloy nang paisa-isa ayon sa iskedyul.'
+      },
+      step4: {
+        badge: 'Hakbang 4',
+        title: 'Mag-workout gamit ang video',
+        desc: 'Sundan ang workout video upang tama ang iyong pag-eehersisyo. Maaari mong i-rotate nang pahiga ang iyong telepono upang mapanood ang video sa full screen para sa mas magandang karanasan.'
+      }
     },
-    step2: {
-      badge: 'Hakbang 2',
-      title: 'Pumili ng angkop na workout program',
-      desc: 'Tingnan ang mga available na workout program at piliin ang pinakaangkop sa iyong fitness level, layunin, at kagustuhan.'
-    },
-    step3: {
-      badge: 'Hakbang 3',
-      title: 'Piliin ang araw ng workout',
-      desc: 'Buksan ang napiling programa at piliin ang araw ng workout na gusto mong sundan. Maaari kang magpatuloy nang paisa-isa ayon sa iskedyul.'
-    },
-    step4: {
-      badge: 'Hakbang 4',
-      title: 'Mag-workout gamit ang video',
-      desc: 'Sundan ang workout video upang tama ang iyong pag-eehersisyo. Maaari mong i-rotate nang pahiga ang iyong telepono upang mapanood ang video sa full screen para sa mas magandang karanasan.'
-    }
+
+    noteTitle: 'Paalala',
+    note: 'Panatilihing regular ang iyong pag-eehersisyo upang makuha ang pinakamagandang resulta.'
   },
-
-  noteTitle: 'Paalala',
-  note: 'Panatilihing regular ang iyong pag-eehersisyo upang makuha ang pinakamagandang resulta.'
-},
   video: {
     loading: 'Naglo-load ng video...',
     play: 'Simulan ang workout',
@@ -4113,111 +5224,195 @@ guide: {
     btn_delete: 'I-delete',
     btn_save: 'I-save',
   },
+  // fil
+  dashboard: {
+    title: 'Dashboard ng progreso',
+    streak: 'Sunod-sunod na araw',
+    thisWeek: 'Ngayong linggo',
+    total: 'Kabuuan',
+    completedPrograms: 'Natapos',
+    lastWorkout: 'Huling workout'
+  },
+  recommend: {
+    title: 'Inirerekomenda para sa iyo',
+    start: 'Simulan ang planong ito'
+  },
   nutrition: {
-    title: 'Nutrition Guide',
-    subtitle: 'Simple và portion-based eating para suportahan ang iyong training.',
-    sections: {
-      how: {
-        title: 'Paano ito gumagana',
-        bullets: [
-          'Portion-based plan gamit ang food groups.',
-          'Balanse na macros para sa energy at recovery.',
-          'Ang daily shake ay bilang na 1 protein portion.',
-        ],
-      },
-      plan: {
-        title: 'Hanapin ang iyong plan',
-        bullets: [
-          'Pumili ng Plan A–E base sa laki ng katawan & goal.',
-          'Bawat plan = fixed portions kada group/araw.',
-          'I-adjust nang konti kung sobrang gutom o sobrang busog.',
-        ],
-      },
-      foods: {
-        title: 'Food lists (mga pinakamagandang choice)',
-        bullets: [
-          'Gulay & fruits muna; buo, makulay, at high-fiber.',
-          'Lean proteins; smart carbs gaya ng oats, brown rice, at kamote.',
-          'Healthy fats: avocado, mani, buto, olive oil.',
-        ],
-      },
-      samples: {
-        title: 'Mga sample day idea',
-        bullets: [
-          'Breakfast: yogurt + berries + oats.',
-          'Lunch: chicken o tofu bowl, gulay + kanin/quinoa.',
-          'Dinner: isda + green veggies + kamote.',
-        ],
-      },
-      drinks: {
-        title: 'Mga Inumin / kape & tsaa',
-        bullets: [
-          'Water target: ~35-40ml kada kg của timbang sa một ngày.',
-          'Ayos lang ang kape/tsaa; bawasan ang asukal/creamers.',
-          'Iwasan ang sugary drinks at alak hangga’t maaari.',
-        ],
-      },
-      success: {
-        title: 'Ihanda ang sarili para sa tagumpay',
-        bullets: [
-          'Mag-meal prep của proteins, hugasan & i-portion ang gulay.',
-          'Magdala của snacks: prutas, mani, bars.',
-          'Kumain nang dahan-dahan, matulog nang maayos, at maging consistent.',
-        ],
-      },
-    },
+    title: 'Nutrisyon',
+    subtitle: 'Ang iyong pang-araw-araw na target ay iniangkop batay sa iyong kasalukuyang profile at layunin.',
+    noProfileTitle: 'Kumpletuhin muna ang iyong profile',
+    noProfileText: 'Idagdag ang iyong taas, timbang, at layunin upang makakuha ng rekomendasyon sa calories, macro, at hydration.',
+    targets: 'Pang-araw-araw na target',
+    calories: 'Calories',
+    water: 'Tubig',
+    macros: 'Hati ng macro',
+    protein: 'Protein',
+    carbs: 'Carbs',
+    fats: 'Taba',
+    sampleMeals: 'Halimbawang meal plan',
+    tips: 'Mga tip'
   },
   // fil
+  // fil
+  premium: {
+    title: 'Mag-upgrade sa Premium',
+    removeAds: 'Alisin ang mga ad',
+    allPrograms: 'I-unlock ang buong karanasan',
+    active: 'Aktibo ang Premium',
+    restore: 'I-restore ang mga binili',
+    restoreTitle: 'I-restore ang mga binili',
+    restoreSuccess: 'Matagumpay na na-restore ang Premium.',
+    restoreEmpty: 'Walang nakitang Premium purchase.',
+    errorTitle: 'Nabigo ang pagbili',
+    errorText: 'Hindi makumpleto ang pagbili.',
+    productUnavailable: 'Hindi nakita ang Premium product. Pakisuri ang setup ng Play Console / App Store.',
+    subUnavailable: 'Hindi nakita ang buwanang subscription. Pakisuri ang setup ng Play Console / App Store.',
+    loading: 'Naglo-load...',
+
+    monthlyTitle: 'Buwanang Premium',
+    monthlyDesc: 'Awtomatikong nagre-renew bawat buwan para manatiling aktibo ang Premium',
+    subscribeMonthly: 'Mag-subscribe buwan-buwan',
+
+    lifetimeTitle: 'Habambuhay na Premium',
+    lifetimeDesc: 'Isang bayad lang, Premium habambuhay',
+    buyLifetime: 'Bilhin habambuhay'
+  },
+  // fil
+  filters: {
+    all: 'Lahat',
+
+    levelTitle: 'Antas',
+    level: {
+      beginner: 'Baguhan',
+      intermediate: 'Katamtaman',
+      advanced: 'Advanced',
+    },
+
+    goalTitle: 'Pokús',
+    goal: {
+      lose_weight: 'Magbawas ng timbang',
+      build_muscle: 'Magpalaki ng kalamnan',
+      cardio: 'Cardio',
+      core: 'Core',
+      mobility: 'Mobility',
+    },
+
+    equipmentTitle: 'Kagamitan',
+    equipment: {
+      no_equipment: 'Walang kagamitan',
+      with_equipment: 'May kagamitan',
+    },
+
+    durationTitle: 'Tagal',
+    duration: {
+      short: 'Maikli',
+      medium: 'Katamtaman',
+      long: 'Mahaba',
+    },
+
+    noResultsTitle: 'Walang katugmang programa',
+    noResultsText: 'Subukang baguhin ang isa o higit pang filter.',
+  },
+  // fil
+beginner: {
+  modeTitle: 'Beginner mode',
+  modeDesc: 'Mga simpleng paliwanag at mabilis na gabay para sa mga bagong user.',
+  glossaryTitle: 'Gabay para sa baguhan',
+  terms: {
+    restDay: {
+      title: 'Araw ng pahinga',
+      desc: 'Ito ay araw ng recovery. Nagpapahinga at muling bumubuo ang iyong katawan, kaya huwag itong laktawan.'
+    },
+    warmUp: {
+      title: 'Warm-up',
+      desc: 'Magaan na galaw bago mag-ehersisyo upang ihanda ang katawan at mabawasan ang panganib ng injury.'
+    },
+    cooldown: {
+      title: 'Cooldown',
+      desc: 'Magaan na galaw o stretching pagkatapos mag-ehersisyo upang matulungan ang katawan na makabawi.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'High-Intensity Interval Training: maiikling bugso ng matinding trabaho na sinusundan ng maikling pahinga.'
+    },
+    rep: {
+      title: 'Rep',
+      desc: 'Isang kumpletong galaw ng ehersisyo. Halimbawa: isang squat = isang rep.'
+    },
+    set: {
+      title: 'Set',
+      desc: 'Isang grupo ng reps. Halimbawa: 10 squat na ginawa nang magkakasunod = 1 set.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Workout ngayong araw',
+  fallback: 'Workout',
+  startNow: 'Simulan ngayon',
+  restTitle: 'Ngayong araw ay araw ng recovery',
+  restText: 'Magpahinga muna, mag-stretch nang marahan, uminom ng tubig, at maghanda para sa susunod mong workout.'
+},
 // fil
-premium: {
-  title: 'Mag-upgrade sa Premium',
-  removeAds: 'Alisin ang mga ad',
-  allPrograms: 'I-unlock ang buong karanasan',
-  active: 'Aktibo ang Premium',
-  restore: 'I-restore ang mga binili',
-  restoreTitle: 'I-restore ang mga binili',
-  restoreSuccess: 'Matagumpay na na-restore ang Premium.',
-  restoreEmpty: 'Walang nakitang Premium purchase.',
-  errorTitle: 'Nabigo ang pagbili',
-  errorText: 'Hindi makumpleto ang pagbili.',
-  productUnavailable: 'Hindi nakita ang Premium product. Pakisuri ang setup ng Play Console / App Store.',
-  subUnavailable: 'Hindi nakita ang buwanang subscription. Pakisuri ang setup ng Play Console / App Store.',
-  loading: 'Naglo-load...',
-
-  monthlyTitle: 'Buwanang Premium',
-  monthlyDesc: 'Awtomatikong nagre-renew bawat buwan para manatiling aktibo ang Premium',
-  subscribeMonthly: 'Mag-subscribe buwan-buwan',
-
-  lifetimeTitle: 'Habambuhay na Premium',
-  lifetimeDesc: 'Isang bayad lang, Premium habambuhay',
-  buyLifetime: 'Bilhin habambuhay'
+history: {
+  title: 'Kasaysayan ng workout',
+  screenTitle: 'Kasaysayan ng workout',
+  thisWeek: 'Ngayong linggo',
+  minutes: 'Minuto',
+  totalWorkouts: 'Mga workout',
+  empty: 'Wala pang natatapos na workout.',
+  viewAll: 'Tingnan lahat',
+  filter7: '7 araw',
+  filter30: '30 araw',
+  filterAll: 'Lahat'
+},
+achievements: {
+  title: 'Pencapaian',
+  firstWorkout: 'Senaman pertama',
+  tenWorkouts: '10 senaman',
+  twentyfiveWorkouts: '25 senaman',
+  streak3: 'Rentetan 3 hari',
+  streak7: 'Rentetan 7 hari',
+  week4: '4 senaman minggu ini',
+  finishProgram: 'Lengkapkan 1 program'
+},
+challenges: {
+  title: 'Cabaran',
+  intro: 'Mulakan cabaran pendek untuk kekal konsisten.',
+  start7: 'Mulakan cabaran 7 hari',
+  start30: 'Mulakan cabaran 30 hari',
+  complete: 'Cabaran selesai',
+  daysLeft: '{{count}} hari lagi',
+  starter7Title: 'Cabaran permulaan 7 hari',
+  starter7Desc: 'Lengkapkan 5 senaman dalam 7 hari.',
+  consistency30Title: 'Cabaran konsisten 30 hari',
+  consistency30Desc: 'Lengkapkan 20 senaman dalam 30 hari.'
 }
 };
 const pt = {
   ...base,
-tabs: {
-  main: 'Inicio',             // Trang chủ (Phổ biến nhất)
-  nutrition: 'Nutrición',     // Dinh dưỡng
-  guide: 'Guía',              // Hướng dẫn
-  premium: 'Premium',         // Premium
-  settings: 'Ajustes',        // Cài đặt (Hoặc 'Configuración')
-  workout: 'Entrenamiento',   // Tập luyện
-  more: 'Más',                // Thêm/Khác
-  program: 'Programa',        // Chương trình
-  profile: 'Perfil',          // Hồ sơ
-  weightChart: 'Gráfico de peso', // Biểu đồ cân nặng
-},
-home: {
-  title: 'Elige tu plan de entrenamiento', // Chọn kế hoạch tập luyện
-  subtitle: 'Elige un programa y entrena a diario', // Chọn chương trình và tập mỗi ngày
-  program60: 'Quema de grasa en 60 días', // Đốt mỡ trong 60 ngày
-  program90: 'Cuerpo completo en 90 días', // Toàn thân trong 90 ngày
-  daysSuffix: '{{count}} días',   // Ngày
-  health_overview: 'Resumen de salud', // Tổng quan sức khỏe
-  activeTitle: 'En curso',        // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
-  noActive: 'No hay ningún programa activo actualmente.', // Hiện không có chương trình nào đang hoạt động.
-},
-program: {
+  tabs: {
+    main: 'Inicio',             // Trang chủ (Phổ biến nhất)
+    nutrition: 'Nutrición',     // Dinh dưỡng
+    guide: 'Guía',              // Hướng dẫn
+    premium: 'Premium',         // Premium
+    settings: 'Ajustes',        // Cài đặt (Hoặc 'Configuración')
+    workout: 'Entrenamiento',   // Tập luyện
+    more: 'Más',                // Thêm/Khác
+    program: 'Programa',        // Chương trình
+    profile: 'Perfil',          // Hồ sơ
+    weightChart: 'Gráfico de peso', // Biểu đồ cân nặng
+  },
+  home: {
+    title: 'Elige tu plan de entrenamiento', // Chọn kế hoạch tập luyện
+    subtitle: 'Elige un programa y entrena a diario', // Chọn chương trình và tập mỗi ngày
+    program60: 'Quema de grasa en 60 días', // Đốt mỡ trong 60 ngày
+    program90: 'Cuerpo completo en 90 días', // Toàn thân trong 90 ngày
+    daysSuffix: '{{count}} días',   // Ngày
+    health_overview: 'Resumen de salud', // Tổng quan sức khỏe
+    activeTitle: 'En curso',        // Đang diễn ra/In Progress (Dịch thoát ý từ Practicing)
+    noActive: 'No hay ningún programa activo actualmente.', // Hiện không có chương trình nào đang hoạt động.
+  },
+  program: {
     daysPrefix: 'Día {{day}} • {{weekday}}',
     weekTitle: 'Semana {{n}}',
     completed: 'Completado',
@@ -4232,37 +5427,37 @@ program: {
     pickOne: 'Elige un plan para comenzar',
     days: 'Dia',
   },
-// pt
-guide: {
-  title: 'Como usar o PulseFit',
-  subtitle: 'Siga estes passos simples para começar sua jornada de treino.',
+  // pt
+  guide: {
+    title: 'Como usar o PulseFit',
+    subtitle: 'Siga estes passos simples para começar sua jornada de treino.',
 
-  steps: {
-    step1: {
-      badge: 'Passo 1',
-      title: 'Insira suas informações pessoais',
-      desc: 'Preencha sua altura, peso, condição de saúde, objetivos e outras informações básicas. O aplicativo calculará seu IMC e fornecerá orientações de saúde para ajudá-lo a começar com segurança.'
+    steps: {
+      step1: {
+        badge: 'Passo 1',
+        title: 'Insira suas informações pessoais',
+        desc: 'Preencha sua altura, peso, condição de saúde, objetivos e outras informações básicas. O aplicativo calculará seu IMC e fornecerá orientações de saúde para ajudá-lo a começar com segurança.'
+      },
+      step2: {
+        badge: 'Passo 2',
+        title: 'Escolha um programa de treino adequado',
+        desc: 'Veja os programas disponíveis e escolha o que melhor se adapta ao seu nível de condicionamento, objetivos e preferências.'
+      },
+      step3: {
+        badge: 'Passo 3',
+        title: 'Escolha o dia do treino',
+        desc: 'Abra o programa selecionado e escolha o dia de treino que deseja seguir. Você pode avançar passo a passo de acordo com o cronograma.'
+      },
+      step4: {
+        badge: 'Passo 4',
+        title: 'Treine com o vídeo',
+        desc: 'Siga o vídeo de treino para se exercitar corretamente. Você pode girar o celular na horizontal para assistir ao vídeo em tela cheia e ter uma experiência melhor.'
+      }
     },
-    step2: {
-      badge: 'Passo 2',
-      title: 'Escolha um programa de treino adequado',
-      desc: 'Veja os programas disponíveis e escolha o que melhor se adapta ao seu nível de condicionamento, objetivos e preferências.'
-    },
-    step3: {
-      badge: 'Passo 3',
-      title: 'Escolha o dia do treino',
-      desc: 'Abra o programa selecionado e escolha o dia de treino que deseja seguir. Você pode avançar passo a passo de acordo com o cronograma.'
-    },
-    step4: {
-      badge: 'Passo 4',
-      title: 'Treine com o vídeo',
-      desc: 'Siga o vídeo de treino para se exercitar corretamente. Você pode girar o celular na horizontal para assistir ao vídeo em tela cheia e ter uma experiência melhor.'
-    }
+
+    noteTitle: 'Observação',
+    note: 'Mantenha a consistência nos treinos para alcançar os melhores resultados.'
   },
-
-  noteTitle: 'Observação',
-  note: 'Mantenha a consistência nos treinos para alcançar os melhores resultados.'
-},
   video: {
     loading: 'Cargando video...',
     play: 'Iniciar entrenamiento',
@@ -4391,84 +5586,168 @@ guide: {
     btn_delete: 'Eliminar',
     btn_save: 'Guardar',
   },
+  // pt
+  dashboard: {
+    title: 'Painel de progresso',
+    streak: 'Sequência',
+    thisWeek: 'Esta semana',
+    total: 'Total',
+    completedPrograms: 'Concluídos',
+    lastWorkout: 'Último treino'
+  },
+  recommend: {
+    title: 'Recomendado para você',
+    start: 'Começar este plano'
+  },
   nutrition: {
-    title: 'Guía de Nutrición',
-    subtitle: 'Alimentación simple basada en porciones para apoyar tu entrenamiento.',
-    sections: {
-      how: {
-        title: 'Cómo funciona',
-        bullets: [
-          'Plan basado en porciones usando grupos de alimentos.',
-          'Macros equilibrados para energía y recuperación.',
-          'El batido diario cuenta como 1 porción de proteína.',
-        ],
-      },
-      plan: {
-        title: 'Encuentra tu plan',
-        bullets: [
-          'Elige el Plan A–E según tu tamaño corporal y objetivo.',
-          'Cada plan = porciones fijas por grupo/día.',
-          'Ajusta ligeramente si tienes mucha hambre o estás muy lleno.',
-        ],
-      },
-      foods: {
-        title: 'Lista de alimentos (mejores opciones)',
-        bullets: [
-          'Vegetales y frutas primero; integrales, coloridos, altos en fibra.',
-          'Proteínas magras; carbohidratos inteligentes como avena, arroz integral, camote.',
-          'Grasas saludables: aguacate, nueces, semillas, aceite de oliva.',
-        ],
-      },
-      samples: {
-        title: 'Ideas para un día típico',
-        bullets: [
-          'Desayuno: yogur + bayas + avena.',
-          'Almuerzo: bowl de pollo o tofu, vegetales + arroz/quinua.',
-          'Cena: pescado + vegetales verdes + camote.',
-        ],
-      },
-      drinks: {
-        title: 'Bebidas / café y té',
-        bullets: [
-          'Meta de agua: ~35ml por kg de peso corporal al día.',
-          'Café/té está bien; limita azúcar/cremas.',
-          'Evita bebidas azucaradas y alcohol siempre que sea posible.',
-        ],
-      },
-      success: {
-        title: 'Prepárate para el éxito',
-        bullets: [
-          'Prepara proteínas con antelación (meal-prep), lava y divide los vegetales.',
-          'Lleva snacks: fruta, nueces, barras.',
-          'Come despacio, duerme bien, sé constante.',
-        ],
-      },
-    },
+    title: 'Nutrição',
+    subtitle: 'Suas metas diárias são personalizadas com base no seu perfil atual e objetivo.',
+    noProfileTitle: 'Complete seu perfil primeiro',
+    noProfileText: 'Adicione sua altura, peso e objetivo para receber recomendações de calorias, macros e hidratação.',
+    targets: 'Metas diárias',
+    calories: 'Calorias',
+    water: 'Água',
+    macros: 'Divisão de macros',
+    protein: 'Proteína',
+    carbs: 'Carboidratos',
+    fats: 'Gorduras',
+    sampleMeals: 'Plano alimentar de exemplo',
+    tips: 'Dicas'
   },
   // pt
+  // pt
+  premium: {
+    title: 'Atualizar para Premium',
+    removeAds: 'Remover anúncios',
+    allPrograms: 'Desbloquear a experiência completa',
+    active: 'Premium está ativo',
+    restore: 'Restaurar compras',
+    restoreTitle: 'Restaurar compras',
+    restoreSuccess: 'Premium restaurado com sucesso.',
+    restoreEmpty: 'Nenhuma compra Premium encontrada.',
+    errorTitle: 'Falha na compra',
+    errorText: 'Não foi possível concluir a compra.',
+    productUnavailable: 'Produto Premium não encontrado. Verifique a configuração do Play Console / App Store.',
+    subUnavailable: 'Assinatura mensal não encontrada. Verifique a configuração do Play Console / App Store.',
+    loading: 'Carregando...',
+
+    monthlyTitle: 'Premium mensal',
+    monthlyDesc: 'Renovação automática todos os meses para manter o Premium ativo',
+    subscribeMonthly: 'Assinar mensalmente',
+
+    lifetimeTitle: 'Premium vitalício',
+    lifetimeDesc: 'Pagamento único, mantenha o Premium para sempre',
+    buyLifetime: 'Comprar vitalício'
+  },
+  // pt
+filters: {
+  all: 'Todos',
+
+  levelTitle: 'Nível',
+  level: {
+    beginner: 'Iniciante',
+    intermediate: 'Intermediário',
+    advanced: 'Avançado',
+  },
+
+  goalTitle: 'Foco',
+  goal: {
+    lose_weight: 'Perder peso',
+    build_muscle: 'Ganhar massa muscular',
+    cardio: 'Cardio',
+    core: 'Core',
+    mobility: 'Mobilidade',
+  },
+
+  equipmentTitle: 'Equipamento',
+  equipment: {
+    no_equipment: 'Sem equipamento',
+    with_equipment: 'Com equipamento',
+  },
+
+  durationTitle: 'Duração',
+  duration: {
+    short: 'Curta',
+    medium: 'Média',
+    long: 'Longa',
+  },
+
+  noResultsTitle: 'Nenhum programa correspondente',
+  noResultsText: 'Tente alterar um ou mais filtros.',
+},
+  // pt
+beginner: {
+  modeTitle: 'Modo iniciante',
+  modeDesc: 'Explicações simples e orientação rápida para novos usuários.',
+  glossaryTitle: 'Guia para iniciantes',
+  terms: {
+    restDay: {
+      title: 'Dia de descanso',
+      desc: 'É um dia de recuperação. Seu corpo descansa e se reconstrói, então não pule esse dia.'
+    },
+    warmUp: {
+      title: 'Aquecimento',
+      desc: 'Movimentos leves antes do treino para preparar o corpo e reduzir o risco de lesões.'
+    },
+    cooldown: {
+      title: 'Desaquecimento',
+      desc: 'Movimentos leves ou alongamentos após o treino para ajudar o corpo a se recuperar.'
+    },
+    hiit: {
+      title: 'HIIT',
+      desc: 'Treinamento intervalado de alta intensidade: curtos períodos de esforço intenso seguidos de curtos descansos.'
+    },
+    rep: {
+      title: 'Repetição',
+      desc: 'Um movimento completo de um exercício. Exemplo: um agachamento = uma repetição.'
+    },
+    set: {
+      title: 'Série',
+      desc: 'Um grupo de repetições. Exemplo: 10 agachamentos feitos juntos = 1 série.'
+    }
+  }
+},
+todayWorkout: {
+  title: 'Treino de hoje',
+  fallback: 'Treino',
+  startNow: 'Começar agora',
+  restTitle: 'Hoje é um dia de recuperação',
+  restText: 'Faça uma pausa, alongue-se suavemente, beba água e prepare-se para o seu próximo treino.'
+},
 // pt
-premium: {
-  title: 'Atualizar para Premium',
-  removeAds: 'Remover anúncios',
-  allPrograms: 'Desbloquear a experiência completa',
-  active: 'Premium está ativo',
-  restore: 'Restaurar compras',
-  restoreTitle: 'Restaurar compras',
-  restoreSuccess: 'Premium restaurado com sucesso.',
-  restoreEmpty: 'Nenhuma compra Premium encontrada.',
-  errorTitle: 'Falha na compra',
-  errorText: 'Não foi possível concluir a compra.',
-  productUnavailable: 'Produto Premium não encontrado. Verifique a configuração do Play Console / App Store.',
-  subUnavailable: 'Assinatura mensal não encontrada. Verifique a configuração do Play Console / App Store.',
-  loading: 'Carregando...',
-
-  monthlyTitle: 'Premium mensal',
-  monthlyDesc: 'Renovação automática todos os meses para manter o Premium ativo',
-  subscribeMonthly: 'Assinar mensalmente',
-
-  lifetimeTitle: 'Premium vitalício',
-  lifetimeDesc: 'Pagamento único, mantenha o Premium para sempre',
-  buyLifetime: 'Comprar vitalício'
+history: {
+  title: 'Histórico de treinos',
+  screenTitle: 'Histórico de treinos',
+  thisWeek: 'Esta semana',
+  minutes: 'Minutos',
+  totalWorkouts: 'Treinos',
+  empty: 'Ainda não há treinos concluídos.',
+  viewAll: 'Ver tudo',
+  filter7: '7 dias',
+  filter30: '30 dias',
+  filterAll: 'Todos'
+},
+achievements: {
+  title: 'Conquistas',
+  firstWorkout: 'Primeiro treino',
+  tenWorkouts: '10 treinos',
+  twentyfiveWorkouts: '25 treinos',
+  streak3: 'Sequência de 3 dias',
+  streak7: 'Sequência de 7 dias',
+  week4: '4 treinos esta semana',
+  finishProgram: 'Concluir 1 programa'
+},
+challenges: {
+  title: 'Desafios',
+  intro: 'Comece um desafio curto para manter a consistência.',
+  start7: 'Começar desafio de 7 dias',
+  start30: 'Começar desafio de 30 dias',
+  complete: 'Desafio concluído',
+  daysLeft: 'Faltam {{count}} dia(s)',
+  starter7Title: 'Desafio inicial de 7 dias',
+  starter7Desc: 'Conclua 5 treinos em 7 dias.',
+  consistency30Title: 'Desafio de consistência de 30 dias',
+  consistency30Desc: 'Conclua 20 treinos em 30 dias.'
 }
 };
 
@@ -4513,7 +5792,7 @@ i18n.use(initReactI18next).init({
   try {
     const saved = await AsyncStorage.getItem(LANG_KEY);
     if (saved) i18n.changeLanguage(saved);
-  } catch {}
+  } catch { }
 })();
 
 export { LANG_KEY };

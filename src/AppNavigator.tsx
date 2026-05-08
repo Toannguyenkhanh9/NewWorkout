@@ -19,6 +19,7 @@ import { SettingsScreen } from './screens/SettingsScreen';
 import { UserProfileScreen } from './screens/UserProfileScreen';
 import { WorkoutScreen } from './screens/WorkoutScreen';
 import { WeightChartScreen } from './screens/WeightChartScreen';
+import { WorkoutHistoryScreen } from './screens/WorkoutHistoryScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,7 @@ const MainStack: React.FC = () => {
         component={WorkoutVideoScreen as any}
         options={{ title: t('tabs.workout') }}
       />
+          <Stack.Screen name="WorkoutHistory" component={WorkoutHistoryScreen} />
     </Stack.Navigator>
   );
 };
@@ -88,6 +90,11 @@ const SettingsStack: React.FC = () => {
       <Stack.Screen name="Guide" component={GuideScreen} options={{ title: t('tabs.guide') }} />
       <Stack.Screen name="Premium" component={PremiumScreen} options={{ title: t('tabs.premium') }} />
       <Stack.Screen name="WeightChart" component={WeightChartScreen} options={{ title: t('tabs.weightChart') }} />
+          <Stack.Screen
+      name="WorkoutHistory"
+      component={WorkoutHistoryScreen}
+      options={{ title: 'Workout History' }}
+    />
     </Stack.Navigator>
   );
 };
