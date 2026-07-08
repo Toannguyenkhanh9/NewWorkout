@@ -25,7 +25,6 @@ import {
 } from '../data/programCatalog';
 import { useSubscription } from '../iap/SubscriptionProvider';
 import { ensureTrialAccess } from '../ads/trial';
-import { AdBanner } from '../components/AdBanner';
 
 type LevelFilter = 'all' | ProgramLevel;
 type GoalFilter = 'all' | ProgramGoalTag;
@@ -266,11 +265,6 @@ export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
                 </Text>
               </View>
             ) : null}
-          </View>
-        }
-        ListFooterComponent={
-          <View style={styles.listFooter}>
-            <AdBanner />
           </View>
         }
       />

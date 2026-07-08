@@ -992,7 +992,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/4week.jpg'),
     plan: FourWeeksOfThePrep,
-    premium: true,
+    premium: false,
   },
   {
     id: 'SixWeeksOfTheWork',
@@ -1019,7 +1019,7 @@ export const PROGRAMS: WorkoutProgram[] = [
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/theasylum1.png'),
     plan: Asymum1,
-    premium: true,
+    premium: false,
   },
     {
     id: 'TheAsylum2',

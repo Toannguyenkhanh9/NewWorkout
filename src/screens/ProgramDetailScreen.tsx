@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import { PROGRAMS, generateProgramDays, WorkoutDay } from '../data/programs';
 import { DayItem } from '../components/DayItem';
-import { AdBanner } from '../components/AdBanner';
 import { markActive } from '../store/activePrograms';
 import { gateWorkout } from '../ads/adGate';
 import { useSubscription } from '../iap/SubscriptionProvider';
@@ -185,9 +184,6 @@ await addWorkoutHistory({
         stickySectionHeadersEnabled
         contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
       />
-       <View style={{ paddingHorizontal: 16 }}>
-        <AdBanner />
-      </View> 
     </View>
   );
 };

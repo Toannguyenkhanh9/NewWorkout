@@ -11,8 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import { buildNutritionPlan } from '../nutrition/nutritionPlanner';
 import { ProfileInput } from '../recommendation/programRecommender';
-import { AdBanner } from '../components/AdBanner';
-
 const PROFILE_KEY = 'user:profile';
 
 export const NutritionScreen: React.FC = () => {
@@ -106,10 +104,6 @@ export const NutritionScreen: React.FC = () => {
             </View>
           </>
         )}
-
-        <View style={styles.bannerWrap}>
-          <AdBanner />
-        </View>
       </ScrollView>
     </View>
   );

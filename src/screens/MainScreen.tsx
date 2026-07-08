@@ -16,7 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { PROGRAMS, WorkoutProgram } from '../data/programs';
 import { getActiveIds } from '../store/activePrograms';
-import { AdBanner } from '../components/AdBanner';
 import { shouldPromptNow } from '../weight/weightStore';
 import { WeightPrompt } from '../components/WeightPrompt';
 import { ActiveProgramsCard, ActiveItem } from '../components/ActiveProgramsCard';
@@ -399,11 +398,6 @@ export const MainScreen: React.FC<any> = () => {
                 onOpenProgram={openProgramById}
                 title={t('home.activeTitle', 'Đang tập luyện')}
               />
-
-              <View style={{ marginTop: 10 }}>
-                <AdBanner />
-              </View>
-
               <Text style={styles.footer}>
                 {t('footer.devBy', { name: 'Kevin' })}
               </Text>
