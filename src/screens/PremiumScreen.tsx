@@ -1,5 +1,5 @@
 // FILE: src/screens/PremiumScreen.tsx
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,16 +8,23 @@ import {
   Alert,
   ActivityIndicator,
   Platform,
+  DeviceEventEmitter,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
+
 import { useSubscription } from '../iap/SubscriptionProvider';
 import {
   PREMIUM_LIFETIME_PRODUCT_ID,
   PREMIUM_MONTHLY_SUB_ID,
 } from '../iap/iapConfig';
 
+const PREMIUM_KEY = 'app:isPremium';
+const REMOVE_ADS_KEY = 'app:adsRemoved';
+
 export const PremiumScreen: React.FC = () => {
   const { t } = useTranslation();
+
   const {
     isPremium,
     loading,
@@ -29,12 +36,33 @@ export const PremiumScreen: React.FC = () => {
     restorePurchases,
   } = useSubscription();
 
+  const markPremiumActive = useCallback(async () => {
+    await AsyncStorage.setItem(PREMIUM_KEY, 'true');
+    await AsyncStorage.setItem(REMOVE_ADS_KEY, 'true');
+
+    DeviceEventEmitter.emit('premiumChanged');
+  }, []);
+
+  useEffect(() => {
+    if (isPremium) {
+      markPremiumActive();
+    }
+  }, [isPremium, markPremiumActive]);
+
   const lifetimeProduct = useMemo(() => {
-    return products.find((p: any) => p.productId === PREMIUM_LIFETIME_PRODUCT_ID) || null;
+    return (
+      products.find(
+        (p: any) => p.productId === PREMIUM_LIFETIME_PRODUCT_ID,
+      ) || null
+    );
   }, [products]);
 
   const monthlySub = useMemo(() => {
-    return subscriptions.find((s: any) => s.productId === PREMIUM_MONTHLY_SUB_ID) || null;
+    return (
+      subscriptions.find(
+        (s: any) => s.productId === PREMIUM_MONTHLY_SUB_ID,
+      ) || null
+    );
   }, [subscriptions]);
 
   const monthlyPrice = useMemo(() => {
@@ -44,13 +72,15 @@ export const PremiumScreen: React.FC = () => {
     if (monthlySub.price) return monthlySub.price;
 
     const androidPhase =
-      monthlySub.subscriptionOfferDetails?.[0]?.pricingPhases?.pricingPhaseList?.[0]?.formattedPrice;
+      monthlySub.subscriptionOfferDetails?.[0]?.pricingPhases
+        ?.pricingPhaseList?.[0]?.formattedPrice;
 
     return androidPhase || '$--';
   }, [monthlySub]);
 
   const androidOfferToken = useMemo(() => {
     if (Platform.OS !== 'android') return undefined;
+
     return monthlySub?.subscriptionOfferDetails?.[0]?.offerToken;
   }, [monthlySub]);
 
@@ -61,17 +91,24 @@ export const PremiumScreen: React.FC = () => {
           t('premium.errorTitle', 'Purchase failed'),
           t(
             'premium.subUnavailable',
-            'Monthly subscription not found. Please check Play Console / App Store setup.'
-          )
+            'Monthly subscription not found. Please check Play Console / App Store setup.',
+          ),
         );
         return;
       }
 
       await buyMonthlySubscription(monthlySub.productId, androidOfferToken);
+
+      await markPremiumActive();
+
+      Alert.alert(
+        t('premium.restoreTitle', 'Premium'),
+        t('premium.restoreSuccess', 'Premium restored successfully.'),
+      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
-        e?.message || t('premium.errorText', 'Unable to complete purchase.')
+        e?.message || t('premium.errorText', 'Unable to complete purchase.'),
       );
     }
   };
@@ -83,36 +120,63 @@ export const PremiumScreen: React.FC = () => {
           t('premium.errorTitle', 'Purchase failed'),
           t(
             'premium.productUnavailable',
-            'Premium product not found. Please check Play Console / App Store setup.'
-          )
+            'Premium product not found. Please check Play Console / App Store setup.',
+          ),
         );
         return;
       }
 
       await buyLifetime(lifetimeProduct.productId);
+
+      await markPremiumActive();
+
+      Alert.alert(
+        t('premium.restoreTitle', 'Premium'),
+        t('premium.restoreSuccess', 'Premium restored successfully.'),
+      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
-        e?.message || t('premium.errorText', 'Unable to complete purchase.')
+        e?.message || t('premium.errorText', 'Unable to complete purchase.'),
       );
     }
   };
 
   const onRestore = async () => {
-    const ok = await restorePurchases();
-    Alert.alert(
-      t('premium.restoreTitle', 'Restore purchases'),
-      ok
-        ? t('premium.restoreSuccess', 'Premium restored successfully.')
-        : t('premium.restoreEmpty', 'No Premium purchase found.')
-    );
+    try {
+      const ok = await restorePurchases();
+
+      if (ok) {
+        await markPremiumActive();
+      }
+
+      Alert.alert(
+        t('premium.restoreTitle', 'Restore purchases'),
+        ok
+          ? t('premium.restoreSuccess', 'Premium restored successfully.')
+          : t('premium.restoreEmpty', 'No Premium purchase found.'),
+      );
+    } catch (e: any) {
+      Alert.alert(
+        t('premium.errorTitle', 'Purchase failed'),
+        e?.message || t('premium.errorText', 'Unable to complete purchase.'),
+      );
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('premium.title')}</Text>
-      <Text style={styles.text}>• {t('premium.removeAds')}</Text>
-      <Text style={styles.text}>• {t('premium.allPrograms')}</Text>
+      <Text style={styles.title}>
+        {t('premium.title', 'Upgrade Premium')}
+      </Text>
+
+      <Text style={styles.text}>
+        • {t('premium.removeAds', 'Remove ads')}
+      </Text>
+
+      <Text style={styles.text}>
+        • {t('premium.allPrograms', 'Unlock the full experience')}
+      </Text>
 
       {isPremium ? (
         <View style={styles.activeBox}>
@@ -122,20 +186,30 @@ export const PremiumScreen: React.FC = () => {
         </View>
       ) : null}
 
-      {/* Monthly */}
       <View style={styles.planCard}>
-        <Text style={styles.planName}>{t('premium.monthlyTitle', 'Monthly Premium')}</Text>
-        <Text style={styles.planDesc}>
-          {t('premium.monthlyDesc', 'Auto-renews every month to keep Premium active')}
+        <Text style={styles.planName}>
+          {t('premium.monthlyTitle', 'Monthly Premium')}
         </Text>
+
+        <Text style={styles.planDesc}>
+          {t(
+            'premium.monthlyDesc',
+            'Auto-renews every month to keep Premium active',
+          )}
+        </Text>
+
         <Text style={styles.priceValue}>
           {loading ? t('premium.loading', 'Loading...') : monthlyPrice}
         </Text>
 
         <TouchableOpacity
-          style={[styles.button, (loading || purchasing || isPremium) && styles.buttonDisabled]}
+          style={[
+            styles.button,
+            (loading || purchasing || isPremium) && styles.buttonDisabled,
+          ]}
           onPress={onBuyMonthly}
           disabled={loading || purchasing || isPremium}
+          activeOpacity={0.85}
         >
           {purchasing ? (
             <ActivityIndicator color="#0F172A" />
@@ -147,22 +221,34 @@ export const PremiumScreen: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Lifetime */}
       <View style={styles.planCard}>
-        <Text style={styles.planName}>{t('premium.lifetimeTitle', 'Lifetime Premium')}</Text>
-        <Text style={styles.planDesc}>
-          {t('premium.lifetimeDesc', 'One-time payment, keep Premium forever')}
+        <Text style={styles.planName}>
+          {t('premium.lifetimeTitle', 'Lifetime Premium')}
         </Text>
+
+        <Text style={styles.planDesc}>
+          {t(
+            'premium.lifetimeDesc',
+            'One-time payment, keep Premium forever',
+          )}
+        </Text>
+
         <Text style={styles.priceValue}>
           {loading
             ? t('premium.loading', 'Loading...')
-            : lifetimeProduct?.localizedPrice || lifetimeProduct?.price || '$--'}
+            : lifetimeProduct?.localizedPrice ||
+              lifetimeProduct?.price ||
+              '$--'}
         </Text>
 
         <TouchableOpacity
-          style={[styles.buttonSecondary, (loading || purchasing || isPremium) && styles.buttonDisabled]}
+          style={[
+            styles.buttonSecondary,
+            (loading || purchasing || isPremium) && styles.buttonDisabled,
+          ]}
           onPress={onBuyLifetime}
           disabled={loading || purchasing || isPremium}
+          activeOpacity={0.85}
         >
           <Text style={styles.buttonSecondaryText}>
             {t('premium.buyLifetime', 'Buy lifetime')}
@@ -171,9 +257,13 @@ export const PremiumScreen: React.FC = () => {
       </View>
 
       <TouchableOpacity
-        style={styles.restoreButton}
+        style={[
+          styles.restoreButton,
+          (loading || purchasing) && styles.buttonDisabled,
+        ]}
         onPress={onRestore}
         disabled={loading || purchasing}
+        activeOpacity={0.85}
       >
         <Text style={styles.restoreText}>
           {t('premium.restore', 'Restore purchases')}

@@ -6,6 +6,8 @@ import {
   View,
   StyleSheet,
   Keyboard,
+  AppState,
+  DeviceEventEmitter,
 } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,17 +30,18 @@ import { WeightChartScreen } from './screens/WeightChartScreen';
 import { WorkoutHistoryScreen } from './screens/WorkoutHistoryScreen';
 import { AdBanner } from './components/AdBanner';
 import { AdvancedMealPlanScreen } from './screens/AdvancedMealPlanScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const BG = '#06111D';
 const CARD = '#0B1624';
-const CARD_2 = '#101C2B';
 const TEXT = '#F8FAFC';
 const MUTED = '#94A3B8';
 const NEON = '#7CFF3A';
-const CYAN = '#19E6D2';
+const PREMIUM_KEY = 'app:isPremium';
+const REMOVE_ADS_KEY = 'app:adsRemoved';
 
 const enNavigator = {
   Navigator: {
@@ -236,12 +239,7 @@ const TabIcon: React.FC<{
   focused: boolean;
 }> = ({ icon, color, focused }) => {
   return (
-    <View
-      style={[
-        styles.tabIconWrap,
-        focused && styles.tabIconWrapActive,
-      ]}
-    >
+    <View style={[styles.tabIconWrap, focused && styles.tabIconWrapActive]}>
       <Text style={[styles.tabIcon, { color }]}>{icon}</Text>
     </View>
   );
@@ -252,6 +250,23 @@ export const AppNavigator: React.FC = () => {
   const insets = useSafeAreaInsets();
 
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+
+  const loadPremiumState = async () => {
+    try {
+      const premiumRaw = await AsyncStorage.getItem(PREMIUM_KEY);
+      const removeAdsRaw = await AsyncStorage.getItem(REMOVE_ADS_KEY);
+
+      setIsPremium(
+        premiumRaw === 'true' ||
+          premiumRaw === '1' ||
+          removeAdsRaw === 'true' ||
+          removeAdsRaw === '1',
+      );
+    } catch {
+      setIsPremium(false);
+    }
+  };
 
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', () => {
@@ -267,6 +282,25 @@ export const AppNavigator: React.FC = () => {
       hideSub.remove();
     };
   }, []);
+  useEffect(() => {
+    loadPremiumState();
+
+    const premiumSub = DeviceEventEmitter.addListener(
+      'premiumChanged',
+      loadPremiumState,
+    );
+
+    const appStateSub = AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        loadPremiumState();
+      }
+    });
+
+    return () => {
+      premiumSub.remove();
+      appStateSub.remove();
+    };
+  }, []);
 
   const extraBottom =
     Platform.OS === 'android'
@@ -274,7 +308,7 @@ export const AppNavigator: React.FC = () => {
       : Math.max(insets.bottom, 8);
 
   const tabButtonHeight = 58 + extraBottom;
-  const bannerHeight = 68;
+  const bannerHeight = isPremium ? 0 : 68;
   const totalBottomHeight = tabButtonHeight + bannerHeight;
 
   return (
@@ -356,7 +390,7 @@ export const AppNavigator: React.FC = () => {
         />
       </Tab.Navigator>
 
-      {!keyboardVisible ? (
+      {!keyboardVisible && !isPremium ? (
         <View
           style={[
             styles.bannerAboveTab,
