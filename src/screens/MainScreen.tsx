@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
 import { PROGRAMS, WorkoutProgram } from '../data/programs';
 import { getActiveIds } from '../store/activePrograms';
 import { shouldPromptNow } from '../weight/weightStore';
@@ -29,16 +30,47 @@ import { useToast } from '../ui/Toast';
 import { trackWorkoutTapAndMaybeAsk } from '../review/rate';
 import { markWorkoutActivity } from '../notifications/reminder';
 import { markSessionCompleted } from '../store/progressStats';
-import { addWorkoutHistory, getWorkoutHistory, getWeeklyWorkoutCount, getTotalWorkoutMinutes, WorkoutHistoryEntry } from '../store/workoutHistory';
+import {
+  addWorkoutHistory,
+  getWorkoutHistory,
+  getWeeklyWorkoutCount,
+  getTotalWorkoutMinutes,
+  WorkoutHistoryEntry,
+} from '../store/workoutHistory';
 import { getAchievements, AchievementItem } from '../store/achievements';
-import { getActiveChallengeState, startChallenge, ActiveChallengeState } from '../store/challenges';
+import {
+  getActiveChallengeState,
+  startChallenge,
+  ActiveChallengeState,
+} from '../store/challenges';
 import { WorkoutHistoryCard } from '../components/WorkoutHistoryCard';
 import { AchievementsCard } from '../components/AchievementsCard';
 import { ChallengeCard } from '../components/ChallengeCard';
 
-const BG = require('../../assets/images/backgound.png');
+const BG_IMAGE = require('../../assets/images/backgound.png');
+
 const BMI_KEY = 'user:bmi';
 const RECO_KEY = 'user:recommendation';
+
+const BG = '#06111D';
+const CARD = 'rgba(11, 22, 36, 0.94)';
+const CARD_2 = 'rgba(16, 28, 43, 0.96)';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+
+const MiniStat: React.FC<{
+  label: string;
+  value: string | number;
+  icon: string;
+}> = ({ label, value, icon }) => (
+  <View style={styles.miniStat}>
+    <Text style={styles.miniStatIcon}>{icon}</Text>
+    <Text style={styles.miniStatValue}>{value}</Text>
+    <Text style={styles.miniStatLabel}>{label}</Text>
+  </View>
+);
 
 export const MainScreen: React.FC<any> = () => {
   const { t } = useTranslation();
@@ -67,9 +99,11 @@ export const MainScreen: React.FC<any> = () => {
 
     for (const id of ids) {
       const key = `program:${id}:completed`;
+
       try {
         const json = await AsyncStorage.getItem(key);
         const map = json ? (JSON.parse(json) as Record<string, boolean>) : {};
+
         completedObj[id] = map;
         progressObj[id] = Object.values(map).filter(Boolean).length;
       } catch {
@@ -88,6 +122,7 @@ export const MainScreen: React.FC<any> = () => {
         AsyncStorage.getItem(BMI_KEY),
         AsyncStorage.getItem(RECO_KEY),
       ]);
+
       setBmi(bmiStr ? parseFloat(bmiStr) : null);
       setAdvice(reco || null);
     } catch {
@@ -101,13 +136,14 @@ export const MainScreen: React.FC<any> = () => {
   }, []);
 
   const loadExtraCards = useCallback(async () => {
-    const [history, weekCount, minutes, achievementItems, challengeState] = await Promise.all([
-      getWorkoutHistory(5),
-      getWeeklyWorkoutCount(7),
-      getTotalWorkoutMinutes(7),
-      getAchievements(PROGRAMS),
-      getActiveChallengeState(),
-    ]);
+    const [history, weekCount, minutes, achievementItems, challengeState] =
+      await Promise.all([
+        getWorkoutHistory(5),
+        getWeeklyWorkoutCount(7),
+        getTotalWorkoutMinutes(7),
+        getAchievements(PROGRAMS),
+        getActiveChallengeState(),
+      ]);
 
     setHistoryItems(history);
     setWeeklyCount(weekCount);
@@ -121,6 +157,7 @@ export const MainScreen: React.FC<any> = () => {
       (async () => {
         const ids = await getActiveIds();
         const list = PROGRAMS.filter((p) => ids.includes(p.id));
+
         setActivePrograms(list);
 
         await Promise.all([
@@ -130,7 +167,9 @@ export const MainScreen: React.FC<any> = () => {
           loadExtraCards(),
         ]);
 
-        if (await shouldPromptNow()) setShowWeight(true);
+        if (await shouldPromptNow()) {
+          setShowWeight(true);
+        }
       })();
     }, [computeProgress, loadHealthAdvice, loadBeginnerMode, loadExtraCards]),
   );
@@ -156,6 +195,7 @@ export const MainScreen: React.FC<any> = () => {
     if (!program) return;
 
     let trial = false;
+
     if (!isPremium) {
       trial = await ensureTrialAccess();
     }
@@ -165,13 +205,21 @@ export const MainScreen: React.FC<any> = () => {
     if (locked) {
       Alert.alert(
         t('premium.lockedTitle', 'Premium required'),
-        t('premium.lockedText', 'This program is available for Premium users only. Upgrade to continue.'),
+        t(
+          'premium.lockedText',
+          'This program is available for Premium users only. Upgrade to continue.',
+        ),
         [
-          { text: t('common.cancel', 'Cancel'), style: 'cancel' },
+          {
+            text: t('common.cancel', 'Cancel'),
+            style: 'cancel',
+          },
           {
             text: t('premium.cta', 'Upgrade now'),
             onPress: () =>
-              navigation.getParent()?.navigate('Settings', { screen: 'Premium' }),
+              navigation.getParent()?.navigate('Settings', {
+                screen: 'Premium',
+              }),
           },
         ],
       );
@@ -188,21 +236,31 @@ export const MainScreen: React.FC<any> = () => {
     const { program, day } = workoutItem;
 
     let trial = false;
+
     if (!isPremium) {
       trial = await ensureTrialAccess();
     }
 
     const locked = !!program.premium && !isPremium && !trial;
+
     if (locked) {
       Alert.alert(
         t('premium.lockedTitle', 'Premium required'),
-        t('premium.lockedText', 'This program is available for Premium users only. Upgrade to continue.'),
+        t(
+          'premium.lockedText',
+          'This program is available for Premium users only. Upgrade to continue.',
+        ),
         [
-          { text: t('common.cancel', 'Cancel'), style: 'cancel' },
+          {
+            text: t('common.cancel', 'Cancel'),
+            style: 'cancel',
+          },
           {
             text: t('premium.cta', 'Upgrade now'),
             onPress: () =>
-              navigation.getParent()?.navigate('Settings', { screen: 'Premium' }),
+              navigation.getParent()?.navigate('Settings', {
+                screen: 'Premium',
+              }),
           },
         ],
       );
@@ -215,12 +273,16 @@ export const MainScreen: React.FC<any> = () => {
     });
 
     if (result === 'closed') {
-      toast.show(t('ads.need_full', 'You need to watch the entire ad to continue'));
+      toast.show(
+        t('ads.need_full', 'You need to watch the entire ad to continue'),
+      );
       return;
     }
 
     if (result === 'not_ready') {
-      toast.show(t('ads.not_ready', 'Ad is loading, please try again in a few seconds'));
+      toast.show(
+        t('ads.not_ready', 'Ad is loading, please try again in a few seconds'),
+      );
       return;
     }
 
@@ -255,12 +317,14 @@ export const MainScreen: React.FC<any> = () => {
 
     if (!wasCompleted) {
       await markSessionCompleted(program.id, day.id);
+
       await addWorkoutHistory({
         programId: program.id,
         dayId: day.id,
-        workoutName: day.name,
+        workoutName: day.name || `Day ${day.dayNumber || ''}`.trim(),
         durationMin: day.durationMin,
       });
+
       await loadExtraCards();
     }
 
@@ -291,8 +355,13 @@ export const MainScreen: React.FC<any> = () => {
   const isRestToday = !!todayWorkout && (todayWorkout as any).kind === 'rest';
 
   return (
-    <ImageBackground source={BG} style={styles.bg}>
-      <StatusBar barStyle="light-content" />
+    <ImageBackground source={BG_IMAGE} style={styles.bg} resizeMode="cover">
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+
+      <View style={styles.darkOverlay} />
+      <View pointerEvents="none" style={styles.glowTop} />
+      <View pointerEvents="none" style={styles.glowBottom} />
+
       <SafeAreaView edges={['top', 'left', 'right']} style={styles.safe}>
         <ScrollView
           style={styles.scroll}
@@ -300,62 +369,122 @@ export const MainScreen: React.FC<any> = () => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.container}>
-            <View style={styles.headingWrap}>
-              <Text style={styles.appName}>Insanity Deluxe Edition</Text>
-              <Text style={styles.subtitle}>{t('home.subtitle')}</Text>
+            <View style={styles.hero}>
+              <View style={styles.heroBadge}>
+                <Text style={styles.heroBadgeText}>FITNESS APP</Text>
+              </View>
+
+              <Text style={styles.appName}>
+                Insanity Deluxe
+              </Text>
+
+              <Text style={styles.appNameAccent}>
+                Edition
+              </Text>
+
+              <Text style={styles.subtitle}>
+                {t('home.subtitle', 'Pick a program and train daily')}
+              </Text>
+            </View>
+
+            <View style={styles.statRow}>
+              <MiniStat
+                icon="🔥"
+                value={weeklyCount}
+                label={t('history.thisWeek', 'This week')}
+              />
+
+              <MiniStat
+                icon="⏱️"
+                value={weeklyMinutes}
+                label={t('history.minutes', 'Minutes')}
+              />
+
+              <MiniStat
+                icon="🏆"
+                value={achievements.filter((x: any) => x.completed).length}
+                label={t('achievements.title', 'Achievements')}
+              />
             </View>
 
             {advice ? (
-              <View style={styles.adviceCard}>
-                <Text style={styles.adviceTitle}>{t('home.health_overview')}</Text>
-                <Text style={styles.adviceBMI}>
-                  {t('onboard.bmi')}: {bmi ?? '—'}
-                </Text>
-                <Text style={styles.adviceText}>{advice}</Text>
+              <View style={styles.healthCard}>
+                <View style={styles.cardHeader}>
+                  <View>
+                    <Text style={styles.cardTitle}>
+                      {t('home.health_overview', 'Health overview')}
+                    </Text>
+
+                    <Text style={styles.cardSub}>
+                      {t('onboard.bmi', 'BMI')}: {bmi ?? '—'}
+                    </Text>
+                  </View>
+
+                  <View style={styles.roundIcon}>
+                    <Text style={styles.roundIconText}>❤</Text>
+                  </View>
+                </View>
+
+                <Text style={styles.healthText}>{advice}</Text>
               </View>
             ) : null}
 
-            <View style={styles.beginnerCard}>
-              <View style={styles.beginnerHeader}>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.beginnerTitle}>
-                    {t('beginner.modeTitle', 'Beginner mode')}
-                  </Text>
-                  <Text style={styles.beginnerSub}>
-                    {t('beginner.modeDesc', 'Simple explanations and quick guidance for new users.')}
-                  </Text>
-                </View>
+            <View style={styles.modeCard}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.cardTitle}>
+                  {t('beginner.modeTitle', 'Beginner mode')}
+                </Text>
 
-                <TouchableOpacity
-                  style={[styles.beginnerToggle, beginnerMode && styles.beginnerToggleActive]}
-                  onPress={onToggleBeginnerMode}
-                >
-                  <Text
-                    style={[
-                      styles.beginnerToggleText,
-                      beginnerMode && styles.beginnerToggleTextActive,
-                    ]}
-                  >
-                    {beginnerMode ? t('common.on', 'ON') : t('common.off', 'OFF')}
-                  </Text>
-                </TouchableOpacity>
+                <Text style={styles.cardSub}>
+                  {t(
+                    'beginner.modeDesc',
+                    'Simple explanations and quick guidance for new users.',
+                  )}
+                </Text>
               </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.toggleButton,
+                  beginnerMode && styles.toggleButtonActive,
+                ]}
+                onPress={onToggleBeginnerMode}
+                activeOpacity={0.86}
+              >
+                <Text
+                  style={[
+                    styles.toggleText,
+                    beginnerMode && styles.toggleTextActive,
+                  ]}
+                >
+                  {beginnerMode ? t('common.on', 'ON') : t('common.off', 'OFF')}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {todayWorkout && !isRestToday ? (
               <View style={styles.todayCard}>
-                <Text style={styles.todayLabel}>
+                <Text style={styles.todayKicker}>
                   {t('todayWorkout.title', "Today's workout")}
                 </Text>
-                <Text style={styles.todayWorkoutName}>
-                  {(todayWorkout as any).day.name || t('todayWorkout.fallback', 'Workout')}
-                </Text>
-                <Text style={styles.todayWorkoutMeta}>
-                  {(t((todayWorkout as any).program.titleKey) as string)} • {t('program.day', 'Day')} {(todayWorkout as any).day.dayNumber}
+
+                <Text style={styles.todayName}>
+                  {(todayWorkout as any).day.name ||
+                    t('todayWorkout.fallback', 'Workout')}
                 </Text>
 
-                <TouchableOpacity style={styles.todayButton} onPress={openTodayWorkout}>
-                  <Text style={styles.todayButtonText}>
+                <Text style={styles.todayMeta}>
+                  {(t((todayWorkout as any).program.titleKey) as string)} •{' '}
+                  {t('program.day', 'Day')}{' '}
+                  {(todayWorkout as any).day.dayNumber}
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.startButton}
+                  onPress={openTodayWorkout}
+                  activeOpacity={0.88}
+                >
+                  <Text style={styles.startButtonText}>
                     {t('todayWorkout.startNow', 'Start now')}
                   </Text>
                 </TouchableOpacity>
@@ -364,40 +493,66 @@ export const MainScreen: React.FC<any> = () => {
 
             {isRestToday ? (
               <View style={styles.restCard}>
-                <Text style={styles.restLabel}>
+                <Text style={styles.restTitle}>
                   {t('todayWorkout.restTitle', 'Today is a recovery day')}
                 </Text>
+
                 <Text style={styles.restText}>
-                  {t('todayWorkout.restText', 'Take a break, stretch gently, drink water, and get ready for your next workout.')}
+                  {t(
+                    'todayWorkout.restText',
+                    'Take a break, stretch gently, drink water, and get ready for your next workout.',
+                  )}
                 </Text>
               </View>
             ) : null}
 
-            {beginnerMode ? <BeginnerGlossaryCard /> : null}
+            {beginnerMode ? (
+              <View style={styles.lightComponentWrap}>
+                <BeginnerGlossaryCard />
+              </View>
+            ) : null}
 
-<WorkoutHistoryCard
-  items={historyItems}
-  weeklyCount={weeklyCount}
-  weeklyMinutes={weeklyMinutes}
-  t={t as any}
-  onPressViewAll={() => navigation.navigate('WorkoutHistory')}
-/>
+            <View style={styles.lightComponentWrap}>
+              <WorkoutHistoryCard
+                items={historyItems}
+                weeklyCount={weeklyCount}
+                weeklyMinutes={weeklyMinutes}
+                t={t as any}
+                onPressViewAll={() => navigation.navigate('WorkoutHistory')}
+              />
+            </View>
 
-<AchievementsCard items={achievements} t={t as any} />
+            <View style={styles.lightComponentWrap}>
+              <AchievementsCard items={achievements} t={t as any} />
+            </View>
 
-<ChallengeCard
-  active={activeChallenge}
-  onStart7={onStart7Day}
-  onStart30={onStart30Day}
-  t={t as any}
-/>
+            <View style={styles.lightComponentWrap}>
+              <ChallengeCard
+                active={activeChallenge}
+                onStart7={onStart7Day}
+                onStart30={onStart30Day}
+                t={t as any}
+              />
+            </View>
 
             <View style={styles.bottomArea}>
-              <ActiveProgramsCard
-                items={items}
-                onOpenProgram={openProgramById}
-                title={t('home.activeTitle', 'Đang tập luyện')}
-              />
+              <View style={styles.sectionTitleRow}>
+                <Text style={styles.sectionTitle}>
+                  {t('home.activeTitle', 'Đang tập luyện')}
+                </Text>
+                <Text style={styles.sectionSub}>
+                  {items.length} {t('workouts.programs', 'programs')}
+                </Text>
+              </View>
+
+              <View style={styles.lightComponentWrap}>
+                <ActiveProgramsCard
+                  items={items}
+                  onOpenProgram={openProgramById}
+                  title={t('home.activeTitle', 'Đang tập luyện')}
+                />
+              </View>
+
               <Text style={styles.footer}>
                 {t('footer.devBy', { name: 'Kevin' })}
               </Text>
@@ -416,163 +571,284 @@ export const MainScreen: React.FC<any> = () => {
 };
 
 const styles = StyleSheet.create({
-  bg: { flex: 1 },
-  safe: { flex: 1 },
-  scroll: { flex: 1 },
-  scrollContent: { paddingBottom: 20 },
-  container: { paddingHorizontal: 16, paddingBottom: 12 },
+  bg: {
+    flex: 1,
+    backgroundColor: BG,
+  },
+  darkOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(3, 7, 18, 0.78)',
+  },
+  glowTop: {
+    position: 'absolute',
+    top: -90,
+    right: -80,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(25, 230, 210, 0.22)',
+  },
+  glowBottom: {
+    position: 'absolute',
+    bottom: 80,
+    left: -120,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(124, 255, 58, 0.12)',
+  },
+  safe: {
+    flex: 1,
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 160,
+  },
+  container: {
+    paddingHorizontal: 18,
+    paddingTop: 12,
+  },
 
-  headingWrap: { alignItems: 'center', marginTop: 8 },
-  appName: {
-    fontSize: 30,
+  hero: {
+    paddingTop: 8,
+    marginBottom: 16,
+  },
+  heroBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(25, 230, 210, 0.8)',
+    backgroundColor: 'rgba(25, 230, 210, 0.12)',
+    marginBottom: 12,
+  },
+  heroBadgeText: {
+    color: CYAN,
+    fontSize: 11,
     fontWeight: '900',
-    color: '#33e06dff',
     letterSpacing: 1.2,
-    textAlign: 'center',
-    textShadowColor: 'rgba(0,0,0,0.45)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+  },
+  appName: {
+    color: TEXT,
+    fontSize: 34,
+    lineHeight: 38,
+    fontWeight: '900',
+    letterSpacing: 0.2,
+  },
+  appNameAccent: {
+    color: NEON,
+    fontSize: 34,
+    lineHeight: 38,
+    fontWeight: '900',
+    letterSpacing: 0.2,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#1d1b1bff',
-    opacity: 0.95,
-    marginTop: 6,
-    textAlign: 'center',
-    textShadowColor: 'rgba(0,0,0,0.35)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
+    color: '#D8E4F0',
+    fontSize: 15,
+    lineHeight: 22,
+    marginTop: 8,
+    maxWidth: 330,
   },
 
-  adviceCard: {
-    backgroundColor: 'rgba(255,255,255,0.96)',
-    borderRadius: 16,
-    padding: 14,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
+  statRow: {
+    flexDirection: 'row',
+    marginHorizontal: -5,
+    marginBottom: 12,
   },
-  adviceTitle: {
-    color: '#0F172A',
+  miniStat: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: CARD,
+    borderRadius: 18,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+  },
+  miniStatIcon: {
+    fontSize: 20,
+    marginBottom: 7,
+  },
+  miniStatValue: {
+    color: TEXT,
+    fontSize: 22,
     fontWeight: '900',
-    marginBottom: 4,
-    fontSize: 16,
   },
-  adviceBMI: { color: '#065F46', fontWeight: '800', marginBottom: 4 },
-  adviceText: { color: '#334155', lineHeight: 20 },
+  miniStatLabel: {
+    color: MUTED,
+    fontSize: 11,
+    marginTop: 3,
+    fontWeight: '700',
+  },
 
-  beginnerCard: {
-    backgroundColor: 'rgba(255,255,255,0.96)',
-    borderRadius: 16,
-    padding: 14,
-    marginTop: 10,
+  healthCard: {
+    backgroundColor: CARD,
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(124, 255, 58, 0.22)',
   },
-  beginnerHeader: { flexDirection: 'row', alignItems: 'center' },
-  beginnerTitle: { color: '#0F172A', fontWeight: '900', fontSize: 16 },
-  beginnerSub: { color: '#64748B', marginTop: 4, fontSize: 13, lineHeight: 19 },
-  beginnerToggle: {
-    paddingHorizontal: 14,
+  modeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: CARD,
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+  },
+  todayCard: {
+    backgroundColor: CARD,
+    borderRadius: 24,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(124, 255, 58, 0.32)',
+  },
+  restCard: {
+    backgroundColor: 'rgba(69, 40, 12, 0.88)',
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(245, 158, 11, 0.35)',
+  },
+
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardTitle: {
+    color: TEXT,
+    fontWeight: '900',
+    fontSize: 17,
+  },
+  cardSub: {
+    color: MUTED,
+    marginTop: 5,
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  healthText: {
+    color: '#E5E7EB',
+    lineHeight: 21,
+    marginTop: 12,
+    fontSize: 14,
+  },
+  roundIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(124, 255, 58, 0.16)',
+    borderWidth: 1,
+    borderColor: NEON,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  roundIconText: {
+    color: NEON,
+    fontSize: 20,
+    fontWeight: '900',
+  },
+
+  toggleButton: {
+    marginLeft: 12,
+    paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 999,
-    backgroundColor: '#F1F5F9',
+    backgroundColor: CARD_2,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
-    marginLeft: 12,
+    borderColor: 'rgba(148, 163, 184, 0.24)',
   },
-  beginnerToggleActive: {
-    backgroundColor: '#ECFDF5',
-    borderColor: '#10B981',
+  toggleButtonActive: {
+    backgroundColor: NEON,
+    borderColor: NEON,
   },
-  beginnerToggleText: { color: '#334155', fontWeight: '900', fontSize: 12 },
-  beginnerToggleTextActive: { color: '#065F46' },
-
-  todayCard: {
-    backgroundColor: 'rgba(255,255,255,0.96)',
-    borderRadius: 16,
-    padding: 14,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
-  },
-  todayLabel: {
-    color: '#0F766E',
+  toggleText: {
+    color: MUTED,
     fontWeight: '900',
     fontSize: 12,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
-  todayWorkoutName: {
-    color: '#0F172A',
+  toggleTextActive: {
+    color: BG,
+  },
+
+  todayKicker: {
+    color: CYAN,
     fontWeight: '900',
-    fontSize: 18,
-    marginTop: 6,
+    fontSize: 12,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
-  todayWorkoutMeta: {
-    color: '#64748B',
-    marginTop: 4,
+  todayName: {
+    color: TEXT,
+    fontSize: 22,
+    fontWeight: '900',
+    marginTop: 8,
+  },
+  todayMeta: {
+    color: MUTED,
+    marginTop: 5,
     fontSize: 13,
     fontWeight: '700',
   },
-  todayButton: {
-    marginTop: 12,
-    backgroundColor: '#10B981',
-    paddingVertical: 12,
-    borderRadius: 12,
+  startButton: {
+    backgroundColor: NEON,
+    borderRadius: 15,
+    paddingVertical: 13,
     alignItems: 'center',
+    marginTop: 14,
   },
-  todayButtonText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
-    fontSize: 14,
+  startButtonText: {
+    color: BG,
+    fontWeight: '900',
+    fontSize: 15,
   },
 
-  restCard: {
-    backgroundColor: 'rgba(255,255,255,0.96)',
-    borderRadius: 16,
-    padding: 14,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-  },
-  restLabel: {
-    color: '#B45309',
+  restTitle: {
+    color: '#FDE68A',
     fontWeight: '900',
-    fontSize: 12,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    fontSize: 17,
   },
   restText: {
-    color: '#334155',
-    fontSize: 14,
+    color: '#FFF7ED',
     lineHeight: 21,
     marginTop: 8,
   },
 
-  bottomArea: {
-    paddingTop: 10,
-    paddingBottom: 6,
+  lightComponentWrap: {
+    marginBottom: 12,
+    borderRadius: 22,
+    overflow: 'hidden',
   },
 
+  bottomArea: {
+    paddingTop: 4,
+  },
+  sectionTitleRow: {
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    color: TEXT,
+    fontWeight: '900',
+    fontSize: 20,
+  },
+  sectionSub: {
+    color: MUTED,
+    fontSize: 12,
+    marginTop: 3,
+    fontWeight: '700',
+  },
   footer: {
     textAlign: 'center',
-    color: '#FFFFFF',
+    color: MUTED,
     marginTop: 12,
     fontSize: 12,
-    textShadowColor: 'rgba(0,0,0,0.25)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
 });
 

@@ -10,6 +10,14 @@ type Props = {
   t: (key: string, defaultValue?: string, options?: any) => string;
 };
 
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+const BG = '#06111D';
+const CARD = 'rgba(11, 22, 36, 0.96)';
+const CARD_2 = 'rgba(16, 28, 43, 0.96)';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+
 export const ChallengeCard: React.FC<Props> = ({
   active,
   onStart7,
@@ -38,25 +46,57 @@ export const ChallengeCard: React.FC<Props> = ({
     }
   };
 
+  const percent =
+    active?.definition
+      ? Math.min(100, Math.round((active.progress / Math.max(1, active.target)) * 100))
+      : 0;
+
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>
-        {t('challenges.title', 'Challenges')}
-      </Text>
+      <View style={styles.glow} />
+
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.kicker}>CHALLENGE</Text>
+          <Text style={styles.title}>
+            {t('challenges.title', 'Challenges')}
+          </Text>
+        </View>
+
+        <View style={styles.iconCircle}>
+          <Text style={styles.iconText}>⚡</Text>
+        </View>
+      </View>
 
       {active?.definition ? (
         <>
-          <Text style={styles.challengeName}>{getTitle(active.definition.id)}</Text>
-          <Text style={styles.challengeDesc}>{getDesc(active.definition.id)}</Text>
+          <Text style={styles.challengeName}>
+            {getTitle(active.definition.id)}
+          </Text>
+
+          <Text style={styles.challengeDesc}>
+            {getDesc(active.definition.id)}
+          </Text>
 
           <View style={styles.progressBox}>
-            <Text style={styles.progressText}>
-              {active.progress}/{active.target}
-            </Text>
+            <View style={styles.progressTop}>
+              <Text style={styles.progressText}>
+                {active.progress}/{active.target}
+              </Text>
+
+              <Text style={styles.percentText}>{percent}%</Text>
+            </View>
+
+            <View style={styles.progressTrack}>
+              <View style={[styles.progressFill, { width: `${percent}%` }]} />
+            </View>
+
             <Text style={styles.subText}>
               {active.completed
                 ? t('challenges.complete', 'Challenge completed')
-                : t('challenges.daysLeft', '{{count}} day(s) left', { count: active.daysLeft })}
+                : t('challenges.daysLeft', '{{count}} day(s) left', {
+                    count: active.daysLeft,
+                  })}
             </Text>
           </View>
         </>
@@ -66,13 +106,21 @@ export const ChallengeCard: React.FC<Props> = ({
             {t('challenges.intro', 'Start a short challenge to stay consistent.')}
           </Text>
 
-          <TouchableOpacity style={styles.primaryBtn} onPress={onStart7}>
+          <TouchableOpacity
+            style={styles.primaryBtn}
+            onPress={onStart7}
+            activeOpacity={0.88}
+          >
             <Text style={styles.primaryBtnText}>
               {t('challenges.start7', 'Start 7-day challenge')}
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryBtn} onPress={onStart30}>
+          <TouchableOpacity
+            style={styles.secondaryBtn}
+            onPress={onStart30}
+            activeOpacity={0.88}
+          >
             <Text style={styles.secondaryBtnText}>
               {t('challenges.start30', 'Start 30-day challenge')}
             </Text>
@@ -85,70 +133,128 @@ export const ChallengeCard: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'rgba(255,255,255,0.96)',
-    borderRadius: 16,
-    padding: 14,
+    backgroundColor: CARD,
+    borderRadius: 22,
+    padding: 16,
     marginTop: 10,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(124, 255, 58, 0.22)',
+    overflow: 'hidden',
+  },
+  glow: {
+    position: 'absolute',
+    bottom: -80,
+    right: -80,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: 'rgba(124, 255, 58, 0.10)',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 14,
+  },
+  kicker: {
+    color: CYAN,
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1.1,
+    marginBottom: 4,
   },
   title: {
-    color: '#0F172A',
+    color: TEXT,
     fontWeight: '900',
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+  },
+  iconCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(124, 255, 58, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(124, 255, 58, 0.45)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconText: {
+    fontSize: 22,
   },
   challengeName: {
-    color: '#0F172A',
+    color: TEXT,
     fontWeight: '900',
-    fontSize: 16,
+    fontSize: 17,
   },
   challengeDesc: {
-    color: '#64748B',
-    lineHeight: 20,
+    color: MUTED,
+    lineHeight: 21,
     marginTop: 6,
+    fontSize: 14,
   },
   progressBox: {
-    marginTop: 12,
-    backgroundColor: '#F8FAFC',
-    borderRadius: 12,
-    padding: 12,
+    marginTop: 14,
+    backgroundColor: CARD_2,
+    borderRadius: 18,
+    padding: 13,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+  },
+  progressTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   progressText: {
-    color: '#0F172A',
+    color: TEXT,
     fontWeight: '900',
-    fontSize: 20,
+    fontSize: 22,
+  },
+  percentText: {
+    color: NEON,
+    fontWeight: '900',
+    fontSize: 14,
+  },
+  progressTrack: {
+    height: 10,
+    backgroundColor: 'rgba(148, 163, 184, 0.18)',
+    borderRadius: 999,
+    overflow: 'hidden',
+    marginTop: 12,
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 999,
+    backgroundColor: NEON,
   },
   subText: {
-    color: '#0F766E',
+    color: CYAN,
     fontWeight: '800',
-    marginTop: 4,
+    marginTop: 10,
   },
   primaryBtn: {
-    marginTop: 12,
-    backgroundColor: '#10B981',
-    paddingVertical: 12,
-    borderRadius: 12,
+    marginTop: 14,
+    backgroundColor: NEON,
+    paddingVertical: 13,
+    borderRadius: 15,
     alignItems: 'center',
   },
   primaryBtnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: BG,
+    fontWeight: '900',
   },
   secondaryBtn: {
-    marginTop: 8,
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E5E7EB',
+    marginTop: 9,
+    backgroundColor: CARD_2,
+    borderColor: 'rgba(25, 230, 210, 0.35)',
     borderWidth: 1,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 13,
+    borderRadius: 15,
     alignItems: 'center',
   },
   secondaryBtnText: {
-    color: '#0F172A',
-    fontWeight: '800',
+    color: CYAN,
+    fontWeight: '900',
   },
 });
 

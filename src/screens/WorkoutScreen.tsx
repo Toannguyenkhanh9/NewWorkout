@@ -7,12 +7,13 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Dimensions,
   Alert,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+
 import { PROGRAMS } from '../data/programs';
 import {
   getProgramCatalogMeta,
@@ -31,6 +32,14 @@ type GoalFilter = 'all' | ProgramGoalTag;
 type EquipmentFilter = 'all' | ProgramEquipmentNeed;
 type DurationFilter = 'all' | ProgramDurationBucket;
 
+const BG = '#06111D';
+const CARD = '#0B1624';
+const CARD_2 = '#101C2B';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+
 const Chip: React.FC<{
   label: string;
   active: boolean;
@@ -41,41 +50,19 @@ const Chip: React.FC<{
     style={[styles.chip, active && styles.chipActive]}
     activeOpacity={0.85}
   >
-    <Text style={[styles.chipText, active && styles.chipTextActive]}>
+    <Text
+      style={[styles.chipText, active && styles.chipTextActive]}
+      numberOfLines={1}
+    >
       {label}
     </Text>
   </TouchableOpacity>
-);
-
-const InfoBadge: React.FC<{
-  label: string;
-  variant?: 'level' | 'goal' | 'equipment' | 'duration';
-}> = ({ label, variant = 'goal' }) => (
-  <View
-    style={[
-      styles.infoBadge,
-      variant === 'level' && styles.badgeLevel,
-      variant === 'goal' && styles.badgeGoal,
-      variant === 'equipment' && styles.badgeEquipment,
-      variant === 'duration' && styles.badgeDuration,
-    ]}
-  >
-    <Text style={styles.infoBadgeText} numberOfLines={1}>
-      {label}
-    </Text>
-  </View>
 );
 
 export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { isPremium } = useSubscription?.() || { isPremium: false };
-
-  const { width } = Dimensions.get('window');
-  const COLS = 2;
-  const HPAD = 16;
-  const GAP = 12;
-  const tileWidth = Math.floor((width - HPAD * 2 - GAP * (COLS - 1)) / COLS);
 
   const [level, setLevel] = useState<LevelFilter>('all');
   const [goal, setGoal] = useState<GoalFilter>('all');
@@ -106,25 +93,32 @@ export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
         t('premium.lockedTitle', 'Premium required'),
         t(
           'premium.lockedText',
-          'This program is available for Premium users only. Upgrade to continue.'
+          'This program is available for Premium users only. Upgrade to continue.',
         ),
         [
-          { text: t('common.cancel', 'Cancel'), style: 'cancel' },
+          {
+            text: t('common.cancel', 'Cancel'),
+            style: 'cancel',
+          },
           {
             text: t('premium.cta', 'Upgrade now'),
             onPress: goPremium,
           },
-        ]
+        ],
       );
       return;
     }
 
     try {
-      navigation.navigate('ProgramDetail' as never, { programId: item.id } as never);
+      navigation.navigate('ProgramDetail' as never, {
+        programId: item.id,
+      } as never);
     } catch {
       navigation.getParent()?.navigate('Workout', {
         screen: 'ProgramDetail',
-        params: { programId: item.id },
+        params: {
+          programId: item.id,
+        },
       } as never);
     }
   };
@@ -143,117 +137,220 @@ export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
     });
   }, [level, goal, equipment, duration]);
 
-  const renderItem = ({ item, index }: any) => {
-    const isLeft = index % 2 === 0;
-    const programTitle = item.title ?? (item.titleKey ? t(item.titleKey) : item.id);
+  const getLevelColor = (programLevel: ProgramLevel) => {
+    if (programLevel === 'beginner') return NEON;
+    if (programLevel === 'intermediate') return '#FACC15';
+    return '#FB7185';
+  };
+
+  const renderItem = ({ item }: any) => {
+    const programTitle =
+      item.title ?? (item.titleKey ? t(item.titleKey) : item.id);
+
     const meta = getProgramCatalogMeta(item.id);
     const avgDuration = getAverageWorkoutDuration(item);
-    const durationBucket = getProgramDurationBucket(item);
-    const mainGoal = meta.goals[0];
+    const levelColor = getLevelColor(meta.level);
 
     return (
       <TouchableOpacity
-        style={[
-          styles.tile,
-          { width: tileWidth, marginRight: isLeft ? GAP : 0, marginBottom: 14 },
-        ]}
+        style={styles.resultCard}
         activeOpacity={0.88}
         onPress={() => openProgram(item)}
       >
-        <View style={styles.thumbWrap}>
-          <Image source={item.icon} style={styles.thumb} resizeMode="cover" />
-
-          <View style={styles.playBadge}>
-            <Text style={styles.playIcon}>▶</Text>
-          </View>
+        <View style={styles.resultImageWrap}>
+          <Image source={item.icon} style={styles.resultImage} resizeMode="cover" />
+          <View style={styles.imageShade} />
 
           {item.premium ? (
             <View style={styles.premiumBadge}>
-              <Text style={styles.premiumBadgeText}>PREMIUM</Text>
+              <Text style={styles.premiumBadgeText}>PRO</Text>
             </View>
           ) : null}
         </View>
 
-        <Text style={styles.tileTitle} numberOfLines={2}>
-          {programTitle}
-        </Text>
+        <View style={styles.resultBody}>
+          <Text style={styles.resultTitle} numberOfLines={2}>
+            {programTitle}
+          </Text>
 
-        <View style={styles.badgesWrap}>
-          <InfoBadge
-            variant="level"
-            label={t(`filters.level.${meta.level}`, meta.level)}
-          />
-          <InfoBadge
-            variant="goal"
-            label={t(`filters.goal.${mainGoal}`, mainGoal)}
-          />
-          <InfoBadge
-            variant="equipment"
-            label={t(`filters.equipment.${meta.equipment}`, meta.equipment)}
-          />
-          <InfoBadge
-            variant="duration"
-            label={t(`filters.duration.${durationBucket}`, durationBucket)}
-          />
+          <Text style={styles.resultMeta} numberOfLines={1}>
+            {avgDuration} {t('workouts.min', 'min')} ·{' '}
+            {t(`filters.equipment.${meta.equipment}`, meta.equipment)}
+          </Text>
+
+          <Text style={[styles.levelText, { color: levelColor }]} numberOfLines={1}>
+            {t(`filters.level.${meta.level}`, meta.level)}
+          </Text>
         </View>
 
-        <Text style={styles.tileMeta}>
-          {avgDuration} {t('workouts.min', 'min')} • {item.durationDays}{' '}
-          {t('workouts.days', 'days')}
-        </Text>
+        <View style={styles.bookmarkWrap}>
+          <Text style={styles.bookmark}>♡</Text>
+        </View>
       </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={BG} />
+
+      <View pointerEvents="none" style={styles.glowTop} />
+      <View pointerEvents="none" style={styles.glowBottom} />
+
       <FlatList
         data={filteredPrograms}
         keyExtractor={(x) => x.id}
-        numColumns={COLS}
         renderItem={renderItem}
-        contentContainerStyle={{ paddingHorizontal: HPAD, paddingBottom: 24 }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingBottom: 160,
+        }}
         ListHeaderComponent={
-          <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-            <Text style={styles.h1}>{t('tabs.workout', 'Workout')}</Text>
-            <Text style={styles.sub}>
-              {t('workouts.pickOne', 'Choose a workout plan to get started')}
+          <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
+            <View style={styles.kickerPill}>
+              <Text style={styles.kickerText}>WORKOUT LIBRARY</Text>
+            </View>
+
+            <Text style={styles.h1}>
+              {t('workouts.heroTitle', 'Your daily workout plan')}
             </Text>
 
-            <View style={styles.filterWrap}>
-              <Text style={styles.filterTitle}>{t('filters.levelTitle', 'Level')}</Text>
+            <Text style={styles.sub}>
+              {t(
+                'workouts.pickOne',
+                'Choose a lesson plan to get started',
+              )}
+            </Text>
+
+            <View style={styles.filterPanel}>
+              <View style={styles.filterHeader}>
+                <Text style={styles.filterPanelTitle}>
+                  {t('filters.title', 'Smart filter')}
+                </Text>
+
+                <Text style={styles.resultCount}>
+                  {filteredPrograms.length} {t('workouts.results', 'results')}
+                </Text>
+              </View>
+
+              <Text style={styles.filterTitle}>
+                {t('filters.levelTitle', 'Level')}
+              </Text>
+
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Chip label={t('filters.all', 'All')} active={level === 'all'} onPress={() => setLevel('all')} />
-                <Chip label={t('filters.level.beginner', 'Beginner')} active={level === 'beginner'} onPress={() => setLevel('beginner')} />
-                <Chip label={t('filters.level.intermediate', 'Intermediate')} active={level === 'intermediate'} onPress={() => setLevel('intermediate')} />
-                <Chip label={t('filters.level.advanced', 'Advanced')} active={level === 'advanced'} onPress={() => setLevel('advanced')} />
+                <Chip
+                  label={t('filters.all', 'All')}
+                  active={level === 'all'}
+                  onPress={() => setLevel('all')}
+                />
+                <Chip
+                  label={t('filters.level.beginner', 'Beginner')}
+                  active={level === 'beginner'}
+                  onPress={() => setLevel('beginner')}
+                />
+                <Chip
+                  label={t('filters.level.intermediate', 'Intermediate')}
+                  active={level === 'intermediate'}
+                  onPress={() => setLevel('intermediate')}
+                />
+                <Chip
+                  label={t('filters.level.advanced', 'Advanced')}
+                  active={level === 'advanced'}
+                  onPress={() => setLevel('advanced')}
+                />
               </ScrollView>
 
-              <Text style={styles.filterTitle}>{t('filters.goalTitle', 'Focus')}</Text>
+              <Text style={styles.filterTitle}>
+                {t('filters.goalTitle', 'Focus')}
+              </Text>
+
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Chip label={t('filters.all', 'All')} active={goal === 'all'} onPress={() => setGoal('all')} />
-                <Chip label={t('filters.goal.lose_weight', 'Lose weight')} active={goal === 'lose_weight'} onPress={() => setGoal('lose_weight')} />
-                <Chip label={t('filters.goal.build_muscle', 'Build muscle')} active={goal === 'build_muscle'} onPress={() => setGoal('build_muscle')} />
-                <Chip label={t('filters.goal.cardio', 'Cardio')} active={goal === 'cardio'} onPress={() => setGoal('cardio')} />
-                <Chip label={t('filters.goal.core', 'Core')} active={goal === 'core'} onPress={() => setGoal('core')} />
-                <Chip label={t('filters.goal.mobility', 'Mobility')} active={goal === 'mobility'} onPress={() => setGoal('mobility')} />
+                <Chip
+                  label={t('filters.all', 'All')}
+                  active={goal === 'all'}
+                  onPress={() => setGoal('all')}
+                />
+                <Chip
+                  label={t('filters.goal.lose_weight', 'Lose weight')}
+                  active={goal === 'lose_weight'}
+                  onPress={() => setGoal('lose_weight')}
+                />
+                <Chip
+                  label={t('filters.goal.build_muscle', 'Build muscle')}
+                  active={goal === 'build_muscle'}
+                  onPress={() => setGoal('build_muscle')}
+                />
+                <Chip
+                  label={t('filters.goal.cardio', 'Cardio')}
+                  active={goal === 'cardio'}
+                  onPress={() => setGoal('cardio')}
+                />
+                <Chip
+                  label={t('filters.goal.core', 'Core')}
+                  active={goal === 'core'}
+                  onPress={() => setGoal('core')}
+                />
+                <Chip
+                  label={t('filters.goal.mobility', 'Mobility')}
+                  active={goal === 'mobility'}
+                  onPress={() => setGoal('mobility')}
+                />
               </ScrollView>
 
-              <Text style={styles.filterTitle}>{t('filters.equipmentTitle', 'Equipment')}</Text>
+              <Text style={styles.filterTitle}>
+                {t('filters.equipmentTitle', 'Equipment')}
+              </Text>
+
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Chip label={t('filters.all', 'All')} active={equipment === 'all'} onPress={() => setEquipment('all')} />
-                <Chip label={t('filters.equipment.no_equipment', 'No equipment')} active={equipment === 'no_equipment'} onPress={() => setEquipment('no_equipment')} />
-                <Chip label={t('filters.equipment.with_equipment', 'With equipment')} active={equipment === 'with_equipment'} onPress={() => setEquipment('with_equipment')} />
+                <Chip
+                  label={t('filters.all', 'All')}
+                  active={equipment === 'all'}
+                  onPress={() => setEquipment('all')}
+                />
+                <Chip
+                  label={t('filters.equipment.no_equipment', 'No equipment')}
+                  active={equipment === 'no_equipment'}
+                  onPress={() => setEquipment('no_equipment')}
+                />
+                <Chip
+                  label={t('filters.equipment.with_equipment', 'With equipment')}
+                  active={equipment === 'with_equipment'}
+                  onPress={() => setEquipment('with_equipment')}
+                />
               </ScrollView>
 
-              <Text style={styles.filterTitle}>{t('filters.durationTitle', 'Duration')}</Text>
+              <Text style={styles.filterTitle}>
+                {t('filters.durationTitle', 'Duration')}
+              </Text>
+
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Chip label={t('filters.all', 'All')} active={duration === 'all'} onPress={() => setDuration('all')} />
-                <Chip label={t('filters.duration.short', 'Short')} active={duration === 'short'} onPress={() => setDuration('short')} />
-                <Chip label={t('filters.duration.medium', 'Medium')} active={duration === 'medium'} onPress={() => setDuration('medium')} />
-                <Chip label={t('filters.duration.long', 'Long')} active={duration === 'long'} onPress={() => setDuration('long')} />
+                <Chip
+                  label={t('filters.all', 'All')}
+                  active={duration === 'all'}
+                  onPress={() => setDuration('all')}
+                />
+                <Chip
+                  label={t('filters.duration.short', 'Short')}
+                  active={duration === 'short'}
+                  onPress={() => setDuration('short')}
+                />
+                <Chip
+                  label={t('filters.duration.medium', 'Medium')}
+                  active={duration === 'medium'}
+                  onPress={() => setDuration('medium')}
+                />
+                <Chip
+                  label={t('filters.duration.long', 'Long')}
+                  active={duration === 'long'}
+                  onPress={() => setDuration('long')}
+                />
               </ScrollView>
             </View>
+
+            <Text style={styles.resultTitleHeader}>
+              {t('workouts.matchingResults', 'Matching results')} ({filteredPrograms.length})
+            </Text>
 
             {filteredPrograms.length === 0 ? (
               <View style={styles.emptyBox}>
@@ -273,176 +370,216 @@ export const WorkoutScreen: React.FC<any> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F4F7FB' },
+  container: {
+    flex: 1,
+    backgroundColor: BG,
+  },
 
-  header: { alignItems: 'center', marginBottom: 12 },
-  h1: { fontSize: 28, fontWeight: '800', color: '#0F172A', letterSpacing: 0.2 },
-  sub: { marginTop: 6, color: '#475569', fontSize: 13, marginBottom: 12 },
+  glowTop: {
+    position: 'absolute',
+    top: -90,
+    right: -80,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(25, 230, 210, 0.22)',
+  },
+  glowBottom: {
+    position: 'absolute',
+    bottom: 60,
+    left: -110,
+    width: 240,
+    height: 240,
+    borderRadius: 120,
+    backgroundColor: 'rgba(124, 255, 58, 0.12)',
+  },
 
-  filterWrap: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+  header: {
+    marginBottom: 10,
+  },
+  kickerPill: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    padding: 12,
+    borderColor: 'rgba(25, 230, 210, 0.8)',
+    backgroundColor: 'rgba(25, 230, 210, 0.12)',
     marginBottom: 14,
   },
-  filterTitle: {
-    color: '#0F172A',
-    fontWeight: '800',
-    marginBottom: 8,
-    marginTop: 4,
-    alignSelf: 'flex-start',
+  kickerText: {
+    color: CYAN,
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1.2,
   },
-  chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: '#FFFFFF',
+  h1: {
+    color: TEXT,
+    fontSize: 34,
+    lineHeight: 40,
+    fontWeight: '900',
+    letterSpacing: 0.2,
+  },
+  sub: {
+    color: '#D8E4F0',
+    fontSize: 15,
+    lineHeight: 22,
+    marginTop: 8,
+    marginBottom: 16,
+    maxWidth: 330,
+  },
+
+  filterPanel: {
+    backgroundColor: 'rgba(11, 22, 36, 0.96)',
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+    padding: 14,
+    marginBottom: 16,
+  },
+  filterHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  filterPanelTitle: {
+    color: TEXT,
+    fontSize: 17,
+    fontWeight: '900',
+  },
+  resultCount: {
+    color: NEON,
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  filterTitle: {
+    color: MUTED,
+    fontWeight: '900',
+    marginBottom: 8,
+    marginTop: 14,
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+  },
+
+  chip: {
+    paddingHorizontal: 13,
+    paddingVertical: 9,
+    borderRadius: 999,
+    backgroundColor: CARD_2,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.22)',
     marginRight: 8,
-    marginBottom: 4,
   },
   chipActive: {
-    backgroundColor: '#ECFDF5',
-    borderColor: '#10B981',
+    backgroundColor: NEON,
+    borderColor: NEON,
   },
   chipText: {
-    color: '#0F172A',
-    fontWeight: '700',
+    color: '#CBD5E1',
+    fontWeight: '800',
     fontSize: 13,
   },
   chipTextActive: {
-    color: '#065F46',
+    color: BG,
+  },
+
+  resultTitleHeader: {
+    color: TEXT,
+    fontSize: 20,
+    fontWeight: '900',
+    marginBottom: 12,
+  },
+
+  resultCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.055)',
+    borderRadius: 18,
+    padding: 9,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.075)',
+  },
+  resultImageWrap: {
+    width: 118,
+    height: 88,
+    borderRadius: 13,
+    overflow: 'hidden',
+    backgroundColor: CARD_2,
+    marginRight: 13,
+  },
+  resultImage: {
+    width: '100%',
+    height: '100%',
+  },
+  imageShade: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(3, 7, 18, 0.08)',
+  },
+  premiumBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    backgroundColor: '#F59E0B',
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 999,
+  },
+  premiumBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 9,
+    fontWeight: '900',
+  },
+  resultBody: {
+    flex: 1,
+  },
+  resultTitle: {
+    color: TEXT,
+    fontSize: 17,
+    lineHeight: 21,
+    fontWeight: '900',
+  },
+  resultMeta: {
+    color: '#E5E7EB',
+    fontSize: 13,
+    fontWeight: '600',
+    marginTop: 5,
+  },
+  levelText: {
+    fontSize: 13,
+    fontWeight: '900',
+    marginTop: 7,
+  },
+  bookmarkWrap: {
+    width: 32,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 4,
+  },
+  bookmark: {
+    color: TEXT,
+    fontSize: 28,
+    fontWeight: '300',
   },
 
   emptyBox: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
-    padding: 14,
+    backgroundColor: 'rgba(11, 22, 36, 0.96)',
+    borderRadius: 20,
+    padding: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(245, 158, 11, 0.35)',
+    marginBottom: 14,
   },
   emptyTitle: {
-    color: '#0F172A',
+    color: '#FDE68A',
     fontWeight: '900',
     fontSize: 15,
   },
   emptyText: {
-    color: '#64748B',
+    color: MUTED,
     marginTop: 6,
-  },
-
-  tile: {
-    alignItems: 'center',
-  },
-
-  thumbWrap: {
-    width: '100%',
-    aspectRatio: 1,
-    borderRadius: 16,
-    overflow: 'hidden',
-    backgroundColor: '#E5E7EB',
-    marginBottom: 8,
-    elevation: 2,
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  thumb: { width: '100%', height: '100%' },
-
-  playBadge: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -18,
-    marginLeft: -18,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(15,23,42,0.75)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  playIcon: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-
-  premiumBadge: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    backgroundColor: 'rgba(245, 158, 11, 0.95)',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 999,
-  },
-  premiumBadgeText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: '900',
-    letterSpacing: 0.5,
-  },
-
-  tileTitle: {
-    textAlign: 'center',
-    color: '#0F172A',
-    fontSize: 16,
-    fontWeight: '800',
-    lineHeight: 20,
-    paddingHorizontal: 4,
-    minHeight: 42,
-  },
-
-  badgesWrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: 6,
-    marginBottom: 4,
-    gap: 6,
-  },
-  infoBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  infoBadgeText: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: '#0F172A',
-  },
-
-  badgeLevel: {
-    backgroundColor: '#EFF6FF',
-    borderColor: '#BFDBFE',
-  },
-  badgeGoal: {
-    backgroundColor: '#ECFDF5',
-    borderColor: '#A7F3D0',
-  },
-  badgeEquipment: {
-    backgroundColor: '#F5F3FF',
-    borderColor: '#DDD6FE',
-  },
-  badgeDuration: {
-    backgroundColor: '#FFF7ED',
-    borderColor: '#FED7AA',
-  },
-
-  tileMeta: {
-    textAlign: 'center',
-    color: '#64748B',
-    fontSize: 12,
-    marginTop: 4,
-    fontWeight: '700',
-  },
-  listFooter: {
-    paddingTop: 8,
-    alignItems: 'center',
   },
 });
 

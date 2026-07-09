@@ -11,6 +11,7 @@ import {
   Switch,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,17 +24,25 @@ type UserProfile = {
   name: string;
   age?: number;
   gender?: Gender;
-  heightCm?: number;   // cm
-  weightKg?: number;   // kg
-  healthNote?: string; // general health notes
+  heightCm?: number;
+  weightKg?: number;
+  healthNote?: string;
   injured?: boolean;
   injuryNote?: string;
 };
 
 const STORAGE_KEY = 'user:profile';
 const RECO_KEY = 'user:recommendation';
+const BMI_KEY = 'user:bmi';
 
-// ===== Inline English resource (keys without quotes) =====
+const BG = '#06111D';
+const CARD = 'rgba(11, 22, 36, 0.96)';
+const CARD_2 = 'rgba(16, 28, 43, 0.96)';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+
 const enUserProfile = {
   UserProfile: {
     title: 'User Profile',
@@ -63,16 +72,21 @@ const enUserProfile = {
     bmi_label_obese: 'Obese',
 
     health_label: 'Health status',
-    health_ph: 'e.g., Blood pressure stable, sleeping well, just returning to training…',
+    health_ph:
+      'e.g., Blood pressure stable, sleeping well, just returning to training…',
 
     injured_q: 'Any injuries?',
     injury_label: 'Injury details',
-    injury_ph: 'e.g., Left knee pain, avoid deep squats; shoulder pain when pressing…',
+    injury_ph:
+      'e.g., Left knee pain, avoid deep squats; shoulder pain when pressing…',
 
     hint_fill_hw: 'Enter height & weight to get suggestions.',
-    rec_injured: 'Recommendation: prioritize light CORE/Upper sessions with more Rest days.',
-    rec_overweight: 'Recommendation: Fat-loss plan (light → moderate HIIT) alternating with Lower/Core.',
-    rec_general: 'Recommendation: Full-body plan (foundational strength + Core).',
+    rec_injured:
+      'Recommendation: prioritize light CORE/Upper sessions with more Rest days.',
+    rec_overweight:
+      'Recommendation: Fat-loss plan (light → moderate HIIT) alternating with Lower/Core.',
+    rec_general:
+      'Recommendation: Full-body plan (foundational strength + Core).',
 
     loading: 'Loading…',
     save_success_title: 'Saved',
@@ -84,13 +98,15 @@ const enUserProfile = {
   },
 };
 
-// Merge English bundle (idempotent, deep merge)
 try {
   i18n.addResourceBundle('en', 'translation', enUserProfile, true, true);
-} catch { /* no-op */ }
+} catch {
+  // no-op
+}
 
 export const UserProfileScreen: React.FC<any> = ({ navigation }) => {
   const { t } = useTranslation();
+
   const [profile, setProfile] = useState<UserProfile>({
     name: '',
     age: undefined,
@@ -101,58 +117,86 @@ export const UserProfileScreen: React.FC<any> = ({ navigation }) => {
     injured: false,
     injuryNote: '',
   });
+
   const [loading, setLoading] = useState(true);
 
-  // Load saved profile
   useEffect(() => {
     (async () => {
       try {
         const json = await AsyncStorage.getItem(STORAGE_KEY);
-        if (json) setProfile(JSON.parse(json));
+
+        if (json) {
+          setProfile(JSON.parse(json));
+        }
       } catch {}
+
       setLoading(false);
     })();
   }, []);
 
   const setField = <K extends keyof UserProfile>(k: K, v: UserProfile[K]) =>
-    setProfile((p) => ({ ...p, [k]: v }));
+    setProfile((p) => ({
+      ...p,
+      [k]: v,
+    }));
 
-  // BMI & label
   const bmi = useMemo(() => {
     if (!profile.heightCm || !profile.weightKg) return undefined;
+
     const h = profile.heightCm / 100;
     if (h <= 0) return undefined;
+
     return +(profile.weightKg / (h * h)).toFixed(1);
   }, [profile.heightCm, profile.weightKg]);
 
   const bmiLabel = useMemo(() => {
     if (bmi === undefined) return '';
+
     if (bmi < 18.5) return t('UserProfile.bmi_label_under');
     if (bmi < 25) return t('UserProfile.bmi_label_normal');
     if (bmi < 30) return t('UserProfile.bmi_label_over');
+
     return t('UserProfile.bmi_label_obese');
   }, [bmi, t]);
 
-  // Recommendation logic
   const recommendation = useMemo(() => {
     if (profile.injured) {
       return t('UserProfile.rec_injured');
     }
-    if (bmi === undefined) return t('UserProfile.hint_fill_hw');
-    if (bmi >= 25) return t('UserProfile.rec_overweight');
+
+    if (bmi === undefined) {
+      return t('UserProfile.hint_fill_hw');
+    }
+
+    if (bmi >= 25) {
+      return t('UserProfile.rec_overweight');
+    }
+
     return t('UserProfile.rec_general');
   }, [bmi, profile.injured, t]);
 
-  const valid = useMemo(() => profile.name.trim().length >= 2, [profile.name]);
+  const valid = useMemo(() => {
+    return profile.name.trim().length >= 2;
+  }, [profile.name]);
 
   const save = async () => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
       await AsyncStorage.setItem(RECO_KEY, recommendation);
+
+      if (bmi !== undefined) {
+        await AsyncStorage.setItem(BMI_KEY, String(bmi));
+      } else {
+        await AsyncStorage.removeItem(BMI_KEY);
+      }
+
       Alert.alert(t('UserProfile.save_success_title'), recommendation);
       navigation.goBack?.();
-    } catch (e) {
-      Alert.alert(t('UserProfile.save_error_title'), t('UserProfile.save_error_msg'));
+    } catch {
+      Alert.alert(
+        t('UserProfile.save_error_title'),
+        t('UserProfile.save_error_msg'),
+      );
     }
   };
 
@@ -167,138 +211,214 @@ export const UserProfileScreen: React.FC<any> = ({ navigation }) => {
       injured: false,
       injuryNote: '',
     });
-    await AsyncStorage.multiRemove([STORAGE_KEY, RECO_KEY]);
+
+    await AsyncStorage.multiRemove([STORAGE_KEY, RECO_KEY, BMI_KEY]);
   };
 
   if (loading) {
     return (
-      <SafeAreaView style={[styles.safe, { justifyContent: 'center', alignItems: 'center' }]}>
-        <Text style={{ color: '#64748B' }}>{t('UserProfile.loading')}</Text>
+      <SafeAreaView style={[styles.safe, styles.loadingWrap]}>
+        <StatusBar barStyle="light-content" backgroundColor={BG} />
+        <Text style={styles.loadingText}>{t('UserProfile.loading')}</Text>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={styles.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-          <Text style={styles.title}>{t('UserProfile.title')}</Text>
-          <Text style={styles.caption}>{t('UserProfile.subtitle')}</Text>
+      <StatusBar barStyle="light-content" backgroundColor={BG} />
 
-          {/* Name */}
-          <Label>{t('UserProfile.name_label')}</Label>
-          <Input
-            placeholder={t('UserProfile.name_ph')}
-            value={profile.name}
-            onChangeText={(v) => setField('name', v)}
-            returnKeyType="next"
-          />
+      <View pointerEvents="none" style={styles.glowTop} />
+      <View pointerEvents="none" style={styles.glowBottom} />
 
-          {/* Age + Gender */}
-          <Row>
-            <Col>
-              <Label>{t('UserProfile.age_label')}</Label>
-              <Input
-                placeholder={t('UserProfile.age_ph')}
-                keyboardType="number-pad"
-                value={profile.age?.toString() ?? ''}
-                onChangeText={(v) => setField('age', v ? parseInt(v, 10) || undefined : undefined)}
-              />
-            </Col>
-            <Col>
-              <Label>{t('UserProfile.gender_label')}</Label>
-              <Segment
-                value={profile.gender}
-                options={[
-                  { key: 'male', label: t('UserProfile.gender_male') },
-                  { key: 'female', label: t('UserProfile.gender_female') },
-                  { key: 'other', label: t('UserProfile.gender_other') },
-                ]}
-                onChange={(g) => setField('gender', g as Gender)}
-              />
-            </Col>
-          </Row>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+      >
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.hero}>
+            <View style={styles.kickerPill}>
+              <Text style={styles.kickerText}>PROFILE</Text>
+            </View>
 
-          {/* Height + Weight */}
-          <Row>
-            <Col>
-              <Label>{t('UserProfile.height_label')}</Label>
-              <Input
-                placeholder={t('UserProfile.height_ph')}
-                keyboardType="number-pad"
-                value={profile.heightCm?.toString() ?? ''}
-                onChangeText={(v) => setField('heightCm', v ? parseFloat(v) || undefined : undefined)}
-              />
-            </Col>
-            <Col>
-              <Label>{t('UserProfile.weight_label')}</Label>
-              <Input
-                placeholder={t('UserProfile.weight_ph')}
-                keyboardType="decimal-pad"
-                value={profile.weightKg?.toString() ?? ''}
-                onChangeText={(v) => setField('weightKg', v ? parseFloat(v) || undefined : undefined)}
-              />
-            </Col>
-          </Row>
+            <Text style={styles.title}>{t('UserProfile.title')}</Text>
+            <Text style={styles.caption}>{t('UserProfile.subtitle')}</Text>
+          </View>
 
-          {/* BMI */}
-          <InfoBox>
-            <Text style={styles.infoText}>
-              {t('UserProfile.bmi')}: {bmi ?? '—'} {bmi ? `(${bmiLabel})` : ''}
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>
+              {t('UserProfile.personalInfo', 'Personal information')}
             </Text>
-          </InfoBox>
 
-          {/* Health status */}
-          <Label>{t('UserProfile.health_label')}</Label>
-          <Input
-            placeholder={t('UserProfile.health_ph')}
-            value={profile.healthNote}
-            onChangeText={(v) => setField('healthNote', v)}
-            multiline
-            style={{ height: 80, textAlignVertical: 'top' }}
-          />
-
-          {/* Injury */}
-          <Row style={{ alignItems: 'center', marginTop: 8 }}>
-            <Text style={[styles.label, { marginBottom: 0 }]}>{t('UserProfile.injured_q')}</Text>
-            <Switch
-              value={!!profile.injured}
-              onValueChange={(v) => setField('injured', v)}
-              trackColor={{ false: '#CBD5E1', true: '#86EFAC' }}
-              thumbColor={profile.injured ? '#10B981' : '#E5E7EB'}
-              style={{ marginLeft: 8 }}
+            <Label>{t('UserProfile.name_label')}</Label>
+            <Input
+              placeholder={t('UserProfile.name_ph')}
+              value={profile.name}
+              onChangeText={(v) => setField('name', v)}
+              returnKeyType="next"
             />
-          </Row>
 
-          {profile.injured && (
-            <>
-              <Label>{t('UserProfile.injury_label')}</Label>
-              <Input
-                placeholder={t('UserProfile.injury_ph')}
-                value={profile.injuryNote}
-                onChangeText={(v) => setField('injuryNote', v)}
-                multiline
-                style={{ height: 80, textAlignVertical: 'top' }}
+            <Row>
+              <Col>
+                <Label>{t('UserProfile.age_label')}</Label>
+                <Input
+                  placeholder={t('UserProfile.age_ph')}
+                  keyboardType="number-pad"
+                  value={profile.age?.toString() ?? ''}
+                  onChangeText={(v) =>
+                    setField(
+                      'age',
+                      v ? parseInt(v, 10) || undefined : undefined,
+                    )
+                  }
+                />
+              </Col>
+
+              <Col>
+                <Label>{t('UserProfile.gender_label')}</Label>
+                <Segment
+                  value={profile.gender}
+                  options={[
+                    { key: 'male', label: t('UserProfile.gender_male') },
+                    { key: 'female', label: t('UserProfile.gender_female') },
+                    { key: 'other', label: t('UserProfile.gender_other') },
+                  ]}
+                  onChange={(g) => setField('gender', g as Gender)}
+                />
+              </Col>
+            </Row>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>
+              {t('UserProfile.bodyMetrics', 'Body metrics')}
+            </Text>
+
+            <Row>
+              <Col>
+                <Label>{t('UserProfile.height_label')}</Label>
+                <Input
+                  placeholder={t('UserProfile.height_ph')}
+                  keyboardType="number-pad"
+                  value={profile.heightCm?.toString() ?? ''}
+                  onChangeText={(v) =>
+                    setField(
+                      'heightCm',
+                      v ? parseFloat(v) || undefined : undefined,
+                    )
+                  }
+                />
+              </Col>
+
+              <Col>
+                <Label>{t('UserProfile.weight_label')}</Label>
+                <Input
+                  placeholder={t('UserProfile.weight_ph')}
+                  keyboardType="decimal-pad"
+                  value={profile.weightKg?.toString() ?? ''}
+                  onChangeText={(v) =>
+                    setField(
+                      'weightKg',
+                      v ? parseFloat(v) || undefined : undefined,
+                    )
+                  }
+                />
+              </Col>
+            </Row>
+
+            <InfoBox icon="📊" title={t('UserProfile.bmi')}>
+              <Text style={styles.infoText}>
+                {bmi ?? '—'} {bmi ? `(${bmiLabel})` : ''}
+              </Text>
+            </InfoBox>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>
+              {t('UserProfile.healthSection', 'Health status')}
+            </Text>
+
+            <Label>{t('UserProfile.health_label')}</Label>
+            <Input
+              placeholder={t('UserProfile.health_ph')}
+              value={profile.healthNote}
+              onChangeText={(v) => setField('healthNote', v)}
+              multiline
+              style={{ height: 90, textAlignVertical: 'top' }}
+            />
+
+            <View style={styles.switchRow}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.label}>{t('UserProfile.injured_q')}</Text>
+                <Text style={styles.smallHint}>
+                  {t(
+                    'UserProfile.injured_hint',
+                    'Turn this on if you need lighter recommendations.',
+                  )}
+                </Text>
+              </View>
+
+              <Switch
+                value={!!profile.injured}
+                onValueChange={(v) => setField('injured', v)}
+                trackColor={{
+                  false: 'rgba(148, 163, 184, 0.28)',
+                  true: 'rgba(124, 255, 58, 0.35)',
+                }}
+                thumbColor={profile.injured ? NEON : '#CBD5E1'}
+                style={{ marginLeft: 8 }}
               />
-            </>
-          )}
+            </View>
 
-          {/* Recommendation */}
-          <InfoBox>
+            {profile.injured ? (
+              <>
+                <Label>{t('UserProfile.injury_label')}</Label>
+                <Input
+                  placeholder={t('UserProfile.injury_ph')}
+                  value={profile.injuryNote}
+                  onChangeText={(v) => setField('injuryNote', v)}
+                  multiline
+                  style={{ height: 90, textAlignVertical: 'top' }}
+                />
+              </>
+            ) : null}
+          </View>
+
+          <InfoBox icon="💡" title={t('UserProfile.recommendation', 'Recommendation')}>
             <Text style={styles.infoText}>{recommendation}</Text>
           </InfoBox>
 
-          {/* Actions */}
           <View style={styles.actions}>
-            <TouchableOpacity style={[styles.btn, styles.btnGhost]} onPress={clear}>
-              <Text style={[styles.btnText, { color: '#334155' }]}>{t('UserProfile.btn_delete')}</Text>
+            <TouchableOpacity
+              style={[styles.btn, styles.btnGhost]}
+              onPress={clear}
+              activeOpacity={0.86}
+            >
+              <Text style={[styles.btnText, styles.btnGhostText]}>
+                {t('UserProfile.btn_delete')}
+              </Text>
             </TouchableOpacity>
+
             <TouchableOpacity
               style={[styles.btn, valid ? styles.btnPrimary : styles.btnDisabled]}
               onPress={save}
               disabled={!valid}
+              activeOpacity={0.86}
             >
-              <Text style={[styles.btnText, { color: valid ? '#fff' : '#94A3B8' }]}>{t('UserProfile.btn_save')}</Text>
+              <Text
+                style={[
+                  styles.btnText,
+                  {
+                    color: valid ? BG : MUTED,
+                  },
+                ]}
+              >
+                {t('UserProfile.btn_save')}
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -307,19 +427,26 @@ export const UserProfileScreen: React.FC<any> = ({ navigation }) => {
   );
 };
 
-/* ---------- UI helpers ---------- */
 const Label: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <Text style={styles.label}>{children}</Text>
 );
 
 const Input: React.FC<React.ComponentProps<typeof TextInput>> = (props) => (
-  <TextInput {...props} placeholderTextColor="#9CA3AF" style={[styles.input, props.style]} />
+  <TextInput
+    {...props}
+    placeholderTextColor="rgba(148, 163, 184, 0.75)"
+    style={[styles.input, props.style]}
+  />
 );
 
-const Row: React.FC<{ children: React.ReactNode; style?: any }> = ({ children, style }) => (
-  <View style={[styles.row, style]}>{children}</View>
+const Row: React.FC<{ children: React.ReactNode; style?: any }> = ({
+  children,
+  style,
+}) => <View style={[styles.row, style]}>{children}</View>;
+
+const Col: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <View style={styles.col}>{children}</View>
 );
-const Col: React.FC<{ children: React.ReactNode }> = ({ children }) => <View style={styles.col}>{children}</View>;
 
 const Segment: React.FC<{
   value?: string;
@@ -329,74 +456,260 @@ const Segment: React.FC<{
   <View style={styles.segmentWrap}>
     {options.map((o) => {
       const active = value === o.key;
+
       return (
-        <TouchableOpacity key={o.key} onPress={() => onChange(o.key)} style={[styles.segmentItem, active && styles.segmentActive]}>
-          <Text style={[styles.segmentText, active && styles.segmentTextActive]}>{o.label}</Text>
+        <TouchableOpacity
+          key={o.key}
+          onPress={() => onChange(o.key)}
+          style={[styles.segmentItem, active && styles.segmentActive]}
+          activeOpacity={0.86}
+        >
+          <Text style={[styles.segmentText, active && styles.segmentTextActive]}>
+            {o.label}
+          </Text>
         </TouchableOpacity>
       );
     })}
   </View>
 );
 
-const InfoBox: React.FC<{ children: React.ReactNode }> = ({ children }) => <View style={styles.infoBox}>{children}</View>;
+const InfoBox: React.FC<{
+  children: React.ReactNode;
+  icon?: string;
+  title?: string;
+}> = ({ children, icon, title }) => (
+  <View style={styles.infoBox}>
+    {icon ? (
+      <View style={styles.infoIcon}>
+        <Text style={styles.infoIconText}>{icon}</Text>
+      </View>
+    ) : null}
 
-/* ---------- Styles ---------- */
+    <View style={{ flex: 1 }}>
+      {title ? <Text style={styles.infoTitle}>{title}</Text> : null}
+      {children}
+    </View>
+  </View>
+);
+
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F6F7FB' },
-  container: { padding: 16, paddingBottom: 24 },
-  title: { fontSize: 20, fontWeight: '900', color: '#0F172A' },
-  caption: { fontSize: 12, color: '#64748B', marginTop: 4, marginBottom: 12 },
-
-  label: { color: '#334155', fontWeight: '700', marginBottom: 6 },
-  input: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+  safe: {
+    flex: 1,
+    backgroundColor: BG,
+  },
+  loadingWrap: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: MUTED,
+    fontWeight: '800',
+  },
+  glowTop: {
+    position: 'absolute',
+    top: -90,
+    right: -90,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(25, 230, 210, 0.22)',
+  },
+  glowBottom: {
+    position: 'absolute',
+    bottom: 60,
+    left: -110,
+    width: 250,
+    height: 250,
+    borderRadius: 125,
+    backgroundColor: 'rgba(124, 255, 58, 0.12)',
+  },
+  container: {
+    paddingHorizontal: 18,
+    paddingTop: 18,
+    paddingBottom: 160,
+  },
+  hero: {
+    marginBottom: 18,
+  },
+  kickerPill: {
+    alignSelf: 'flex-start',
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    color: '#0F172A',
-    fontSize: 14,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(25, 230, 210, 0.75)',
+    backgroundColor: 'rgba(25, 230, 210, 0.12)',
+    marginBottom: 14,
+  },
+  kickerText: {
+    color: CYAN,
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+  title: {
+    color: TEXT,
+    fontSize: 34,
+    lineHeight: 40,
+    fontWeight: '900',
+  },
+  caption: {
+    color: '#D8E4F0',
+    fontSize: 15,
+    lineHeight: 22,
+    marginTop: 8,
   },
 
-  row: { flexDirection: 'row', gap: 12 },
-  col: { flex: 1 },
-
+  card: {
+    backgroundColor: CARD,
+    borderRadius: 24,
+    padding: 16,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(124, 255, 58, 0.22)',
+  },
+  sectionTitle: {
+    color: TEXT,
+    fontSize: 18,
+    fontWeight: '900',
+    marginBottom: 14,
+  },
+  label: {
+    color: '#CBD5E1',
+    fontWeight: '900',
+    marginBottom: 7,
+    fontSize: 13,
+  },
+  smallHint: {
+    color: MUTED,
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 2,
+  },
+  input: {
+    backgroundColor: CARD_2,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.18)',
+    paddingHorizontal: 13,
+    paddingVertical: 11,
+    color: TEXT,
+    fontSize: 14,
+    marginBottom: 12,
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  col: {
+    flex: 1,
+  },
   segmentWrap: {
     flexDirection: 'row',
-    backgroundColor: '#F1F5F9',
-    borderRadius: 12,
+    backgroundColor: CARD_2,
+    borderRadius: 15,
     padding: 3,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: 'rgba(148, 163, 184, 0.18)',
+    marginBottom: 12,
   },
-  segmentItem: { flex: 1, borderRadius: 10, paddingVertical: 8, alignItems: 'center' },
-  segmentActive: { backgroundColor: '#10B981' },
-  segmentText: { color: '#334155', fontWeight: '700' },
-  segmentTextActive: { color: '#fff' },
+  segmentItem: {
+    flex: 1,
+    borderRadius: 12,
+    paddingVertical: 9,
+    alignItems: 'center',
+  },
+  segmentActive: {
+    backgroundColor: NEON,
+  },
+  segmentText: {
+    color: MUTED,
+    fontWeight: '800',
+    fontSize: 12,
+  },
+  segmentTextActive: {
+    color: BG,
+    fontWeight: '900',
+  },
+  switchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: CARD_2,
+    borderRadius: 16,
+    padding: 13,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+    marginBottom: 12,
+  },
 
   infoBox: {
-    marginTop: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    flexDirection: 'row',
+    backgroundColor: CARD,
+    borderRadius: 22,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    padding: 12,
+    borderColor: 'rgba(25, 230, 210, 0.25)',
+    padding: 14,
+    marginBottom: 14,
   },
-  infoText: { color: '#0F172A' },
+  infoIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: 'rgba(25, 230, 210, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(25, 230, 210, 0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 11,
+  },
+  infoIconText: {
+    fontSize: 20,
+  },
+  infoTitle: {
+    color: CYAN,
+    fontWeight: '900',
+    fontSize: 12,
+    letterSpacing: 0.6,
+    marginBottom: 5,
+    textTransform: 'uppercase',
+  },
+  infoText: {
+    color: '#E5E7EB',
+    lineHeight: 21,
+    fontWeight: '600',
+  },
 
-  actions: { flexDirection: 'row', gap: 12, marginTop: 16 },
+  actions: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 2,
+  },
   btn: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 13,
+    borderRadius: 15,
     alignItems: 'center',
     borderWidth: 1,
   },
-  btnPrimary: { backgroundColor: '#10B981', borderColor: '#10B981' },
-  btnDisabled: { backgroundColor: '#F1F5F9', borderColor: '#E5E7EB' },
-  btnGhost: { backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' },
-  btnText: { fontWeight: '800', fontSize: 14 },
+  btnPrimary: {
+    backgroundColor: NEON,
+    borderColor: NEON,
+  },
+  btnDisabled: {
+    backgroundColor: CARD_2,
+    borderColor: 'rgba(148, 163, 184, 0.16)',
+  },
+  btnGhost: {
+    backgroundColor: CARD_2,
+    borderColor: 'rgba(25, 230, 210, 0.35)',
+  },
+  btnText: {
+    fontWeight: '900',
+    fontSize: 14,
+  },
+  btnGhostText: {
+    color: CYAN,
+  },
 });
 
 export default UserProfileScreen;

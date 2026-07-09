@@ -5,106 +5,725 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  ImageBackground,
+  Modal,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
+import Svg, { Circle, G } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  CommonActions,
+} from '@react-navigation/native';
+
 import { buildNutritionPlan } from '../nutrition/nutritionPlanner';
 import { ProfileInput } from '../recommendation/programRecommender';
+import { AdvancedNutritionCard } from '../components/AdvancedNutritionCard';
+import { AdvancedMealPlanCard } from '../components/AdvancedMealPlanCard';
+import {
+  loadNutritionTargets,
+  saveNutritionTargets,
+  clearNutritionTargets,
+  type NutritionTargetOverrides,
+} from '../nutrition/nutritionTargets';
+import { WaterReminderCard } from '../components/WaterReminderCard';
+
 const PROFILE_KEY = 'user:profile';
 
+const BG = '#06111D';
+const CARD = '#0B1624';
+const CARD_2 = '#101C2B';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+
+const BLUE = '#38BDF8';
+const YELLOW = '#FACC15';
+const PURPLE = '#C084FC';
+
+const ILLUSTRATIONS = {
+  hero: require('../../assets/images/nutrition_hero.png'),
+  breakfast: require('../../assets/images/meal_breakfast.png'),
+  lunch: require('../../assets/images/meal_lunch.png'),
+  dinner: require('../../assets/images/meal_dinner.png'),
+  snack: require('../../assets/images/meal_snack.png'),
+};
+const clamp = (value: number) => Math.max(0, Math.min(100, value));
+
+const ProgressRing: React.FC<{
+  size: number;
+  strokeWidth: number;
+  progress: number;
+  color: string;
+  children?: React.ReactNode;
+}> = ({ size, strokeWidth, progress, color, children }) => {
+  const radius = (size - strokeWidth) / 2;
+  const center = size / 2;
+  const circumference = 2 * Math.PI * radius;
+  const safeProgress = clamp(progress);
+  const dash = (safeProgress / 100) * circumference;
+
+  return (
+    <View
+      style={{
+        width: size,
+        height: size,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Svg width={size} height={size}>
+        <G rotation="-90" originX={center} originY={center}>
+          <Circle
+            cx={center}
+            cy={center}
+            r={radius}
+            stroke="rgba(148, 163, 184, 0.16)"
+            strokeWidth={strokeWidth}
+            fill="transparent"
+          />
+          <Circle
+            cx={center}
+            cy={center}
+            r={radius}
+            stroke={color}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${dash} ${circumference - dash}`}
+            strokeLinecap="round"
+            fill="transparent"
+          />
+        </G>
+      </Svg>
+
+      <View style={styles.ringCenter}>{children}</View>
+    </View>
+  );
+};
+
+const MacroDonut: React.FC<{
+  protein: number;
+  carbs: number;
+  fats: number;
+}> = ({ protein, carbs, fats }) => {
+  const size = 116;
+  const strokeWidth = 17;
+  const radius = (size - strokeWidth) / 2;
+  const center = size / 2;
+  const circumference = 2 * Math.PI * radius;
+
+  const segments = [
+    { value: protein, color: BLUE },
+    { value: carbs, color: '#4ADE80' },
+    { value: fats, color: YELLOW },
+    { value: Math.max(0, 100 - protein - carbs - fats), color: PURPLE },
+  ];
+
+  let offset = 0;
+
+  return (
+    <View style={styles.donutWrap}>
+      <Svg width={size} height={size}>
+        <G rotation="-90" originX={center} originY={center}>
+          <Circle
+            cx={center}
+            cy={center}
+            r={radius}
+            stroke="rgba(148, 163, 184, 0.14)"
+            strokeWidth={strokeWidth}
+            fill="transparent"
+          />
+
+          {segments.map((seg, index) => {
+            const dash = (clamp(seg.value) / 100) * circumference;
+            const dashOffset = -offset;
+            offset += dash;
+
+            if (seg.value <= 0) return null;
+
+            return (
+              <Circle
+                key={`${seg.color}-${index}`}
+                cx={center}
+                cy={center}
+                r={radius}
+                stroke={seg.color}
+                strokeWidth={strokeWidth}
+                strokeDasharray={`${dash} ${circumference - dash}`}
+                strokeDashoffset={dashOffset}
+                strokeLinecap="round"
+                fill="transparent"
+              />
+            );
+          })}
+        </G>
+      </Svg>
+
+      <View style={styles.donutHole} />
+    </View>
+  );
+};
+
+const MacroLegendRow: React.FC<{
+  color: string;
+  label: string;
+  percent: number;
+  grams: number;
+}> = ({ color, label, percent, grams }) => {
+  return (
+    <View style={styles.legendRow}>
+      <View style={[styles.legendDot, { backgroundColor: color }]} />
+
+      <Text style={styles.legendLabel}>{label}</Text>
+
+      <Text style={styles.legendValue}>
+        {percent}% ({grams}g)
+      </Text>
+    </View>
+  );
+};
+
+const GoalRingCard: React.FC<{
+  title: string;
+  value: string | number;
+  unit: string;
+  color: string;
+  progress: number;
+}> = ({ title, value, unit, color, progress }) => {
+  return (
+    <View style={styles.goalCard}>
+      <Text style={styles.goalTitle}>{title}</Text>
+
+      <ProgressRing
+        size={112}
+        strokeWidth={8}
+        progress={progress}
+        color={color}
+      >
+        <Text style={styles.goalValue}>{value}</Text>
+        <Text style={styles.goalUnit}>{unit}</Text>
+      </ProgressRing>
+    </View>
+  );
+};
+
+const MealCard: React.FC<{
+  title: string;
+  image: any;
+}> = ({ title, image }) => {
+  return (
+    <View style={styles.mealCard}>
+      <ImageBackground
+        source={image}
+        style={styles.mealImage}
+        imageStyle={styles.mealImageStyle}
+        resizeMode="cover"
+      >
+        <View style={styles.mealShade} />
+      </ImageBackground>
+
+      <Text style={styles.mealName} numberOfLines={1}>
+        {title}
+      </Text>
+    </View>
+  );
+};
+const DailyGoalEditModal: React.FC<{
+  visible: boolean;
+  caloriesValue: string;
+  waterValue: string;
+  onChangeCalories: (value: string) => void;
+  onChangeWater: (value: string) => void;
+  onClose: () => void;
+  onSave: () => void;
+  onReset: () => void;
+  t: (key: string, defaultValue?: string, options?: any) => string;
+}> = ({
+  visible,
+  caloriesValue,
+  waterValue,
+  onChangeCalories,
+  onChangeWater,
+  onClose,
+  onSave,
+  onReset,
+  t,
+}) => {
+  return (
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={styles.modalWrap}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.modalBackdrop}
+          onPress={onClose}
+        />
+
+        <View style={styles.modalCard}>
+          <Text style={styles.modalKicker}>
+            {t('nutrition.customTargetKicker', 'CUSTOM TARGET')}
+          </Text>
+
+          <Text style={styles.modalTitle}>
+            {t('nutrition.editDailyGoals', 'Edit daily goals')}
+          </Text>
+
+          <Text style={styles.modalDesc}>
+            {t(
+              'nutrition.editDailyGoalsDesc',
+              'Change calories or water target. The app will recalculate macros and meal suggestions automatically.',
+            )}
+          </Text>
+
+          <Text style={styles.inputLabel}>
+            {t('nutrition.calories', 'Calories')}
+          </Text>
+
+          <TextInput
+            value={caloriesValue}
+            onChangeText={onChangeCalories}
+            keyboardType="number-pad"
+            placeholder="2000"
+            placeholderTextColor="#64748B"
+            style={styles.input}
+          />
+
+          <Text style={styles.inputLabel}>
+            {t('nutrition.water', 'Water')} ({t('nutrition.liter', 'L')})
+          </Text>
+
+          <TextInput
+            value={waterValue}
+            onChangeText={onChangeWater}
+            keyboardType="decimal-pad"
+            placeholder="2.5"
+            placeholderTextColor="#64748B"
+            style={styles.input}
+          />
+
+          <View style={styles.modalActions}>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              style={[styles.modalBtn, styles.modalBtnGhost]}
+              onPress={onReset}
+            >
+              <Text style={styles.modalBtnGhostText}>
+                {t('nutrition.resetAuto', 'Auto')}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              activeOpacity={0.85}
+              style={[styles.modalBtn, styles.modalBtnCancel]}
+              onPress={onClose}
+            >
+              <Text style={styles.modalBtnCancelText}>
+                {t('common.cancel', 'Cancel')}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              activeOpacity={0.85}
+              style={[styles.modalBtn, styles.modalBtnSave]}
+              onPress={onSave}
+            >
+              <Text style={styles.modalBtnSaveText}>
+                {t('weight.save', 'Save')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </Modal>
+  );
+};
 export const NutritionScreen: React.FC = () => {
   const { t } = useTranslation();
+const navigation = useNavigation<any>();
+const [targetOverrides, setTargetOverrides] =
+  useState<NutritionTargetOverrides>({});
+
+const [showGoalEditor, setShowGoalEditor] = useState(false);
+const [caloriesInput, setCaloriesInput] = useState('');
+const [waterInput, setWaterInput] = useState('');
+const openAdvancedMealPlan = () => {
+  const currentRouteNames = navigation.getState?.()?.routeNames || [];
+
+  if (currentRouteNames.includes('AdvancedMealPlan')) {
+    navigation.navigate('AdvancedMealPlan');
+    return;
+  }
+
+  const parent = navigation.getParent?.();
+  const parentRouteNames = parent?.getState?.()?.routeNames || [];
+
+  if (parentRouteNames.includes('Nutrition')) {
+    parent.navigate('Nutrition', {
+      screen: 'AdvancedMealPlan',
+    });
+    return;
+  }
+
+  navigation.dispatch(
+    CommonActions.navigate({
+      name: 'Nutrition',
+      params: {
+        screen: 'AdvancedMealPlan',
+      },
+    }),
+  );
+};
   const [profile, setProfile] = useState<ProfileInput | null>(null);
 
-  useFocusEffect(
-    useCallback(() => {
-      (async () => {
-        try {
-          const raw = await AsyncStorage.getItem(PROFILE_KEY);
-          setProfile(raw ? JSON.parse(raw) : null);
-        } catch {
-          setProfile(null);
-        }
-      })();
-    }, []),
-  );
+useFocusEffect(
+  useCallback(() => {
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(PROFILE_KEY);
+        setProfile(raw ? JSON.parse(raw) : null);
 
-  const plan = useMemo(() => buildNutritionPlan(profile), [profile]);
+        const savedTargets = await loadNutritionTargets();
+        setTargetOverrides(savedTargets);
+      } catch {
+        setProfile(null);
+        setTargetOverrides({});
+      }
+    })();
+  }, []),
+);
+
+const plan = useMemo(
+  () => buildNutritionPlan(profile, t as any, targetOverrides),
+  [profile, t, targetOverrides],
+);
+const openGoalEditor = () => {
+  if (!plan) return;
+
+  setCaloriesInput(String(targetOverrides.calories || plan.calories));
+  setWaterInput(String(targetOverrides.waterLiters || plan.waterLiters));
+  setShowGoalEditor(true);
+};
+
+const saveGoalEditor = async () => {
+  const nextCalories = Number(caloriesInput.replace(',', '.'));
+  const nextWater = Number(waterInput.replace(',', '.'));
+
+  const saved = await saveNutritionTargets({
+    calories: Number.isFinite(nextCalories) ? nextCalories : undefined,
+    waterLiters: Number.isFinite(nextWater) ? nextWater : undefined,
+  });
+
+  setTargetOverrides(saved);
+  setShowGoalEditor(false);
+};
+
+const resetGoalEditor = async () => {
+  await clearNutritionTargets();
+  setTargetOverrides({});
+  setShowGoalEditor(false);
+};
+
+  const macroStats = useMemo(() => {
+    if (!plan) {
+      return {
+        proteinPercent: 0,
+        carbsPercent: 0,
+        fatsPercent: 0,
+      };
+    }
+
+    const total = plan.proteinG * 4 + plan.carbsG * 4 + plan.fatsG * 9;
+
+    if (!total) {
+      return {
+        proteinPercent: 0,
+        carbsPercent: 0,
+        fatsPercent: 0,
+      };
+    }
+
+    return {
+      proteinPercent: clamp(Math.round((plan.proteinG * 4 * 100) / total)),
+      carbsPercent: clamp(Math.round((plan.carbsG * 4 * 100) / total)),
+      fatsPercent: clamp(Math.round((plan.fatsG * 9 * 100) / total)),
+    };
+  }, [plan]);
+
+  const firstTip =
+    plan?.tips?.[0] ||
+    t(
+      'nutrition.tipFallback',
+      'Drink enough water and prioritize protein-rich foods to support muscle recovery.',
+    );
 
   return (
     <View style={styles.screen}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>{t('nutrition.title', 'Nutrition')}</Text>
-        <Text style={styles.subtitle}>
-          {t(
-            'nutrition.subtitle',
-            'Your daily targets are personalized based on your current profile and goal.'
-          )}
-        </Text>
+      <StatusBar barStyle="light-content" backgroundColor={BG} />
 
-        {!plan ? (
-          <View style={styles.emptyCard}>
-            <Text style={styles.emptyTitle}>
-              {t('nutrition.noProfileTitle', 'Complete your profile first')}
+      <View pointerEvents="none" style={styles.greenGlow} />
+      <View pointerEvents="none" style={styles.blueGlow} />
+      <View pointerEvents="none" style={styles.bottomGlow} />
+
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.content}
+      >
+        <View style={styles.heroImageWrap}>
+          <ImageBackground
+            source={ILLUSTRATIONS.hero}
+            style={styles.heroImage}
+            imageStyle={styles.heroImageStyle}
+            resizeMode="cover"
+          >
+            <View style={styles.heroImageOverlay} />
+
+            <View style={styles.stepBox}>
+              <Text style={styles.stepText}>
+                {t('nutrition.heroStep', '3')}
+              </Text>
+            </View>
+
+            <View style={styles.heroTextBlock}>
+              <Text style={styles.heroTitle}>
+                {t('nutrition.heroTitleLine1', 'Personalized')}
+              </Text>
+
+              <Text style={styles.heroTitleAccent}>
+                {t('nutrition.heroTitleLine2', 'nutrition plan')}
+              </Text>
+
+              <Text style={styles.heroSubtitle}>
+                {t(
+                  'nutrition.subtitle',
+                  'The app suggests calories, water and nutrition ratios based on your personal goal.',
+                )}
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
+
+        <View style={styles.phoneMock}>
+          <View style={styles.phoneTopBar}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.iconBtn}>
+              <Text style={styles.backIcon}>‹</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.phoneTitle}>
+              {t('nutrition.screenTitle', 'Nutrition')}
             </Text>
-            <Text style={styles.emptyText}>
-              {t(
-                'nutrition.noProfileText',
-                'Add your height, weight and goal to get calorie, macro and hydration recommendations.'
-              )}
-            </Text>
+
+            <TouchableOpacity activeOpacity={0.8} style={styles.iconBtn}>
+              <Text style={styles.bellIcon}>♡</Text>
+            </TouchableOpacity>
           </View>
-        ) : (
-          <>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>{t('nutrition.targets', 'Daily targets')}</Text>
-              <View style={styles.metricGrid}>
-                <View style={styles.metricBox}>
-                  <Text style={styles.metricValue}>{plan.calories}</Text>
-                  <Text style={styles.metricLabel}>{t('nutrition.calories', 'Calories')}</Text>
+
+          {!plan ? (
+            <View style={styles.emptyCard}>
+              <Text style={styles.emptyEmoji}>🥗</Text>
+
+              <Text style={styles.emptyTitle}>
+                {t('nutrition.noProfileTitle', 'Complete your profile first')}
+              </Text>
+
+              <Text style={styles.emptyText}>
+                {t(
+                  'nutrition.noProfileText',
+                  'Add your height, weight and goal to get personalized calories, macros and water targets.',
+                )}
+              </Text>
+            </View>
+          ) : (
+            <>
+              <View style={styles.sectionCard}>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>
+                    {t('nutrition.dailyGoal', 'Daily goals')}
+                  </Text>
+
+<TouchableOpacity activeOpacity={0.85} onPress={openGoalEditor}>
+  <Text style={styles.editText}>
+    {t('nutrition.edit', 'Edit')}
+  </Text>
+</TouchableOpacity>
                 </View>
-                <View style={styles.metricBox}>
-                  <Text style={styles.metricValue}>{plan.waterLiters}L</Text>
-                  <Text style={styles.metricLabel}>{t('nutrition.water', 'Water')}</Text>
+
+                <View style={styles.goalRow}>
+                  <GoalRingCard
+                    title={t('nutrition.calories', 'Calories')}
+                    value={plan.calories}
+                    unit={t('nutrition.kcal', 'kcal')}
+                    color={YELLOW}
+                    progress={76}
+                  />
+
+                  <GoalRingCard
+                    title={t('nutrition.water', 'Water')}
+                    value={plan.waterLiters}
+                    unit={t('nutrition.liter', 'L')}
+                    color={BLUE}
+                    progress={70}
+                  />
                 </View>
               </View>
-            </View>
+              <WaterReminderCard
+  targetLiters={plan.waterLiters}
+  t={t as any}
+/>
+              <AdvancedNutritionCard plan={plan} t={t as any} />
+              <View style={styles.sectionCard}>
+                <Text style={styles.sectionTitle}>
+                  {t('nutrition.macroRatio', 'Macro ratio')}
+                </Text>
 
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>{t('nutrition.macros', 'Macro split')}</Text>
-              <View style={styles.metricGrid}>
-                <View style={styles.metricBox}>
-                  <Text style={styles.metricValue}>{plan.proteinG}g</Text>
-                  <Text style={styles.metricLabel}>{t('nutrition.protein', 'Protein')}</Text>
-                </View>
-                <View style={styles.metricBox}>
-                  <Text style={styles.metricValue}>{plan.carbsG}g</Text>
-                  <Text style={styles.metricLabel}>{t('nutrition.carbs', 'Carbs')}</Text>
-                </View>
-                <View style={styles.metricBox}>
-                  <Text style={styles.metricValue}>{plan.fatsG}g</Text>
-                  <Text style={styles.metricLabel}>{t('nutrition.fats', 'Fats')}</Text>
+                <View style={styles.divider} />
+
+                <View style={styles.macroLayout}>
+                  <MacroDonut
+                    protein={macroStats.proteinPercent}
+                    carbs={macroStats.carbsPercent}
+                    fats={macroStats.fatsPercent}
+                  />
+
+                  <View style={styles.macroLegend}>
+                    <MacroLegendRow
+                      color={BLUE}
+                      label={t('nutrition.protein', 'Protein')}
+                      percent={macroStats.proteinPercent}
+                      grams={plan.proteinG}
+                    />
+
+                    <MacroLegendRow
+                      color="#4ADE80"
+                      label={t('nutrition.carb', 'Carb')}
+                      percent={macroStats.carbsPercent}
+                      grams={plan.carbsG}
+                    />
+
+                    <MacroLegendRow
+                      color={YELLOW}
+                      label={t('nutrition.fat', 'Fat')}
+                      percent={macroStats.fatsPercent}
+                      grams={plan.fatsG}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
 
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>{t('nutrition.sampleMeals', 'Sample meal plan')}</Text>
-              {plan.meals.map((meal) => (
-                <Text key={meal} style={styles.lineText}>• {meal}</Text>
-              ))}
-            </View>
+              <View style={styles.mealSection}>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>
+                    {t('nutrition.sampleMeals', 'Sample meals')}
+                  </Text>
 
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>{t('nutrition.tips', 'Tips')}</Text>
-              {plan.tips.map((tip) => (
-                <Text key={tip} style={styles.lineText}>• {tip}</Text>
-              ))}
-            </View>
-          </>
-        )}
+<TouchableOpacity
+  activeOpacity={0.8}
+  onPress={openAdvancedMealPlan}
+>
+  <Text style={styles.editText}>
+    {t('nutrition.viewAll', 'View all')} ›
+  </Text>
+</TouchableOpacity>
+                </View>
+
+                <View style={styles.mealGrid}>
+                  <MealCard
+                    title={t('nutrition.breakfast', 'Breakfast')}
+                    image={ILLUSTRATIONS.breakfast}
+                  />
+
+                  <MealCard
+                    title={t('nutrition.lunch', 'Lunch')}
+                    image={ILLUSTRATIONS.lunch}
+                  />
+
+                  <MealCard
+                    title={t('nutrition.dinner', 'Dinner')}
+                    image={ILLUSTRATIONS.dinner}
+                  />
+
+                  <MealCard
+                    title={t('nutrition.snack', 'Snack')}
+                    image={ILLUSTRATIONS.snack}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.sectionCard}>
+                <Text style={styles.sectionTitle}>
+                  {t('nutrition.mealPlan', 'Meal suggestions')}
+                </Text>
+
+                {plan.meals.map((meal, index) => (
+                  <View key={`${meal}-${index}`} style={styles.mealListRow}>
+                    <View style={styles.mealIndex}>
+                      <Text style={styles.mealIndexText}>{index + 1}</Text>
+                    </View>
+
+                    <Text style={styles.mealListText}>{meal}</Text>
+                  </View>
+                ))}
+              </View>
+                <AdvancedMealPlanCard mealGroups={plan.mealGroups} t={t as any} />
+              <View style={styles.adviceSection}>
+                <Text style={styles.sectionTitle}>
+                  {t('nutrition.tips', 'Advice')}
+                </Text>
+
+                <View style={styles.adviceCard}>
+                  <View style={styles.adviceIcon}>
+                    <Text style={styles.adviceIconText}>♢</Text>
+                  </View>
+
+                  <Text style={styles.adviceText}>{firstTip}</Text>
+                </View>
+              </View>
+            </>
+          )}
+        </View>
+
+        <View style={styles.footerBanner}>
+          <Text style={styles.footerTitle}>
+            {t('nutrition.footer1', 'From today,')}
+          </Text>
+
+          <Text style={styles.footerTitleStrong}>
+            {t('nutrition.footer2', 'a better version of you')}
+          </Text>
+
+          <View style={styles.footerTags}>
+            <Text style={styles.footerTag}>◎ {t('nutrition.science', 'Science')}</Text>
+            <Text style={styles.footerDivider}>|</Text>
+            <Text style={styles.footerTag}>♡ {t('nutrition.effective', 'Effective')}</Text>
+            <Text style={styles.footerDivider}>|</Text>
+            <Text style={styles.footerTag}>⚡ {t('nutrition.sustainable', 'Sustainable')}</Text>
+          </View>
+        </View>
       </ScrollView>
+            <DailyGoalEditModal
+        visible={showGoalEditor}
+        caloriesValue={caloriesInput}
+        waterValue={waterInput}
+        onChangeCalories={setCaloriesInput}
+        onChangeWater={setWaterInput}
+        onClose={() => setShowGoalEditor(false)}
+        onSave={saveGoalEditor}
+        onReset={resetGoalEditor}
+        t={t as any}
+      />
     </View>
   );
 };
@@ -112,99 +731,562 @@ export const NutritionScreen: React.FC = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F6F7FB',
+    backgroundColor: BG,
   },
   container: {
     flex: 1,
-    backgroundColor: '#F6F7FB',
   },
   content: {
-    padding: 16,
-    paddingBottom: 28,
+    paddingBottom: 160,
   },
-  title: {
-    fontSize: 24,
+
+  greenGlow: {
+    position: 'absolute',
+    top: -120,
+    right: -120,
+    width: 320,
+    height: 320,
+    borderRadius: 160,
+    backgroundColor: 'rgba(34, 197, 94, 0.20)',
+  },
+  blueGlow: {
+    position: 'absolute',
+    top: 320,
+    left: -120,
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    backgroundColor: 'rgba(56, 189, 248, 0.10)',
+  },
+  bottomGlow: {
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
+    height: 180,
+    backgroundColor: 'rgba(22, 101, 52, 0.16)',
+  },
+
+  heroImageWrap: {
+    marginHorizontal: 0,
+    height: 390,
+    overflow: 'hidden',
+    backgroundColor: '#020617',
+  },
+  heroImage: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 30,
+  },
+  heroImageStyle: {
+    opacity: 0.85,
+  },
+  heroImageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(3, 7, 18, 0.48)',
+  },
+  stepBox: {
+    width: 54,
+    height: 54,
+    borderRadius: 12,
+    backgroundColor: NEON,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 24,
+    shadowColor: NEON,
+    shadowOpacity: 0.26,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
+  },
+  stepText: {
+    color: BG,
+    fontSize: 27,
     fontWeight: '900',
-    color: '#0F172A',
   },
-  subtitle: {
-    color: '#64748B',
-    marginTop: 6,
-    marginBottom: 14,
-    lineHeight: 20,
+  heroTextBlock: {
+    maxWidth: 360,
   },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+  heroTitle: {
+    color: TEXT,
+    fontSize: 39,
+    lineHeight: 46,
+    fontWeight: '900',
+    letterSpacing: -0.8,
+  },
+  heroTitleAccent: {
+    color: NEON,
+    fontSize: 42,
+    lineHeight: 48,
+    fontWeight: '900',
+    letterSpacing: -0.8,
+  },
+  heroSubtitle: {
+    color: TEXT,
+    fontSize: 21,
+    lineHeight: 31,
+    fontWeight: '600',
+    marginTop: 22,
+  },
+
+  phoneMock: {
+    marginHorizontal: 18,
+    marginTop: -88,
+    borderRadius: 34,
+    backgroundColor: 'rgba(3, 7, 18, 0.92)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.10)',
+    paddingHorizontal: 14,
+    paddingTop: 18,
+    paddingBottom: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.38,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 14 },
+    elevation: 10,
+  },
+  phoneTopBar: {
+    height: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  iconBtn: {
+    width: 42,
+    height: 42,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backIcon: {
+    color: 'rgba(255,255,255,0.75)',
+    fontSize: 38,
+    lineHeight: 38,
+    fontWeight: '300',
+  },
+  bellIcon: {
+    color: 'rgba(255,255,255,0.76)',
+    fontSize: 28,
+    fontWeight: '300',
+  },
+  phoneTitle: {
+    flex: 1,
+    color: TEXT,
+    fontSize: 21,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+
+  sectionCard: {
+    backgroundColor: 'rgba(255,255,255,0.055)',
+    borderRadius: 18,
     padding: 14,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    shadowColor: '#0F172A',
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
+    borderColor: 'rgba(255,255,255,0.07)',
   },
-  cardTitle: {
-    color: '#0F172A',
-    fontWeight: '900',
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  metricGrid: {
+  sectionHeader: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 14,
   },
-  metricBox: {
-    width: '48%',
-    backgroundColor: '#F8FAFC',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
+  sectionTitle: {
+    flex: 1,
+    color: TEXT,
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  editText: {
+    color: NEON,
+    fontSize: 15,
+    fontWeight: '800',
+  },
+
+  goalRow: {
+    flexDirection: 'row',
+    marginHorizontal: -5,
+  },
+  goalCard: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: 'rgba(8, 19, 33, 0.95)',
+    borderRadius: 18,
+    padding: 14,
+  },
+  goalTitle: {
+    color: TEXT,
+    fontSize: 16,
+    fontWeight: '800',
     marginBottom: 10,
   },
-  metricValue: {
-    color: '#0F172A',
+  ringCenter: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  goalValue: {
+    color: TEXT,
+    fontSize: 27,
     fontWeight: '900',
+  },
+  goalUnit: {
+    color: '#E5E7EB',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    marginTop: 12,
+    marginBottom: 14,
+  },
+  macroLayout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  donutWrap: {
+    width: 126,
+    height: 126,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  donutHole: {
+    position: 'absolute',
+    width: 62,
+    height: 62,
+    borderRadius: 31,
+    backgroundColor: '#081321',
+  },
+  macroLegend: {
+    flex: 1,
+    paddingLeft: 4,
+  },
+  legendRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 13,
+  },
+  legendDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 10,
+  },
+  legendLabel: {
+    color: '#E5E7EB',
+    fontSize: 15,
+    fontWeight: '700',
+    width: 58,
+  },
+  legendValue: {
+    color: TEXT,
+    fontSize: 14,
+    fontWeight: '900',
+    flex: 1,
+    textAlign: 'right',
+  },
+
+  mealSection: {
+    marginBottom: 14,
+  },
+  mealGrid: {
+    flexDirection: 'row',
+    marginHorizontal: -5,
+  },
+  mealCard: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  mealImage: {
+    height: 84,
+    borderRadius: 14,
+    overflow: 'hidden',
+    backgroundColor: CARD_2,
+  },
+  mealImageStyle: {
+    borderRadius: 14,
+  },
+  mealShade: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(3,7,18,0.08)',
+  },
+  mealName: {
+    color: '#E5E7EB',
+    fontSize: 13,
+    fontWeight: '800',
+    textAlign: 'center',
+    marginTop: 8,
+  },
+
+  mealListRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: 'rgba(16, 28, 43, 0.96)',
+    borderRadius: 14,
+    padding: 11,
+    marginBottom: 9,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.10)',
+  },
+  mealIndex: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: 'rgba(124, 255, 58, 0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  mealIndexText: {
+    color: NEON,
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  mealListText: {
+    flex: 1,
+    color: '#E5E7EB',
+    fontSize: 14,
+    lineHeight: 21,
+  },
+
+  adviceSection: {
+    marginBottom: 10,
+  },
+  adviceCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.055)',
+    borderRadius: 18,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.07)',
+    marginTop: 10,
+  },
+  adviceIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: NEON,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 13,
+  },
+  adviceIconText: {
+    color: BG,
+    fontSize: 24,
+    fontWeight: '900',
+  },
+  adviceText: {
+    flex: 1,
+    color: '#F1F5F9',
+    fontSize: 15,
+    lineHeight: 23,
+    fontWeight: '600',
+  },
+
+  mockNav: {
+    height: 66,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.08)',
+    marginHorizontal: -14,
+    marginBottom: -12,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+  },
+  mockNavItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  mockNavItemActive: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  mockNavIcon: {
+    color: MUTED,
     fontSize: 20,
   },
-  metricLabel: {
-    color: '#64748B',
-    marginTop: 4,
+  mockNavIconActive: {
+    color: NEON,
+    fontSize: 24,
+  },
+  mockNavText: {
+    color: MUTED,
     fontSize: 12,
     fontWeight: '700',
+    marginTop: 4,
   },
-  lineText: {
-    color: '#334155',
+  mockNavTextActive: {
+    color: NEON,
+    fontSize: 12,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+
+  footerBanner: {
+    marginHorizontal: 18,
+    marginTop: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(148, 163, 184, 0.18)',
+  },
+  footerTitle: {
+    color: TEXT,
+    fontSize: 25,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  footerTitleStrong: {
+    color: NEON,
+    fontSize: 25,
+    fontWeight: '900',
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  footerTags: {
+    marginTop: 18,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  footerTag: {
+    color: '#E5E7EB',
     fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 4,
+    fontWeight: '800',
+    marginHorizontal: 7,
   },
+  footerDivider: {
+    color: 'rgba(148, 163, 184, 0.6)',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+
   emptyCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
+    backgroundColor: 'rgba(255,255,255,0.055)',
+    borderRadius: 18,
+    padding: 18,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(124, 255, 58, 0.22)',
+  },
+  emptyEmoji: {
+    fontSize: 34,
+    marginBottom: 12,
   },
   emptyTitle: {
-    color: '#0F172A',
+    color: TEXT,
+    fontSize: 20,
     fontWeight: '900',
-    fontSize: 16,
     marginBottom: 8,
   },
   emptyText: {
-    color: '#475569',
-    lineHeight: 21,
+    color: MUTED,
+    fontSize: 14,
+    lineHeight: 22,
   },
-  bannerWrap: {
-    marginTop: 8,
-    alignItems: 'center',
+  modalWrap: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingHorizontal: 18,
+},
+modalBackdrop: {
+  ...StyleSheet.absoluteFillObject,
+  backgroundColor: 'rgba(0,0,0,0.58)',
+},
+modalCard: {
+  width: '100%',
+  backgroundColor: '#0B1624',
+  borderRadius: 24,
+  padding: 18,
+  borderWidth: 1,
+  borderColor: 'rgba(124, 255, 58, 0.25)',
+  shadowColor: '#00FFD1',
+  shadowOpacity: 0.14,
+  shadowRadius: 18,
+  shadowOffset: {
+    width: 0,
+    height: 10,
   },
+  elevation: 8,
+},
+modalKicker: {
+  color: CYAN,
+  fontSize: 11,
+  fontWeight: '900',
+  letterSpacing: 1.1,
+  marginBottom: 5,
+},
+modalTitle: {
+  color: TEXT,
+  fontSize: 22,
+  fontWeight: '900',
+},
+modalDesc: {
+  color: MUTED,
+  fontSize: 14,
+  lineHeight: 21,
+  marginTop: 8,
+  marginBottom: 16,
+},
+inputLabel: {
+  color: '#E5E7EB',
+  fontSize: 13,
+  fontWeight: '900',
+  marginBottom: 8,
+},
+input: {
+  backgroundColor: '#101C2B',
+  borderRadius: 16,
+  borderWidth: 1,
+  borderColor: 'rgba(148, 163, 184, 0.20)',
+  color: TEXT,
+  fontSize: 18,
+  fontWeight: '900',
+  paddingHorizontal: 14,
+  paddingVertical: 12,
+  marginBottom: 14,
+},
+modalActions: {
+  flexDirection: 'row',
+  marginTop: 4,
+},
+modalBtn: {
+  flex: 1,
+  borderRadius: 14,
+  paddingVertical: 12,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderWidth: 1,
+  marginHorizontal: 4,
+},
+modalBtnGhost: {
+  backgroundColor: 'rgba(25, 230, 210, 0.10)',
+  borderColor: 'rgba(25, 230, 210, 0.35)',
+},
+modalBtnCancel: {
+  backgroundColor: '#101C2B',
+  borderColor: 'rgba(148, 163, 184, 0.22)',
+},
+modalBtnSave: {
+  backgroundColor: NEON,
+  borderColor: NEON,
+},
+modalBtnGhostText: {
+  color: CYAN,
+  fontWeight: '900',
+},
+modalBtnCancelText: {
+  color: '#E5E7EB',
+  fontWeight: '900',
+},
+modalBtnSaveText: {
+  color: BG,
+  fontWeight: '900',
+},
 });
 
 export default NutritionScreen;

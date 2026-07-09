@@ -1,10 +1,11 @@
 // FILE: src/AppNavigator.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Platform,
   View,
   StyleSheet,
+  Keyboard,
 } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -26,11 +27,19 @@ import { WorkoutScreen } from './screens/WorkoutScreen';
 import { WeightChartScreen } from './screens/WeightChartScreen';
 import { WorkoutHistoryScreen } from './screens/WorkoutHistoryScreen';
 import { AdBanner } from './components/AdBanner';
+import { AdvancedMealPlanScreen } from './screens/AdvancedMealPlanScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-/* ===== Inline English resource ===== */
+const BG = '#06111D';
+const CARD = '#0B1624';
+const CARD_2 = '#101C2B';
+const TEXT = '#F8FAFC';
+const MUTED = '#94A3B8';
+const NEON = '#7CFF3A';
+const CYAN = '#19E6D2';
+
 const enNavigator = {
   Navigator: {
     stack: {
@@ -57,11 +66,27 @@ try {
   // no-op
 }
 
+const screenHeaderOptions = {
+  headerStyle: {
+    backgroundColor: BG,
+  },
+  headerTintColor: TEXT,
+  headerTitleStyle: {
+    color: TEXT,
+    fontWeight: '900' as const,
+    fontSize: 17,
+  },
+  headerShadowVisible: false,
+  contentStyle: {
+    backgroundColor: BG,
+  },
+};
+
 const MainStack: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
       <Stack.Screen
         name="MainScreen"
         component={MainScreen}
@@ -71,37 +96,49 @@ const MainStack: React.FC = () => {
       <Stack.Screen
         name="ProgramDetail"
         component={ProgramDetailScreen}
-        options={{ headerTitle: t('tabs.program') }}
+        options={{ title: t('tabs.program', 'Program') }}
       />
 
       <Stack.Screen
         name="WorkoutVideo"
         component={WorkoutVideoScreen}
-        options={{ title: t('tabs.workout') }}
+        options={{ title: t('tabs.workout', 'Workout') }}
       />
 
       <Stack.Screen
         name="WorkoutWeb"
         component={WorkoutVideoScreen as any}
-        options={{ title: t('tabs.workout') }}
+        options={{ title: t('tabs.workout', 'Workout') }}
       />
 
       <Stack.Screen
         name="WorkoutHistory"
         component={WorkoutHistoryScreen}
-        options={{ title: t('history.screenTitle', 'Workout History') }}
+        options={{
+          title: t('history.screenTitle', 'Workout History'),
+        }}
       />
     </Stack.Navigator>
   );
 };
 
 const NutritionStack: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
       <Stack.Screen
         name="NutritionHome"
         component={NutritionScreen}
         options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="AdvancedMealPlan"
+        component={AdvancedMealPlanScreen}
+        options={{
+          title: t('nutrition.advancedMealPlan', 'Advanced meal plan'),
+        }}
       />
 
       <Stack.Screen
@@ -117,41 +154,43 @@ const SettingsStack: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
       <Stack.Screen
         name="MoreHome"
         component={SettingsScreen}
-        options={{ headerTitle: t('tabs.more') }}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name="UserProfile"
         component={UserProfileScreen}
-        options={{ title: t('tabs.profile') }}
+        options={{ title: t('tabs.profile', 'User Profile') }}
       />
 
       <Stack.Screen
         name="Guide"
         component={GuideScreen}
-        options={{ title: t('tabs.guide') }}
+        options={{ title: t('tabs.guide', 'Guide') }}
       />
 
       <Stack.Screen
         name="Premium"
         component={PremiumScreen}
-        options={{ title: t('tabs.premium') }}
+        options={{ title: t('tabs.premium', 'Premium') }}
       />
 
       <Stack.Screen
         name="WeightChart"
         component={WeightChartScreen}
-        options={{ title: t('tabs.weightChart') }}
+        options={{ title: t('tabs.weightChart', 'Weight Tracking') }}
       />
 
       <Stack.Screen
         name="WorkoutHistory"
         component={WorkoutHistoryScreen}
-        options={{ title: t('history.screenTitle', 'Workout History') }}
+        options={{
+          title: t('history.screenTitle', 'Workout History'),
+        }}
       />
     </Stack.Navigator>
   );
@@ -161,7 +200,7 @@ const WorkoutStack: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
       <Stack.Screen
         name="WorkoutHome"
         component={WorkoutScreen}
@@ -171,21 +210,40 @@ const WorkoutStack: React.FC = () => {
       <Stack.Screen
         name="ProgramDetail"
         component={ProgramDetailScreen}
-        options={{ title: t('tabs.program') }}
+        options={{ title: t('tabs.program', 'Program') }}
       />
 
       <Stack.Screen
         name="WorkoutVideo"
         component={WorkoutVideoScreen}
-        options={{ title: t('tabs.workout') }}
+        options={{ title: t('tabs.workout', 'Workout') }}
       />
 
       <Stack.Screen
         name="WorkoutWeb"
         component={WorkoutVideoScreen as any}
-        options={{ title: t('Navigator.stack.workout') }}
+        options={{
+          title: t('Navigator.stack.workout', 'Workout'),
+        }}
       />
     </Stack.Navigator>
+  );
+};
+
+const TabIcon: React.FC<{
+  icon: string;
+  color: string;
+  focused: boolean;
+}> = ({ icon, color, focused }) => {
+  return (
+    <View
+      style={[
+        styles.tabIconWrap,
+        focused && styles.tabIconWrapActive,
+      ]}
+    >
+      <Text style={[styles.tabIcon, { color }]}>{icon}</Text>
+    </View>
   );
 };
 
@@ -193,23 +251,30 @@ export const AppNavigator: React.FC = () => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
   const extraBottom =
     Platform.OS === 'android'
       ? Math.max(insets.bottom, 8)
       : Math.max(insets.bottom, 8);
 
-  const tabButtonHeight = 56 + extraBottom;
-
-  /**
-   * Banner test của bạn đang là 468x60.
-   * Cộng thêm padding trên/dưới => 68.
-   */
+  const tabButtonHeight = 58 + extraBottom;
   const bannerHeight = 68;
-
-  /**
-   * Tab bar phải cao hơn để chừa chỗ cho banner,
-   * nếu không banner absolute sẽ đè lên nội dung page.
-   */
   const totalBottomHeight = tabButtonHeight + bannerHeight;
 
   return (
@@ -218,21 +283,26 @@ export const AppNavigator: React.FC = () => {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: '#FFFFFF',
-            borderTopColor: '#E5E7EB',
+            backgroundColor: CARD,
+            borderTopColor: 'rgba(124, 255, 58, 0.18)',
+            borderTopWidth: 1,
             height: totalBottomHeight,
-
-            /**
-             * Đẩy icon + label xuống dưới banner
-             */
             paddingTop: bannerHeight + 6,
             paddingBottom: extraBottom,
+            shadowColor: '#00FFD1',
+            shadowOpacity: 0.12,
+            shadowRadius: 12,
+            shadowOffset: {
+              width: 0,
+              height: -4,
+            },
+            elevation: 16,
           },
-          tabBarActiveTintColor: '#10B981',
-          tabBarInactiveTintColor: '#64748B',
+          tabBarActiveTintColor: NEON,
+          tabBarInactiveTintColor: MUTED,
           tabBarLabelStyle: {
             fontSize: 12,
-            fontWeight: '700',
+            fontWeight: '900',
             marginBottom: 2,
           },
           tabBarIconStyle: {
@@ -245,9 +315,9 @@ export const AppNavigator: React.FC = () => {
           name="Main"
           component={MainStack}
           options={{
-            tabBarLabel: t('tabs.main'),
-            tabBarIcon: ({ color }) => (
-              <Text style={{ color }}>🏠</Text>
+            tabBarLabel: t('tabs.main', 'Home'),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon icon="🏠" color={color} focused={focused} />
             ),
           }}
         />
@@ -256,9 +326,9 @@ export const AppNavigator: React.FC = () => {
           name="Workout"
           component={WorkoutStack}
           options={{
-            tabBarLabel: t('tabs.workout'),
-            tabBarIcon: ({ color }) => (
-              <Text style={{ color }}>🏋️‍♂️</Text>
+            tabBarLabel: t('tabs.workout', 'Workout'),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon icon="🏋️‍♂️" color={color} focused={focused} />
             ),
           }}
         />
@@ -267,9 +337,9 @@ export const AppNavigator: React.FC = () => {
           name="Nutrition"
           component={NutritionStack}
           options={{
-            tabBarLabel: t('tabs.nutrition'),
-            tabBarIcon: ({ color }) => (
-              <Text style={{ color }}>🥗</Text>
+            tabBarLabel: t('tabs.nutrition', 'Nutrition'),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon icon="🥗" color={color} focused={focused} />
             ),
           }}
         />
@@ -278,26 +348,27 @@ export const AppNavigator: React.FC = () => {
           name="Settings"
           component={SettingsStack}
           options={{
-            tabBarLabel: t('tabs.more'),
-            tabBarIcon: ({ color }) => (
-              <Text style={{ color }}>⚙️</Text>
+            tabBarLabel: t('tabs.more', 'More'),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon icon="⚙️" color={color} focused={focused} />
             ),
           }}
         />
       </Tab.Navigator>
 
-      {/* Banner cố định nằm phía trên icon bottom tab */}
-      <View
-        style={[
-          styles.bannerAboveTab,
-          {
-            bottom: tabButtonHeight,
-            height: bannerHeight,
-          },
-        ]}
-      >
-        <AdBanner />
-      </View>
+      {!keyboardVisible ? (
+        <View
+          style={[
+            styles.bannerAboveTab,
+            {
+              bottom: tabButtonHeight,
+              height: bannerHeight,
+            },
+          ]}
+        >
+          <AdBanner />
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -305,7 +376,24 @@ export const AppNavigator: React.FC = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: BG,
+  },
+
+  tabIconWrap: {
+    minWidth: 34,
+    height: 26,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabIconWrapActive: {
+    backgroundColor: 'rgba(124, 255, 58, 0.14)',
+    borderWidth: 1,
+    borderColor: 'rgba(124, 255, 58, 0.35)',
+  },
+  tabIcon: {
+    fontSize: 17,
+    fontWeight: '900',
   },
 
   bannerAboveTab: {
@@ -314,11 +402,11 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 999,
     elevation: 999,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: CARD,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#E5E7EB',
-    borderBottomColor: '#E5E7EB',
+    borderTopColor: 'rgba(124, 255, 58, 0.22)',
+    borderBottomColor: 'rgba(148, 163, 184, 0.12)',
     paddingTop: 4,
     paddingBottom: 4,
     paddingHorizontal: 8,
