@@ -7,9 +7,10 @@ export type PlanItem =
   | {
       type: 'workout';
       sessionKey: Exclude<WorkoutSessionKey, 'rest'>;
-      name: string;        // tên bài tập hiển thị
-      url: string;         // URL mở bằng WebView
-      durationMin: number; // thời lượng (phút)
+      name: string;
+      url: string;          // HTML mở WebView
+      durationMin: number;
+      downloadVideos?: WorkoutDownloadVideo[];
     };
 
 export interface WorkoutDay {
@@ -23,7 +24,7 @@ export interface WorkoutDay {
   name?: string;
   webUrl?: string;
   durationMin?: number;
-
+  downloadVideos?: WorkoutDownloadVideo[];
   // giữ tương thích cũ (trỏ về webUrl):
   videoUrl: string;
 }
@@ -37,14 +38,34 @@ export interface WorkoutProgram {
   plan: PlanItem[]; 
    premium?: boolean;     // <-- danh sách ngày bạn nhập, không lặp
 }
+export type WorkoutDownloadVideo = {
+  title: string;
+  url: string;
+};
 
 // Helper tạo item workout nhanh
 const W = (
   sessionKey: Exclude<WorkoutSessionKey, 'rest'>,
   name: string,
   url: string,
-  durationMin: number
-): PlanItem => ({ type: 'workout', sessionKey, name, url, durationMin });
+  durationMin: number,
+  downloadVideos?: string | WorkoutDownloadVideo[],
+): PlanItem => ({
+  type: 'workout',
+  sessionKey,
+  name,
+  url,
+  durationMin,
+  downloadVideos:
+    typeof downloadVideos === 'string'
+      ? [
+          {
+            title: name,
+            url: downloadVideos,
+          },
+        ]
+      : downloadVideos,
+});
 
 // ====== Ví dụ kế hoạch bạn nhập (không lặp tuần) ======
 // Bạn có thể thêm/bớt, app sẽ hiển thị đúng số lượng.
@@ -195,166 +216,320 @@ const Max30: PlanItem[] = [
 ];
 const FocusT25: PlanItem[] = [
   // ALPHA – Week 1 (Day 1–7)
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 1
-  W('hiit',  'Speed 1.0',                'findex11.html', 25), // 2
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 3
-  W('core',  'Ab Intervals',             'findex1.html',  25), // 4
-  W('lower', 'Cardio & Lower Focus',     'findex17.html', 50), // 5
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 1
+  W('hiit',  'Speed 1.0',                'findex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed1.mp4'), // 2
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 3
+  W('core',  'Ab Intervals',             'findex1.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4'), // 4
+  W('lower', 'Cardio & Lower Focus',     'findex17.html', 50,
+         [
+    {
+      title: 'Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4',
+    },
+    {
+      title: 'Lower Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/lower_focus.mp4',
+    },
+  ],
+  ), // 5
   { type: 'rest' },                                                    // 6 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 7
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 7
 
   // ALPHA – Week 2 (Day 8–14)
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 8
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 9
-  W('hiit',  'Speed 1.0',                'findex11.html', 25), // 10
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 11
-  W('lower', 'Lower Focus & AB Intervals','findex18.html', 50), // 12
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 8
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 9
+  W('hiit',  'Speed 1.0',                'findex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed1.mp4'), // 10
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 11
+  W('lower', 'Lower Focus & AB Intervals','findex18.html', 50,
+     [
+    {
+      title: 'Lower Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/lower_focus.mp4',
+    },
+    {
+      title: 'Ab Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4',
+    },
+  ],
+  ), // 12
   { type: 'rest' },                                                    // 13 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 14
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 14
 
   // ALPHA – Week 3 (Day 15–21)
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 15
-  W('hiit',  'Speed 1.0',                'findex11.html', 25), // 16
-  W('lower', 'Lower Focus',              'findex7.html',  25), // 17
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 18
-  W('core',  'Total Body Circuit & Ab Intervals', 'findex19.html', 50), // 19
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 15
+  W('hiit',  'Speed 1.0',                'findex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed1.mp4'), // 16
+  W('lower', 'Lower Focus',              'findex7.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/lower_focus.mp4'), // 17
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 18
+  W('core',  'Total Body Circuit & Ab Intervals', 'findex19.html', 50,
+         [
+    {
+      title: 'Total Body Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4',
+    },
+    {
+      title: 'Ab Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4',
+    },
+  ],
+  ), // 19
   { type: 'rest' },                                                    // 20 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 21
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 21
 
   // ALPHA – Week 4 (Day 22–28)
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 22
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 23
-  W('lower', 'Lower Focus',              'findex7.html',  25), // 24
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 25
-  W('core',  'AB Intervals & Speed 1.0', 'findex20.html', 50), // 26
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 22
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 23
+  W('lower', 'Lower Focus',              'findex7.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/lower_focus.mp4'), // 24
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 25
+  W('core',  'AB Intervals & Speed 1.0', 'findex20.html', 50,
+     [
+    {
+      title: 'Ab Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4',
+    },
+    {
+      title: 'Speed 1.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed1.mp4',
+    },
+  ],
+  ), // 26
   { type: 'rest' },                                                    // 27 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 28
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 28
 
   // ALPHA – Week 5 (Day 29–35)
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 29
-  W('core',  'Ab Intervals',             'findex1.html',  25), // 30
-  W('core',  'Total Body Circuit',       'findex15.html', 25), // 31
-  W('hiit',  'Cardio',                   'findex2.html',  25), // 32
-  W('lower', 'Total Body Circuit & Lower Focus', 'findex21.html', 50), // 33
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 29
+  W('core',  'Ab Intervals',             'findex1.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4'), // 30
+  W('core',  'Total Body Circuit',       'findex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4'), // 31
+  W('hiit',  'Cardio',                   'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/cardio.mp4'), // 32
+  W('lower', 'Total Body Circuit & Lower Focus', 'findex21.html', 50,
+         [
+    {
+      title: 'Total Body Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4',
+    },
+    {
+      title: 'Lower Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/lower_focus.mp4',
+    },
+  ],
+  ), // 33
   { type: 'rest' },                                                    // 34 - Off
-  W('core',  'Stretch',                  'findex2.html',  25), // 35 (giữ nguyên file như JSX của bạn)
+  W('core',  'Stretch',                  'findex2.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 35 (giữ nguyên file như JSX của bạn)
 
   // BETA – Week 6 (Day 36–42)
-  W('core',  'Core Cardio',              'findex3.html',  25), // 36
-  W('hiit',  'Speed 2.0',                'findex12.html', 25), // 37
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 38
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 39
-  W('upper', 'Upper Focus & Core Cardio','findex22.html', 50), // 40
+  W('core',  'Core Cardio',              'findex3.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4'), // 36
+  W('hiit',  'Speed 2.0',                'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4'), // 37
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 38
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 39
+  W('upper', 'Upper Focus & Core Cardio','findex22.html', 50,
+         [
+    {
+      title: 'Upper Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4',
+    },
+    {
+      title: 'Core Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4',
+    },
+  ],
+  ), // 40
   { type: 'rest' },                                                    // 41 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 42
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 42
 
   // BETA – Week 7 (Day 43–49)
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 43
-  W('core',  'Core Cardio',              'findex3.html',  25), // 44
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 45
-  W('upper', 'Upper Focus',              'findex16.html', 25), // 46
-  W('core',  "Rip't Circuit & Speed 2.0",'findex23.html', 50), // 47
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 43
+  W('core',  'Core Cardio',              'findex3.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4'), // 44
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 45
+  W('upper', 'Upper Focus',              'findex16.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4'), // 46
+  W('core',  "Rip't Circuit & Speed 2.0",'findex23.html', 50,
+             [
+    {
+      title: 'Ript Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4',
+    },
+    {
+      title: 'Speed 2.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4',
+    },
+  ],
+  ), // 47
   { type: 'rest' },                                                    // 48 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 49
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 49
 
   // BETA – Week 8 (Day 50–56)
-  W('core',  'Core Cardio',              'findex3.html',  25), // 50
-  W('upper', 'Upper Focus',              'findex16.html', 25), // 51
-  W('hiit',  'Speed 2.0',                'findex12.html', 25), // 52
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 53
-  W('core',  'Dynamic Core & Speed 2.0', 'findex24.html', 50), // 54
+  W('core',  'Core Cardio',              'findex3.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4'), // 50
+  W('upper', 'Upper Focus',              'findex16.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4'), // 51
+  W('hiit',  'Speed 2.0',                'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4'), // 52
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 53
+  W('core',  'Dynamic Core & Speed 2.0', 'findex24.html', 50,
+                 [
+    {
+      title: 'Dynamic Core',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4',
+    },
+    {
+      title: 'Speed 2.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4',
+    },
+  ],
+  ), // 54
   { type: 'rest' },                                                    // 55 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 56
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 56
 
   // BETA – Week 9 (Day 57–63)
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 57
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 58
-  W('core',  'Core Cardio',              'findex3.html',  25), // 59
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 60
-  W('upper', 'Speed 2.0 & Upper Focus',  'findex25.html', 50), // 61
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 57
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 58
+  W('core',  'Core Cardio',              'findex3.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4'), // 59
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 60
+  W('upper', 'Speed 2.0 & Upper Focus',  'findex25.html', 50,
+                 [
+    {
+      title: 'Speed 2.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4',
+    },
+    {
+      title: 'Upper Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4',
+    },
+  ],
+  ), // 61
   { type: 'rest' },                                                    // 62 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 63
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 63
 
   // BETA – Week 10 (Day 64–70)
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 64
-  W('core',  'Core Cardio',              'findex3.html',  25), // 65
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 66
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 67
-  W('core',  "Rip't Circuit & Speed 2.0",'findex23.html', 50), // 68
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 64
+  W('core',  'Core Cardio',              'findex3.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/core_cardio.mp4'), // 65
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 66
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 67
+  W('core',  "Rip't Circuit & Speed 2.0",'findex23.html', 50,
+                 [
+    {
+      title: 'Ript Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4',
+    },
+    {
+      title: 'Speed 2.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed2.mp4',
+    },
+  ],
+  ), // 68
   { type: 'rest' },                                                    // 69 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 70
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 70
 
   // PURE GAMMA – Week 11 (Day 71–77)
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 71
-  W('upper', "Rip't Up",                 'findex10.html', 25), // 72
-  W('core',  'Extreme Circuit',          'findex6.html',  25), // 73
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 74
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 75
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 71
+  W('upper', "Rip't Up",                 'findex10.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_up.mp4'), // 72
+  W('core',  'Extreme Circuit',          'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 73
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 74
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 75
   { type: 'rest' },                                                    // 76 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 77
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 77
 
   // PURE GAMMA – Week 12 (Day 78–84)
-  W('upper', "Rip't Up",                 'findex9.html',  25), // 78
-  W('core',  'Extreme Circuit',          'findex6.html',  25), // 79
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 80
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 81
-  W('upper', "Rip't Up",                 'findex12.html', 25), // 82
+  W('upper', "Rip't Up",                 'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_up.mp4'), // 78
+  W('core',  'Extreme Circuit',          'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 79
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 80
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 81
+  W('upper', "Rip't Up",                 'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_up.mp4'), // 82
   { type: 'rest' },                                                    // 83 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 84
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 84
 
   // PURE GAMMA – Week 13 (Day 85–91)
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 85
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 86
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 87
-  W('hiit',  'Extreme Cardio',           'findex6.html',  25), // 88
-  W('hiit',  'The Pyramid',              'findex12.html', 25), // 89
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 85
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 86
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 87
+  W('hiit',  'Extreme Circuit',           'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 88
+  W('hiit',  'The Pyramid',              'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 89
   { type: 'rest' },                                                    // 90 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 91
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 91
 
   // PURE GAMMA – Week 14 (Day 92–98)
-  W('hiit',  'Extreme Cardio',           'findex6.html',  25), // 92
-  W('upper', "Rip't Up",                 'findex10.html', 25), // 93
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 94
-  W('hiit',  'The Pyramid',              'findex12.html', 25), // 95
-  W('hiit',  'Extreme Cardio',           'findex6.html',  25), // 96
+  W('hiit',  'Extreme Circuit',           'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 92
+  W('upper', "Rip't Up",                 'findex10.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_up.mp4'), // 93
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 94
+  W('hiit',  'The Pyramid',              'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 95
+  W('hiit',  'Extreme Circuit',           'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 96
   { type: 'rest' },                                                    // 97 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 98
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 98
 
   // GAMMA: PURE STRENGTH HYBRID – Week 15 (Day 99–105)
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 99
-  W('upper', "Rip't Up",                 'findex10.html', 25), // 100
-  W('hiit',  'Extreme Cardio',           'findex6.html',  25), // 101
-  W('hiit',  'The Pyramid',              'findex12.html', 25), // 102
-  W('core',  'Total Body Circuit & Speed 3.0', 'findex23.html', 50), // 103
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 99
+  W('upper', "Rip't Up",                 'findex10.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_up.mp4'), // 100
+  W('hiit',  'Extreme Circuit',           'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 101
+  W('hiit',  'The Pyramid',              'findex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 102
+  W('core',  'Total Body Circuit & Speed 3.0', 'findex23.html', 50,
+                       [
+    {
+      title: 'Total Body Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4',
+    },
+    {
+      title: 'Speed 3.0',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4',
+    },
+  ],
+  ), // 103
   { type: 'rest' },                                                    // 104 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 105
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 105
 
   // GAMMA: PURE STRENGTH HYBRID – Week 16 (Day 106–112)
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 106
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 107
-  W('upper', 'Upper Focus',              'findex16.html', 25), // 108
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 109
-  W('core',  'Extreme Cardio & Dynamic Core', 'findex27.html', 50), // 110
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 106
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 107
+  W('upper', 'Upper Focus',              'findex16.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4'), // 108
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 109
+  W('core',  'Extreme Cardio & Dynamic Core', 'findex27.html', 50,
+                           [
+    {
+      title: 'Extreme Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4',
+    },
+    {
+      title: 'Dynamic Core',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4',
+    },
+  ],
+  ), // 110
   { type: 'rest' },                                                    // 111 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 112
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 112
 
   // GAMMA: PURE STRENGTH HYBRID – Week 17 (Day 113–119)
-  W('hiit',  'Extreme Cardio',           'findex6.html',  25), // 113
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 114
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 115
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 116
-  W('upper', 'Total Body Circuit & Upper Focus', 'findex28.html', 50), // 117
+  W('hiit',  'Extreme Circuit',           'findex6.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4'), // 113
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 114
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 115
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 116
+  W('upper', 'Total Body Circuit & Upper Focus', 'findex28.html', 50,
+     [
+    {
+      title: 'Total Body Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/total_body_circuit.mp4',
+    },
+    {
+      title: 'Upper Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4',
+    },
+  ],
+  ), // 117
   { type: 'rest' },                                                    // 118 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 119
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 119
 
   // GAMMA: PURE STRENGTH HYBRID – Week 18 (Day 120–126)
-  W('hiit',  'The Pyramid',              'findex8.html',  25), // 120
-  W('hiit',  'Speed 3.0',                'findex13.html', 25), // 121
-  W('core',  "Rip't Circuit",            'findex9.html',  25), // 122
-  W('core',  'Dynamic Core',             'findex5.html',  25), // 123
-  W('upper', 'Upper Focus & Extreme Cardio', 'findex28.html', 50), // 124
+  W('hiit',  'The Pyramid',              'findex8.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/pyramid.mp4'), // 120
+  W('hiit',  'Speed 3.0',                'findex13.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/speed3.mp4'), // 121
+  W('core',  "Rip't Circuit",            'findex9.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/ript_circuit.mp4'), // 122
+  W('core',  'Dynamic Core',             'findex5.html',  25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/dynamic_core.mp4'), // 123
+  W('upper', 'Upper Focus & Extreme Cardio', 'findex28.html', 50,
+         [
+    {
+      title: 'Upper Focus',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/upper_focus.mp4',
+    },
+    {
+      title: 'Extreme Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/T25Focus/extreme_cardio.mp4',
+    },
+  ],
+  ), // 124
   { type: 'rest' },                                                    // 125 - Off
-  W('core',  'Stretch',                  'findex14.html', 25), // 126
+  W('core',  'Stretch',                  'findex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/T25Focus/stretch.mp4'), // 126
 ];
 const P90X1: PlanItem[] = [
   // PHASE 1 – Week 1 (Day 1–7)
@@ -1083,6 +1258,7 @@ export function generateProgramDays(program: WorkoutProgram): WorkoutDay[] {
       name: item.name,
       webUrl: item.url,
       durationMin: item.durationMin,
+      downloadVideos: item.downloadVideos,
       videoUrl: item.url // tương thích trường cũ
     };
   });

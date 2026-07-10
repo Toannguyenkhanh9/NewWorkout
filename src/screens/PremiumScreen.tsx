@@ -178,6 +178,20 @@ export const PremiumScreen: React.FC = () => {
         • {t('premium.allPrograms', 'Unlock the full experience')}
       </Text>
 
+  <Text style={styles.text}>
+    • {t(
+      'premium.downloadOfflineVideos',
+      'Download workout videos and watch offline',
+    )}
+  </Text>
+
+  <Text style={styles.text}>
+    • {t(
+      'premium.advancedMealPlan',
+      'Advanced meal plans and nutrition tools',
+    )}
+  </Text>
+
       {isPremium ? (
         <View style={styles.activeBox}>
           <Text style={styles.activeText}>
@@ -369,6 +383,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 15,
   },
+  benefitList: {
+  marginBottom: 8,
+},
 });
 
 export default PremiumScreen;

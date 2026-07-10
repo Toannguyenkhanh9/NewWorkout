@@ -35,7 +35,17 @@ const base = {
     "daysPrefix": "Day {{day}} • {{weekday}}",
     "weekTitle": "Week {{n}}",
     "completed": "Completed",
-    "todayWorkout": "Workout: {{name}}"
+    "todayWorkout": "Workout: {{name}}",
+      workoutProgram: 'WORKOUT PROGRAM',
+  premiumProgram: 'PREMIUM PROGRAM',
+  weeklyPlan: 'Weekly training plan',
+  planDesc:
+    'Open each training day, follow the workout video and stay consistent week by week.',
+  restDay: 'Recovery / Rest',
+  restDesc: 'Stretch, hydrate and recover',
+  dayTitle: 'Day {{n}}',
+  notFoundTitle: 'Program not found',
+  notFoundText: 'This workout program is not available.',
   },
   "workouts": {
     "rest": "Recovery / Rest",
@@ -47,7 +57,8 @@ const base = {
     "day": "days",
     "heroTitle": "Your daily workout plan",
     "matchingResults": "Matching results",
-    "days": "days"
+    "days": "days",
+      min: 'min',
   },
   "guide": {
     "title": "How to Use PulseFit",
@@ -96,12 +107,31 @@ const base = {
     "subscribeMonthly": "Subscribe monthly",
     "lifetimeTitle": "Lifetime Premium",
     "lifetimeDesc": "One-time payment, keep Premium forever",
-    "buyLifetime": "Buy lifetime"
+    "buyLifetime": "Buy lifetime",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Upgrade Premium to download workout videos and watch offline.',
+      downloadOfflineVideos: 'Download workout videos and watch offline',
+  advancedMealPlan: 'Advanced meal plans and nutrition tools',
   },
   "video": {
     "loading": "Loading video...",
     "play": "Start workout",
-    "error": "Unable to play video. Please try again."
+    "error": "Unable to play video. Please try again.",
+      offlineMode: 'Offline video',
+  downloadOffline: 'Download',
+  downloadOfflineDesc:
+    'Download once and use it for every repeated day of this workout.',
+  downloadMultipleOfflineDesc:
+    'Download all videos in this workout once and use them offline.',
+  downloading: 'Downloading',
+  downloadSuccess: 'Video downloaded for offline use.',
+  downloadError: 'Unable to download video.',
+  downloaded: 'Downloaded',
+  playingOffline: 'Playing offline',
+  downloadUrlMissing:
+    'Offline video is not available for this workout yet.',
+  notAvailable: 'N/A',
   },
   "settings": {
     "title": "Settings",
@@ -449,6 +479,88 @@ reminderTime: 'Reminder time',
 reminderInterval: 'Reminder interval',
 waterReminderTitle: 'Time to drink water',
 waterReminderBody: 'Drink about {{amount}}ml of water to stay hydrated.',
+todayMenuKicker: 'TODAY MENU',
+todayMenuTitle: "Today's meal suggestion",
+todayMenuDesc:
+  'This menu changes automatically every day based on your daily calorie target.',
+todayMenuDate: 'Today',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Oatmeal, banana and eggs',
+        desc: 'Oats, banana, eggs and a light protein source.',
+      },
+      greekYogurt: {
+        title: 'Greek yogurt bowl',
+        desc: 'Greek yogurt, fruit, nuts and a small portion of oats.',
+      },
+      chickenSandwich: {
+        title: 'Chicken egg sandwich',
+        desc: 'Whole-grain bread, chicken breast, egg and vegetables.',
+      },
+      smoothie: {
+        title: 'Protein smoothie',
+        desc: 'Milk or yogurt, banana, oats and protein-rich topping.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Chicken rice bowl',
+        desc: 'Rice, chicken breast, vegetables and a healthy sauce.',
+      },
+      beefPotato: {
+        title: 'Lean beef and potatoes',
+        desc: 'Lean beef, potatoes, salad and olive oil dressing.',
+      },
+      salmonRice: {
+        title: 'Salmon rice plate',
+        desc: 'Salmon, rice, greens and avocado or healthy fats.',
+      },
+      tofuNoodles: {
+        title: 'Tofu noodle bowl',
+        desc: 'Tofu, noodles, vegetables and a light soy-based sauce.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Fish with vegetables',
+        desc: 'Fish, steamed vegetables and a small serving of carbs.',
+      },
+      chickenSweetPotato: {
+        title: 'Chicken and sweet potato',
+        desc: 'Chicken, sweet potato and mixed greens.',
+      },
+      eggRice: {
+        title: 'Egg rice and vegetables',
+        desc: 'Eggs, rice, vegetables and a light soup.',
+      },
+      turkeyWrap: {
+        title: 'Lean protein wrap',
+        desc: 'Lean protein, wrap, greens and yogurt-based sauce.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Fruit and nuts',
+        desc: 'A serving of fruit with a small handful of nuts.',
+      },
+      proteinMilk: {
+        title: 'Protein milk',
+        desc: 'Milk or yogurt with a protein-rich snack.',
+      },
+      boiledEggs: {
+        title: 'Boiled eggs and fruit',
+        desc: 'Boiled eggs with fruit or a light carb source.',
+      },
+      cottageCheese: {
+        title: 'Cheese or yogurt snack',
+        desc: 'Cheese or yogurt with fruit for recovery.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Beginner mode",
@@ -670,7 +782,17 @@ const vi = {
     "daysPrefix": "Ngày {{day}} • {{weekday}}",
     "weekTitle": "Tuần {{n}}",
     "completed": "Đã hoàn thành",
-    "todayWorkout": "Bài tập: {{name}}"
+    "todayWorkout": "Bài tập: {{name}}",
+      workoutProgram: 'CHƯƠNG TRÌNH TẬP LUYỆN',
+  premiumProgram: 'CHƯƠNG TRÌNH PREMIUM',
+  weeklyPlan: 'Kế hoạch tập luyện hằng tuần',
+  planDesc:
+    'Mở từng ngày tập, làm theo video và duy trì đều đặn qua từng tuần.',
+  restDay: 'Phục hồi / Nghỉ ngơi',
+  restDesc: 'Giãn cơ, uống nước và phục hồi cơ thể',
+  dayTitle: 'Ngày {{n}}',
+  notFoundTitle: 'Không tìm thấy chương trình',
+  notFoundText: 'Chương trình tập luyện này không khả dụng.',
   },
   "workouts": {
     "rest": "Phục hồi / Nghỉ ngơi",
@@ -679,10 +801,12 @@ const vi = {
     "lower": "Mông - Đùi",
     "core": "Bụng & Core",
     "pickOne": "Chọn một giáo án để bắt đầu",
-    "days": "ngày",
+  min: 'phút',
+  days: 'ngày',
     "day": "ngày",
     "heroTitle": "Kế hoạch tập luyện hằng ngày",
-    "matchingResults": "Kết quả phù hợp"
+    "matchingResults": "Kết quả phù hợp",
+    
   },
   "guide": {
     "title": "Hướng dẫn sử dụng PulseFit",
@@ -731,12 +855,31 @@ const vi = {
     "subscribeMonthly": "Đăng ký theo tháng",
     "lifetimeTitle": "Premium trọn đời",
     "lifetimeDesc": "Thanh toán một lần, sử dụng Premium mãi mãi",
-    "buyLifetime": "Mua trọn đời"
+    "buyLifetime": "Mua trọn đời",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Nâng cấp Premium để tải video bài tập và xem offline.',
+      downloadOfflineVideos: 'Tải video bài tập để xem offline',
+  advancedMealPlan: 'Thực đơn chuyên sâu và công cụ dinh dưỡng',
   },
   "video": {
     "loading": "Đang tải video...",
     "play": "Bắt đầu tập",
-    "error": "Không thể phát video. Vui lòng thử lại."
+    "error": "Không thể phát video. Vui lòng thử lại.",
+      offlineMode: 'Video offline',
+  downloadOffline: 'Tải xuống',
+  downloadOfflineDesc:
+    'Chỉ cần tải một lần và dùng cho mọi ngày lặp lại bài tập này.',
+  downloadMultipleOfflineDesc:
+    'Tải tất cả video trong buổi tập này một lần và dùng offline.',
+  downloading: 'Đang tải',
+  downloadSuccess: 'Video đã được tải để xem offline.',
+  downloadError: 'Không thể tải video.',
+  downloaded: 'Đã tải',
+  playingOffline: 'Đang phát offline',
+  downloadUrlMissing:
+    'Bài tập này chưa có video offline.',
+  notAvailable: 'N/A',
   },
 settings: {
   title: 'Cài đặt',
@@ -1086,6 +1229,88 @@ reminderTime: 'Thời gian nhắc',
 reminderInterval: 'Chu kỳ nhắc',
 waterReminderTitle: 'Đến giờ uống nước',
 waterReminderBody: 'Hãy uống khoảng {{amount}}ml nước để giữ cơ thể đủ nước.',
+todayMenuKicker: 'THỰC ĐƠN HÔM NAY',
+todayMenuTitle: 'Gợi ý thực đơn hôm nay',
+todayMenuDesc:
+  'Thực đơn tự thay đổi mỗi ngày dựa trên mục tiêu calo hằng ngày của bạn.',
+todayMenuDate: 'Hôm nay',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Yến mạch, chuối và trứng',
+        desc: 'Yến mạch, chuối, trứng và nguồn protein nhẹ.',
+      },
+      greekYogurt: {
+        title: 'Sữa chua Hy Lạp với trái cây',
+        desc: 'Sữa chua Hy Lạp, trái cây, hạt và một ít yến mạch.',
+      },
+      chickenSandwich: {
+        title: 'Sandwich gà và trứng',
+        desc: 'Bánh mì nguyên cám, ức gà, trứng và rau xanh.',
+      },
+      smoothie: {
+        title: 'Sinh tố giàu protein',
+        desc: 'Sữa hoặc sữa chua, chuối, yến mạch và topping giàu protein.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Cơm gà lành mạnh',
+        desc: 'Cơm, ức gà, rau xanh và nước sốt nhẹ.',
+      },
+      beefPotato: {
+        title: 'Bò nạc và khoai tây',
+        desc: 'Bò nạc, khoai tây, salad và sốt dầu ô liu.',
+      },
+      salmonRice: {
+        title: 'Cơm cá hồi',
+        desc: 'Cá hồi, cơm, rau xanh và bơ hoặc chất béo tốt.',
+      },
+      tofuNoodles: {
+        title: 'Mì đậu hũ',
+        desc: 'Đậu hũ, mì, rau củ và sốt nhẹ từ nước tương.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Cá và rau củ',
+        desc: 'Cá, rau hấp và một phần nhỏ tinh bột.',
+      },
+      chickenSweetPotato: {
+        title: 'Gà và khoai lang',
+        desc: 'Ức gà, khoai lang và rau xanh trộn.',
+      },
+      eggRice: {
+        title: 'Cơm trứng và rau',
+        desc: 'Trứng, cơm, rau củ và một bát canh nhẹ.',
+      },
+      turkeyWrap: {
+        title: 'Cuốn protein nạc',
+        desc: 'Protein nạc, bánh cuốn, rau xanh và sốt sữa chua.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Trái cây và hạt',
+        desc: 'Một phần trái cây kèm một ít hạt.',
+      },
+      proteinMilk: {
+        title: 'Sữa giàu protein',
+        desc: 'Sữa hoặc sữa chua kèm món ăn nhẹ giàu protein.',
+      },
+      boiledEggs: {
+        title: 'Trứng luộc và trái cây',
+        desc: 'Trứng luộc kèm trái cây hoặc một nguồn tinh bột nhẹ.',
+      },
+      cottageCheese: {
+        title: 'Phô mai hoặc sữa chua',
+        desc: 'Phô mai hoặc sữa chua kèm trái cây để hỗ trợ phục hồi.',
+      },
+    },
+  },
+},
   },
   "filters": {
     "title": "Bộ lọc thông minh",
@@ -1346,7 +1571,17 @@ const es = {
     "daysPrefix": "Dia {{day}} • {{weekday}}",
     "weekTitle": "Semana {{n}}",
     "completed": "Concluído",
-    "todayWorkout": "Treino: {{name}}"
+    "todayWorkout": "Treino: {{name}}",
+      workoutProgram: 'PROGRAMA DE ENTRENAMIENTO',
+  premiumProgram: 'PROGRAMA PREMIUM',
+  weeklyPlan: 'Plan de entrenamiento semanal',
+  planDesc:
+    'Abre cada día de entrenamiento, sigue el video y mantén la constancia semana a semana.',
+  restDay: 'Recuperación / Descanso',
+  restDesc: 'Estira, hidrátate y recupera tu cuerpo',
+  dayTitle: 'Día {{n}}',
+  notFoundTitle: 'Programa no encontrado',
+  notFoundText: 'Este programa de entrenamiento no está disponible.',
   },
   "workouts": {
     "rest": "Recuperação / Descanso",
@@ -1355,7 +1590,8 @@ const es = {
     "lower": "Glúteos - Pernas",
     "core": "Abdômen & Core",
     "pickOne": "Escolha um plano para começar",
-    "days": "Día",
+  min: 'min',
+  days: 'días',
     "day": "Día",
     "heroTitle": "Tu plan de entrenamiento diario",
     "matchingResults": "Resultados coincidentes"
@@ -1407,12 +1643,39 @@ const es = {
     "subscribeMonthly": "Suscribirse mensualmente",
     "lifetimeTitle": "Premium de por vida",
     "lifetimeDesc": "Pago único, mantén Premium para siempre",
-    "buyLifetime": "Comprar de por vida"
+    "buyLifetime": "Comprar de por vida",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Actualiza a Premium para descargar videos de entrenamiento y verlos sin conexión.',
+      downloadOfflineVideos: 'Descargar videos de entrenamiento para ver sin conexión',
+  advancedMealPlan: 'Planes de comida avanzados y herramientas de nutrición',
   },
   "video": {
     "loading": "Carregando vídeo...",
     "play": "Iniciar treino",
-    "error": "Não foi possível reproduzir. Tente novamente."
+    "error": "Não foi possível reproduzir. Tente novamente.",
+    video: {
+  offlineMode: 'Video sin conexión',
+  downloadOffline: 'Descargar',
+  downloadOfflineDesc:
+    'Descárgalo una vez y úsalo en todos los días repetidos de este entrenamiento.',
+  downloadMultipleOfflineDesc:
+    'Descarga todos los videos de este entrenamiento una vez y úsalos sin conexión.',
+  downloading: 'Descargando',
+  downloadSuccess: 'Video descargado para usar sin conexión.',
+  downloadError: 'No se pudo descargar el video.',
+  downloaded: 'Descargado',
+  playingOffline: 'Reproduciendo sin conexión',
+  downloadUrlMissing:
+    'El video sin conexión aún no está disponible para este entrenamiento.',
+  notAvailable: 'N/D',
+},
+
+premium: {
+  premium: 'Premium',
+  downloadOfflinePremium:
+    'Actualiza a Premium para descargar videos de entrenamiento y verlos sin conexión.',
+},
   },
 // es
 settings: {
@@ -1615,6 +1878,88 @@ reminderTime: 'Hora del recordatorio',
 reminderInterval: 'Intervalo',
 waterReminderTitle: 'Hora de beber agua',
 waterReminderBody: 'Bebe unos {{amount}}ml de agua para mantenerte hidratado.',
+todayMenuKicker: 'MENÚ DE HOY',
+todayMenuTitle: 'Sugerencia de comidas para hoy',
+todayMenuDesc:
+  'Este menú cambia automáticamente cada día según tu objetivo diario de calorías.',
+todayMenuDate: 'Hoy',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Avena, plátano y huevos',
+        desc: 'Avena, plátano, huevos y una fuente ligera de proteína.',
+      },
+      greekYogurt: {
+        title: 'Bowl de yogur griego',
+        desc: 'Yogur griego, fruta, frutos secos y una pequeña porción de avena.',
+      },
+      chickenSandwich: {
+        title: 'Sándwich de pollo y huevo',
+        desc: 'Pan integral, pechuga de pollo, huevo y verduras.',
+      },
+      smoothie: {
+        title: 'Batido de proteína',
+        desc: 'Leche o yogur, plátano, avena y topping rico en proteína.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Bowl de arroz con pollo',
+        desc: 'Arroz, pechuga de pollo, verduras y una salsa saludable.',
+      },
+      beefPotato: {
+        title: 'Carne magra con patatas',
+        desc: 'Carne magra, patatas, ensalada y aderezo de aceite de oliva.',
+      },
+      salmonRice: {
+        title: 'Plato de salmón con arroz',
+        desc: 'Salmón, arroz, verduras y aguacate o grasas saludables.',
+      },
+      tofuNoodles: {
+        title: 'Bowl de fideos con tofu',
+        desc: 'Tofu, fideos, verduras y una salsa ligera de soja.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Pescado con verduras',
+        desc: 'Pescado, verduras al vapor y una pequeña porción de carbohidratos.',
+      },
+      chickenSweetPotato: {
+        title: 'Pollo con batata',
+        desc: 'Pollo, batata y verduras mixtas.',
+      },
+      eggRice: {
+        title: 'Arroz con huevo y verduras',
+        desc: 'Huevos, arroz, verduras y una sopa ligera.',
+      },
+      turkeyWrap: {
+        title: 'Wrap de proteína magra',
+        desc: 'Proteína magra, wrap, verduras y salsa a base de yogur.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Fruta y frutos secos',
+        desc: 'Una porción de fruta con un pequeño puñado de frutos secos.',
+      },
+      proteinMilk: {
+        title: 'Leche proteica',
+        desc: 'Leche o yogur con un snack rico en proteína.',
+      },
+      boiledEggs: {
+        title: 'Huevos cocidos y fruta',
+        desc: 'Huevos cocidos con fruta o una fuente ligera de carbohidratos.',
+      },
+      cottageCheese: {
+        title: 'Queso o yogur',
+        desc: 'Queso o yogur con fruta para la recuperación.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Modo principiante",
@@ -1875,7 +2220,17 @@ const fr = {
     "daysPrefix": "Jour {{day}} • {{weekday}}",
     "weekTitle": "Semaine {{n}}",
     "completed": "Terminé",
-    "todayWorkout": "Entraînement : {{name}}"
+    "todayWorkout": "Entraînement : {{name}}",
+      workoutProgram: 'PROGRAMME D’ENTRAÎNEMENT',
+  premiumProgram: 'PROGRAMME PREMIUM',
+  weeklyPlan: 'Plan d’entraînement hebdomadaire',
+  planDesc:
+    'Ouvrez chaque journée d’entraînement, suivez la vidéo et restez régulier semaine après semaine.',
+  restDay: 'Récupération / Repos',
+  restDesc: 'Étirez-vous, hydratez-vous et récupérez',
+  dayTitle: 'Jour {{n}}',
+  notFoundTitle: 'Programme introuvable',
+  notFoundText: 'Ce programme d’entraînement n’est pas disponible.',
   },
   "workouts": {
     "rest": "Récupération / Repos",
@@ -1884,7 +2239,8 @@ const fr = {
     "lower": "Bas du corps : Fessiers - Jambes",
     "core": "Abdos & Gainage",
     "pickOne": "Choisissez un programme pour commencer",
-    "days": "Jour",
+  min: 'min',
+  days: 'jours',
     "day": "Jour",
     "heroTitle": "Votre plan d’entraînement quotidien",
     "matchingResults": "Résultats correspondants"
@@ -1936,12 +2292,31 @@ const fr = {
     "subscribeMonthly": "S’abonner mensuellement",
     "lifetimeTitle": "Premium à vie",
     "lifetimeDesc": "Paiement unique, gardez Premium pour toujours",
-    "buyLifetime": "Acheter à vie"
+    "buyLifetime": "Acheter à vie",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Passez à Premium pour télécharger les vidéos d’entraînement et les regarder hors ligne.',
+      downloadOfflineVideos: 'Télécharger les vidéos d’entraînement pour les regarder hors ligne',
+  advancedMealPlan: 'Plans de repas avancés et outils de nutrition',
   },
   "video": {
     "loading": "Chargement...",
     "play": "Commencer l’entraînement",
-    "error": "Impossible de lire la vidéo. Veuillez réessayer."
+    "error": "Impossible de lire la vidéo. Veuillez réessayer.",
+      offlineMode: 'Vidéo hors ligne',
+  downloadOffline: 'Télécharger',
+  downloadOfflineDesc:
+    'Téléchargez une seule fois et utilisez-la pour chaque jour répété de cet entraînement.',
+  downloadMultipleOfflineDesc:
+    'Téléchargez toutes les vidéos de cet entraînement une seule fois et utilisez-les hors ligne.',
+  downloading: 'Téléchargement',
+  downloadSuccess: 'Vidéo téléchargée pour une utilisation hors ligne.',
+  downloadError: 'Impossible de télécharger la vidéo.',
+  downloaded: 'Téléchargé',
+  playingOffline: 'Lecture hors ligne',
+  downloadUrlMissing:
+    'La vidéo hors ligne n’est pas encore disponible pour cet entraînement.',
+  notAvailable: 'N/A',
   },
 // fr
 settings: {
@@ -2145,6 +2520,88 @@ reminderTime: 'Heure du rappel',
 reminderInterval: 'Intervalle',
 waterReminderTitle: 'Il est temps de boire de l’eau',
 waterReminderBody: 'Buvez environ {{amount}}ml d’eau pour rester hydraté.',
+todayMenuKicker: 'MENU DU JOUR',
+todayMenuTitle: 'Suggestion de repas du jour',
+todayMenuDesc:
+  'Ce menu change automatiquement chaque jour selon votre objectif calorique quotidien.',
+todayMenuDate: 'Aujourd’hui',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Flocons d’avoine, banane et œufs',
+        desc: 'Avoine, banane, œufs et une source légère de protéines.',
+      },
+      greekYogurt: {
+        title: 'Bol de yaourt grec',
+        desc: 'Yaourt grec, fruits, noix et une petite portion d’avoine.',
+      },
+      chickenSandwich: {
+        title: 'Sandwich poulet et œuf',
+        desc: 'Pain complet, blanc de poulet, œuf et légumes.',
+      },
+      smoothie: {
+        title: 'Smoothie protéiné',
+        desc: 'Lait ou yaourt, banane, avoine et garniture riche en protéines.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Bol riz et poulet',
+        desc: 'Riz, blanc de poulet, légumes et sauce saine.',
+      },
+      beefPotato: {
+        title: 'Bœuf maigre et pommes de terre',
+        desc: 'Bœuf maigre, pommes de terre, salade et vinaigrette à l’huile d’olive.',
+      },
+      salmonRice: {
+        title: 'Assiette saumon et riz',
+        desc: 'Saumon, riz, légumes verts et avocat ou bonnes graisses.',
+      },
+      tofuNoodles: {
+        title: 'Bol nouilles et tofu',
+        desc: 'Tofu, nouilles, légumes et sauce légère au soja.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Poisson aux légumes',
+        desc: 'Poisson, légumes vapeur et petite portion de glucides.',
+      },
+      chickenSweetPotato: {
+        title: 'Poulet et patate douce',
+        desc: 'Poulet, patate douce et légumes verts.',
+      },
+      eggRice: {
+        title: 'Riz aux œufs et légumes',
+        desc: 'Œufs, riz, légumes et soupe légère.',
+      },
+      turkeyWrap: {
+        title: 'Wrap de protéines maigres',
+        desc: 'Protéine maigre, wrap, légumes verts et sauce au yaourt.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Fruits et noix',
+        desc: 'Une portion de fruits avec une petite poignée de noix.',
+      },
+      proteinMilk: {
+        title: 'Lait protéiné',
+        desc: 'Lait ou yaourt avec une collation riche en protéines.',
+      },
+      boiledEggs: {
+        title: 'Œufs durs et fruits',
+        desc: 'Œufs durs avec fruits ou source légère de glucides.',
+      },
+      cottageCheese: {
+        title: 'Fromage ou yaourt',
+        desc: 'Fromage ou yaourt avec fruits pour la récupération.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Mode débutant",
@@ -2405,7 +2862,17 @@ const de = {
     "daysPrefix": "Tag {{day}} • {{weekday}}",
     "weekTitle": "Woche {{n}}",
     "completed": "Abgeschlossen",
-    "todayWorkout": "Training: {{name}}"
+    "todayWorkout": "Training: {{name}}",
+      workoutProgram: 'WORKOUT-PROGRAMM',
+  premiumProgram: 'PREMIUM-PROGRAMM',
+  weeklyPlan: 'Wöchentlicher Trainingsplan',
+  planDesc:
+    'Öffne jeden Trainingstag, folge dem Workout-Video und bleibe Woche für Woche konsequent.',
+  restDay: 'Erholung / Pause',
+  restDesc: 'Dehnen, trinken und den Körper regenerieren',
+  dayTitle: 'Tag {{n}}',
+  notFoundTitle: 'Programm nicht gefunden',
+  notFoundText: 'Dieses Workout-Programm ist nicht verfügbar.',
   },
   "workouts": {
     "rest": "Erholung / Pause",
@@ -2414,7 +2881,8 @@ const de = {
     "lower": "Gesäß - Beine",
     "core": "Bauch & Rumpf",
     "pickOne": "Wähle einen Plan, um zu starten",
-    "days": "Tag",
+  min: 'Min.',
+  days: 'Tage',
     "day": "Tag",
     "heroTitle": "Dein täglicher Trainingsplan",
     "matchingResults": "Passende Ergebnisse"
@@ -2466,12 +2934,31 @@ const de = {
     "subscribeMonthly": "Monatlich abonnieren",
     "lifetimeTitle": "Premium auf Lebenszeit",
     "lifetimeDesc": "Einmalige Zahlung, Premium für immer behalten",
-    "buyLifetime": "Lebenslang kaufen"
+    "buyLifetime": "Lebenslang kaufen",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Upgrade auf Premium, um Workout-Videos herunterzuladen und offline anzusehen.',
+      downloadOfflineVideos: 'Workout-Videos herunterladen und offline ansehen',
+  advancedMealPlan: 'Erweiterte Ernährungspläne und Ernährungstools',
   },
   "video": {
     "loading": "Video lädt...",
     "play": "Training starten",
-    "error": "Video kann nicht abgespielt werden. Bitte versuche es erneut."
+    "error": "Video kann nicht abgespielt werden. Bitte versuche es erneut.",
+     offlineMode: 'Offline-Video',
+  downloadOffline: 'Herunterladen',
+  downloadOfflineDesc:
+    'Einmal herunterladen und für jeden wiederholten Tag dieses Workouts verwenden.',
+  downloadMultipleOfflineDesc:
+    'Lade alle Videos dieses Workouts einmal herunter und nutze sie offline.',
+  downloading: 'Wird heruntergeladen',
+  downloadSuccess: 'Video wurde für die Offline-Nutzung heruntergeladen.',
+  downloadError: 'Video konnte nicht heruntergeladen werden.',
+  downloaded: 'Heruntergeladen',
+  playingOffline: 'Offline-Wiedergabe',
+  downloadUrlMissing:
+    'Für dieses Workout ist noch kein Offline-Video verfügbar.',
+  notAvailable: 'N/V',
   },
 // de
 settings: {
@@ -2675,6 +3162,88 @@ reminderTime: 'Erinnerungszeit',
 reminderInterval: 'Intervall',
 waterReminderTitle: 'Zeit, Wasser zu trinken',
 waterReminderBody: 'Trinke etwa {{amount}}ml Wasser, um hydriert zu bleiben.',
+todayMenuKicker: 'HEUTIGES MENÜ',
+todayMenuTitle: 'Essensvorschlag für heute',
+todayMenuDesc:
+  'Dieses Menü ändert sich jeden Tag automatisch basierend auf deinem täglichen Kalorienziel.',
+todayMenuDate: 'Heute',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Haferflocken, Banane und Eier',
+        desc: 'Haferflocken, Banane, Eier und eine leichte Proteinquelle.',
+      },
+      greekYogurt: {
+        title: 'Griechischer Joghurt-Bowl',
+        desc: 'Griechischer Joghurt, Obst, Nüsse und eine kleine Portion Haferflocken.',
+      },
+      chickenSandwich: {
+        title: 'Hähnchen-Ei-Sandwich',
+        desc: 'Vollkornbrot, Hähnchenbrust, Ei und Gemüse.',
+      },
+      smoothie: {
+        title: 'Protein-Smoothie',
+        desc: 'Milch oder Joghurt, Banane, Haferflocken und proteinreiches Topping.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Hähnchen-Reis-Bowl',
+        desc: 'Reis, Hähnchenbrust, Gemüse und eine gesunde Sauce.',
+      },
+      beefPotato: {
+        title: 'Mageres Rindfleisch mit Kartoffeln',
+        desc: 'Mageres Rindfleisch, Kartoffeln, Salat und Olivenöl-Dressing.',
+      },
+      salmonRice: {
+        title: 'Lachs mit Reis',
+        desc: 'Lachs, Reis, Gemüse und Avocado oder gesunde Fette.',
+      },
+      tofuNoodles: {
+        title: 'Tofu-Nudel-Bowl',
+        desc: 'Tofu, Nudeln, Gemüse und leichte Sojasauce.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Fisch mit Gemüse',
+        desc: 'Fisch, gedämpftes Gemüse und eine kleine Portion Kohlenhydrate.',
+      },
+      chickenSweetPotato: {
+        title: 'Hähnchen und Süßkartoffel',
+        desc: 'Hähnchen, Süßkartoffel und gemischtes Gemüse.',
+      },
+      eggRice: {
+        title: 'Eierreis mit Gemüse',
+        desc: 'Eier, Reis, Gemüse und eine leichte Suppe.',
+      },
+      turkeyWrap: {
+        title: 'Wrap mit magerem Protein',
+        desc: 'Mageres Protein, Wrap, Gemüse und Joghurtsauce.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Obst und Nüsse',
+        desc: 'Eine Portion Obst mit einer kleinen Handvoll Nüssen.',
+      },
+      proteinMilk: {
+        title: 'Proteinmilch',
+        desc: 'Milch oder Joghurt mit einem proteinreichen Snack.',
+      },
+      boiledEggs: {
+        title: 'Gekochte Eier und Obst',
+        desc: 'Gekochte Eier mit Obst oder einer leichten Kohlenhydratquelle.',
+      },
+      cottageCheese: {
+        title: 'Käse oder Joghurt',
+        desc: 'Käse oder Joghurt mit Obst zur Regeneration.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Anfängermodus",
@@ -2935,7 +3504,17 @@ const zh = {
     "daysPrefix": "第 {{day}} 天 • {{weekday}}",
     "weekTitle": "第 {{n}} 周",
     "completed": "已完成",
-    "todayWorkout": "今日训练: {{name}}"
+    "todayWorkout": "今日训练: {{name}}",
+      workoutProgram: '训练计划',
+  premiumProgram: '高级训练计划',
+  weeklyPlan: '每周训练计划',
+  planDesc:
+    '打开每天的训练，跟随视频练习，并每周保持稳定训练。',
+  restDay: '恢复 / 休息',
+  restDesc: '拉伸、补水并恢复身体',
+  dayTitle: '第 {{n}} 天',
+  notFoundTitle: '未找到训练计划',
+  notFoundText: '该训练计划不可用。',
   },
   "workouts": {
     "rest": "恢复 / 休息",
@@ -2944,7 +3523,8 @@ const zh = {
     "lower": "臀部 - 腿部",
     "core": "腹肌 & 核心",
     "pickOne": "选择一个计划开始",
-    "days": "天",
+  min: '分钟',
+  days: '天',
     "day": "天",
     "heroTitle": "你的每日训练计划",
     "matchingResults": "匹配结果"
@@ -2996,12 +3576,31 @@ const zh = {
     "subscribeMonthly": "按月订阅",
     "lifetimeTitle": "终身高级版",
     "lifetimeDesc": "一次性付款，永久享受高级版",
-    "buyLifetime": "购买终身版"
+    "buyLifetime": "购买终身版",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    '升级到 Premium 即可下载训练视频并离线观看。',
+      downloadOfflineVideos: '下载训练视频并离线观看',
+  advancedMealPlan: '高级饮食计划和营养工具',
   },
   "video": {
     "loading": "视频加载中...",
     "play": "开始训练",
-    "error": "无法播放视频。请重试。"
+    "error": "无法播放视频。请重试。",
+      offlineMode: '离线视频',
+  downloadOffline: '下载',
+  downloadOfflineDesc:
+    '只需下载一次，即可用于该训练重复出现的所有日期。',
+  downloadMultipleOfflineDesc:
+    '一次下载本次训练中的所有视频，并可离线观看。',
+  downloading: '正在下载',
+  downloadSuccess: '视频已下载，可离线使用。',
+  downloadError: '无法下载视频。',
+  downloaded: '已下载',
+  playingOffline: '正在离线播放',
+  downloadUrlMissing:
+    '该训练暂时没有可用的离线视频。',
+  notAvailable: '不可用',
   },
 // zh
 settings: {
@@ -3205,6 +3804,88 @@ reminderTime: '提醒时间',
 reminderInterval: '提醒间隔',
 waterReminderTitle: '该喝水了',
 waterReminderBody: '喝大约 {{amount}}ml 水，保持身体水分充足。',
+todayMenuKicker: '今日菜单',
+todayMenuTitle: '今日餐食建议',
+todayMenuDesc:
+  '此菜单会根据你的每日卡路里目标每天自动更换。',
+todayMenuDate: '今天',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: '燕麦、香蕉和鸡蛋',
+        desc: '燕麦、香蕉、鸡蛋和轻量蛋白质来源。',
+      },
+      greekYogurt: {
+        title: '希腊酸奶碗',
+        desc: '希腊酸奶、水果、坚果和少量燕麦。',
+      },
+      chickenSandwich: {
+        title: '鸡肉鸡蛋三明治',
+        desc: '全麦面包、鸡胸肉、鸡蛋和蔬菜。',
+      },
+      smoothie: {
+        title: '蛋白奶昔',
+        desc: '牛奶或酸奶、香蕉、燕麦和高蛋白配料。',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: '鸡肉米饭碗',
+        desc: '米饭、鸡胸肉、蔬菜和健康酱汁。',
+      },
+      beefPotato: {
+        title: '瘦牛肉和土豆',
+        desc: '瘦牛肉、土豆、沙拉和橄榄油酱汁。',
+      },
+      salmonRice: {
+        title: '三文鱼米饭盘',
+        desc: '三文鱼、米饭、绿叶蔬菜和牛油果或健康脂肪。',
+      },
+      tofuNoodles: {
+        title: '豆腐面碗',
+        desc: '豆腐、面条、蔬菜和清淡酱油汁。',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: '鱼肉配蔬菜',
+        desc: '鱼肉、蒸蔬菜和少量碳水。',
+      },
+      chickenSweetPotato: {
+        title: '鸡肉和红薯',
+        desc: '鸡肉、红薯和混合蔬菜。',
+      },
+      eggRice: {
+        title: '鸡蛋米饭和蔬菜',
+        desc: '鸡蛋、米饭、蔬菜和清淡汤品。',
+      },
+      turkeyWrap: {
+        title: '瘦蛋白卷饼',
+        desc: '瘦蛋白、卷饼、绿叶菜和酸奶酱。',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: '水果和坚果',
+        desc: '一份水果搭配少量坚果。',
+      },
+      proteinMilk: {
+        title: '蛋白牛奶',
+        desc: '牛奶或酸奶搭配高蛋白小食。',
+      },
+      boiledEggs: {
+        title: '水煮蛋和水果',
+        desc: '水煮蛋搭配水果或轻量碳水来源。',
+      },
+      cottageCheese: {
+        title: '奶酪或酸奶小食',
+        desc: '奶酪或酸奶搭配水果，帮助恢复。',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "新手模式",
@@ -3465,7 +4146,17 @@ const ja = {
     "daysPrefix": "{{day}}日目 • {{weekday}}",
     "weekTitle": "{{n}}週目",
     "completed": "完了",
-    "todayWorkout": "今日のワークアウト: {{name}}"
+    "todayWorkout": "今日のワークアウト: {{name}}",
+      workoutProgram: 'ワークアウトプログラム',
+  premiumProgram: 'プレミアムプログラム',
+  weeklyPlan: '週間トレーニングプラン',
+  planDesc:
+    '毎日のトレーニングを開き、動画に従って週ごとに継続しましょう。',
+  restDay: '回復 / 休息',
+  restDesc: 'ストレッチ、水分補給、身体の回復を行いましょう',
+  dayTitle: '{{n}}日目',
+  notFoundTitle: 'プログラムが見つかりません',
+  notFoundText: 'このワークアウトプログラムは利用できません。',
   },
   "workouts": {
     "rest": "回復 / 休息日",
@@ -3477,7 +4168,8 @@ const ja = {
     "days": "日",
     "day": "日",
     "heroTitle": "毎日のワークアウトプラン",
-    "matchingResults": "一致する結果"
+    "matchingResults": "一致する結果",
+      min: '分',
   },
   "guide": {
     "title": "PulseFit の使い方",
@@ -3526,12 +4218,31 @@ const ja = {
     "subscribeMonthly": "月額で登録",
     "lifetimeTitle": "永久プレミアム",
     "lifetimeDesc": "一度の支払いで永久にプレミアムを利用",
-    "buyLifetime": "永久版を購入"
+    "buyLifetime": "永久版を購入",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Premium にアップグレードすると、ワークアウト動画をダウンロードしてオフラインで視聴できます。',
+      downloadOfflineVideos: 'ワークアウト動画をダウンロードしてオフライン視聴',
+  advancedMealPlan: '高度な食事プランと栄養ツール',
   },
   "video": {
     "loading": "動画を読み込み中...",
     "play": "ワークアウト開始",
-    "error": "動画を再生できません。再試行してください。"
+    "error": "動画を再生できません。再試行してください。",
+     offlineMode: 'オフライン動画',
+  downloadOffline: 'ダウンロード',
+  downloadOfflineDesc:
+    '一度ダウンロードすれば、このワークアウトが繰り返される日でも使用できます。',
+  downloadMultipleOfflineDesc:
+    'このワークアウト内のすべての動画を一度ダウンロードして、オフラインで使用できます。',
+  downloading: 'ダウンロード中',
+  downloadSuccess: '動画をオフライン用にダウンロードしました。',
+  downloadError: '動画をダウンロードできません。',
+  downloaded: 'ダウンロード済み',
+  playingOffline: 'オフライン再生中',
+  downloadUrlMissing:
+    'このワークアウトのオフライン動画はまだ利用できません。',
+  notAvailable: 'N/A',
   },
 // ja
 settings: {
@@ -3735,6 +4446,88 @@ reminderTime: '通知時間',
 reminderInterval: '通知間隔',
 waterReminderTitle: '水分補給の時間です',
 waterReminderBody: '水分補給のために約{{amount}}mlの水を飲みましょう。',
+todayMenuKicker: '今日のメニュー',
+todayMenuTitle: '今日の食事提案',
+todayMenuDesc:
+  'このメニューは、毎日のカロリー目標に合わせて自動的に変わります。',
+todayMenuDate: '今日',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'オートミール、バナナ、卵',
+        desc: 'オートミール、バナナ、卵、軽めのタンパク質源。',
+      },
+      greekYogurt: {
+        title: 'ギリシャヨーグルトボウル',
+        desc: 'ギリシャヨーグルト、果物、ナッツ、少量のオートミール。',
+      },
+      chickenSandwich: {
+        title: 'チキンエッグサンド',
+        desc: '全粒パン、鶏むね肉、卵、野菜。',
+      },
+      smoothie: {
+        title: 'プロテインスムージー',
+        desc: '牛乳またはヨーグルト、バナナ、オートミール、タンパク質豊富なトッピング。',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'チキンライスボウル',
+        desc: 'ご飯、鶏むね肉、野菜、ヘルシーなソース。',
+      },
+      beefPotato: {
+        title: '赤身牛肉とポテト',
+        desc: '赤身牛肉、ポテト、サラダ、オリーブオイルドレッシング。',
+      },
+      salmonRice: {
+        title: 'サーモンライスプレート',
+        desc: 'サーモン、ご飯、葉野菜、アボカドまたは良質な脂質。',
+      },
+      tofuNoodles: {
+        title: '豆腐ヌードルボウル',
+        desc: '豆腐、麺、野菜、軽い醤油ベースのソース。',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: '魚と野菜',
+        desc: '魚、蒸し野菜、少量の炭水化物。',
+      },
+      chickenSweetPotato: {
+        title: 'チキンとさつまいも',
+        desc: '鶏肉、さつまいも、ミックス野菜。',
+      },
+      eggRice: {
+        title: '卵ご飯と野菜',
+        desc: '卵、ご飯、野菜、軽めのスープ。',
+      },
+      turkeyWrap: {
+        title: '低脂質プロテインラップ',
+        desc: '低脂質タンパク質、ラップ、葉野菜、ヨーグルトソース。',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: '果物とナッツ',
+        desc: '果物1人分と少量のナッツ。',
+      },
+      proteinMilk: {
+        title: 'プロテインミルク',
+        desc: '牛乳またはヨーグルトとタンパク質豊富な軽食。',
+      },
+      boiledEggs: {
+        title: 'ゆで卵と果物',
+        desc: 'ゆで卵と果物、または軽めの炭水化物源。',
+      },
+      cottageCheese: {
+        title: 'チーズまたはヨーグルト',
+        desc: '回復をサポートするチーズまたはヨーグルトと果物。',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "初心者モード",
@@ -3995,7 +4788,17 @@ const ko = {
     "daysPrefix": "{{day}}일차 • {{weekday}}",
     "weekTitle": "{{n}}주차",
     "completed": "완료됨",
-    "todayWorkout": "오늘의 운동: {{name}}"
+    "todayWorkout": "오늘의 운동: {{name}}",
+      workoutProgram: '운동 프로그램',
+  premiumProgram: '프리미엄 프로그램',
+  weeklyPlan: '주간 훈련 계획',
+  planDesc:
+    '매일 훈련을 열고 운동 영상을 따라 하며 매주 꾸준히 이어가세요.',
+  restDay: '회복 / 휴식',
+  restDesc: '스트레칭하고 수분을 보충하며 몸을 회복하세요',
+  dayTitle: '{{n}}일차',
+  notFoundTitle: '프로그램을 찾을 수 없음',
+  notFoundText: '이 운동 프로그램은 사용할 수 없습니다.',
   },
   "workouts": {
     "rest": "회복 / 휴식",
@@ -4004,7 +4807,8 @@ const ko = {
     "lower": "하체: 엉덩이 - 다리",
     "core": "복근 & 코어",
     "pickOne": "시작할 플랜을 선택하세요",
-    "days": "일",
+  min: '분',
+  days: '일',
     "day": "일",
     "heroTitle": "나의 일일 운동 계획",
     "matchingResults": "맞는 결과"
@@ -4056,12 +4860,31 @@ const ko = {
     "subscribeMonthly": "월간 구독",
     "lifetimeTitle": "평생 프리미엄",
     "lifetimeDesc": "한 번 결제로 평생 프리미엄 이용",
-    "buyLifetime": "평생 이용 구매"
+    "buyLifetime": "평생 이용 구매",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Premium으로 업그레이드하여 운동 비디오를 다운로드하고 오프라인에서 시청하세요.',
+      downloadOfflineVideos: '운동 영상을 다운로드하고 오프라인으로 시청',
+  advancedMealPlan: '고급 식단 계획 및 영양 도구',
   },
   "video": {
     "loading": "동영상 로딩 중...",
     "play": "운동 시작",
-    "error": "동영상을 재생할 수 없습니다. 다시 시도해주세요."
+    "error": "동영상을 재생할 수 없습니다. 다시 시도해주세요.",
+      offlineMode: '오프라인 비디오',
+  downloadOffline: '다운로드',
+  downloadOfflineDesc:
+    '한 번 다운로드하면 이 운동이 반복되는 모든 날에 사용할 수 있습니다.',
+  downloadMultipleOfflineDesc:
+    '이 운동의 모든 비디오를 한 번 다운로드하고 오프라인에서 사용하세요.',
+  downloading: '다운로드 중',
+  downloadSuccess: '오프라인 사용을 위해 비디오가 다운로드되었습니다.',
+  downloadError: '비디오를 다운로드할 수 없습니다.',
+  downloaded: '다운로드됨',
+  playingOffline: '오프라인 재생 중',
+  downloadUrlMissing:
+    '이 운동의 오프라인 비디오는 아직 사용할 수 없습니다.',
+  notAvailable: 'N/A',
   },
 // ko
 settings: {
@@ -4265,6 +5088,88 @@ reminderTime: '알림 시간',
 reminderInterval: '알림 간격',
 waterReminderTitle: '물을 마실 시간이에요',
 waterReminderBody: '수분 유지를 위해 약 {{amount}}ml의 물을 마셔보세요.',
+todayMenuKicker: '오늘의 메뉴',
+todayMenuTitle: '오늘의 식단 추천',
+todayMenuDesc:
+  '이 메뉴는 일일 칼로리 목표에 따라 매일 자동으로 변경됩니다.',
+todayMenuDate: '오늘',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: '오트밀, 바나나, 달걀',
+        desc: '오트밀, 바나나, 달걀과 가벼운 단백질 식품.',
+      },
+      greekYogurt: {
+        title: '그릭 요거트 볼',
+        desc: '그릭 요거트, 과일, 견과류와 소량의 오트밀.',
+      },
+      chickenSandwich: {
+        title: '치킨 에그 샌드위치',
+        desc: '통곡물 빵, 닭가슴살, 달걀과 채소.',
+      },
+      smoothie: {
+        title: '프로틴 스무디',
+        desc: '우유 또는 요거트, 바나나, 오트밀과 단백질 토핑.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: '치킨 라이스 볼',
+        desc: '밥, 닭가슴살, 채소와 건강한 소스.',
+      },
+      beefPotato: {
+        title: '저지방 소고기와 감자',
+        desc: '저지방 소고기, 감자, 샐러드와 올리브오일 드레싱.',
+      },
+      salmonRice: {
+        title: '연어 라이스 플레이트',
+        desc: '연어, 밥, 채소와 아보카도 또는 건강한 지방.',
+      },
+      tofuNoodles: {
+        title: '두부 누들 볼',
+        desc: '두부, 면, 채소와 가벼운 간장 소스.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: '생선과 채소',
+        desc: '생선, 찐 채소와 소량의 탄수화물.',
+      },
+      chickenSweetPotato: {
+        title: '닭고기와 고구마',
+        desc: '닭고기, 고구마와 혼합 채소.',
+      },
+      eggRice: {
+        title: '달걀밥과 채소',
+        desc: '달걀, 밥, 채소와 가벼운 수프.',
+      },
+      turkeyWrap: {
+        title: '저지방 단백질 랩',
+        desc: '저지방 단백질, 랩, 채소와 요거트 소스.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: '과일과 견과류',
+        desc: '과일 한 portion과 소량의 견과류.',
+      },
+      proteinMilk: {
+        title: '프로틴 밀크',
+        desc: '우유 또는 요거트와 단백질 간식.',
+      },
+      boiledEggs: {
+        title: '삶은 달걀과 과일',
+        desc: '삶은 달걀과 과일 또는 가벼운 탄수화물.',
+      },
+      cottageCheese: {
+        title: '치즈 또는 요거트 간식',
+        desc: '회복을 위한 치즈 또는 요거트와 과일.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "초보자 모드",
@@ -4525,7 +5430,17 @@ const ru = {
     "daysPrefix": "День {{day}} • {{weekday}}",
     "weekTitle": "Неделя {{n}}",
     "completed": "Выполнено",
-    "todayWorkout": "Тренировка: {{name}}"
+    "todayWorkout": "Тренировка: {{name}}",
+      workoutProgram: 'ПРОГРАММА ТРЕНИРОВОК',
+  premiumProgram: 'ПРЕМИУМ-ПРОГРАММА',
+  weeklyPlan: 'Еженедельный план тренировок',
+  planDesc:
+    'Открывайте каждый тренировочный день, следуйте видео и сохраняйте регулярность неделя за неделей.',
+  restDay: 'Восстановление / Отдых',
+  restDesc: 'Растянитесь, пейте воду и восстановитесь',
+  dayTitle: 'День {{n}}',
+  notFoundTitle: 'Программа не найдена',
+  notFoundText: 'Эта программа тренировок недоступна.',
   },
   "workouts": {
     "rest": "Восстановление / Отдых",
@@ -4537,7 +5452,8 @@ const ru = {
     "days": "день",
     "day": "день",
     "heroTitle": "Ваш ежедневный план тренировок",
-    "matchingResults": "Подходящие результаты"
+    "matchingResults": "Подходящие результаты",
+      min: 'мин',
   },
   "guide": {
     "title": "Как пользоваться PulseFit",
@@ -4586,12 +5502,31 @@ const ru = {
     "subscribeMonthly": "Подписаться на месяц",
     "lifetimeTitle": "Premium навсегда",
     "lifetimeDesc": "Разовая оплата, Premium навсегда",
-    "buyLifetime": "Купить навсегда"
+    "buyLifetime": "Купить навсегда",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Обновитесь до Premium, чтобы скачивать видео тренировок и смотреть их офлайн.',
+      downloadOfflineVideos: 'Скачивать видео тренировок и смотреть офлайн',
+  advancedMealPlan: 'Расширенные планы питания и инструменты нутрициологии',
   },
   "video": {
     "loading": "Загрузка видео...",
     "play": "Начать тренировку",
-    "error": "Не удалось воспроизвести видео. Попробуйте снова."
+    "error": "Не удалось воспроизвести видео. Попробуйте снова.",
+      offlineMode: 'Офлайн-видео',
+  downloadOffline: 'Скачать',
+  downloadOfflineDesc:
+    'Скачайте один раз и используйте для каждого повторяющегося дня этой тренировки.',
+  downloadMultipleOfflineDesc:
+    'Скачайте все видео этой тренировки один раз и используйте их офлайн.',
+  downloading: 'Загрузка',
+  downloadSuccess: 'Видео скачано для офлайн-использования.',
+  downloadError: 'Не удалось скачать видео.',
+  downloaded: 'Скачано',
+  playingOffline: 'Воспроизведение офлайн',
+  downloadUrlMissing:
+    'Офлайн-видео для этой тренировки пока недоступно.',
+  notAvailable: 'Н/Д',
   },
 // ru
 settings: {
@@ -4795,6 +5730,88 @@ reminderTime: 'Время напоминания',
 reminderInterval: 'Интервал',
 waterReminderTitle: 'Пора выпить воды',
 waterReminderBody: 'Выпейте около {{amount}}мл воды, чтобы поддерживать гидратацию.',
+todayMenuKicker: 'МЕНЮ НА СЕГОДНЯ',
+todayMenuTitle: 'Рекомендация питания на сегодня',
+todayMenuDesc:
+  'Это меню автоматически меняется каждый день в зависимости от вашей дневной цели по калориям.',
+todayMenuDate: 'Сегодня',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Овсянка, банан и яйца',
+        desc: 'Овсянка, банан, яйца и лёгкий источник белка.',
+      },
+      greekYogurt: {
+        title: 'Боул с греческим йогуртом',
+        desc: 'Греческий йогурт, фрукты, орехи и немного овсянки.',
+      },
+      chickenSandwich: {
+        title: 'Сэндвич с курицей и яйцом',
+        desc: 'Цельнозерновой хлеб, куриная грудка, яйцо и овощи.',
+      },
+      smoothie: {
+        title: 'Протеиновый смузи',
+        desc: 'Молоко или йогурт, банан, овсянка и белковая добавка.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Боул с курицей и рисом',
+        desc: 'Рис, куриная грудка, овощи и полезный соус.',
+      },
+      beefPotato: {
+        title: 'Постная говядина и картофель',
+        desc: 'Постная говядина, картофель, салат и заправка с оливковым маслом.',
+      },
+      salmonRice: {
+        title: 'Лосось с рисом',
+        desc: 'Лосось, рис, зелень и авокадо или полезные жиры.',
+      },
+      tofuNoodles: {
+        title: 'Лапша с тофу',
+        desc: 'Тофу, лапша, овощи и лёгкий соевый соус.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Рыба с овощами',
+        desc: 'Рыба, овощи на пару и небольшая порция углеводов.',
+      },
+      chickenSweetPotato: {
+        title: 'Курица и батат',
+        desc: 'Курица, батат и смешанная зелень.',
+      },
+      eggRice: {
+        title: 'Рис с яйцами и овощами',
+        desc: 'Яйца, рис, овощи и лёгкий суп.',
+      },
+      turkeyWrap: {
+        title: 'Ролл с постным белком',
+        desc: 'Постный белок, лепёшка, зелень и йогуртовый соус.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Фрукты и орехи',
+        desc: 'Порция фруктов с небольшой горстью орехов.',
+      },
+      proteinMilk: {
+        title: 'Белковое молоко',
+        desc: 'Молоко или йогурт с белковым перекусом.',
+      },
+      boiledEggs: {
+        title: 'Варёные яйца и фрукты',
+        desc: 'Варёные яйца с фруктами или лёгким источником углеводов.',
+      },
+      cottageCheese: {
+        title: 'Сыр или йогурт',
+        desc: 'Сыр или йогурт с фруктами для восстановления.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Режим для новичков",
@@ -5055,7 +6072,17 @@ const ar = {
     "daysPrefix": "اليوم {{day}} • {{weekday}}",
     "weekTitle": "الأسبوع {{n}}",
     "completed": "مكتمل",
-    "todayWorkout": "تمرين اليوم: {{name}}"
+    "todayWorkout": "تمرين اليوم: {{name}}",
+    workoutProgram: 'برنامج التمرين',
+  premiumProgram: 'برنامج Premium',
+  weeklyPlan: 'خطة التدريب الأسبوعية',
+  planDesc:
+    'افتح كل يوم تدريبي، اتبع فيديو التمرين وحافظ على الاستمرارية أسبوعًا بعد أسبوع.',
+  restDay: 'تعافٍ / راحة',
+  restDesc: 'قم بالتمدد، اشرب الماء واستعد نشاطك',
+  dayTitle: 'اليوم {{n}}',
+  notFoundTitle: 'لم يتم العثور على البرنامج',
+  notFoundText: 'برنامج التمرين هذا غير متاح.',
   },
   "workouts": {
     "rest": "استشفاء / راحة",
@@ -5064,7 +6091,8 @@ const ar = {
     "lower": "أرداف - أرجل",
     "core": "عضلات البطن والجذع",
     "pickOne": "اختر خطة للبدء",
-    "days": "days",
+  min: 'دقيقة',
+  days: 'أيام',
     "day": "days",
     "heroTitle": "خطة تمرينك اليومية",
     "matchingResults": "النتائج المطابقة"
@@ -5116,12 +6144,31 @@ const ar = {
     "subscribeMonthly": "اشترك شهريًا",
     "lifetimeTitle": "بريميوم مدى الحياة",
     "lifetimeDesc": "دفعة واحدة، واحصل على بريميوم مدى الحياة",
-    "buyLifetime": "اشترِ مدى الحياة"
+    "buyLifetime": "اشترِ مدى الحياة",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'قم بالترقية إلى Premium لتنزيل فيديوهات التمارين ومشاهدتها بدون إنترنت.',
+      downloadOfflineVideos: 'تنزيل فيديوهات التمارين ومشاهدتها بدون إنترنت',
+  advancedMealPlan: 'خطط وجبات متقدمة وأدوات تغذية',
   },
   "video": {
     "loading": "جاري تحميل الفيديو...",
     "play": "ابدأ التمرين",
-    "error": "تعذر تشغيل الفيديو. يرجى المحاولة مرة أخرى."
+    "error": "تعذر تشغيل الفيديو. يرجى المحاولة مرة أخرى.",
+      offlineMode: 'فيديو بدون إنترنت',
+  downloadOffline: 'تنزيل',
+  downloadOfflineDesc:
+    'قم بالتنزيل مرة واحدة واستخدمه في كل يوم يتكرر فيه هذا التمرين.',
+  downloadMultipleOfflineDesc:
+    'قم بتنزيل جميع فيديوهات هذا التمرين مرة واحدة واستخدمها بدون إنترنت.',
+  downloading: 'جارٍ التنزيل',
+  downloadSuccess: 'تم تنزيل الفيديو للاستخدام بدون إنترنت.',
+  downloadError: 'تعذر تنزيل الفيديو.',
+  downloaded: 'تم التنزيل',
+  playingOffline: 'يتم التشغيل بدون إنترنت',
+  downloadUrlMissing:
+    'الفيديو بدون إنترنت غير متاح لهذا التمرين بعد.',
+  notAvailable: 'غير متاح',
   },
 // ar
 settings: {
@@ -5325,6 +6372,88 @@ reminderTime: 'وقت التذكير',
 reminderInterval: 'الفاصل الزمني',
 waterReminderTitle: 'حان وقت شرب الماء',
 waterReminderBody: 'اشرب حوالي {{amount}}ml من الماء للحفاظ على الترطيب.',
+todayMenuKicker: 'قائمة اليوم',
+todayMenuTitle: 'اقتراح وجبات اليوم',
+todayMenuDesc:
+  'تتغير هذه القائمة تلقائيًا كل يوم بناءً على هدف السعرات الحرارية اليومي.',
+todayMenuDate: 'اليوم',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'الشوفان والموز والبيض',
+        desc: 'شوفان، موز، بيض ومصدر خفيف للبروتين.',
+      },
+      greekYogurt: {
+        title: 'وعاء الزبادي اليوناني',
+        desc: 'زبادي يوناني، فواكه، مكسرات وكمية صغيرة من الشوفان.',
+      },
+      chickenSandwich: {
+        title: 'ساندويتش الدجاج والبيض',
+        desc: 'خبز حبوب كاملة، صدر دجاج، بيض وخضروات.',
+      },
+      smoothie: {
+        title: 'سموذي بروتين',
+        desc: 'حليب أو زبادي، موز، شوفان وإضافة غنية بالبروتين.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'وعاء الأرز بالدجاج',
+        desc: 'أرز، صدر دجاج، خضروات وصلصة صحية.',
+      },
+      beefPotato: {
+        title: 'لحم بقري قليل الدهن وبطاطس',
+        desc: 'لحم بقري قليل الدهن، بطاطس، سلطة وصلصة زيت الزيتون.',
+      },
+      salmonRice: {
+        title: 'طبق السلمون مع الأرز',
+        desc: 'سلمون، أرز، خضار ورقية وأفوكادو أو دهون صحية.',
+      },
+      tofuNoodles: {
+        title: 'وعاء النودلز بالتوفو',
+        desc: 'توفو، نودلز، خضروات وصلصة صويا خفيفة.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'سمك مع خضروات',
+        desc: 'سمك، خضروات مطهية بالبخار وكمية صغيرة من الكربوهيدرات.',
+      },
+      chickenSweetPotato: {
+        title: 'دجاج وبطاطا حلوة',
+        desc: 'دجاج، بطاطا حلوة وخضروات مشكلة.',
+      },
+      eggRice: {
+        title: 'أرز بالبيض والخضروات',
+        desc: 'بيض، أرز، خضروات وحساء خفيف.',
+      },
+      turkeyWrap: {
+        title: 'لفافة بروتين قليل الدهن',
+        desc: 'بروتين قليل الدهن، خبز لف، خضار وصلصة زبادي.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'فواكه ومكسرات',
+        desc: 'حصة من الفواكه مع كمية صغيرة من المكسرات.',
+      },
+      proteinMilk: {
+        title: 'حليب بروتين',
+        desc: 'حليب أو زبادي مع وجبة خفيفة غنية بالبروتين.',
+      },
+      boiledEggs: {
+        title: 'بيض مسلوق وفواكه',
+        desc: 'بيض مسلوق مع فواكه أو مصدر خفيف للكربوهيدرات.',
+      },
+      cottageCheese: {
+        title: 'جبن أو زبادي',
+        desc: 'جبن أو زبادي مع فواكه للمساعدة على التعافي.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "وضع المبتدئين",
@@ -5585,7 +6714,17 @@ const hi = {
     "daysPrefix": "दिन {{day}} • {{weekday}}",
     "weekTitle": "सप्ताह {{n}}",
     "completed": "पूरा हुआ",
-    "todayWorkout": "आज का वर्कआउट: {{name}}"
+    "todayWorkout": "आज का वर्कआउट: {{name}}",
+      workoutProgram: 'वर्कआउट प्रोग्राम',
+  premiumProgram: 'प्रीमियम प्रोग्राम',
+  weeklyPlan: 'साप्ताहिक ट्रेनिंग प्लान',
+  planDesc:
+    'हर ट्रेनिंग दिन खोलें, वर्कआउट वीडियो का पालन करें और हर सप्ताह लगातार बने रहें।',
+  restDay: 'रिकवरी / आराम',
+  restDesc: 'स्ट्रेच करें, पानी पिएं और शरीर को रिकवर करें',
+  dayTitle: 'दिन {{n}}',
+  notFoundTitle: 'प्रोग्राम नहीं मिला',
+  notFoundText: 'यह वर्कआउट प्रोग्राम उपलब्ध नहीं है।',
   },
   "workouts": {
     "rest": "रिकवरी / आराम",
@@ -5597,7 +6736,8 @@ const hi = {
     "days": "दिन",
     "day": "दिन",
     "heroTitle": "आपकी दैनिक वर्कआउट योजना",
-    "matchingResults": "मेल खाते परिणाम"
+    "matchingResults": "मेल खाते परिणाम",
+      min: 'मिनट',
   },
   "guide": {
     "title": "PulseFit का उपयोग कैसे करें",
@@ -5646,12 +6786,31 @@ const hi = {
     "subscribeMonthly": "मासिक सदस्यता लें",
     "lifetimeTitle": "आजीवन प्रीमियम",
     "lifetimeDesc": "एक बार भुगतान करें, हमेशा के लिए प्रीमियम पाएँ",
-    "buyLifetime": "आजीवन खरीदें"
+    "buyLifetime": "आजीवन खरीदें",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'वर्कआउट वीडियो डाउनलोड करने और ऑफलाइन देखने के लिए Premium में अपग्रेड करें।',
+      downloadOfflineVideos: 'वर्कआउट वीडियो डाउनलोड करें और ऑफलाइन देखें',
+  advancedMealPlan: 'एडवांस meal plans और nutrition tools',
   },
   "video": {
     "loading": "वीडियो लोड हो रहा है...",
     "play": "वर्कआउट शुरू करें",
-    "error": "वीडियो चलाने में असमर्थ। कृपया पुनः प्रयास करें।"
+    "error": "वीडियो चलाने में असमर्थ। कृपया पुनः प्रयास करें।",
+      offlineMode: 'ऑफलाइन वीडियो',
+  downloadOffline: 'डाउनलोड करें',
+  downloadOfflineDesc:
+    'एक बार डाउनलोड करें और इस वर्कआउट के हर दोहराए गए दिन में उपयोग करें।',
+  downloadMultipleOfflineDesc:
+    'इस वर्कआउट के सभी वीडियो एक बार डाउनलोड करें और उन्हें ऑफलाइन उपयोग करें।',
+  downloading: 'डाउनलोड हो रहा है',
+  downloadSuccess: 'वीडियो ऑफलाइन उपयोग के लिए डाउनलोड हो गया।',
+  downloadError: 'वीडियो डाउनलोड नहीं हो सका।',
+  downloaded: 'डाउनलोड हो गया',
+  playingOffline: 'ऑफलाइन चल रहा है',
+  downloadUrlMissing:
+    'इस वर्कआउट के लिए ऑफलाइन वीडियो अभी उपलब्ध नहीं है।',
+  notAvailable: 'N/A',
   },
 // hi
 settings: {
@@ -5855,6 +7014,88 @@ reminderTime: 'रिमाइंडर समय',
 reminderInterval: 'अंतराल',
 waterReminderTitle: 'पानी पीने का समय',
 waterReminderBody: 'हाइड्रेटेड रहने के लिए लगभग {{amount}}ml पानी पिएं।',
+todayMenuKicker: 'आज का मेनू',
+todayMenuTitle: 'आज के भोजन का सुझाव',
+todayMenuDesc:
+  'यह मेनू आपके दैनिक कैलोरी लक्ष्य के आधार पर हर दिन अपने आप बदलता है।',
+todayMenuDate: 'आज',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'ओट्स, केला और अंडे',
+        desc: 'ओट्स, केला, अंडे और हल्का प्रोटीन स्रोत।',
+      },
+      greekYogurt: {
+        title: 'ग्रीक योगर्ट बाउल',
+        desc: 'ग्रीक योगर्ट, फल, नट्स और थोड़ी मात्रा में ओट्स।',
+      },
+      chickenSandwich: {
+        title: 'चिकन एग सैंडविच',
+        desc: 'होल-ग्रेन ब्रेड, चिकन ब्रेस्ट, अंडा और सब्जियां।',
+      },
+      smoothie: {
+        title: 'प्रोटीन स्मूदी',
+        desc: 'दूध या योगर्ट, केला, ओट्स और प्रोटीन युक्त टॉपिंग।',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'चिकन राइस बाउल',
+        desc: 'चावल, चिकन ब्रेस्ट, सब्जियां और हेल्दी सॉस।',
+      },
+      beefPotato: {
+        title: 'लीन बीफ और आलू',
+        desc: 'लीन बीफ, आलू, सलाद और ऑलिव ऑयल ड्रेसिंग।',
+      },
+      salmonRice: {
+        title: 'सैल्मन राइस प्लेट',
+        desc: 'सैल्मन, चावल, हरी सब्जियां और एवोकाडो या हेल्दी फैट।',
+      },
+      tofuNoodles: {
+        title: 'टोफू नूडल बाउल',
+        desc: 'टोफू, नूडल्स, सब्जियां और हल्की सोया सॉस।',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'मछली और सब्जियां',
+        desc: 'मछली, स्टीम सब्जियां और थोड़ी मात्रा में कार्ब्स।',
+      },
+      chickenSweetPotato: {
+        title: 'चिकन और शकरकंद',
+        desc: 'चिकन, शकरकंद और मिश्रित हरी सब्जियां।',
+      },
+      eggRice: {
+        title: 'अंडा चावल और सब्जियां',
+        desc: 'अंडे, चावल, सब्जियां और हल्का सूप।',
+      },
+      turkeyWrap: {
+        title: 'लीन प्रोटीन रैप',
+        desc: 'लीन प्रोटीन, रैप, हरी सब्जियां और योगर्ट सॉस।',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'फल और नट्स',
+        desc: 'एक सर्विंग फल और थोड़े से नट्स।',
+      },
+      proteinMilk: {
+        title: 'प्रोटीन मिल्क',
+        desc: 'दूध या योगर्ट के साथ प्रोटीन युक्त स्नैक।',
+      },
+      boiledEggs: {
+        title: 'उबले अंडे और फल',
+        desc: 'उबले अंडे के साथ फल या हल्का कार्ब स्रोत।',
+      },
+      cottageCheese: {
+        title: 'चीज़ या योगर्ट स्नैक',
+        desc: 'रिकवरी के लिए चीज़ या योगर्ट के साथ फल।',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "बिगिनर मोड",
@@ -6111,7 +7352,17 @@ const th = {
     "daysPrefix": "วันที่ {{day}} • {{weekday}}",
     "weekTitle": "สัปดาห์ที่ {{n}}",
     "completed": "เสร็จสิ้น",
-    "todayWorkout": "การฝึกวันนี้: {{name}}"
+    "todayWorkout": "การฝึกวันนี้: {{name}}",
+      workoutProgram: 'โปรแกรมออกกำลังกาย',
+  premiumProgram: 'โปรแกรม Premium',
+  weeklyPlan: 'แผนการฝึกรายสัปดาห์',
+  planDesc:
+    'เปิดแต่ละวันของการฝึก ทำตามวิดีโอออกกำลังกาย และรักษาความสม่ำเสมอในแต่ละสัปดาห์',
+  restDay: 'ฟื้นฟู / พักผ่อน',
+  restDesc: 'ยืดเหยียด ดื่มน้ำ และฟื้นฟูร่างกาย',
+  dayTitle: 'วันที่ {{n}}',
+  notFoundTitle: 'ไม่พบโปรแกรม',
+  notFoundText: 'โปรแกรมออกกำลังกายนี้ไม่พร้อมใช้งาน',
   },
   "workouts": {
     "rest": "ฟื้นฟูร่างกาย / พักผ่อน",
@@ -6123,7 +7374,8 @@ const th = {
     "days": "วัน",
     "day": "วัน",
     "heroTitle": "แผนออกกำลังกายประจำวัน",
-    "matchingResults": "ผลลัพธ์ที่ตรงกัน"
+    "matchingResults": "ผลลัพธ์ที่ตรงกัน",
+      min: 'นาที',
   },
   "guide": {
     "title": "วิธีใช้ PulseFit",
@@ -6156,7 +7408,21 @@ const th = {
   "video": {
     "loading": "กำลังโหลดวิดีโอ...",
     "play": "เริ่มการฝึก",
-    "error": "ไม่สามารถเล่นวิดีโอได้ โปรดลองอีกครั้ง"
+    "error": "ไม่สามารถเล่นวิดีโอได้ โปรดลองอีกครั้ง",
+      offlineMode: 'วิดีโอออฟไลน์',
+  downloadOffline: 'ดาวน์โหลด',
+  downloadOfflineDesc:
+    'ดาวน์โหลดครั้งเดียวและใช้ได้กับทุกวันที่ซ้ำของการออกกำลังกายนี้',
+  downloadMultipleOfflineDesc:
+    'ดาวน์โหลดวิดีโอทั้งหมดในเซสชันนี้ครั้งเดียวและใช้งานแบบออฟไลน์',
+  downloading: 'กำลังดาวน์โหลด',
+  downloadSuccess: 'ดาวน์โหลดวิดีโอสำหรับใช้งานออฟไลน์แล้ว',
+  downloadError: 'ไม่สามารถดาวน์โหลดวิดีโอได้',
+  downloaded: 'ดาวน์โหลดแล้ว',
+  playingOffline: 'กำลังเล่นแบบออฟไลน์',
+  downloadUrlMissing:
+    'วิดีโอออฟไลน์สำหรับการออกกำลังกายนี้ยังไม่พร้อมใช้งาน',
+  notAvailable: 'N/A',
   },
 // th
 settings: {
@@ -6360,6 +7626,88 @@ reminderTime: 'เวลาแจ้งเตือน',
 reminderInterval: 'ช่วงเวลาแจ้งเตือน',
 waterReminderTitle: 'ถึงเวลาดื่มน้ำแล้ว',
 waterReminderBody: 'ดื่มน้ำประมาณ {{amount}}ml เพื่อให้ร่างกายไม่ขาดน้ำ',
+todayMenuKicker: 'เมนูวันนี้',
+todayMenuTitle: 'คำแนะนำมื้ออาหารวันนี้',
+todayMenuDesc:
+  'เมนูนี้จะเปลี่ยนอัตโนมัติทุกวันตามเป้าหมายแคลอรีรายวันของคุณ',
+todayMenuDate: 'วันนี้',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'ข้าวโอ๊ต กล้วย และไข่',
+        desc: 'ข้าวโอ๊ต กล้วย ไข่ และแหล่งโปรตีนเบา ๆ',
+      },
+      greekYogurt: {
+        title: 'กรีกโยเกิร์ตโบวล์',
+        desc: 'กรีกโยเกิร์ต ผลไม้ ถั่ว และข้าวโอ๊ตเล็กน้อย',
+      },
+      chickenSandwich: {
+        title: 'แซนด์วิชไก่และไข่',
+        desc: 'ขนมปังโฮลเกรน อกไก่ ไข่ และผัก',
+      },
+      smoothie: {
+        title: 'สมูทตี้โปรตีน',
+        desc: 'นมหรือโยเกิร์ต กล้วย ข้าวโอ๊ต และท็อปปิงโปรตีน',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'ข้าวไก่โบวล์',
+        desc: 'ข้าว อกไก่ ผัก และซอสเพื่อสุขภาพ',
+      },
+      beefPotato: {
+        title: 'เนื้อไม่ติดมันกับมันฝรั่ง',
+        desc: 'เนื้อไม่ติดมัน มันฝรั่ง สลัด และน้ำสลัดน้ำมันมะกอก',
+      },
+      salmonRice: {
+        title: 'ข้าวปลาแซลมอน',
+        desc: 'ปลาแซลมอน ข้าว ผักใบเขียว และอะโวคาโดหรือไขมันดี',
+      },
+      tofuNoodles: {
+        title: 'บะหมี่เต้าหู้โบวล์',
+        desc: 'เต้าหู้ บะหมี่ ผัก และซอสถั่วเหลืองเบา ๆ',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'ปลากับผัก',
+        desc: 'ปลา ผักนึ่ง และคาร์โบไฮเดรตปริมาณเล็กน้อย',
+      },
+      chickenSweetPotato: {
+        title: 'ไก่กับมันหวาน',
+        desc: 'ไก่ มันหวาน และผักรวม',
+      },
+      eggRice: {
+        title: 'ข้าวไข่กับผัก',
+        desc: 'ไข่ ข้าว ผัก และซุปเบา ๆ',
+      },
+      turkeyWrap: {
+        title: 'แรปโปรตีนไขมันต่ำ',
+        desc: 'โปรตีนไขมันต่ำ แรป ผักใบเขียว และซอสโยเกิร์ต',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'ผลไม้และถั่ว',
+        desc: 'ผลไม้หนึ่งส่วนกับถั่วเล็กน้อย',
+      },
+      proteinMilk: {
+        title: 'นมโปรตีน',
+        desc: 'นมหรือโยเกิร์ตกับของว่างโปรตีนสูง',
+      },
+      boiledEggs: {
+        title: 'ไข่ต้มกับผลไม้',
+        desc: 'ไข่ต้มกับผลไม้หรือแหล่งคาร์บเบา ๆ',
+      },
+      cottageCheese: {
+        title: 'ชีสหรือโยเกิร์ต',
+        desc: 'ชีสหรือโยเกิร์ตกับผลไม้เพื่อช่วยฟื้นฟู',
+      },
+    },
+  },
+},
   },
   "premium": {
     "title": "อัปเกรดเป็นพรีเมียม",
@@ -6380,7 +7728,12 @@ waterReminderBody: 'ดื่มน้ำประมาณ {{amount}}ml เพ�
     "subscribeMonthly": "สมัครรายเดือน",
     "lifetimeTitle": "พรีเมียมตลอดชีพ",
     "lifetimeDesc": "จ่ายครั้งเดียว ใช้งานพรีเมียมได้ตลอดไป",
-    "buyLifetime": "ซื้อตลอดชีพ"
+    "buyLifetime": "ซื้อตลอดชีพ",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'อัปเกรดเป็น Premium เพื่อดาวน์โหลดวิดีโอออกกำลังกายและดูแบบออฟไลน์',
+      downloadOfflineVideos: 'ดาวน์โหลดวิดีโอออกกำลังกายเพื่อดูแบบออฟไลน์',
+  advancedMealPlan: 'แผนอาหารขั้นสูงและเครื่องมือโภชนาการ',
   },
   "filters": {
     "all": "ทั้งหมด",
@@ -6645,7 +7998,17 @@ const id = {
     "daysPrefix": "Hari {{day}} • {{weekday}}",
     "weekTitle": "Minggu {{n}}",
     "completed": "Selesai",
-    "todayWorkout": "Latihan: {{name}}"
+    "todayWorkout": "Latihan: {{name}}",
+      workoutProgram: 'PROGRAM LATIHAN',
+  premiumProgram: 'PROGRAM PREMIUM',
+  weeklyPlan: 'Rencana latihan mingguan',
+  planDesc:
+    'Buka setiap hari latihan, ikuti video workout, dan tetap konsisten dari minggu ke minggu.',
+  restDay: 'Pemulihan / Istirahat',
+  restDesc: 'Lakukan peregangan, minum air, dan pulihkan tubuh',
+  dayTitle: 'Hari {{n}}',
+  notFoundTitle: 'Program tidak ditemukan',
+  notFoundText: 'Program latihan ini tidak tersedia.',
   },
   "workouts": {
     "rest": "Pemulihan / Istirahat",
@@ -6657,7 +8020,8 @@ const id = {
     "days": "Hari",
     "day": "Hari",
     "heroTitle": "Rencana latihan harianmu",
-    "matchingResults": "Hasil yang cocok"
+    "matchingResults": "Hasil yang cocok",
+      min: 'mnt',
   },
   "guide": {
     "title": "Cara Menggunakan PulseFit",
@@ -6706,12 +8070,31 @@ const id = {
     "subscribeMonthly": "Berlangganan bulanan",
     "lifetimeTitle": "Premium Seumur Hidup",
     "lifetimeDesc": "Bayar sekali, nikmati Premium selamanya",
-    "buyLifetime": "Beli seumur hidup"
+    "buyLifetime": "Beli seumur hidup",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Upgrade ke Premium untuk mengunduh video latihan dan menontonnya offline.',
+      downloadOfflineVideos: 'Unduh video latihan dan tonton offline',
+  advancedMealPlan: 'Rencana makan lanjutan dan alat nutrisi',
   },
   "video": {
     "loading": "Memuat video...",
     "play": "Mulai latihan",
-    "error": "Tidak dapat memutar video. Silakan coba lagi."
+    "error": "Tidak dapat memutar video. Silakan coba lagi.",
+      offlineMode: 'Video offline',
+  downloadOffline: 'Unduh',
+  downloadOfflineDesc:
+    'Unduh sekali dan gunakan untuk setiap hari berulang dari latihan ini.',
+  downloadMultipleOfflineDesc:
+    'Unduh semua video dalam latihan ini sekali dan gunakan secara offline.',
+  downloading: 'Mengunduh',
+  downloadSuccess: 'Video telah diunduh untuk penggunaan offline.',
+  downloadError: 'Tidak dapat mengunduh video.',
+  downloaded: 'Diunduh',
+  playingOffline: 'Memutar offline',
+  downloadUrlMissing:
+    'Video offline belum tersedia untuk latihan ini.',
+  notAvailable: 'N/A',
   },
 // id
 settings: {
@@ -6915,6 +8298,88 @@ reminderTime: 'Waktu pengingat',
 reminderInterval: 'Interval',
 waterReminderTitle: 'Saatnya minum air',
 waterReminderBody: 'Minum sekitar {{amount}}ml air agar tetap terhidrasi.',
+todayMenuKicker: 'MENU HARI INI',
+todayMenuTitle: 'Saran menu hari ini',
+todayMenuDesc:
+  'Menu ini berubah otomatis setiap hari berdasarkan target kalori harianmu.',
+todayMenuDate: 'Hari ini',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Oatmeal, pisang, dan telur',
+        desc: 'Oat, pisang, telur, dan sumber protein ringan.',
+      },
+      greekYogurt: {
+        title: 'Greek yogurt bowl',
+        desc: 'Greek yogurt, buah, kacang, dan sedikit oat.',
+      },
+      chickenSandwich: {
+        title: 'Sandwich ayam dan telur',
+        desc: 'Roti gandum, dada ayam, telur, dan sayuran.',
+      },
+      smoothie: {
+        title: 'Smoothie protein',
+        desc: 'Susu atau yogurt, pisang, oat, dan topping tinggi protein.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Chicken rice bowl',
+        desc: 'Nasi, dada ayam, sayuran, dan saus sehat.',
+      },
+      beefPotato: {
+        title: 'Daging sapi rendah lemak dan kentang',
+        desc: 'Daging sapi rendah lemak, kentang, salad, dan dressing minyak zaitun.',
+      },
+      salmonRice: {
+        title: 'Salmon dengan nasi',
+        desc: 'Salmon, nasi, sayuran hijau, dan alpukat atau lemak sehat.',
+      },
+      tofuNoodles: {
+        title: 'Mie tofu bowl',
+        desc: 'Tofu, mie, sayuran, dan saus kedelai ringan.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Ikan dengan sayuran',
+        desc: 'Ikan, sayuran kukus, dan sedikit sumber karbohidrat.',
+      },
+      chickenSweetPotato: {
+        title: 'Ayam dan ubi',
+        desc: 'Ayam, ubi, dan sayuran campur.',
+      },
+      eggRice: {
+        title: 'Nasi telur dan sayuran',
+        desc: 'Telur, nasi, sayuran, dan sup ringan.',
+      },
+      turkeyWrap: {
+        title: 'Wrap protein rendah lemak',
+        desc: 'Protein rendah lemak, wrap, sayuran hijau, dan saus yogurt.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Buah dan kacang',
+        desc: 'Satu porsi buah dengan segenggam kecil kacang.',
+      },
+      proteinMilk: {
+        title: 'Susu protein',
+        desc: 'Susu atau yogurt dengan camilan tinggi protein.',
+      },
+      boiledEggs: {
+        title: 'Telur rebus dan buah',
+        desc: 'Telur rebus dengan buah atau sumber karbohidrat ringan.',
+      },
+      cottageCheese: {
+        title: 'Keju atau yogurt',
+        desc: 'Keju atau yogurt dengan buah untuk pemulihan.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Mode pemula",
@@ -7175,7 +8640,17 @@ const ms = {
     "daysPrefix": "Hari {{day}} • {{weekday}}",
     "weekTitle": "Minggu {{n}}",
     "completed": "Selesai",
-    "todayWorkout": "Senaman: {{name}}"
+    "todayWorkout": "Senaman: {{name}}",
+      workoutProgram: 'PROGRAM LATIHAN',
+  premiumProgram: 'PROGRAM PREMIUM',
+  weeklyPlan: 'Pelan latihan mingguan',
+  planDesc:
+    'Buka setiap hari latihan, ikut video senaman dan kekal konsisten minggu demi minggu.',
+  restDay: 'Pemulihan / Rehat',
+  restDesc: 'Regangkan badan, minum air dan pulihkan tubuh',
+  dayTitle: 'Hari {{n}}',
+  notFoundTitle: 'Program tidak ditemui',
+  notFoundText: 'Program latihan ini tidak tersedia.',
   },
   "workouts": {
     "rest": "Pemulihan / Rehat",
@@ -7187,7 +8662,8 @@ const ms = {
     "days": "days",
     "day": "days",
     "heroTitle": "Pelan senaman harian anda",
-    "matchingResults": "Keputusan sepadan"
+    "matchingResults": "Keputusan sepadan",
+      min: 'min',
   },
   "guide": {
     "title": "Cara Menggunakan PulseFit",
@@ -7236,12 +8712,31 @@ const ms = {
     "subscribeMonthly": "Langgan bulanan",
     "lifetimeTitle": "Premium Sepanjang Hayat",
     "lifetimeDesc": "Bayar sekali, nikmati Premium selamanya",
-    "buyLifetime": "Beli sepanjang hayat"
+    "buyLifetime": "Beli sepanjang hayat",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Naik taraf ke Premium untuk memuat turun video latihan dan menontonnya luar talian.',
+      downloadOfflineVideos: 'Muat turun video latihan dan tonton luar talian',
+  advancedMealPlan: 'Pelan makanan lanjutan dan alat nutrisi',
   },
   "video": {
     "loading": "Memuatkan video...",
     "play": "Mula senaman",
-    "error": "Tidak dapat memainkan video. Sila cuba lagi."
+    "error": "Tidak dapat memainkan video. Sila cuba lagi.",
+     offlineMode: 'Video luar talian',
+  downloadOffline: 'Muat turun',
+  downloadOfflineDesc:
+    'Muat turun sekali dan gunakan untuk setiap hari berulang bagi latihan ini.',
+  downloadMultipleOfflineDesc:
+    'Muat turun semua video dalam latihan ini sekali dan gunakan secara luar talian.',
+  downloading: 'Memuat turun',
+  downloadSuccess: 'Video dimuat turun untuk kegunaan luar talian.',
+  downloadError: 'Tidak dapat memuat turun video.',
+  downloaded: 'Dimuat turun',
+  playingOffline: 'Memainkan luar talian',
+  downloadUrlMissing:
+    'Video luar talian belum tersedia untuk latihan ini.',
+  notAvailable: 'N/A',
   },
 // ms
 settings: {
@@ -7445,6 +8940,88 @@ reminderTime: 'Masa peringatan',
 reminderInterval: 'Selang masa',
 waterReminderTitle: 'Masa untuk minum air',
 waterReminderBody: 'Minum kira-kira {{amount}}ml air untuk kekal hidrat.',
+todayMenuKicker: 'MENU HARI INI',
+todayMenuTitle: 'Cadangan menu hari ini',
+todayMenuDesc:
+  'Menu ini berubah secara automatik setiap hari berdasarkan sasaran kalori harian anda.',
+todayMenuDate: 'Hari ini',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Oat, pisang dan telur',
+        desc: 'Oat, pisang, telur dan sumber protein ringan.',
+      },
+      greekYogurt: {
+        title: 'Mangkuk yogurt Greek',
+        desc: 'Yogurt Greek, buah, kacang dan sedikit oat.',
+      },
+      chickenSandwich: {
+        title: 'Sandwic ayam dan telur',
+        desc: 'Roti bijirin penuh, dada ayam, telur dan sayur.',
+      },
+      smoothie: {
+        title: 'Smoothie protein',
+        desc: 'Susu atau yogurt, pisang, oat dan topping tinggi protein.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Mangkuk nasi ayam',
+        desc: 'Nasi, dada ayam, sayur dan sos sihat.',
+      },
+      beefPotato: {
+        title: 'Daging lembu tanpa lemak dan kentang',
+        desc: 'Daging lembu tanpa lemak, kentang, salad dan sos minyak zaitun.',
+      },
+      salmonRice: {
+        title: 'Pinggan salmon dan nasi',
+        desc: 'Salmon, nasi, sayur hijau dan avokado atau lemak sihat.',
+      },
+      tofuNoodles: {
+        title: 'Mangkuk mi tofu',
+        desc: 'Tofu, mi, sayur dan sos soya ringan.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Ikan dengan sayur',
+        desc: 'Ikan, sayur kukus dan sedikit sumber karbohidrat.',
+      },
+      chickenSweetPotato: {
+        title: 'Ayam dan keledek',
+        desc: 'Ayam, keledek dan sayur campur.',
+      },
+      eggRice: {
+        title: 'Nasi telur dan sayur',
+        desc: 'Telur, nasi, sayur dan sup ringan.',
+      },
+      turkeyWrap: {
+        title: 'Wrap protein tanpa lemak',
+        desc: 'Protein tanpa lemak, wrap, sayur hijau dan sos yogurt.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Buah dan kacang',
+        desc: 'Satu hidangan buah dengan sedikit kacang.',
+      },
+      proteinMilk: {
+        title: 'Susu protein',
+        desc: 'Susu atau yogurt dengan snek tinggi protein.',
+      },
+      boiledEggs: {
+        title: 'Telur rebus dan buah',
+        desc: 'Telur rebus dengan buah atau sumber karbohidrat ringan.',
+      },
+      cottageCheese: {
+        title: 'Keju atau yogurt',
+        desc: 'Keju atau yogurt dengan buah untuk pemulihan.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Mod pemula",
@@ -7705,7 +9282,17 @@ const fil = {
     "daysPrefix": "Araw {{day}} • {{weekday}}",
     "weekTitle": "Linggo {{n}}",
     "completed": "Tapos na",
-    "todayWorkout": "Workout: {{name}}"
+    "todayWorkout": "Workout: {{name}}",
+      workoutProgram: 'WORKOUT PROGRAM',
+  premiumProgram: 'PREMIUM PROGRAM',
+  weeklyPlan: 'Lingguhang training plan',
+  planDesc:
+    'Buksan ang bawat araw ng training, sundan ang workout video, at manatiling consistent bawat linggo.',
+  restDay: 'Recovery / Pahinga',
+  restDesc: 'Mag-stretch, uminom ng tubig, at mag-recover',
+  dayTitle: 'Araw {{n}}',
+  notFoundTitle: 'Hindi nahanap ang program',
+  notFoundText: 'Hindi available ang workout program na ito.',
   },
   "workouts": {
     "rest": "Recovery / Pahinga",
@@ -7717,7 +9304,8 @@ const fil = {
     "days": "Araw",
     "day": "Araw",
     "heroTitle": "Daily workout plan mo",
-    "matchingResults": "Matching results"
+    "matchingResults": "Matching results",
+      min: 'min',
   },
   "guide": {
     "title": "Paano Gamitin ang PulseFit",
@@ -7766,12 +9354,31 @@ const fil = {
     "subscribeMonthly": "Mag-subscribe buwan-buwan",
     "lifetimeTitle": "Habambuhay na Premium",
     "lifetimeDesc": "Isang bayad lang, Premium habambuhay",
-    "buyLifetime": "Bilhin habambuhay"
+    "buyLifetime": "Bilhin habambuhay",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Mag-upgrade sa Premium para mag-download ng workout videos at manood offline.',
+      downloadOfflineVideos: 'I-download ang workout videos at manood offline',
+  advancedMealPlan: 'Advanced meal plans at nutrition tools',
   },
   "video": {
     "loading": "Naglo-load ng video...",
     "play": "Simulan ang workout",
-    "error": "Hindi ma-play ang video. Pakisubukan muli."
+    "error": "Hindi ma-play ang video. Pakisubukan muli.",
+    offlineMode: 'Offline video',
+  downloadOffline: 'I-download',
+  downloadOfflineDesc:
+    'I-download nang isang beses at gamitin ito sa bawat paulit-ulit na araw ng workout na ito.',
+  downloadMultipleOfflineDesc:
+    'I-download ang lahat ng video sa workout na ito nang isang beses at gamitin offline.',
+  downloading: 'Nagda-download',
+  downloadSuccess: 'Na-download ang video para sa offline use.',
+  downloadError: 'Hindi ma-download ang video.',
+  downloaded: 'Na-download',
+  playingOffline: 'Nagpe-play offline',
+  downloadUrlMissing:
+    'Hindi pa available ang offline video para sa workout na ito.',
+  notAvailable: 'N/A',
   },
 // fil
 settings: {
@@ -7975,6 +9582,88 @@ reminderTime: 'Reminder time',
 reminderInterval: 'Interval',
 waterReminderTitle: 'Oras na para uminom ng tubig',
 waterReminderBody: 'Uminom ng mga {{amount}}ml na tubig para manatiling hydrated.',
+todayMenuKicker: 'MENU NGAYON',
+todayMenuTitle: 'Meal suggestion ngayong araw',
+todayMenuDesc:
+  'Awtomatikong nagbabago ang menu na ito araw-araw batay sa daily calorie target mo.',
+todayMenuDate: 'Ngayon',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Oatmeal, saging at itlog',
+        desc: 'Oats, saging, itlog at light protein source.',
+      },
+      greekYogurt: {
+        title: 'Greek yogurt bowl',
+        desc: 'Greek yogurt, prutas, nuts at kaunting oats.',
+      },
+      chickenSandwich: {
+        title: 'Chicken egg sandwich',
+        desc: 'Whole-grain bread, chicken breast, itlog at gulay.',
+      },
+      smoothie: {
+        title: 'Protein smoothie',
+        desc: 'Gatas o yogurt, saging, oats at protein-rich topping.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Chicken rice bowl',
+        desc: 'Kanin, chicken breast, gulay at healthy sauce.',
+      },
+      beefPotato: {
+        title: 'Lean beef at patatas',
+        desc: 'Lean beef, patatas, salad at olive oil dressing.',
+      },
+      salmonRice: {
+        title: 'Salmon rice plate',
+        desc: 'Salmon, kanin, greens at avocado o healthy fats.',
+      },
+      tofuNoodles: {
+        title: 'Tofu noodle bowl',
+        desc: 'Tofu, noodles, gulay at light soy-based sauce.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Isda na may gulay',
+        desc: 'Isda, steamed vegetables at maliit na serving ng carbs.',
+      },
+      chickenSweetPotato: {
+        title: 'Chicken at kamote',
+        desc: 'Chicken, kamote at mixed greens.',
+      },
+      eggRice: {
+        title: 'Egg rice at gulay',
+        desc: 'Itlog, kanin, gulay at light soup.',
+      },
+      turkeyWrap: {
+        title: 'Lean protein wrap',
+        desc: 'Lean protein, wrap, greens at yogurt-based sauce.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Prutas at nuts',
+        desc: 'Isang serving ng prutas na may kaunting nuts.',
+      },
+      proteinMilk: {
+        title: 'Protein milk',
+        desc: 'Gatas o yogurt na may protein-rich snack.',
+      },
+      boiledEggs: {
+        title: 'Boiled eggs at prutas',
+        desc: 'Boiled eggs na may prutas o light carb source.',
+      },
+      cottageCheese: {
+        title: 'Cheese o yogurt snack',
+        desc: 'Cheese o yogurt na may prutas para sa recovery.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Beginner mode",
@@ -8235,7 +9924,17 @@ const pt = {
     "daysPrefix": "Día {{day}} • {{weekday}}",
     "weekTitle": "Semana {{n}}",
     "completed": "Completado",
-    "todayWorkout": "Entrenamiento: {{name}}"
+    "todayWorkout": "Entrenamiento: {{name}}",
+      workoutProgram: 'PROGRAMA DE TREINO',
+  premiumProgram: 'PROGRAMA PREMIUM',
+  weeklyPlan: 'Plano de treino semanal',
+  planDesc:
+    'Abra cada dia de treino, siga o vídeo e mantenha a consistência semana após semana.',
+  restDay: 'Recuperação / Descanso',
+  restDesc: 'Alongue, hidrate-se e recupere o corpo',
+  dayTitle: 'Dia {{n}}',
+  notFoundTitle: 'Programa não encontrado',
+  notFoundText: 'Este programa de treino não está disponível.',
   },
   "workouts": {
     "rest": "Recuperación / Descanso",
@@ -8247,7 +9946,8 @@ const pt = {
     "days": "Dia",
     "day": "Dia",
     "heroTitle": "Seu plano de treino diário",
-    "matchingResults": "Resultados correspondentes"
+    "matchingResults": "Resultados correspondentes",
+      min: 'min',
   },
   "guide": {
     "title": "Como usar o PulseFit",
@@ -8296,12 +9996,31 @@ const pt = {
     "subscribeMonthly": "Assinar mensalmente",
     "lifetimeTitle": "Premium vitalício",
     "lifetimeDesc": "Pagamento único, mantenha o Premium para sempre",
-    "buyLifetime": "Comprar vitalício"
+    "buyLifetime": "Comprar vitalício",
+      premium: 'Premium',
+  downloadOfflinePremium:
+    'Atualize para Premium para baixar vídeos de treino e assistir offline.',
+      downloadOfflineVideos: 'Baixar vídeos de treino e assistir offline',
+  advancedMealPlan: 'Planos alimentares avançados e ferramentas de nutrição',
   },
   "video": {
     "loading": "Cargando video...",
     "play": "Iniciar entrenamiento",
-    "error": "No se pudo reproducir el video. Inténtalo de nuevo."
+    "error": "No se pudo reproducir el video. Inténtalo de nuevo.",
+      offlineMode: 'Vídeo offline',
+  downloadOffline: 'Baixar',
+  downloadOfflineDesc:
+    'Baixe uma vez e use em todos os dias repetidos deste treino.',
+  downloadMultipleOfflineDesc:
+    'Baixe todos os vídeos deste treino uma vez e use-os offline.',
+  downloading: 'Baixando',
+  downloadSuccess: 'Vídeo baixado para uso offline.',
+  downloadError: 'Não foi possível baixar o vídeo.',
+  downloaded: 'Baixado',
+  playingOffline: 'Reproduzindo offline',
+  downloadUrlMissing:
+    'O vídeo offline ainda não está disponível para este treino.',
+  notAvailable: 'N/D',
   },
 // pt
 settings: {
@@ -8505,6 +10224,88 @@ reminderTime: 'Hora do lembrete',
 reminderInterval: 'Intervalo',
 waterReminderTitle: 'Hora de beber água',
 waterReminderBody: 'Beba cerca de {{amount}}ml de água para se manter hidratado.',
+todayMenuKicker: 'MENU DE HOJE',
+todayMenuTitle: 'Sugestão de refeição para hoje',
+todayMenuDesc:
+  'Este menu muda automaticamente todos os dias com base na sua meta diária de calorias.',
+todayMenuDate: 'Hoje',
+
+todayMenu: {
+  items: {
+    breakfast: {
+      oatsEggs: {
+        title: 'Aveia, banana e ovos',
+        desc: 'Aveia, banana, ovos e uma fonte leve de proteína.',
+      },
+      greekYogurt: {
+        title: 'Bowl de iogurte grego',
+        desc: 'Iogurte grego, frutas, castanhas e uma pequena porção de aveia.',
+      },
+      chickenSandwich: {
+        title: 'Sanduíche de frango e ovo',
+        desc: 'Pão integral, peito de frango, ovo e vegetais.',
+      },
+      smoothie: {
+        title: 'Smoothie proteico',
+        desc: 'Leite ou iogurte, banana, aveia e cobertura rica em proteína.',
+      },
+    },
+    lunch: {
+      chickenRice: {
+        title: 'Bowl de arroz com frango',
+        desc: 'Arroz, peito de frango, vegetais e molho saudável.',
+      },
+      beefPotato: {
+        title: 'Carne magra com batatas',
+        desc: 'Carne magra, batatas, salada e molho de azeite.',
+      },
+      salmonRice: {
+        title: 'Prato de salmão com arroz',
+        desc: 'Salmão, arroz, folhas verdes e abacate ou gorduras saudáveis.',
+      },
+      tofuNoodles: {
+        title: 'Bowl de macarrão com tofu',
+        desc: 'Tofu, macarrão, vegetais e molho leve à base de soja.',
+      },
+    },
+    dinner: {
+      fishVeg: {
+        title: 'Peixe com vegetais',
+        desc: 'Peixe, vegetais no vapor e uma pequena porção de carboidratos.',
+      },
+      chickenSweetPotato: {
+        title: 'Frango com batata-doce',
+        desc: 'Frango, batata-doce e folhas verdes.',
+      },
+      eggRice: {
+        title: 'Arroz com ovos e vegetais',
+        desc: 'Ovos, arroz, vegetais e uma sopa leve.',
+      },
+      turkeyWrap: {
+        title: 'Wrap de proteína magra',
+        desc: 'Proteína magra, wrap, folhas verdes e molho à base de iogurte.',
+      },
+    },
+    snack: {
+      fruitNuts: {
+        title: 'Frutas e castanhas',
+        desc: 'Uma porção de fruta com uma pequena quantidade de castanhas.',
+      },
+      proteinMilk: {
+        title: 'Leite proteico',
+        desc: 'Leite ou iogurte com um lanche rico em proteína.',
+      },
+      boiledEggs: {
+        title: 'Ovos cozidos e frutas',
+        desc: 'Ovos cozidos com frutas ou uma fonte leve de carboidratos.',
+      },
+      cottageCheese: {
+        title: 'Queijo ou iogurte',
+        desc: 'Queijo ou iogurte com frutas para recuperação.',
+      },
+    },
+  },
+},
   },
   "beginner": {
     "modeTitle": "Modo iniciante",

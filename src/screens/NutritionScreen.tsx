@@ -34,6 +34,7 @@ import {
 } from '../nutrition/nutritionTargets';
 import { WaterReminderCard } from '../components/WaterReminderCard';
 import { markNutritionTipRead } from '../services/gamification';
+import { TodayMenuCard } from '../components/TodayMenuCard';
 
 const PROFILE_KEY = 'user:profile';
 
@@ -511,12 +512,16 @@ const resetGoalEditor = async () => {
                 {t('nutrition.heroTitleLine2', 'nutrition plan')}
               </Text>
 
-              <Text style={styles.heroSubtitle}>
-                {t(
-                  'nutrition.subtitle',
-                  'The app suggests calories, water and nutrition ratios based on your personal goal.',
-                )}
-              </Text>
+<Text
+  style={styles.heroSubtitle}
+  numberOfLines={3}
+  adjustsFontSizeToFit
+>
+  {t(
+    'nutrition.subtitle',
+    'The app suggests calories, water and nutrition ratios based on your personal goal.',
+  )}
+</Text>
             </View>
           </ImageBackground>
         </View>
@@ -586,6 +591,10 @@ const resetGoalEditor = async () => {
               </View>
               <WaterReminderCard
   targetLiters={plan.waterLiters}
+  t={t as any}
+/>
+<TodayMenuCard
+  targetCalories={plan.calories}
   t={t as any}
 />
               <AdvancedNutritionCard plan={plan} t={t as any} />
@@ -772,17 +781,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(22, 101, 52, 0.16)',
   },
 
-  heroImageWrap: {
-    marginHorizontal: 0,
-    height: 390,
-    overflow: 'hidden',
-    backgroundColor: '#020617',
-  },
-  heroImage: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 30,
-  },
+heroImageWrap: {
+  marginHorizontal: 0,
+  height: 460,
+  overflow: 'hidden',
+  backgroundColor: '#020617',
+},
+heroImage: {
+  flex: 1,
+  paddingHorizontal: 24,
+  paddingTop: 28,
+  paddingBottom: 95,
+},
   heroImageStyle: {
     opacity: 0.85,
   },
@@ -790,66 +800,66 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(3, 7, 18, 0.48)',
   },
-  stepBox: {
-    width: 54,
-    height: 54,
-    borderRadius: 12,
-    backgroundColor: NEON,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 24,
-    shadowColor: NEON,
-    shadowOpacity: 0.26,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 5,
-  },
+stepBox: {
+  width: 54,
+  height: 54,
+  borderRadius: 12,
+  backgroundColor: NEON,
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: 18,
+  shadowColor: NEON,
+  shadowOpacity: 0.26,
+  shadowRadius: 14,
+  shadowOffset: { width: 0, height: 6 },
+  elevation: 5,
+},
   stepText: {
     color: BG,
     fontSize: 27,
     fontWeight: '900',
   },
-  heroTextBlock: {
-    maxWidth: 360,
-  },
-  heroTitle: {
-    color: TEXT,
-    fontSize: 39,
-    lineHeight: 46,
-    fontWeight: '900',
-    letterSpacing: -0.8,
-  },
-  heroTitleAccent: {
-    color: NEON,
-    fontSize: 42,
-    lineHeight: 48,
-    fontWeight: '900',
-    letterSpacing: -0.8,
-  },
-  heroSubtitle: {
-    color: TEXT,
-    fontSize: 21,
-    lineHeight: 31,
-    fontWeight: '600',
-    marginTop: 22,
-  },
-
-  phoneMock: {
-    marginHorizontal: 18,
-    marginTop: -88,
-    borderRadius: 34,
-    backgroundColor: 'rgba(3, 7, 18, 0.92)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.10)',
-    paddingHorizontal: 14,
-    paddingTop: 18,
-    paddingBottom: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.38,
-    shadowRadius: 24,
-    shadowOffset: { width: 0, height: 14 },
-    elevation: 10,
-  },
+heroTextBlock: {
+  maxWidth: 335,
+},
+heroTitle: {
+  color: TEXT,
+  fontSize: 34,
+  lineHeight: 40,
+  fontWeight: '900',
+  letterSpacing: -0.8,
+},
+heroTitleAccent: {
+  color: NEON,
+  fontSize: 37,
+  lineHeight: 43,
+  fontWeight: '900',
+  letterSpacing: -0.8,
+},
+heroSubtitle: {
+  color: TEXT,
+  fontSize: 18,
+  lineHeight: 26,
+  fontWeight: '600',
+  marginTop: 14,
+  maxWidth: 335,
+},
+phoneMock: {
+  marginHorizontal: 18,
+  marginTop: -46,
+  borderRadius: 34,
+  backgroundColor: 'rgba(3, 7, 18, 0.92)',
+  borderWidth: 1,
+  borderColor: 'rgba(255,255,255,0.10)',
+  paddingHorizontal: 14,
+  paddingTop: 18,
+  paddingBottom: 12,
+  shadowColor: '#000',
+  shadowOpacity: 0.38,
+  shadowRadius: 24,
+  shadowOffset: { width: 0, height: 14 },
+  elevation: 10,
+},
   phoneTopBar: {
     height: 44,
     flexDirection: 'row',

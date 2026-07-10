@@ -146,7 +146,10 @@ export const ProgramDetailScreen: React.FC = () => {
       const weekNo = Math.floor(i / 7) + 1;
 
       out.push({
-        title: t('program.weekTitle', { n: weekNo }),
+title: t('program.weekTitle', {
+  n: weekNo,
+  defaultValue: 'Week {{n}}',
+}),
         data: chunk,
       });
     }
@@ -273,13 +276,15 @@ export const ProgramDetailScreen: React.FC = () => {
       });
     }
 
-    navigation.navigate('WorkoutWeb', {
-      programId,
-      dayId: day.id,
-      sessionKey: day.sessionKey,
-      videoUrl: day.webUrl ?? day.videoUrl,
-      name: day.name,
-    });
+navigation.navigate('WorkoutWeb', {
+  programId,
+  dayId: day.id,
+  sessionKey: day.sessionKey,
+  videoUrl: day.webUrl ?? day.videoUrl,
+  name: day.name,
+  durationMinutes: day.durationMin || 25,
+  downloadVideos: day.downloadVideos || [],
+});
   };
 
   if (!program) {
@@ -287,10 +292,16 @@ export const ProgramDetailScreen: React.FC = () => {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.notFoundCard}>
-          <Text style={styles.notFoundTitle}>Program not found</Text>
-          <Text style={styles.notFoundText}>
-            This workout program is not available.
-          </Text>
+<Text style={styles.notFoundTitle}>
+  {t('program.notFoundTitle', 'Program not found')}
+</Text>
+
+<Text style={styles.notFoundText}>
+  {t(
+    'program.notFoundText',
+    'This workout program is not available.',
+  )}
+</Text>
         </View>
       </View>
     );
@@ -312,9 +323,11 @@ export const ProgramDetailScreen: React.FC = () => {
         ListHeaderComponent={
           <View style={styles.header}>
             <View style={styles.kickerPill}>
-              <Text style={styles.kickerText}>
-                {program.premium ? 'PREMIUM PROGRAM' : 'WORKOUT PROGRAM'}
-              </Text>
+<Text style={styles.kickerText}>
+  {program.premium
+    ? t('program.premiumProgram', 'PREMIUM PROGRAM')
+    : t('program.workoutProgram', 'WORKOUT PROGRAM')}
+</Text>
             </View>
 
             <Text style={styles.programTitle}>{t(program.titleKey)}</Text>
