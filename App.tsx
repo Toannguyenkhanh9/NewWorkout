@@ -9,6 +9,7 @@ import OnboardingProfileScreen from './src/screens/OnboardingProfileScreen';
 import mobileAds from 'react-native-google-mobile-ads';
 import { preloadRewarded } from './src/ads/rewarded';
 import { ToastProvider } from './src/ui/Toast';
+import { initNotifications } from './src/notifications/reminder';
 const ONBOARD_DONE = 'onboarding:done';
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
       try {
         await mobileAds().initialize();
         preloadRewarded();
+        await initNotifications();
         const ok = await AsyncStorage.getItem(ONBOARD_DONE);
         setNeedsOnboard(!ok);
       } finally {

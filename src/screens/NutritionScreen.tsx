@@ -33,6 +33,7 @@ import {
   type NutritionTargetOverrides,
 } from '../nutrition/nutritionTargets';
 import { WaterReminderCard } from '../components/WaterReminderCard';
+import { markNutritionTipRead } from '../services/gamification';
 
 const PROFILE_KEY = 'user:profile';
 
@@ -387,7 +388,11 @@ const openAdvancedMealPlan = () => {
   );
 };
   const [profile, setProfile] = useState<ProfileInput | null>(null);
-
+useFocusEffect(
+  useCallback(() => {
+    markNutritionTipRead();
+  }, []),
+);
 useFocusEffect(
   useCallback(() => {
     (async () => {

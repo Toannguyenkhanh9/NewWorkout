@@ -123,6 +123,9 @@ reminderOffText: 'Off • tap to choose time',
 dailyReminderTitle: "It's practice time! 💪",
 dailyReminderBody:
   "Open Insanity Deluxe Edition and complete today's session.",
+  inactiveReminderTitle: 'We miss you 💪',
+inactiveReminderBody:
+  "You haven't worked out for 3 days. Open Insanity Deluxe Edition and continue your training.",
   },
   "onboard": {
     "title": "Let’s get started 👋",
@@ -596,7 +599,44 @@ waterReminderBody: 'Drink about {{amount}}ml of water to stay hydrated.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  gamification: {
+  kicker: 'YOUR PROGRESS',
+  title: 'Fitness journey',
+  subtitle: 'Complete missions, build your streak and level up.',
+  level: 'Level',
+  todayStreak: 'Streak',
+  bestStreak: 'Best',
+  workouts: 'Workouts',
+  dailyMissions: 'Daily missions',
+  achievementsTitle: 'Achievements',
+  completed: 'Done',
+  claim: 'Claim',
+  startWorkout: 'Start',
+  completeWorkout: 'Complete workout',
+  unlocked: 'Achievement unlocked!',
+  workoutCompletedMessage: 'Great job! XP and streak updated.',
+  alreadyCompletedToday: 'This workout has already been completed.',
+
+  missions: {
+    workout: "Complete today's workout",
+    water: 'Reach your water goal',
+    weight: 'Update your weight',
+    nutritionTip: 'Read one nutrition tip',
+  },
+
+  achievements: {
+    firstWorkout: 'First workout',
+    tenWorkouts: '10 workouts',
+    twentyFiveWorkouts: '25 workouts',
+    streak3: '3-day streak',
+    streak7: '7-day streak',
+    level5: 'Reach level 5',
+    level10: 'Reach level 10',
+    mission10: 'Complete 10 missions',
+    water7: 'Drink water 7 days',
+  },
+},
 };
 
 const vi = {
@@ -719,6 +759,9 @@ reminderOffText: 'Đang tắt • nhấn để chọn giờ',
 dailyReminderTitle: 'Đến giờ tập luyện rồi! 💪',
 dailyReminderBody:
   'Mở Insanity Deluxe Edition và hoàn thành buổi tập hôm nay.',
+  inactiveReminderTitle: 'Chúng tôi nhớ bạn 💪',
+inactiveReminderBody:
+  'Bạn đã 3 ngày chưa luyện tập. Hãy mở Insanity Deluxe Edition và tiếp tục hành trình của mình.',
 },
   "onboard": {
     "title": "Cùng bắt đầu nào 👋",
@@ -1232,7 +1275,44 @@ waterReminderBody: 'Hãy uống khoảng {{amount}}ml nước để giữ cơ th
         "snack": "trái cây, các loại hạt hoặc sữa chua"
       }
     }
-  }
+  },
+  gamification: {
+  kicker: 'TIẾN ĐỘ CỦA BẠN',
+  title: 'Hành trình luyện tập',
+  subtitle: 'Hoàn thành nhiệm vụ, giữ chuỗi ngày tập và tăng cấp.',
+  level: 'Cấp',
+  todayStreak: 'Chuỗi ngày',
+  bestStreak: 'Tốt nhất',
+  workouts: 'Buổi tập',
+  dailyMissions: 'Nhiệm vụ hằng ngày',
+  achievementsTitle: 'Thành tích',
+  completed: 'Xong',
+  claim: 'Nhận',
+  startWorkout: 'Tập ngay',
+  completeWorkout: 'Hoàn thành bài tập',
+  unlocked: 'Mở khóa thành tích!',
+  workoutCompletedMessage: 'Tuyệt vời! XP và chuỗi ngày tập đã được cập nhật.',
+  alreadyCompletedToday: 'Bài tập này đã được hoàn thành.',
+
+  missions: {
+    workout: 'Hoàn thành bài tập hôm nay',
+    water: 'Đạt mục tiêu uống nước',
+    weight: 'Cập nhật cân nặng',
+    nutritionTip: 'Đọc một mẹo dinh dưỡng',
+  },
+
+  achievements: {
+    firstWorkout: 'Buổi tập đầu tiên',
+    tenWorkouts: '10 buổi tập',
+    twentyFiveWorkouts: '25 buổi tập',
+    streak3: 'Chuỗi 3 ngày',
+    streak7: 'Chuỗi 7 ngày',
+    level5: 'Đạt cấp 5',
+    level10: 'Đạt cấp 10',
+    mission10: 'Hoàn thành 10 nhiệm vụ',
+    water7: 'Uống nước đủ 7 ngày',
+  },
+},
 };
 
 const es = {
@@ -1357,6 +1437,10 @@ reminderOffText: 'Desactivado • toca para elegir hora',
 dailyReminderTitle: '¡Es hora de entrenar! 💪',
 dailyReminderBody:
   'Abre Insanity Deluxe Edition y completa la sesión de hoy.',
+  // es
+inactiveReminderTitle: 'Te extrañamos 💪',
+inactiveReminderBody:
+  'No has entrenado durante 3 días. Abre Insanity Deluxe Edition y continúa tu entrenamiento.',
 },
   "onboard": {
     "title": "Vamos começar 👋",
@@ -1719,7 +1803,45 @@ waterReminderBody: 'Bebe unos {{amount}}ml de agua para mantenerte hidratado.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // es
+gamification: {
+  kicker: 'TU PROGRESO',
+  title: 'Viaje fitness',
+  subtitle: 'Completa misiones, mantén tu racha y sube de nivel.',
+  level: 'Nivel',
+  todayStreak: 'Racha',
+  bestStreak: 'Mejor',
+  workouts: 'Entrenamientos',
+  dailyMissions: 'Misiones diarias',
+  achievementsTitle: 'Logros',
+  completed: 'Hecho',
+  claim: 'Reclamar',
+  startWorkout: 'Empezar',
+  completeWorkout: 'Completar entrenamiento',
+  unlocked: '¡Logro desbloqueado!',
+  workoutCompletedMessage: '¡Buen trabajo! XP y racha actualizados.',
+  alreadyCompletedToday: 'Este entrenamiento ya se completó.',
+
+  missions: {
+    workout: 'Completa el entrenamiento de hoy',
+    water: 'Alcanza tu objetivo de agua',
+    weight: 'Actualiza tu peso',
+    nutritionTip: 'Lee un consejo de nutrición',
+  },
+
+  achievements: {
+    firstWorkout: 'Primer entrenamiento',
+    tenWorkouts: '10 entrenamientos',
+    twentyFiveWorkouts: '25 entrenamientos',
+    streak3: 'Racha de 3 días',
+    streak7: 'Racha de 7 días',
+    level5: 'Alcanza el nivel 5',
+    level10: 'Alcanza el nivel 10',
+    mission10: 'Completa 10 misiones',
+    water7: 'Bebe agua 7 días',
+  },
+},
 };
 
 const fr = {
@@ -1844,6 +1966,10 @@ reminderOffText: 'Désactivé • touchez pour choisir l’heure',
 dailyReminderTitle: 'C’est l’heure de s’entraîner ! 💪',
 dailyReminderBody:
   'Ouvrez Insanity Deluxe Edition et terminez la séance du jour.',
+  // fr
+inactiveReminderTitle: 'Vous nous manquez 💪',
+inactiveReminderBody:
+  'Vous ne vous êtes pas entraîné depuis 3 jours. Ouvrez Insanity Deluxe Edition et continuez votre entraînement.',
 },
   "onboard": {
     "title": "C’est parti 👋",
@@ -2207,7 +2333,45 @@ waterReminderBody: 'Buvez environ {{amount}}ml d’eau pour rester hydraté.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // fr
+gamification: {
+  kicker: 'VOTRE PROGRESSION',
+  title: 'Parcours fitness',
+  subtitle: 'Terminez des missions, gardez votre série et montez de niveau.',
+  level: 'Niveau',
+  todayStreak: 'Série',
+  bestStreak: 'Meilleur',
+  workouts: 'Séances',
+  dailyMissions: 'Missions quotidiennes',
+  achievementsTitle: 'Succès',
+  completed: 'Terminé',
+  claim: 'Réclamer',
+  startWorkout: 'Commencer',
+  completeWorkout: 'Terminer la séance',
+  unlocked: 'Succès débloqué !',
+  workoutCompletedMessage: 'Bravo ! XP et série mis à jour.',
+  alreadyCompletedToday: 'Cette séance a déjà été terminée.',
+
+  missions: {
+    workout: 'Terminer la séance du jour',
+    water: 'Atteindre votre objectif d’eau',
+    weight: 'Mettre à jour votre poids',
+    nutritionTip: 'Lire un conseil nutrition',
+  },
+
+  achievements: {
+    firstWorkout: 'Première séance',
+    tenWorkouts: '10 séances',
+    twentyFiveWorkouts: '25 séances',
+    streak3: 'Série de 3 jours',
+    streak7: 'Série de 7 jours',
+    level5: 'Atteindre le niveau 5',
+    level10: 'Atteindre le niveau 10',
+    mission10: 'Terminer 10 missions',
+    water7: 'Boire de l’eau 7 jours',
+  },
+},
 };
 
 const de = {
@@ -2332,6 +2496,10 @@ reminderOffText: 'Aus • tippen, um eine Zeit zu wählen',
 dailyReminderTitle: 'Zeit fürs Training! 💪',
 dailyReminderBody:
   'Öffne Insanity Deluxe Edition und absolviere deine heutige Einheit.',
+  // de
+inactiveReminderTitle: 'Wir vermissen dich 💪',
+inactiveReminderBody:
+  'Du hast seit 3 Tagen nicht trainiert. Öffne Insanity Deluxe Edition und setze dein Training fort.',
 },
   "onboard": {
     "title": "Lass uns starten 👋",
@@ -2695,7 +2863,45 @@ waterReminderBody: 'Trinke etwa {{amount}}ml Wasser, um hydriert zu bleiben.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // de
+gamification: {
+  kicker: 'DEIN FORTSCHRITT',
+  title: 'Fitness-Reise',
+  subtitle: 'Erledige Missionen, halte deine Serie und steige im Level auf.',
+  level: 'Level',
+  todayStreak: 'Serie',
+  bestStreak: 'Beste',
+  workouts: 'Workouts',
+  dailyMissions: 'Tägliche Missionen',
+  achievementsTitle: 'Erfolge',
+  completed: 'Fertig',
+  claim: 'Abholen',
+  startWorkout: 'Starten',
+  completeWorkout: 'Workout abschließen',
+  unlocked: 'Erfolg freigeschaltet!',
+  workoutCompletedMessage: 'Gut gemacht! XP und Serie wurden aktualisiert.',
+  alreadyCompletedToday: 'Dieses Workout wurde bereits abgeschlossen.',
+
+  missions: {
+    workout: 'Heutiges Workout abschließen',
+    water: 'Wasserziel erreichen',
+    weight: 'Gewicht aktualisieren',
+    nutritionTip: 'Einen Ernährungstipp lesen',
+  },
+
+  achievements: {
+    firstWorkout: 'Erstes Workout',
+    tenWorkouts: '10 Workouts',
+    twentyFiveWorkouts: '25 Workouts',
+    streak3: '3-Tage-Serie',
+    streak7: '7-Tage-Serie',
+    level5: 'Level 5 erreichen',
+    level10: 'Level 10 erreichen',
+    mission10: '10 Missionen abschließen',
+    water7: '7 Tage Wasser trinken',
+  },
+},
 };
 
 const zh = {
@@ -2820,6 +3026,10 @@ reminderOffText: '已关闭 • 点击选择时间',
 dailyReminderTitle: '该训练了！💪',
 dailyReminderBody:
   '打开 Insanity Deluxe Edition，完成今天的训练。',
+// zh
+inactiveReminderTitle: '我们想你了 💪',
+inactiveReminderBody:
+  '你已经 3 天没有训练了。打开 Insanity Deluxe Edition，继续你的训练吧。',
 },
   "onboard": {
     "title": "让我们开始吧 👋",
@@ -3183,7 +3393,45 @@ waterReminderBody: '喝大约 {{amount}}ml 水，保持身体水分充足。',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // zh
+gamification: {
+  kicker: '你的进度',
+  title: '健身旅程',
+  subtitle: '完成任务，保持连续训练并提升等级。',
+  level: '等级',
+  todayStreak: '连续天数',
+  bestStreak: '最佳',
+  workouts: '训练',
+  dailyMissions: '每日任务',
+  achievementsTitle: '成就',
+  completed: '完成',
+  claim: '领取',
+  startWorkout: '开始',
+  completeWorkout: '完成训练',
+  unlocked: '成就已解锁！',
+  workoutCompletedMessage: '做得好！XP 和连续天数已更新。',
+  alreadyCompletedToday: '该训练已经完成。',
+
+  missions: {
+    workout: '完成今天的训练',
+    water: '达到饮水目标',
+    weight: '更新体重',
+    nutritionTip: '阅读一个营养建议',
+  },
+
+  achievements: {
+    firstWorkout: '第一次训练',
+    tenWorkouts: '10 次训练',
+    twentyFiveWorkouts: '25 次训练',
+    streak3: '连续 3 天',
+    streak7: '连续 7 天',
+    level5: '达到等级 5',
+    level10: '达到等级 10',
+    mission10: '完成 10 个任务',
+    water7: '连续 7 天饮水',
+  },
+},
 };
 
 const ja = {
@@ -3308,6 +3556,10 @@ reminderOffText: 'オフ • タップして時間を選択',
 dailyReminderTitle: 'トレーニングの時間です！💪',
 dailyReminderBody:
   'Insanity Deluxe Edition を開いて、今日のセッションを完了しましょう。',
+  // ja
+inactiveReminderTitle: 'お待ちしています 💪',
+inactiveReminderBody:
+  '3日間トレーニングしていません。Insanity Deluxe Edition を開いて、トレーニングを続けましょう。',
 },
   "onboard": {
     "title": "さあ、始めましょう 👋",
@@ -3671,7 +3923,45 @@ waterReminderBody: '水分補給のために約{{amount}}mlの水を飲みまし
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // ja
+gamification: {
+  kicker: 'あなたの進捗',
+  title: 'フィットネスの旅',
+  subtitle: 'ミッションを達成し、連続記録を伸ばしてレベルアップしましょう。',
+  level: 'レベル',
+  todayStreak: '連続記録',
+  bestStreak: '最高',
+  workouts: 'ワークアウト',
+  dailyMissions: 'デイリーミッション',
+  achievementsTitle: '実績',
+  completed: '完了',
+  claim: '受け取る',
+  startWorkout: '開始',
+  completeWorkout: 'ワークアウトを完了',
+  unlocked: '実績を解除しました！',
+  workoutCompletedMessage: 'よくできました！XP と連続記録が更新されました。',
+  alreadyCompletedToday: 'このワークアウトはすでに完了しています。',
+
+  missions: {
+    workout: '今日のワークアウトを完了',
+    water: '水分目標を達成',
+    weight: '体重を更新',
+    nutritionTip: '栄養アドバイスを1つ読む',
+  },
+
+  achievements: {
+    firstWorkout: '初めてのワークアウト',
+    tenWorkouts: '10回のワークアウト',
+    twentyFiveWorkouts: '25回のワークアウト',
+    streak3: '3日連続',
+    streak7: '7日連続',
+    level5: 'レベル5に到達',
+    level10: 'レベル10に到達',
+    mission10: '10個のミッションを完了',
+    water7: '7日間水分補給',
+  },
+},
 };
 
 const ko = {
@@ -3796,6 +4086,10 @@ reminderOffText: '꺼짐 • 탭하여 시간 선택',
 dailyReminderTitle: '운동할 시간이에요! 💪',
 dailyReminderBody:
   'Insanity Deluxe Edition을 열고 오늘의 운동을 완료하세요.',
+  // ko
+inactiveReminderTitle: '보고 싶었어요 💪',
+inactiveReminderBody:
+  '3일 동안 운동하지 않았어요. Insanity Deluxe Edition을 열고 훈련을 계속하세요.',
 },
   "onboard": {
     "title": "시작해 볼까요 👋",
@@ -4159,7 +4453,45 @@ waterReminderBody: '수분 유지를 위해 약 {{amount}}ml의 물을 마셔보
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // ko
+gamification: {
+  kicker: '나의 진행 상황',
+  title: '피트니스 여정',
+  subtitle: '미션을 완료하고 연속 기록을 유지하며 레벨을 올려보세요.',
+  level: '레벨',
+  todayStreak: '연속 기록',
+  bestStreak: '최고 기록',
+  workouts: '운동',
+  dailyMissions: '일일 미션',
+  achievementsTitle: '업적',
+  completed: '완료',
+  claim: '받기',
+  startWorkout: '시작',
+  completeWorkout: '운동 완료',
+  unlocked: '업적 잠금 해제!',
+  workoutCompletedMessage: '잘했어요! XP와 연속 기록이 업데이트되었습니다.',
+  alreadyCompletedToday: '이 운동은 이미 완료되었습니다.',
+
+  missions: {
+    workout: '오늘의 운동 완료하기',
+    water: '물 섭취 목표 달성하기',
+    weight: '체중 업데이트하기',
+    nutritionTip: '영양 팁 하나 읽기',
+  },
+
+  achievements: {
+    firstWorkout: '첫 운동',
+    tenWorkouts: '운동 10회',
+    twentyFiveWorkouts: '운동 25회',
+    streak3: '3일 연속 기록',
+    streak7: '7일 연속 기록',
+    level5: '레벨 5 달성',
+    level10: '레벨 10 달성',
+    mission10: '미션 10개 완료',
+    water7: '7일 물 마시기',
+  },
+},
 };
 
 const ru = {
@@ -4284,6 +4616,10 @@ reminderOffText: 'Отключено • нажмите, чтобы выбрат
 dailyReminderTitle: 'Пора тренироваться! 💪',
 dailyReminderBody:
   'Откройте Insanity Deluxe Edition и завершите сегодняшнюю тренировку.',
+  // ru
+inactiveReminderTitle: 'Мы скучаем по вам 💪',
+inactiveReminderBody:
+  'Вы не тренировались уже 3 дня. Откройте Insanity Deluxe Edition и продолжите тренировку.',
 },
   "onboard": {
     "title": "Давайте начнем 👋",
@@ -4647,7 +4983,45 @@ waterReminderBody: 'Выпейте около {{amount}}мл воды, чтоб�
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // ru
+gamification: {
+  kicker: 'ВАШ ПРОГРЕСС',
+  title: 'Фитнес-путь',
+  subtitle: 'Выполняйте миссии, сохраняйте серию и повышайте уровень.',
+  level: 'Уровень',
+  todayStreak: 'Серия',
+  bestStreak: 'Лучший',
+  workouts: 'Тренировки',
+  dailyMissions: 'Ежедневные миссии',
+  achievementsTitle: 'Достижения',
+  completed: 'Готово',
+  claim: 'Получить',
+  startWorkout: 'Начать',
+  completeWorkout: 'Завершить тренировку',
+  unlocked: 'Достижение разблокировано!',
+  workoutCompletedMessage: 'Отлично! XP и серия обновлены.',
+  alreadyCompletedToday: 'Эта тренировка уже завершена.',
+
+  missions: {
+    workout: 'Завершить сегодняшнюю тренировку',
+    water: 'Достичь цели по воде',
+    weight: 'Обновить вес',
+    nutritionTip: 'Прочитать один совет по питанию',
+  },
+
+  achievements: {
+    firstWorkout: 'Первая тренировка',
+    tenWorkouts: '10 тренировок',
+    twentyFiveWorkouts: '25 тренировок',
+    streak3: 'Серия 3 дня',
+    streak7: 'Серия 7 дней',
+    level5: 'Достичь 5 уровня',
+    level10: 'Достичь 10 уровня',
+    mission10: 'Выполнить 10 миссий',
+    water7: 'Пить воду 7 дней',
+  },
+},
 };
 
 const ar = {
@@ -4772,6 +5146,10 @@ reminderOffText: 'متوقف • اضغط لاختيار الوقت',
 dailyReminderTitle: 'حان وقت التمرين! 💪',
 dailyReminderBody:
   'افتح Insanity Deluxe Edition وأكمل تمرين اليوم.',
+  // ar
+inactiveReminderTitle: 'اشتقنا إليك 💪',
+inactiveReminderBody:
+  'لم تتمرن منذ 3 أيام. افتح Insanity Deluxe Edition وتابع تدريبك.',
 },
   "onboard": {
     "title": "لنبدأ الآن 👋",
@@ -5135,7 +5513,45 @@ waterReminderBody: 'اشرب حوالي {{amount}}ml من الماء للحفا�
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // ar
+gamification: {
+  kicker: 'تقدمك',
+  title: 'رحلة اللياقة',
+  subtitle: 'أكمل المهام، حافظ على السلسلة وارفع مستواك.',
+  level: 'المستوى',
+  todayStreak: 'السلسلة',
+  bestStreak: 'الأفضل',
+  workouts: 'التمارين',
+  dailyMissions: 'المهام اليومية',
+  achievementsTitle: 'الإنجازات',
+  completed: 'تم',
+  claim: 'استلام',
+  startWorkout: 'ابدأ',
+  completeWorkout: 'إكمال التمرين',
+  unlocked: 'تم فتح إنجاز!',
+  workoutCompletedMessage: 'عمل رائع! تم تحديث نقاط XP والسلسلة.',
+  alreadyCompletedToday: 'تم إكمال هذا التمرين بالفعل.',
+
+  missions: {
+    workout: 'أكمل تمرين اليوم',
+    water: 'حقق هدف شرب الماء',
+    weight: 'حدّث وزنك',
+    nutritionTip: 'اقرأ نصيحة غذائية واحدة',
+  },
+
+  achievements: {
+    firstWorkout: 'أول تمرين',
+    tenWorkouts: '10 تمارين',
+    twentyFiveWorkouts: '25 تمرينًا',
+    streak3: 'سلسلة 3 أيام',
+    streak7: 'سلسلة 7 أيام',
+    level5: 'الوصول إلى المستوى 5',
+    level10: 'الوصول إلى المستوى 10',
+    mission10: 'إكمال 10 مهام',
+    water7: 'شرب الماء لمدة 7 أيام',
+  },
+},
 };
 
 const hi = {
@@ -5260,6 +5676,10 @@ reminderOffText: 'बंद • समय चुनने के लिए ट�
 dailyReminderTitle: 'वर्कआउट का समय हो गया! 💪',
 dailyReminderBody:
   'Insanity Deluxe Edition खोलें और आज का सेशन पूरा करें।',
+ // hi
+inactiveReminderTitle: 'हमें आपकी याद आ रही है 💪',
+inactiveReminderBody:
+  'आपने 3 दिनों से वर्कआउट नहीं किया है। Insanity Deluxe Edition खोलें और अपनी ट्रेनिंग जारी रखें।', 
 },
   "onboard": {
     "title": "चलिए शुरू करते हैं 👋",
@@ -5623,7 +6043,45 @@ waterReminderBody: 'हाइड्रेटेड रहने के लिए
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // hi
+gamification: {
+  kicker: 'आपकी प्रगति',
+  title: 'फिटनेस यात्रा',
+  subtitle: 'मिशन पूरे करें, अपनी स्ट्रीक बनाए रखें और लेवल बढ़ाएं।',
+  level: 'लेवल',
+  todayStreak: 'स्ट्रीक',
+  bestStreak: 'सर्वश्रेष्ठ',
+  workouts: 'वर्कआउट',
+  dailyMissions: 'दैनिक मिशन',
+  achievementsTitle: 'उपलब्धियां',
+  completed: 'पूरा',
+  claim: 'क्लेम करें',
+  startWorkout: 'शुरू करें',
+  completeWorkout: 'वर्कआउट पूरा करें',
+  unlocked: 'उपलब्धि अनलॉक हुई!',
+  workoutCompletedMessage: 'बहुत बढ़िया! XP और स्ट्रीक अपडेट हो गए।',
+  alreadyCompletedToday: 'यह वर्कआउट पहले ही पूरा हो चुका है।',
+
+  missions: {
+    workout: 'आज का वर्कआउट पूरा करें',
+    water: 'पानी का लक्ष्य पूरा करें',
+    weight: 'अपना वजन अपडेट करें',
+    nutritionTip: 'एक पोषण टिप पढ़ें',
+  },
+
+  achievements: {
+    firstWorkout: 'पहला वर्कआउट',
+    tenWorkouts: '10 वर्कआउट',
+    twentyFiveWorkouts: '25 वर्कआउट',
+    streak3: '3 दिन की स्ट्रीक',
+    streak7: '7 दिन की स्ट्रीक',
+    level5: 'लेवल 5 तक पहुंचें',
+    level10: 'लेवल 10 तक पहुंचें',
+    mission10: '10 मिशन पूरे करें',
+    water7: '7 दिन पानी पिएं',
+  },
+},
 };
 
 const th = {
@@ -5723,6 +6181,10 @@ reminderOffText: 'ปิดอยู่ • แตะเพื่อเลือ
 dailyReminderTitle: 'ถึงเวลาออกกำลังกายแล้ว! 💪',
 dailyReminderBody:
   'เปิด Insanity Deluxe Edition และทำเซสชันของวันนี้ให้เสร็จ',
+  // th
+inactiveReminderTitle: 'เราคิดถึงคุณ 💪',
+inactiveReminderBody:
+  'คุณไม่ได้ออกกำลังกายมา 3 วันแล้ว เปิด Insanity Deluxe Edition แล้วกลับมาฝึกต่อกันเถอะ',
 },
   "onboard": {
     "title": "มาเริ่มกันเลย 👋",
@@ -6111,7 +6573,45 @@ waterReminderBody: 'ดื่มน้ำประมาณ {{amount}}ml เพ�
   "appName": "WorkoutApp",
   "footer": {
     "devBy": "พัฒนาโดย {{name}}"
-  }
+  },
+  // th
+gamification: {
+  kicker: 'ความคืบหน้าของคุณ',
+  title: 'เส้นทางฟิตเนส',
+  subtitle: 'ทำภารกิจให้สำเร็จ รักษาสตรีค และเพิ่มเลเวลของคุณ',
+  level: 'เลเวล',
+  todayStreak: 'สตรีค',
+  bestStreak: 'ดีที่สุด',
+  workouts: 'การออกกำลังกาย',
+  dailyMissions: 'ภารกิจรายวัน',
+  achievementsTitle: 'ความสำเร็จ',
+  completed: 'เสร็จแล้ว',
+  claim: 'รับ',
+  startWorkout: 'เริ่ม',
+  completeWorkout: 'ออกกำลังกายเสร็จสิ้น',
+  unlocked: 'ปลดล็อกความสำเร็จแล้ว!',
+  workoutCompletedMessage: 'เยี่ยมมาก! อัปเดต XP และสตรีคแล้ว',
+  alreadyCompletedToday: 'การออกกำลังกายนี้เสร็จสิ้นแล้ว',
+
+  missions: {
+    workout: 'ทำการออกกำลังกายวันนี้ให้เสร็จ',
+    water: 'บรรลุเป้าหมายการดื่มน้ำ',
+    weight: 'อัปเดตน้ำหนักของคุณ',
+    nutritionTip: 'อ่านเคล็ดลับโภชนาการหนึ่งข้อ',
+  },
+
+  achievements: {
+    firstWorkout: 'ออกกำลังกายครั้งแรก',
+    tenWorkouts: 'ออกกำลังกาย 10 ครั้ง',
+    twentyFiveWorkouts: 'ออกกำลังกาย 25 ครั้ง',
+    streak3: 'สตรีค 3 วัน',
+    streak7: 'สตรีค 7 วัน',
+    level5: 'ถึงเลเวล 5',
+    level10: 'ถึงเลเวล 10',
+    mission10: 'ทำภารกิจ 10 รายการ',
+    water7: 'ดื่มน้ำครบ 7 วัน',
+  },
+},
 };
 
 const id = {
@@ -6236,6 +6736,10 @@ reminderOffText: 'Nonaktif • ketuk untuk memilih waktu',
 dailyReminderTitle: 'Saatnya latihan! 💪',
 dailyReminderBody:
   'Buka Insanity Deluxe Edition dan selesaikan sesi hari ini.',
+  // id
+inactiveReminderTitle: 'Kami merindukanmu 💪',
+inactiveReminderBody:
+  'Kamu belum berlatih selama 3 hari. Buka Insanity Deluxe Edition dan lanjutkan latihanmu.',
 },
   "onboard": {
     "title": "Mari kita mulai 👋",
@@ -6599,7 +7103,45 @@ waterReminderBody: 'Minum sekitar {{amount}}ml air agar tetap terhidrasi.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // id
+gamification: {
+  kicker: 'PROGRESMU',
+  title: 'Perjalanan fitness',
+  subtitle: 'Selesaikan misi, jaga streak, dan naik level.',
+  level: 'Level',
+  todayStreak: 'Streak',
+  bestStreak: 'Terbaik',
+  workouts: 'Latihan',
+  dailyMissions: 'Misi harian',
+  achievementsTitle: 'Pencapaian',
+  completed: 'Selesai',
+  claim: 'Klaim',
+  startWorkout: 'Mulai',
+  completeWorkout: 'Selesaikan latihan',
+  unlocked: 'Pencapaian terbuka!',
+  workoutCompletedMessage: 'Kerja bagus! XP dan streak diperbarui.',
+  alreadyCompletedToday: 'Latihan ini sudah diselesaikan.',
+
+  missions: {
+    workout: 'Selesaikan latihan hari ini',
+    water: 'Capai target air minum',
+    weight: 'Perbarui berat badan',
+    nutritionTip: 'Baca satu tips nutrisi',
+  },
+
+  achievements: {
+    firstWorkout: 'Latihan pertama',
+    tenWorkouts: '10 latihan',
+    twentyFiveWorkouts: '25 latihan',
+    streak3: 'Streak 3 hari',
+    streak7: 'Streak 7 hari',
+    level5: 'Capai level 5',
+    level10: 'Capai level 10',
+    mission10: 'Selesaikan 10 misi',
+    water7: 'Minum air 7 hari',
+  },
+},
 };
 
 const ms = {
@@ -6724,6 +7266,10 @@ reminderOffText: 'Mati • ketik untuk pilih masa',
 dailyReminderTitle: 'Masa untuk bersenam! 💪',
 dailyReminderBody:
   'Buka Insanity Deluxe Edition dan lengkapkan sesi hari ini.',
+  // ms
+inactiveReminderTitle: 'Kami rindukan anda 💪',
+inactiveReminderBody:
+  'Anda belum bersenam selama 3 hari. Buka Insanity Deluxe Edition dan teruskan latihan anda.',
 },
   "onboard": {
     "title": "Mari bermula 👋",
@@ -7087,7 +7633,45 @@ waterReminderBody: 'Minum kira-kira {{amount}}ml air untuk kekal hidrat.',
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // ms
+gamification: {
+  kicker: 'KEMAJUAN ANDA',
+  title: 'Perjalanan fitness',
+  subtitle: 'Selesaikan misi, kekalkan streak dan naik tahap.',
+  level: 'Tahap',
+  todayStreak: 'Streak',
+  bestStreak: 'Terbaik',
+  workouts: 'Latihan',
+  dailyMissions: 'Misi harian',
+  achievementsTitle: 'Pencapaian',
+  completed: 'Selesai',
+  claim: 'Tuntut',
+  startWorkout: 'Mula',
+  completeWorkout: 'Selesaikan latihan',
+  unlocked: 'Pencapaian dibuka!',
+  workoutCompletedMessage: 'Bagus! XP dan streak telah dikemas kini.',
+  alreadyCompletedToday: 'Latihan ini sudah diselesaikan.',
+
+  missions: {
+    workout: 'Selesaikan latihan hari ini',
+    water: 'Capai sasaran air',
+    weight: 'Kemas kini berat badan',
+    nutritionTip: 'Baca satu tip nutrisi',
+  },
+
+  achievements: {
+    firstWorkout: 'Latihan pertama',
+    tenWorkouts: '10 latihan',
+    twentyFiveWorkouts: '25 latihan',
+    streak3: 'Streak 3 hari',
+    streak7: 'Streak 7 hari',
+    level5: 'Capai tahap 5',
+    level10: 'Capai tahap 10',
+    mission10: 'Selesaikan 10 misi',
+    water7: 'Minum air 7 hari',
+  },
+},
 };
 
 const fil = {
@@ -7212,6 +7796,10 @@ reminderOffText: 'Off • i-tap para pumili ng oras',
 dailyReminderTitle: 'Oras na para mag-workout! 💪',
 dailyReminderBody:
   'Buksan ang Insanity Deluxe Edition at tapusin ang session mo ngayon.',
+  // fil
+inactiveReminderTitle: 'Na-miss ka namin 💪',
+inactiveReminderBody:
+  'Hindi ka nag-workout sa loob ng 3 araw. Buksan ang Insanity Deluxe Edition at ipagpatuloy ang training mo.',
 },
   "onboard": {
     "title": "Simulan na natin 👋",
@@ -7575,7 +8163,45 @@ waterReminderBody: 'Uminom ng mga {{amount}}ml na tubig para manatiling hydrated
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // fil
+gamification: {
+  kicker: 'PROGRESS MO',
+  title: 'Fitness journey',
+  subtitle: 'Tapusin ang missions, panatilihin ang streak, at mag-level up.',
+  level: 'Level',
+  todayStreak: 'Streak',
+  bestStreak: 'Best',
+  workouts: 'Workouts',
+  dailyMissions: 'Daily missions',
+  achievementsTitle: 'Achievements',
+  completed: 'Done',
+  claim: 'Claim',
+  startWorkout: 'Start',
+  completeWorkout: 'Tapusin ang workout',
+  unlocked: 'Achievement unlocked!',
+  workoutCompletedMessage: 'Great job! Na-update ang XP at streak.',
+  alreadyCompletedToday: 'Natapos na ang workout na ito.',
+
+  missions: {
+    workout: 'Tapusin ang workout ngayon',
+    water: 'Abutin ang water goal mo',
+    weight: 'I-update ang timbang mo',
+    nutritionTip: 'Magbasa ng isang nutrition tip',
+  },
+
+  achievements: {
+    firstWorkout: 'Unang workout',
+    tenWorkouts: '10 workouts',
+    twentyFiveWorkouts: '25 workouts',
+    streak3: '3-day streak',
+    streak7: '7-day streak',
+    level5: 'Maabot ang level 5',
+    level10: 'Maabot ang level 10',
+    mission10: 'Tapusin ang 10 missions',
+    water7: 'Uminom ng tubig nang 7 araw',
+  },
+},
 };
 
 const pt = {
@@ -7700,6 +8326,10 @@ reminderOffText: 'Desligado • toque para escolher o horário',
 dailyReminderTitle: 'Hora de treinar! 💪',
 dailyReminderBody:
   'Abra o Insanity Deluxe Edition e complete a sessão de hoje.',
+  // pt
+inactiveReminderTitle: 'Sentimos sua falta 💪',
+inactiveReminderBody:
+  'Você não treinou por 3 dias. Abra o Insanity Deluxe Edition e continue seu treino.',
 },
   "onboard": {
     "title": "¡Comencemos! 👋",
@@ -8063,7 +8693,45 @@ waterReminderBody: 'Beba cerca de {{amount}}ml de água para se manter hidratado
         "snack": "fruit, nuts or yogurt"
       }
     }
-  }
+  },
+  // pt
+gamification: {
+  kicker: 'SEU PROGRESSO',
+  title: 'Jornada fitness',
+  subtitle: 'Complete missões, mantenha sua sequência e suba de nível.',
+  level: 'Nível',
+  todayStreak: 'Sequência',
+  bestStreak: 'Melhor',
+  workouts: 'Treinos',
+  dailyMissions: 'Missões diárias',
+  achievementsTitle: 'Conquistas',
+  completed: 'Concluído',
+  claim: 'Resgatar',
+  startWorkout: 'Começar',
+  completeWorkout: 'Concluir treino',
+  unlocked: 'Conquista desbloqueada!',
+  workoutCompletedMessage: 'Ótimo trabalho! XP e sequência atualizados.',
+  alreadyCompletedToday: 'Este treino já foi concluído.',
+
+  missions: {
+    workout: 'Concluir o treino de hoje',
+    water: 'Atingir sua meta de água',
+    weight: 'Atualizar seu peso',
+    nutritionTip: 'Ler uma dica de nutrição',
+  },
+
+  achievements: {
+    firstWorkout: 'Primeiro treino',
+    tenWorkouts: '10 treinos',
+    twentyFiveWorkouts: '25 treinos',
+    streak3: 'Sequência de 3 dias',
+    streak7: 'Sequência de 7 dias',
+    level5: 'Alcançar o nível 5',
+    level10: 'Alcançar o nível 10',
+    mission10: 'Completar 10 missões',
+    water7: 'Beber água por 7 dias',
+  },
+},
 };
 
 type Dict = Record<string, any>;

@@ -46,6 +46,7 @@ import {
 import { WorkoutHistoryCard } from '../components/WorkoutHistoryCard';
 import { AchievementsCard } from '../components/AchievementsCard';
 import { ChallengeCard } from '../components/ChallengeCard';
+import { GamificationCard } from '../components/GamificationCard';
 
 const BG_IMAGE = require('../../assets/images/backgound.png');
 
@@ -428,39 +429,9 @@ export const MainScreen: React.FC<any> = () => {
                 <Text style={styles.healthText}>{advice}</Text>
               </View>
             ) : null}
+            
 
-            <View style={styles.modeCard}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.cardTitle}>
-                  {t('beginner.modeTitle', 'Beginner mode')}
-                </Text>
 
-                <Text style={styles.cardSub}>
-                  {t(
-                    'beginner.modeDesc',
-                    'Simple explanations and quick guidance for new users.',
-                  )}
-                </Text>
-              </View>
-
-              <TouchableOpacity
-                style={[
-                  styles.toggleButton,
-                  beginnerMode && styles.toggleButtonActive,
-                ]}
-                onPress={onToggleBeginnerMode}
-                activeOpacity={0.86}
-              >
-                <Text
-                  style={[
-                    styles.toggleText,
-                    beginnerMode && styles.toggleTextActive,
-                  ]}
-                >
-                  {beginnerMode ? t('common.on', 'ON') : t('common.off', 'OFF')}
-                </Text>
-              </TouchableOpacity>
-            </View>
 
             {todayWorkout && !isRestToday ? (
               <View style={styles.todayCard}>
@@ -505,7 +476,44 @@ export const MainScreen: React.FC<any> = () => {
                 </Text>
               </View>
             ) : null}
+            <GamificationCard
+  t={t as any}
+  onStartWorkout={() => {
+    navigation.getParent()?.navigate('Workout');
+  }}
+/>
+            <View style={styles.modeCard}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.cardTitle}>
+                  {t('beginner.modeTitle', 'Beginner mode')}
+                </Text>
 
+                <Text style={styles.cardSub}>
+                  {t(
+                    'beginner.modeDesc',
+                    'Simple explanations and quick guidance for new users.',
+                  )}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.toggleButton,
+                  beginnerMode && styles.toggleButtonActive,
+                ]}
+                onPress={onToggleBeginnerMode}
+                activeOpacity={0.86}
+              >
+                <Text
+                  style={[
+                    styles.toggleText,
+                    beginnerMode && styles.toggleTextActive,
+                  ]}
+                >
+                  {beginnerMode ? t('common.on', 'ON') : t('common.off', 'OFF')}
+                </Text>
+              </TouchableOpacity>
+            </View>
             {beginnerMode ? (
               <View style={styles.lightComponentWrap}>
                 <BeginnerGlossaryCard />

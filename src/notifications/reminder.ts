@@ -9,11 +9,15 @@ import notifee, {
 } from '@notifee/react-native';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '../i18n';
 
 const CHANNEL_ID = 'workout';
+
 const DAILY_REMINDER_ID = 'daily-workout-reminder';
 const INACTIVE_REMINDER_ID = 'inactive-workout-reminder';
+
 const LAST_WORKOUT_KEY = 'workout:lastAt';
+const INACTIVE_REMINDER_SCHEDULED_AT_KEY = 'workout:inactiveReminderScheduledAt';
 
 export const DAILY_REMINDER_SETTINGS_KEY = 'workout:dailyReminderSettings';
 
@@ -72,17 +76,6 @@ const normalizeDailySettings = (
   };
 };
 
-const getNextDailyTimestamp = (hour: number, minute: number) => {
-  const fire = new Date();
-  fire.setHours(hour, minute, 0, 0);
-
-  if (fire.getTime() <= Date.now()) {
-    fire.setDate(fire.getDate() + 1);
-  }
-
-  return fire.getTime();
-};
-
 const requestNotificationPermission = async () => {
   try {
     const settings = await notifee.requestPermission();
@@ -107,6 +100,25 @@ const ensureWorkoutChannel = async () => {
   });
 };
 
+const getNextDailyTimestamp = (hour: number, minute: number) => {
+  const fire = new Date();
+  fire.setHours(hour, minute, 0, 0);
+
+  if (fire.getTime() <= Date.now()) {
+    fire.setDate(fire.getDate() + 1);
+  }
+
+  return fire.getTime();
+};
+
+/**
+ * Gọi 1 lần khi app mở.
+ * Hàm này sẽ:
+ * - xin quyền notification
+ * - tạo channel Android
+ * - khôi phục nhắc hằng ngày nếu user đã bật
+ * - đặt lịch nhắc nếu 3 ngày không tập
+ */
 export async function initNotifications() {
   await requestNotificationPermission();
   await ensureWorkoutChannel();
@@ -116,6 +128,8 @@ export async function initNotifications() {
   if (daily.enabled) {
     await scheduleDailyReminder(daily.hour, daily.minute);
   }
+
+  await scheduleInactiveWorkoutReminder();
 }
 
 export async function loadDailyReminderSettings(): Promise<DailyReminderSettings> {
@@ -140,7 +154,9 @@ export async function saveDailyReminderSettings(
   return next;
 }
 
-/** Lên lịch nhắc giờ hằng ngày theo giờ người dùng chọn */
+/**
+ * Nhắc luyện tập hằng ngày theo giờ người dùng chọn.
+ */
 export async function scheduleDailyReminder(
   hour: number,
   minute: number,
@@ -167,19 +183,31 @@ export async function scheduleDailyReminder(
     },
   };
 
-  await notifee.createTriggerNotification(
-    {
-      id: DAILY_REMINDER_ID,
-      title: text.title || DEFAULT_DAILY_TEXT.title,
-      body: text.body || DEFAULT_DAILY_TEXT.body,
-      android: {
-        channelId: CHANNEL_ID,
-        pressAction: { id: 'default' },
+await notifee.createTriggerNotification(
+  {
+    id: INACTIVE_REMINDER_ID,
+    title:
+      text.title ||
+      i18n.t(
+        'settings.inactiveReminderTitle',
+        DEFAULT_INACTIVE_TEXT.title,
+      ),
+    body:
+      text.body ||
+      i18n.t(
+        'settings.inactiveReminderBody',
+        DEFAULT_INACTIVE_TEXT.body,
+      ),
+    android: {
+      channelId: CHANNEL_ID,
+      pressAction: {
+        id: 'default',
       },
-      ios: {},
     },
-    trigger,
-  );
+    ios: {},
+  },
+  trigger,
+);
 
   await saveDailyReminderSettings({
     enabled: true,
@@ -190,7 +218,6 @@ export async function scheduleDailyReminder(
   return true;
 }
 
-/** Hủy nhắc hằng ngày */
 export async function cancelDailyReminder(saveDisabled = true) {
   try {
     await notifee.cancelNotification(DAILY_REMINDER_ID);
@@ -210,29 +237,39 @@ export async function cancelDailyReminder(saveDisabled = true) {
   }
 }
 
-/** Ghi nhận user vừa tập xong / bắt đầu tập */
+/**
+ * Gọi hàm này khi user hoàn thành bài tập.
+ * Đây là phần quan trọng nhất.
+ */
 export async function markWorkoutActivity() {
   const now = Date.now();
+
   await AsyncStorage.setItem(LAST_WORKOUT_KEY, String(now));
 
   await cancelInactiveWorkoutReminder();
   await scheduleInactiveWorkoutReminder();
 }
 
-/** Đọc thời điểm tập gần nhất */
+/**
+ * Lấy thời gian tập gần nhất.
+ */
 export async function getLastWorkoutAt(): Promise<number | null> {
   try {
     const raw = await AsyncStorage.getItem(LAST_WORKOUT_KEY);
+
     if (!raw) return null;
 
     const ts = parseInt(raw, 10);
+
     return Number.isNaN(ts) ? null : ts;
   } catch {
     return null;
   }
 }
 
-/** Hủy nhắc khi user không tập trong 3 ngày */
+/**
+ * Hủy notification nhắc 3 ngày không tập.
+ */
 export async function cancelInactiveWorkoutReminder() {
   try {
     await notifee.cancelNotification(INACTIVE_REMINDER_ID);
@@ -241,9 +278,20 @@ export async function cancelInactiveWorkoutReminder() {
   try {
     await notifee.cancelTriggerNotification(INACTIVE_REMINDER_ID);
   } catch {}
+
+  try {
+    await AsyncStorage.removeItem(INACTIVE_REMINDER_SCHEDULED_AT_KEY);
+  } catch {}
 }
 
-/** Lên lịch nhắc nếu user không vào tập trong 3 ngày */
+/**
+ * Nếu user không tập 3 ngày thì gửi notification.
+ *
+ * Logic:
+ * - Nếu đã có lastWorkoutAt → nhắc sau lastWorkoutAt + 3 ngày
+ * - Nếu chưa có lastWorkoutAt → nhắc sau thời điểm hiện tại + 3 ngày
+ * - Mỗi lần gọi sẽ hủy lịch cũ rồi đặt lịch mới để tránh bị trùng notification
+ */
 export async function scheduleInactiveWorkoutReminder(
   text: Partial<ReminderText> = {},
 ) {
@@ -254,11 +302,32 @@ export async function scheduleInactiveWorkoutReminder(
   }
 
   await ensureWorkoutChannel();
-  await cancelInactiveWorkoutReminder();
+
+  try {
+    await notifee.cancelNotification(INACTIVE_REMINDER_ID);
+  } catch {}
+
+  try {
+    await notifee.cancelTriggerNotification(INACTIVE_REMINDER_ID);
+  } catch {}
+
+  const lastWorkoutAt = await getLastWorkoutAt();
+
+  const baseTime = lastWorkoutAt || Date.now();
+
+  let reminderAt = baseTime + THREE_DAYS_MS;
+
+  /**
+   * Trường hợp user mở app sau hơn 3 ngày nhưng notification chưa được schedule,
+   * đặt nhắc sau 1 phút để tránh bắn notification ngay lập tức khi đang dùng app.
+   */
+  if (reminderAt <= Date.now()) {
+    reminderAt = Date.now() + 60 * 1000;
+  }
 
   const trigger: TimestampTrigger = {
     type: TriggerType.TIMESTAMP,
-    timestamp: Date.now() + THREE_DAYS_MS,
+    timestamp: reminderAt,
     alarmManager: {
       allowWhileIdle: true,
     },
@@ -271,7 +340,56 @@ export async function scheduleInactiveWorkoutReminder(
       body: text.body || DEFAULT_INACTIVE_TEXT.body,
       android: {
         channelId: CHANNEL_ID,
-        pressAction: { id: 'default' },
+        pressAction: {
+          id: 'default',
+        },
+      },
+      ios: {},
+    },
+    trigger,
+  );
+
+  await AsyncStorage.setItem(
+    INACTIVE_REMINDER_SCHEDULED_AT_KEY,
+    String(reminderAt),
+  );
+
+  return true;
+}
+
+/**
+ * Dùng để test nhanh, ví dụ nhắc sau 1 phút.
+ */
+export async function debugScheduleInactiveWorkoutReminderInMinutes(
+  minutes: number,
+) {
+  const granted = await requestNotificationPermission();
+
+  if (!granted) {
+    return false;
+  }
+
+  await ensureWorkoutChannel();
+  await cancelInactiveWorkoutReminder();
+
+  const trigger: TimestampTrigger = {
+    type: TriggerType.TIMESTAMP,
+    timestamp: Date.now() + minutes * 60 * 1000,
+    alarmManager: {
+      allowWhileIdle: true,
+    },
+  };
+
+  await notifee.createTriggerNotification(
+    {
+      id: INACTIVE_REMINDER_ID,
+      title: DEFAULT_INACTIVE_TEXT.title,
+      body: DEFAULT_INACTIVE_TEXT.body,
+      android: {
+        channelId: CHANNEL_ID,
+        pressAction: {
+          id: 'default',
+        },
       },
       ios: {},
     },

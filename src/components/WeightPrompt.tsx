@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { addWeight, lastEntry, markPromptShown } from '../weight/weightStore';
 import { useTranslation } from 'react-i18next';
+import { markWeightUpdated } from '../services/gamification';
 
 const BG = '#06111D';
 const CARD = 'rgba(11, 22, 36, 0.98)';
@@ -44,6 +45,7 @@ export const WeightPrompt: React.FC<{
 
     if (!isNaN(v) && v > 0) {
       await addWeight(+v);
+      await markWeightUpdated();
       onSaved?.();
       onClose();
     }
