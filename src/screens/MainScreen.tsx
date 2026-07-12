@@ -44,7 +44,7 @@ import {
   ActiveChallengeState,
 } from '../store/challenges';
 import { WorkoutHistoryCard } from '../components/WorkoutHistoryCard';
-import { AchievementsCard } from '../components/AchievementsCard';
+// import { AchievementsCard } from '../components/AchievementsCard';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { GamificationCard } from '../components/GamificationCard';
 
@@ -530,9 +530,9 @@ export const MainScreen: React.FC<any> = () => {
               />
             </View>
 
-            <View style={styles.lightComponentWrap}>
+            {/* <View style={styles.lightComponentWrap}>
               <AchievementsCard items={achievements} t={t as any} />
-            </View>
+            </View> */}
 
             <View style={styles.lightComponentWrap}>
               <ChallengeCard

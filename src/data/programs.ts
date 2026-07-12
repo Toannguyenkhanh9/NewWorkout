@@ -71,147 +71,334 @@ const W = (
 // Bạn có thể thêm/bớt, app sẽ hiển thị đúng số lượng.
 const Max30: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Cardio Challenge',          'mindex1.html',  20), // Day 1 (Mon)
-  W('upper', 'Tabata Power',              'mindex2.html',  25), // Day 2 (Tue)
-  W('lower', 'Sweet Intervals',           'mindex3.html',  25), // Day 3 (Wed)
-  W('core',  'Tabata Power',              'mindex2.html',  15), // Day 4 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 5 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 6 (Sat)
+  W('hiit',  'Cardio Challenge',          'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4'), // Day 1 (Mon)
+  W('upper', 'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 2 (Tue)
+  W('lower', 'Sweet Intervals',           'mindex3.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4'), // Day 3 (Wed)
+  W('core',  'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 4 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 5 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 6 (Sat)
   { type: 'rest' },                                                // Day 7 (Sun) - Off
 
   // Week 2 (Day 8–14) – giống tuần 1
-  W('hiit',  'Cardio Challenge',          'mindex1.html',  20), // Day 8  (Mon)
-  W('upper', 'Tabata Power',              'mindex2.html',  25), // Day 9  (Tue)
-  W('lower', 'Sweet Intervals',           'mindex3.html',  25), // Day 10 (Wed)
-  W('core',  'Tabata Power',              'mindex2.html',  15), // Day 11 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 12 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 13 (Sat)
+  W('hiit',  'Cardio Challenge',          'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4'), // Day 8  (Mon)
+  W('upper', 'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 9  (Tue)
+  W('lower', 'Sweet Intervals',           'mindex3.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4'), // Day 10 (Wed)
+  W('core',  'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 11 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 12 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 13 (Sat)
   { type: 'rest' },                                                // Day 14 (Sun) - Off
 
   // Week 3 (Day 15–21)
-  W('hiit',  'Cardio Challenge',          'mindex1.html',  20), // Day 15 (Mon)
-  W('upper', 'Tabata Strength',           'mindex4.html',  25), // Day 16 (Tue)
-  W('lower', 'Sweet Intervals',           'mindex3.html',  25), // Day 17 (Wed)
-  W('core',  'Tabata Strength',           'mindex4.html',  15), // Day 18 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 19 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 20 (Sat)
+  W('hiit',  'Cardio Challenge',          'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4'), // Day 15 (Mon)
+  W('upper', 'Tabata Strength',           'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 16 (Tue)
+  W('lower', 'Sweet Intervals',           'mindex3.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4'), // Day 17 (Wed)
+  W('core',  'Tabata Strength',           'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 18 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 19 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 20 (Sat)
   { type: 'rest' },                                                // Day 21 (Sun) - Off
 
   // Week 4 (Day 22–28)
-  W('hiit',  'Cardio Challenge',          'mindex1.html',  20), // Day 22 (Mon)
-  W('upper', 'Tabata Strength',           'mindex4.html',  25), // Day 23 (Tue)
-  W('lower', 'Sweet Intervals',           'mindex3.html',  25), // Day 24 (Wed)
-  W('core',  'Tabata Strength',           'mindex4.html',  15), // Day 25 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 26 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 27 (Sat)
+  W('hiit',  'Cardio Challenge',          'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4'), // Day 22 (Mon)
+  W('upper', 'Tabata Strength',           'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 23 (Tue)
+  W('lower', 'Sweet Intervals',           'mindex3.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4'), // Day 24 (Wed)
+  W('core',  'Tabata Strength',           'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 25 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 26 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 27 (Sat)
   { type: 'rest' },                                                // Day 28 (Sun) - Off
 
   // Week 5 (Day 29–35) – bắt đầu Max Out
-  W('hiit',  'Max Out Cardio',            'mindex6.html',  20), // Day 29 (Mon)
-  W('upper', 'Max Out Power',             'mindex7.html',  25), // Day 30 (Tue)
-  W('lower', 'Max Out Sweet',             'mindex8.html',  25), // Day 31 (Wed)
-  W('core',  'Max Out Strength',          'mindex9.html',  15), // Day 32 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 33 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 34 (Sat)
+  W('hiit',  'Max Out Cardio',            'mindex6.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4'), // Day 29 (Mon)
+  W('upper', 'Max Out Power',             'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 30 (Tue)
+  W('lower', 'Max Out Sweet',             'mindex8.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4'), // Day 31 (Wed)
+  W('core',  'Max Out Strength',          'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 32 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 33 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 34 (Sat)
   { type: 'rest' },                                                // Day 35 (Sun) - Off
 
   // Week 6 (Day 36–42)
-  W('hiit',  'Max Out Cardio',            'mindex6.html',  20), // Day 36 (Mon)
-  W('upper', 'Max Out Power',             'mindex7.html',  25), // Day 37 (Tue)
-  W('lower', 'Max Out Sweet',             'mindex8.html',  25), // Day 38 (Wed)
-  W('core',  'Max Out Strength',          'mindex9.html',  15), // Day 39 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 40 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 41 (Sat)
+  W('hiit',  'Max Out Cardio',            'mindex6.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4'), // Day 36 (Mon)
+  W('upper', 'Max Out Power',             'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 37 (Tue)
+  W('lower', 'Max Out Sweet',             'mindex8.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4'), // Day 38 (Wed)
+  W('core',  'Max Out Strength',          'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 39 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 40 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 41 (Sat)
   { type: 'rest' },                                                // Day 42 (Sun) - Off
 
   // Week 7 (Day 43–49)
-  W('hiit',  'Max Out Cardio',            'mindex6.html',  20), // Day 43 (Mon)
-  W('upper', 'Max Out Power',             'mindex7.html',  25), // Day 44 (Tue)
-  W('lower', 'Max Out Sweet',             'mindex8.html',  25), // Day 45 (Wed)
-  W('core',  'Max Out Strength',          'mindex9.html',  15), // Day 46 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 47 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 48 (Sat)
+  W('hiit',  'Max Out Cardio',            'mindex6.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4'), // Day 43 (Mon)
+  W('upper', 'Max Out Power',             'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 44 (Tue)
+  W('lower', 'Max Out Sweet',             'mindex8.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4'), // Day 45 (Wed)
+  W('core',  'Max Out Strength',          'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 46 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 47 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 48 (Sat)
   { type: 'rest' },                                                // Day 49 (Sun) - Off
 
   // Week 8 (Day 50–56)
-  W('hiit',  'Max Out Cardio',            'mindex6.html',  20), // Day 50 (Mon)
-  W('upper', 'Max Out Power',             'mindex7.html',  25), // Day 51 (Tue)
-  W('lower', 'Max Out Sweet',             'mindex8.html',  25), // Day 52 (Wed)
-  W('core',  'Max Out Strength',          'mindex9.html',  15), // Day 53 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 54 (Fri)
-  W('lower', 'Cardio Challenge',          'mindex1.html', 20), // Day 55 (Sat)
+  W('hiit',  'Max Out Cardio',            'mindex6.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4'), // Day 50 (Mon)
+  W('upper', 'Max Out Power',             'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 51 (Tue)
+  W('lower', 'Max Out Sweet',             'mindex8.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4'), // Day 52 (Wed)
+  W('core',  'Max Out Strength',          'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 53 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 54 (Fri)
+  W('lower', 'Cardio Challenge',          'mindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Cardio_Challenge.mp4'), // Day 55 (Sat)
   { type: 'rest' },                                                // Day 56 (Sun) - Off
 
   // Week 9 (Day 57–63) – quay lại pattern Cardio/Tabata/Sweet
-  W('hiit',  'Cardio Challenge',          'mindex1.html',  20), // Day 57 (Mon)
-  W('upper', 'Tabata Power',              'mindex2.html',  25), // Day 58 (Tue)
-  W('lower', 'Sweet Intervals',           'mindex3.html',  25), // Day 59 (Wed)
-  W('core',  'Tabata Power',              'mindex2.html',  15), // Day 60 (Thu)
-  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 18), // Day 61 (Fri)
-  W('lower', 'Pulse',                     'mindex11.html', 20), // Day 62 (Sat)
+  W('hiit',  'Cardio Challenge',          'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Cardio_Challenge.mp4'), // Day 57 (Mon)
+  W('upper', 'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Tabata_Power.mp4'), // Day 58 (Tue)
+  W('lower', 'Sweet Intervals',           'mindex3.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Sweet_Intervals.mp4'), // Day 59 (Wed)
+  W('core',  'Tabata Power',              'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Tabata_Power.mp4'), // Day 60 (Thu)
+  W('hiit',  'Friday Fight Round 2',      'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 61 (Fri)
+  W('lower', 'Pulse',                     'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 62 (Sat)
   { type: 'rest' },                                                // Day 63 (Sun) - Off
 
   // Week 10 (Day 64–70) – thêm Ab Attack 10
-  W('hiit',  'Cardio Challenge & Ab Attack 10', 'mindex17.html', 20), // Day 64 (Mon)
-  W('upper', 'Tabata Power',                    'mindex2.html',  25), // Day 65 (Tue)
-  W('lower', 'Sweet Intervals & Ab Attack 10',  'mindex18.html', 25), // Day 66 (Wed)
-  W('core',  'Tabata Power',                    'mindex2.html',  15), // Day 67 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 68 (Fri)
-  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 20), // Day 69 (Sat)
+  W('hiit',  'Cardio Challenge & Ab Attack 10', 'mindex17.html', 60,
+  [
+    {
+      title: 'Cardio Challenge',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 64 (Mon)
+  W('upper', 'Tabata Power',                    'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 65 (Tue)
+  W('lower', 'Sweet Intervals & Ab Attack 10',  'mindex18.html', 30,
+      [
+    {
+      title: 'Sweet Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 66 (Wed)
+  W('core',  'Tabata Power',                    'mindex2.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_power.mp4'), // Day 67 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 68 (Fri)
+  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 60,
+              [
+    {
+      title: 'Pulse',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 69 (Sat)
   { type: 'rest' },                                                        // Day 70 (Sun) - Off
 
   // Week 11 (Day 71–77)
-  W('hiit',  'Cardio Challenge & Max Out ABS',  'mindex21.html', 20), // Day 71 (Mon)
-  W('upper', 'Tabata Strength',                 'mindex4.html',  25), // Day 72 (Tue)
-  W('lower', 'Sweet Intervals & 360 ABS',       'mindex22.html', 25), // Day 73 (Wed)
-  W('core',  'Tabata Strength',                 'mindex4.html',  15), // Day 74 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 75 (Fri)
-  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 20), // Day 76 (Sat)
+  W('hiit',  'Cardio Challenge & Max Out ABS',  'mindex21.html', 60,
+          [
+    {
+      title: 'Cardio Challenge',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4',
+    },
+    {
+      title: 'Max Out ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_abs.mp4',
+    },
+  ],
+  ), // Day 71 (Mon)
+  W('upper', 'Tabata Strength',                 'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 72 (Tue)
+  W('lower', 'Sweet Intervals & 360 ABS',       'mindex22.html', 30,
+              [
+    {
+      title: 'Sweet Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4',
+    },
+    {
+      title: '360 ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/360_abs.mp4',
+    },
+  ],
+  ), // Day 73 (Wed)
+  W('core',  'Tabata Strength',                 'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 74 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 75 (Fri)
+  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 60,
+                  [
+    {
+      title: 'Pulse',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Ab_Attack_10.mp4',
+    },
+  ],
+  ), // Day 76 (Sat)
   { type: 'rest' },                                                        // Day 77 (Sun) - Off
 
   // Week 12 (Day 78–84)
-  W('hiit',  'Cardio Challenge & 360 ABS',      'mindex23.html', 20), // Day 78 (Mon)
-  W('upper', 'Tabata Strength',                 'mindex4.html',  25), // Day 79 (Tue)
-  W('lower', 'Sweet Intervals & Max Out ABS',   'mindex24.html', 25), // Day 80 (Wed)
-  W('core',  'Tabata Strength',                 'mindex4.html',  15), // Day 81 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 82 (Fri)
-  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 20), // Day 83 (Sat)
+  W('hiit',  'Cardio Challenge & 360 ABS',      'mindex23.html', 60,
+              [
+    {
+      title: 'Cardio Challenge',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4',
+    },
+    {
+      title: '360 ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/360_abs.mp4',
+    },
+  ],
+  ), // Day 78 (Mon)
+  W('upper', 'Tabata Strength',                 'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 79 (Tue)
+  W('lower', 'Sweet Intervals & Max Out ABS',   'mindex24.html', 60,
+                  [
+    {
+      title: 'Sweet Intervals',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/sweat_intervals.mp4',
+    },
+    {
+      title: 'Max Out ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_abs.mp4',
+    },
+  ],
+  ), // Day 80 (Wed)
+  W('core',  'Tabata Strength',                 'mindex4.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/tabata_strength.mp4'), // Day 81 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 82 (Fri)
+  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 60,
+                      [
+    {
+      title: 'Pulse',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 83 (Sat)
   { type: 'rest' },                                                        // Day 84 (Sun) - Off
 
   // Week 13 (Day 85–91) – Max Out phase 4
-  W('hiit',  'Max Out Cardio',                  'mindex6.html',  20), // Day 85 (Mon)
-  W('upper', 'Max Out Power',                   'mindex7.html',  25), // Day 86 (Tue)
-  W('lower', 'Max Out Sweet',                   'mindex8.html',  25), // Day 87 (Wed)
-  W('core',  'Max Out Strength',                'mindex9.html',  15), // Day 88 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 89 (Fri)
-  W('lower', 'Pulse',                           'mindex11.html', 20), // Day 90 (Sat)
+  W('hiit',  'Max Out Cardio',                  'mindex6.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4'), // Day 85 (Mon)
+  W('upper', 'Max Out Power',                   'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 86 (Tue)
+  W('lower', 'Max Out Sweet',                   'mindex8.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweet.mp4'), // Day 87 (Wed)
+  W('core',  'Max Out Strength',                'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 88 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 89 (Fri)
+  W('lower', 'Pulse',                           'mindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4'), // Day 90 (Sat)
   { type: 'rest' },                                                        // Day 91 (Sun) - Off
 
   // Week 14 (Day 92–98)
-  W('hiit',  'Max Out Cardio & Ab Attack 10',   'mindex25.html', 20), // Day 92 (Mon)
-  W('upper', 'Max Out Power',                   'mindex7.html',  25), // Day 93 (Tue)
-  W('lower', 'Max Out Sweet & Ab Attack 10',    'mindex26.html', 25), // Day 94 (Wed)
-  W('core',  'Max Out Strength',                'mindex9.html',  15), // Day 95 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 96 (Fri)
-  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 20), // Day 97 (Sat)
+  W('hiit',  'Max Out Cardio & Ab Attack 10',   'mindex25.html', 60,
+                          [
+    {
+      title: 'Max Out Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 92 (Mon)
+  W('upper', 'Max Out Power',                   'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 93 (Tue)
+  W('lower', 'Max Out Sweet & Ab Attack 10',    'mindex26.html', 60,
+                              [
+    {
+      title: 'Max Out Sweet',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 94 (Wed)
+  W('core',  'Max Out Strength',                'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 95 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 96 (Fri)
+  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 60,
+                              [
+    {
+      title: 'Pulse',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 97 (Sat)
   { type: 'rest' },                                                        // Day 98 (Sun) - Off
 
   // Week 15 (Day 99–105)
-  W('hiit',  'Max Out Cardio & Max Out ABS',    'mindex27.html', 20), // Day 99 (Mon)
-  W('upper', 'Max Out Power',                   'mindex7.html',  25), // Day 100 (Tue)
-  W('lower', 'Max Out Sweet & 360 ABS',         'mindex27.html', 25), // Day 101 (Wed)
-  W('core',  'Max Out Strength',                'mindex9.html',  15), // Day 102 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 103 (Fri)
-  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 20), // Day 104 (Sat)
+  W('hiit',  'Max Out Cardio & Max Out ABS',    'mindex27.html', 60,
+                                  [
+    {
+      title: 'Max Out Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 99 (Mon)
+  W('upper', 'Max Out Power',                   'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 100 (Tue)
+  W('lower', 'Max Out Sweet & 360 ABS',         'mindex27.html', 60,
+                                      [
+    {
+      title: 'Max Out Sweet',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweet.mp4',
+    },
+    {
+      title: '360 ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/360_abs.mp4',
+    },
+  ],
+  ), // Day 101 (Wed)
+  W('core',  'Max Out Strength',                'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 102 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 103 (Fri)
+  W('lower', 'Pulse & Ab Attack 10',            'mindex19.html', 60,
+                                          [
+    {
+      title: 'Pulse',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/Pulse.mp4',
+    },
+    {
+      title: 'Ab Attack 10',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/ab_attack_10.mp4',
+    },
+  ],
+  ), // Day 104 (Sat)
   { type: 'rest' },                                                        // Day 105 (Sun) - Off
 
   // Week 16 (Day 106–112)
-  W('hiit',  'Max Out Cardio & 360 ABS',        'mindex29.html', 20), // Day 106 (Mon)
-  W('upper', 'Max Out Power',                   'mindex7.html',  25), // Day 107 (Tue)
-  W('lower', 'Max Out Sweet & Max Out ABS',     'mindex30.html', 25), // Day 108 (Wed)
-  W('core',  'Max Out Strength',                'mindex9.html',  15), // Day 109 (Thu)
-  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 18), // Day 110 (Fri)
-  W('lower', 'Cardio Challenge',                'mindex1.html',  20), // Day 111 (Sat)
+  W('hiit',  'Max Out Cardio & 360 ABS',        'mindex29.html', 60,
+                                              [
+    {
+      title: 'Max Out Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_cardio.mp4',
+    },
+    {
+      title: '360 ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/360_abs.mp4',
+    },
+  ],
+  ), // Day 106 (Mon)
+  W('upper', 'Max Out Power',                   'mindex7.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_power.mp4'), // Day 107 (Tue)
+  W('lower', 'Max Out Sweet & Max Out ABS',     'mindex30.html', 60,
+                                                  [
+    {
+      title: 'Max Out Sweet',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_sweat.mp4',
+    },
+    {
+      title: 'Max Out ABS',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_abs.mp4',
+    },
+  ],
+  ), // Day 108 (Wed)
+  W('core',  'Max Out Strength',                'mindex9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/max_out_strength.mp4'), // Day 109 (Thu)
+  W('hiit',  'Friday Fight Round 2',            'mindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/friday_fight_round_2.mp4'), // Day 110 (Fri)
+  W('lower', 'Cardio Challenge',                'mindex1.html',  30,'https://insanity-workouts-cdn.b-cdn.net/InsanityMax30/cardio_challenge.mp4'), // Day 111 (Sat)
   { type: 'rest' },                                                        // Day 112 (Sun) - Off
 ];
 const FocusT25: PlanItem[] = [
@@ -690,85 +877,195 @@ const P90X2: PlanItem[] = [
 ];
 const Insanity: PlanItem[] = [
   // MONTH 1 – Week 1 (Day 1–7)
-  W('hiit', 'Fit Test',                     'index1.html',  25), // 1
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 2
-  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40), // 3
-  W('core', 'Cardio Recovery',              'index4.html',  35), // 4
-  W('hiit', 'Pure Cardio',                  'index5.html',  40), // 5
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 6
+  W('hiit', 'Fit Test',                     'index1.html',  25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v'), // 1
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 2
+  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_power_and_resistance.m4v'), // 3
+  W('core', 'Cardio Recovery',              'index4.html',  35,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_recovery.m4v'), // 4
+  W('hiit', 'Pure Cardio',                  'index5.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v'), // 5
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 6
   { type: 'rest' },                                         // 7 (Off)
 
   // MONTH 1 – Week 2 (Day 8–14)
-  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40), // 8
-  W('hiit', 'Pure Cardio',                  'index5.html',  40), // 9
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 10
-  W('core', 'Cardio Recovery',              'index4.html',  35), // 11
-  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40), // 12
-  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55), // 13
+  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_power_and_resistance.m4v'), // 8
+  W('hiit', 'Pure Cardio',                  'index5.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v'), // 9
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 10
+  W('core', 'Cardio Recovery',              'index4.html',  35,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_recovery.m4v'), // 11
+  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_power_and_resistance.m4v'), // 12
+  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55,
+      [
+    {
+      title: 'Pure Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 13
   { type: 'rest' },                                         // 14 (Off)
 
   // MONTH 1 – Week 3 (Day 15–21)
-  W('hiit', 'Fit Test',                     'index1.html',  25), // 15
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 16
-  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55), // 17
-  W('core', 'Cardio Recovery',              'index4.html',  35), // 18
-  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40), // 19
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 20
+  W('hiit', 'Fit Test',                     'index1.html',  25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v'), // 15
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 16
+  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55,
+          [
+    {
+      title: 'Pure Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 17
+  W('core', 'Cardio Recovery',              'index4.html',  35,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_recovery.m4v'), // 18
+  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_power_and_resistance.m4v'), // 19
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 20
   { type: 'rest' },                                         // 21 (Off)
 
   // MONTH 1 – Week 4 (Day 22–28)
-  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55), // 22
-  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40), // 23
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 24
-  W('core', 'Cardio Recovery',              'index4.html',  35), // 25
-  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55), // 26
-  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40), // 27
+  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55,
+          [
+    {
+      title: 'Pure Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 22
+  W('hiit', 'Cardio Power & Resistance',    'index3.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_power_and_resistance.m4v'), // 23
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 24
+  W('core', 'Cardio Recovery',              'index4.html',  35,'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_recovery.m4v'), // 25
+  W('hiit', 'Pure Cardio & Cardio Abs',     'index14.html', 55,
+              [
+    {
+      title: 'Pure Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 26
+  W('hiit', 'Plyometric Cardio Circuit',    'index2.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 27
   { type: 'rest' },                                         // 28 (Off)
 
   // RECOVERY WEEK (Day 29–35)
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 29
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 30
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 31
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 32
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 33
-  W('core', 'Core Cardio & Balance',        'index7.html',  40), // 34
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 29
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 30
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 31
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 32
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 33
+  W('core', 'Core Cardio & Balance',        'index7.html',  40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 34
   { type: 'rest' },                                         // 35 (Off)
 
   // MONTH 2 – Week 1 (Day 36–42)
-  W('hiit', 'Fit Test & Max Interval Circuit', 'index15.html', 60), // 36
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 37
-  W('hiit', 'Max Cardio Conditioning',      'index10.html',  50), // 38
-  W('core', 'Max Recovery',                 'index11.html',  45), // 39
-  W('hiit', 'Max Interval Circuit',         'index8.html',   55), // 40
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 41
+  W('hiit', 'Fit Test & Max Interval Circuit', 'index15.html', 60,
+                  [
+    {
+      title: 'Fit Test',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v',
+    },
+    {
+      title: 'Max Interval Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v',
+    },
+  ],
+  ), // 36
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 37
+  W('hiit', 'Max Cardio Conditioning',      'index10.html',  50,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v'), // 38
+  W('core', 'Max Recovery',                 'index11.html',  45,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_recovery.m4v'), // 39
+  W('hiit', 'Max Interval Circuit',         'index8.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 40
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 41
   { type: 'rest' },                                             // 42 (Off)
 
   // MONTH 2 – Week 2 (Day 43–49)
-  W('hiit', 'Max Cardio Conditioning',      'index10.html',  50), // 43
-  W('hiit', 'Max Interval Circuit',         'index8.html',   55), // 44
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 45
-  W('core', 'Max Recovery',                 'index11.html',  45), // 46
-  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60), // 47
-  W('core', 'Core Cardio & Balance',        'index7.html',   40), // 48
+  W('hiit', 'Max Cardio Conditioning',      'index10.html',  50,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v'), // 43
+  W('hiit', 'Max Interval Circuit',         'index8.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 44
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 45
+  W('core', 'Max Recovery',                 'index11.html',  45,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_recovery.m4v'), // 46
+  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60,
+                      [
+    {
+      title: 'Max Cardio Conditioning',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 47
+  W('core', 'Core Cardio & Balance',        'index7.html',   40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 48
   { type: 'rest' },                                             // 49 (Off)
 
   // MONTH 2 – Week 3 (Day 50–56)
-  W('hiit', 'Fit Test & Max Interval Circuit', 'index15.html', 60), // 50
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 51
-  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60), // 52
-  W('core', 'Max Recovery',                 'index11.html',  45), // 53
-  W('hiit', 'Max Interval Circuit',         'index8.html',   55), // 54
-  W('core', 'Core Cardio & Balance',        'index7.html',   40), // 55
+  W('hiit', 'Fit Test & Max Interval Circuit', 'index15.html', 60,
+                          [
+    {
+      title: 'Fit Test',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v',
+    },
+    {
+      title: 'Max Interval Circuit',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v',
+    },
+  ],
+  ), // 50
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 51
+  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60,
+                              [
+    {
+      title: 'Max Cardio Conditioning',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 52
+  W('core', 'Max Recovery',                 'index11.html',  45,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_recovery.m4v'), // 53
+  W('hiit', 'Max Interval Circuit',         'index8.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 54
+  W('core', 'Core Cardio & Balance',        'index7.html',   40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 55
   { type: 'rest' },                                             // 56 (Off)
 
   // MONTH 2 – Week 4 (Day 57–63)
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 57
-  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60), // 58
-  W('hiit', 'Max Interval Circuit',         'index8.html',   55), // 59
-  W('core', 'Core Cardio & Balance',        'index7.html',   40), // 60
-  W('hiit', 'Max Interval Plyo',            'index9.html',   55), // 61
-  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60), // 62
-  W('hiit', 'Fit Test',                     'index1.html',   25), // 63
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 57
+  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60,
+                                  [
+    {
+      title: 'Max Cardio Conditioning',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 58
+  W('hiit', 'Max Interval Circuit',         'index8.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 59
+  W('core', 'Core Cardio & Balance',        'index7.html',   40,'https://insanity-workouts-cdn.b-cdn.net/Insanity/core_cardio_and_balance.m4v'), // 60
+  W('hiit', 'Max Interval Plyo',            'index9.html',   55,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 61
+  W('hiit', 'Max Cardio Conditioning & Cardio Abs', 'index16.html', 60,
+                                      [
+    {
+      title: 'Max Cardio Conditioning',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v',
+    },
+    {
+      title: 'Cardio Abs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/Insanity/cardio_abs.m4v',
+    },
+  ],
+  ), // 62
+  W('hiit', 'Fit Test',                     'index1.html',   25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v'), // 63
 ];
 const HipHopAbs: PlanItem[] = [
   // Week 1 (Day 1–7)
@@ -846,58 +1143,58 @@ const FourWeeksOfThePrep: PlanItem[] = [
 ];
 const SixWeeksOfTheWork: PlanItem[] = [
   // Week 1
-  W('upper', 'Push',                'w61index1.html', 45), // Mon
-  W('lower', 'Legs',                'w61index2.html', 45), // Tue
+  W('upper', 'Push',                'w61index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_push.mp4'), // Mon
+  W('lower', 'Legs',                'w61index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_legs.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('hiit',  'Endurance & Agility', 'w61index3.html', 40), // Thu
-  W('upper', 'Pull',                'w61index4.html', 45), // Fri
-  W('full',  'Full Body Tempo',     'w61index5.html', 45), // Sat
-  W('core',  'Range And Repair',    'w61index6.html', 30), // Sun
+  W('hiit',  'Endurance & Agility', 'w61index3.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_endurance_and_agility.mp4'), // Thu
+  W('upper', 'Pull',                'w61index4.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_pull.mp4'), // Fri
+  W('full',  'Full Body Tempo',     'w61index5.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_full_body_tempo.mp4'), // Sat
+  W('core',  'Range And Repair',    'w61index6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk1_range_and_repair.mp4'), // Sun
 
   // Week 2
-  W('full',  'Total Body Push/Pull','w62index1.html', 45), // Mon
-  W('full',  'Strength & Power',    'w62index2.html', 45), // Tue
+  W('full',  'Total Body Push/Pull','w62index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk2_total_body_push_pull.mp4'), // Mon
+  W('full',  'Strength & Power',    'w62index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk2_strength_and_power.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('core',  'Cardio & Core',       'w62index3.html', 35), // Thu
-  W('full',  'Isometrics',          'w62index4.html', 40), // Fri
-  W('full',  'The Crucible',        'w62index5.html', 50), // Sat
+  W('core',  'Cardio & Core',       'w62index3.html', 35,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk2_cardio_and_core.mp4'), // Thu
+  W('full',  'Isometrics',          'w62index4.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk2_isometrics.mp4'), // Fri
+  W('full',  'The Crucible',        'w62index5.html', 50,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk2_the_crucible.mp4'), // Sat
   W('core',  'Range And Repair',    'w62index6.html', 30), // Sun
 
   // Week 3
-  W('upper', 'Push',                'w63index1.html', 45), // Mon
-  W('lower', 'Legs',                'w63index2.html', 45), // Tue
+  W('upper', 'Push',                'w63index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_push.mp4'), // Mon
+  W('lower', 'Legs',                'w63index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_legs.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('hiit',  'Endurance & Agility', 'w63index3.html', 40), // Thu
-  W('upper', 'Pull',                'w63index4.html', 45), // Fri
-  W('full',  'Full Body Tempo',     'w63index5.html', 45), // Sat
-  W('core',  'Range And Repair',    'w63index6.html', 30), // Sun
+  W('hiit',  'Endurance & Agility', 'w63index3.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_endurance_and_agility.mp4'), // Thu
+  W('upper', 'Pull',                'w63index4.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_pull.mp4'), // Fri
+  W('full',  'Full Body Tempo',     'w63index5.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_full_body_tempo.mp4'), // Sat
+  W('core',  'Range And Repair',    'w63index6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk3_range_and_repair.mp4'), // Sun
 
   // Week 4
-  W('full',  'Total Body Push/Pull','w64index1.html', 45), // Mon
-  W('full',  'Strength & Power',    'w64index2.html', 45), // Tue
+  W('full',  'Total Body Push/Pull','w64index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4_total_body_push_pull.mp4'), // Mon
+  W('full',  'Strength & Power',    'w64index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4%20_strength_and_power.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('core',  'Cardio & Core',       'w64index3.html', 35), // Thu
-  W('full',  'Isometrics',          'w64index4.html', 40), // Fri
-  W('full',  'The Crucible',        'w64index5.html', 50), // Sat
-  W('core',  'Range And Repair',    'w64index6.html', 30), // Sun
+  W('core',  'Cardio & Core',       'w64index3.html', 35,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4_cardio_and_core.mp4'), // Thu
+  W('full',  'Isometrics',          'w64index4.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4_isometrics.mp4'), // Fri
+  W('full',  'The Crucible',        'w64index5.html', 50,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4_the_crucible.mp4'), // Sat
+  W('core',  'Range And Repair',    'w64index6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk4_range_and_repair.mp4'), // Sun
 
   // Week 5
-  W('upper', 'Push',                'w65index1.html', 45), // Mon
-  W('lower', 'Legs',                'w65index2.html', 45), // Tue
+  W('upper', 'Push',                'w65index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_push.mp4'), // Mon
+  W('lower', 'Legs',                'w65index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_legs.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('hiit',  'Endurance & Agility', 'w65index3.html', 40), // Thu
-  W('upper', 'Pull',                'w65index4.html', 45), // Fri
-  W('full',  'Full Body Tempo',     'w65index5.html', 45), // Sat
-  W('core',  'Range And Repair',    'w65index6.html', 30), // Sun
+  W('hiit',  'Endurance & Agility', 'w65index3.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_endurance_and_agility.mp4'), // Thu
+  W('upper', 'Pull',                'w65index4.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_pull.mp4'), // Fri
+  W('full',  'Full Body Tempo',     'w65index5.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_full_body_tempo.mp4'), // Sat
+  W('core',  'Range And Repair',    'w65index6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk5_range_and_repair.mp4'), // Sun
 
   // Week 6
-  W('full',  'Total Body Push/Pull','w66index1.html', 45), // Mon
-  W('full',  'Strength & Power',    'w66index2.html', 45), // Tue
+  W('full',  'Total Body Push/Pull','w66index1.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_total_body_push_pull.mp4'), // Mon
+  W('full',  'Strength & Power',    'w66index2.html', 45,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_strength_and_power.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('core',  'Cardio & Core',       'w66index3.html', 35), // Thu
-  W('full',  'Isometrics',          'w66index4.html', 40), // Fri
-  W('full',  'The Crucible',        'w66index5.html', 50), // Sat
-  W('core',  'Range And Repair',    'w66index6.html', 30), // Sun,
+  W('core',  'Cardio & Core',       'w66index3.html', 35,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_cardio_and_core.mp4'), // Thu
+  W('full',  'Isometrics',          'w66index4.html', 40,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_isometrics.mp4'), // Fri
+  W('full',  'The Crucible',        'w66index5.html', 50,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_the_crucible.mp4'), // Sat
+  W('core',  'Range And Repair',    'w66index6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/6Week/Wk6_range_and_repair.mp4'), // Sun,
 ];
 const Transform20: PlanItem[] = [
   // Week 1 (Day 1–7)
@@ -954,116 +1251,138 @@ const Transform20: PlanItem[] = [
 ];
 const Asymum1: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 1
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 2
-  W('core',  'Back to Core',                          'aindex6.html', 25), // 3
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 4
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 1
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 2
+  W('core',  'Back to Core',                          'aindex6.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 3
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 4
   { type: 'rest' }, 
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 5
-  W('core',  'Strength',                          'aindex4.html', 25), // 6
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 5
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 6
                                                  // 7 (Off)
   // Week 2 (Day 8–14)
-  W('hiit',  'Back to Core',                 'aindex6.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Relief',                          'aindex3.html', 25), // 3
-  W('hiit',  'Game Day',                 'aindex5.html', 30), // 4
-  W('hiit',  'Back to Core',                 'aindex4.html', 30), // 5
-  W('core',  'Strength',                          'aindex4.html', 25), // 6
-  W('core',  'Relief',                          'aindex3.html', 25), // 6                                            // 14 (Off)
+  W('hiit',  'Back to Core',                 'aindex6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Relief',                          'aindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 3
+  W('hiit',  'Game Day',                 'aindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 4
+  W('hiit',  'Back to Core',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 5
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 6
+  W('core',  'Relief',                          'aindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 6                                            // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Strength',                          'aindex4.html', 25), // 3
-  W('hiit',  'Relief',                 'aindex3.html', 30), // 4
-  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
-  W('core',  'Vertical Plyo',                          'aindex2.html', 25), // 6
-  W('hiit',  'Back to Core',                 'aindex4.html', 30), // 5
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 3
+  W('hiit',  'Relief',                 'aindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 5
+  W('core',  'Vertical Plyo',                          'aindex2.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 6
+  W('hiit',  'Back to Core',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 5
 
   // Week 4 (Day 22–28)
   { type: 'rest' }, 
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 2
-  W('core',  'Strength',                          'aindex4.html', 25), // 3
-  W('hiit',  'Game Day',                 'aindex5.html', 30), // 4
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 5
-  W('core',  'Back to Core',                          'aindex4.html', 25), // 6
-  W('hiit',  'Relief',                 'aindex3.html', 30), // 4                                                 // 28 (Off)
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 1
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 3
+  W('hiit',  'Game Day',                  'aindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 5
+  W('hiit',  'Vertical Plyo',             'aindex2.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 6
+  W('core',  'Back to Core',                   'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 5
+  W('hiit',  'Relief',                'aindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 4                                    // 28 (Off)
 ];
 const Asymum2: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
-  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
-  W('core',  'Power Legs',                          'aindex11.html', 25), // 3
-  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  W('hiit',  'X Trainer',                 'aindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_x_trainer.mp4'), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_upper_elite.mp4'), // 2
+  W('core',  'Power Legs',                          'aindex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_power_legs.mp4'), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_back_and_6Pack.mp4'), // 4
   { type: 'rest' }, 
-  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
-  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_championship.mp4'), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_off_day_stretch.mp4'), // 6
                                                  // 7 (Off)
   // Week 2 (Day 8–14)
-  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
-  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
-  W('core',  'Power Legs',                          'aindex11.html', 25), // 3
-  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  W('hiit',  'X Trainer',                 'aindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_x_trainer.mp4'), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_upper_elite.mp4'), // 2
+  W('core',  'Power Legs',                          'aindex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_power_legs.mp4'), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_back_and_6Pack.mp4'), // 4
   { type: 'rest' }, 
-  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
-  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_championship.mp4'), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_off_day_stretch.mp4'), // 6
                                                  // 7 (Off)                                         // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
-  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
-  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25), // 3
-  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  W('hiit',  'X Trainer',                 'aindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_x_trainer.mp4'), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_upper_elite.mp4'), // 2
+  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25,
+          [
+    {
+      title: 'Power Legs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_power_legs.mp4',
+    },
+    {
+      title: 'Ab Shredder',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_ab_shredder.mp4',
+    },
+  ],
+  ), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_back_and_6Pack.mp4'), // 4
   { type: 'rest' }, 
-  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
-  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_championship.mp4'), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_off_day_stretch.mp4'), // 6
                                                  // 7 (Off)
 
   // Week 4 (Day 22–28)
-  W('hiit',  'X Trainer',                 'aindex8.html', 30), // 1
-  W('hiit',  'Upper Elite',                 'aindex9.html', 30), // 2
-  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25), // 3
-  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30), // 4
+  W('hiit',  'X Trainer',                 'aindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_x_trainer.mp4'), // 1
+  W('hiit',  'Upper Elite',                 'aindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_upper_elite.mp4'), // 2
+  W('core',  'Power Legs & Ab Shredder',                          'aindex16.html', 25,
+              [
+    {
+      title: 'Power Legs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_power_legs.mp4',
+    },
+    {
+      title: 'Ab Shredder',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_ab_shredder.mp4',
+    },
+  ],
+  ), // 3
+  W('hiit',  'Back & 6 pack',                 'aindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_back_and_6Pack.mp4'), // 4
   { type: 'rest' }, 
-  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30), // 5
-  W('core',  'Off day Strength',                          'aindex14.html', 25), // 6                                       // 28 (Off)
+  W('hiit',  'Championship Fit Test',                 'aindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_championship.mp4'), // 5
+  W('core',  'Off day Strength',                          'aindex14.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM2/ASYLUM2_off_day_stretch.mp4'), // 6
 ];
 const AsymumInsanity: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Pure Cardio',                 'index5.html', 30), // 1
-  W('hiit',  'Max Interval Plyo',                 'index9.html', 30), // 2
-  W('core',  'Max Interval Circuit',                          'index15.html', 25), // 3
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 5
+  W('hiit',  'Pure Cardio',                 'index5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v'), // 1
+  W('hiit',  'Max Interval Plyo',                 'index9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_plyo.m4v'), // 2
+  W('core',  'Max Interval Circuit',                          'index15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 5
   { type: 'rest' }, 
-  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  W('core',  'Game Day',                          'aindex5.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 6
                                                  // 7 (Off)
   // Week 2 (Day 8–14)
-  W('hiit',  'Pure Cardio',                 'index5.html', 30), // 1
-  W('hiit',  'Plyo Cardio Circuit',                 'index2.html', 30), // 2
-  W('core',  'Relief',                          'aindex3.html', 25), // 3
+  W('hiit',  'Pure Cardio',                 'index5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/pure_cardio.m4v'), // 1
+  W('hiit',  'Plyometric Cardio Circuit',                 'index2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/plyometric_cardio_circuit.m4v'), // 2
+  W('core',  'Relief',                          'aindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 3
   { type: 'rest' }, 
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-  W('hiit',  'Max Cardio Conditioning',                 'index10.html', 30), // 5
-  W('core',  'Max Recovery',                          'index11.html', 25), // 6
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+  W('hiit',  'Max Cardio Conditioning',                 'index10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_cardio_conditioning.m4v'), // 5
+  W('core',  'Max Recovery',                          'index11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_recovery.m4v'), // 6
                                                  // 7 (Off)                                         // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('hiit',  'Back to Core ',                 'aindex6.html', 30), // 1
-  W('hiit',  'Max Interval Circuit',                 'index15.html', 30), // 2
-  W('core',  'Strength',                          'aindex4.html', 25), // 3
-  W('hiit',  'Relief',                 'aindex3.html', 30), // 4
-  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
-  W('core',  'Strength',                          'aindex4.html', 25), // 6
+  W('hiit',  'Back to Core ',                 'aindex6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 1
+  W('hiit',  'Max Interval Circuit',                 'index15.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 2
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 3
+  W('hiit',  'Relief',                 'aindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 5
+  W('core',  'Strength',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 6
   { type: 'rest' }, 
 
   // Week 4 (Day 22–28)
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 1
-  W('hiit',  'Max Interval Circuit',                 'index15.html', 30), // 2
-  W('core',  'Speed & Agility',                          'aindex1.html', 25), // 3
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 4
-  W('hiit',  'Game Day',                 'aindex5.html', 30), // 5
-  W('core',  'Relief',                          'aindex3.html', 25), // 6    
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 1
+  W('hiit',  'Max Interval Circuit',                 'index15.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Insanity/max_interval_circuit.m4v'), // 2
+  W('core',  'Speed & Agility',                          'aindex1.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 3
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 4
+  W('hiit',  'Game Day',                 'aindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 5
+  W('core',  'Relief',                          'aindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_relief.mp4'), // 6    
    { type: 'rest' }, 
 ];
 const AsymumP90x: PlanItem[] = [

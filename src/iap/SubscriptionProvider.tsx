@@ -1,15 +1,31 @@
 // FILE: src/iap/SubscriptionProvider.tsx
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as RNIap from 'react-native-iap';
+
 import {
   PREMIUM_LIFETIME_PRODUCT_ID,
   PREMIUM_MONTHLY_SUB_ID,
   PREMIUM_PRODUCT_IDS,
   PREMIUM_SUB_IDS,
   PREMIUM_STATE_KEY,
+  PREMIUM_PLUS_LIFETIME_PRODUCT_ID,
+  PREMIUM_PLUS_MONTHLY_SUB_ID,
 } from './iapConfig';
+
+import {
+  markPremiumActive,
+  markPremiumPlusActive,
+  OFFLINE_VIDEO_ACCESS_KEY,
+  PREMIUM_PLAN_KEY,
+} from '../services/premiumAccess';
 
 type IapItem = {
   productId: string;
@@ -34,7 +50,10 @@ type CtxType = {
   products: IapItem[];
   subscriptions: IapItem[];
   buyLifetime: (sku?: string) => Promise<void>;
-  buyMonthlySubscription: (sku?: string, offerToken?: string) => Promise<void>;
+  buyMonthlySubscription: (
+    sku?: string,
+    offerToken?: string,
+  ) => Promise<void>;
   restorePurchases: () => Promise<boolean>;
 };
 
@@ -51,7 +70,10 @@ const SubscriptionContext = createContext<CtxType>({
 
 async function loadProducts(): Promise<IapItem[]> {
   try {
-    const items = await (RNIap as any).getProducts({ skus: PREMIUM_PRODUCT_IDS });
+    const items = await (RNIap as any).getProducts({
+      skus: PREMIUM_PRODUCT_IDS,
+    });
+
     return Array.isArray(items) ? items : [];
   } catch (e) {
     console.log('[iap] getProducts error', e);
@@ -61,7 +83,10 @@ async function loadProducts(): Promise<IapItem[]> {
 
 async function loadSubscriptions(): Promise<IapItem[]> {
   try {
-    const items = await (RNIap as any).getSubscriptions({ skus: PREMIUM_SUB_IDS });
+    const items = await (RNIap as any).getSubscriptions({
+      skus: PREMIUM_SUB_IDS,
+    });
+
     return Array.isArray(items) ? items : [];
   } catch (e) {
     console.log('[iap] getSubscriptions error', e);
@@ -81,13 +106,22 @@ async function requestLifetimePurchase(sku: string) {
   });
 }
 
-async function requestMonthlySubscription(sku: string, offerToken?: string) {
+async function requestMonthlySubscription(
+  sku: string,
+  offerToken?: string,
+) {
   if (Platform.OS === 'android') {
-    const payload: any = { sku };
+    const payload: any = {
+      sku,
+    };
 
-    // Android subscription thường cần offerToken nếu dùng base plan / offer
     if (offerToken) {
-      payload.subscriptionOffers = [{ sku, offerToken }];
+      payload.subscriptionOffers = [
+        {
+          sku,
+          offerToken,
+        },
+      ];
     }
 
     return await (RNIap as any).requestSubscription(payload);
@@ -116,7 +150,49 @@ function isPremiumPurchase(productId?: string) {
   );
 }
 
-export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+function isPremiumPlusPurchase(productId?: string) {
+  return (
+    productId === PREMIUM_PLUS_LIFETIME_PRODUCT_ID ||
+    productId === PREMIUM_PLUS_MONTHLY_SUB_ID
+  );
+}
+
+async function applyPurchaseAccess(productId?: string) {
+  if (isPremiumPlusPurchase(productId)) {
+    await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
+    await markPremiumPlusActive();
+
+    return {
+      isPremium: true,
+      isPlus: true,
+    };
+  }
+
+  if (isPremiumPurchase(productId)) {
+    await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
+    await markPremiumActive();
+
+    return {
+      isPremium: true,
+      isPlus: false,
+    };
+  }
+
+  return {
+    isPremium: false,
+    isPlus: false,
+  };
+}
+
+async function clearPremiumAccess() {
+  await AsyncStorage.removeItem(PREMIUM_STATE_KEY);
+  await AsyncStorage.removeItem(OFFLINE_VIDEO_ACCESS_KEY);
+  await AsyncStorage.setItem(PREMIUM_PLAN_KEY, 'none');
+}
+
+export const SubscriptionProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   const [isPremium, setIsPremium] = useState(false);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
@@ -131,6 +207,7 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const init = async () => {
       try {
         const cached = await AsyncStorage.getItem(PREMIUM_STATE_KEY);
+
         if (mounted && cached === '1') {
           setIsPremium(true);
         }
@@ -139,7 +216,8 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
         if (
           Platform.OS === 'android' &&
-          typeof (RNIap as any).flushFailedPurchasesCachedAsPendingAndroid === 'function'
+          typeof (RNIap as any)
+            .flushFailedPurchasesCachedAsPendingAndroid === 'function'
         ) {
           try {
             await (RNIap as any).flushFailedPurchasesCachedAsPendingAndroid();
@@ -161,33 +239,45 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
           setSubscriptions(loadedSubs);
         }
 
-        purchaseUpdateSub = RNIap.purchaseUpdatedListener(async (purchase: any) => {
-          try {
-            console.log('[iap] purchase updated', purchase);
+        purchaseUpdateSub = RNIap.purchaseUpdatedListener(
+          async (purchase: any) => {
+            try {
+              console.log('[iap] purchase updated', purchase);
 
-            if (isPremiumPurchase(purchase?.productId)) {
-              await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
-              if (mounted) setIsPremium(true);
+              const productId = purchase?.productId;
+
+              const result = await applyPurchaseAccess(productId);
+
+              if (result.isPremium && mounted) {
+                setIsPremium(true);
+              }
+
+              await finishPurchaseSafe(purchase);
+            } catch (e) {
+              console.log('[iap] purchaseUpdatedListener error', e);
+            } finally {
+              if (mounted) {
+                setPurchasing(false);
+              }
             }
-
-            await finishPurchaseSafe(purchase);
-          } catch (e) {
-            console.log('[iap] purchaseUpdatedListener error', e);
-          } finally {
-            if (mounted) setPurchasing(false);
-          }
-        });
+          },
+        );
 
         purchaseErrorSub = RNIap.purchaseErrorListener((error: any) => {
           console.log('[iap] purchase error listener', error);
-          if (mounted) setPurchasing(false);
+
+          if (mounted) {
+            setPurchasing(false);
+          }
         });
 
         await restoreOwnedPurchasesSilently(mounted, setIsPremium);
       } catch (e) {
         console.log('[iap] init error', e);
       } finally {
-        if (mounted) setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -201,7 +291,9 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
     };
   }, []);
 
-  const buyLifetime = async (sku = PREMIUM_LIFETIME_PRODUCT_ID) => {
+  const buyLifetime = async (
+    sku = PREMIUM_LIFETIME_PRODUCT_ID,
+  ) => {
     try {
       setPurchasing(true);
       await requestLifetimePurchase(sku);
@@ -214,7 +306,7 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const buyMonthlySubscription = async (
     sku = PREMIUM_MONTHLY_SUB_ID,
-    offerToken?: string
+    offerToken?: string,
   ) => {
     try {
       setPurchasing(true);
@@ -227,7 +319,11 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   const restorePurchases = async () => {
-    return await restoreOwnedPurchasesSilently(true, setIsPremium, true);
+    return await restoreOwnedPurchasesSilently(
+      true,
+      setIsPremium,
+      true,
+    );
   };
 
   const value = useMemo(
@@ -241,7 +337,13 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
       buyMonthlySubscription,
       restorePurchases,
     }),
-    [isPremium, loading, purchasing, products, subscriptions]
+    [
+      isPremium,
+      loading,
+      purchasing,
+      products,
+      subscriptions,
+    ],
   );
 
   return (
@@ -254,22 +356,47 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 async function restoreOwnedPurchasesSilently(
   mounted: boolean,
   setIsPremium: (v: boolean) => void,
-  _forceReturn = false
+  _forceReturn = false,
 ): Promise<boolean> {
   try {
     const purchases = await RNIap.getAvailablePurchases();
+
     console.log('[iap] restore purchases =', purchases);
 
-    const owned = purchases.some((p: any) => isPremiumPurchase(p.productId));
+    const plusPurchase = purchases.find((p: any) =>
+      isPremiumPlusPurchase(p.productId),
+    );
 
-    if (owned) {
-      await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
-      if (mounted) setIsPremium(true);
+    if (plusPurchase) {
+      await applyPurchaseAccess(plusPurchase.productId);
+
+      if (mounted) {
+        setIsPremium(true);
+      }
+
       return true;
     }
 
-    await AsyncStorage.removeItem(PREMIUM_STATE_KEY);
-    if (mounted) setIsPremium(false);
+    const premiumPurchase = purchases.find((p: any) =>
+      isPremiumPurchase(p.productId),
+    );
+
+    if (premiumPurchase) {
+      await applyPurchaseAccess(premiumPurchase.productId);
+
+      if (mounted) {
+        setIsPremium(true);
+      }
+
+      return true;
+    }
+
+    await clearPremiumAccess();
+
+    if (mounted) {
+      setIsPremium(false);
+    }
+
     return false;
   } catch (e) {
     console.log('[iap] restore error', e);
@@ -277,4 +404,5 @@ async function restoreOwnedPurchasesSilently(
   }
 }
 
-export const useSubscription = () => useContext(SubscriptionContext);
+export const useSubscription = () =>
+  useContext(SubscriptionContext);

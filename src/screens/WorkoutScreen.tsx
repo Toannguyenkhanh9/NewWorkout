@@ -33,7 +33,6 @@ type EquipmentFilter = 'all' | ProgramEquipmentNeed;
 type DurationFilter = 'all' | ProgramDurationBucket;
 
 const BG = '#06111D';
-const CARD = '#0B1624';
 const CARD_2 = '#101C2B';
 const TEXT = '#F8FAFC';
 const MUTED = '#94A3B8';

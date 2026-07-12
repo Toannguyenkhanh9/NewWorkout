@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  DeviceEventEmitter,
 } from 'react-native';
 import {
   RouteProp,
   useNavigation,
   useRoute,
+  useFocusEffect,
 } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { WebView } from 'react-native-webview';
@@ -21,7 +23,12 @@ import { useKeepAwake } from '@sayem314/react-native-keep-awake';
 
 import { markWorkoutCompleted } from '../services/gamification';
 import { markWorkoutActivity } from '../notifications/reminder';
-import { useSubscription } from '../iap/SubscriptionProvider';
+import { trackWorkoutCompletedAndMaybeAsk } from '../review/rate';
+
+import {
+  hasOfflineVideoAccess,
+  PREMIUM_CHANGED_EVENT,
+} from '../services/premiumAccess';
 
 import {
   downloadWorkoutVideo,
@@ -66,7 +73,6 @@ export const WorkoutVideoScreen: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const route = useRoute<WorkoutVideoRouteProp>();
-  const { isPremium } = useSubscription();
 
   const {
     programId,
@@ -81,6 +87,29 @@ export const WorkoutVideoScreen: React.FC = () => {
   const [offlineItems, setOfflineItems] = React.useState<OfflineItem[]>([]);
   const [downloading, setDownloading] = React.useState(false);
   const [downloadProgress, setDownloadProgress] = React.useState(0);
+  const [canDownloadOffline, setCanDownloadOffline] = React.useState(false);
+
+  const reloadOfflineAccess = useCallback(async () => {
+    const ok = await hasOfflineVideoAccess();
+    setCanDownloadOffline(ok);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      reloadOfflineAccess();
+    }, [reloadOfflineAccess]),
+  );
+
+  useEffect(() => {
+    const sub = DeviceEventEmitter.addListener(
+      PREMIUM_CHANGED_EVENT,
+      reloadOfflineAccess,
+    );
+
+    return () => {
+      sub.remove();
+    };
+  }, [reloadOfflineAccess]);
 
   const offlineKey = React.useMemo(() => {
     return getOfflineVideoKey(programId, videoUrl);
@@ -119,8 +148,8 @@ export const WorkoutVideoScreen: React.FC = () => {
   const getItemOfflineKey = useCallback(
     (index: number) => {
       /**
-       * Nếu chỉ có 1 video thì dùng key cũ để tránh user phải download lại
-       * nếu trước đó đã tải bằng bản code cũ.
+       * Nếu chỉ có 1 video thì dùng key cũ để tránh user phải tải lại
+       * nếu trước đó đã download bằng bản code cũ.
        */
       if (offlineSources.length <= 1) {
         return offlineKey;
@@ -171,15 +200,15 @@ export const WorkoutVideoScreen: React.FC = () => {
     offlineItems.every((item) => !!item.path);
 
   /**
-   * Offline là tính năng Premium.
-   * Nếu user không còn Premium thì vẫn stream WebView như bình thường.
+   * Chỉ Premium Plus mới được dùng video offline.
+   * Premium thường vẫn stream WebView như cũ.
    */
-  const canUseOffline = isPremium && allVideosDownloaded;
+  const canUseOffline = canDownloadOffline && allVideosDownloaded;
 
   const downloadedSizeText = React.useMemo(() => {
     const sizes = offlineItems
       .map((item) => item.size)
-      .filter(Boolean);
+      .filter((size): size is string => !!size);
 
     if (sizes.length === 1) {
       return sizes[0];
@@ -188,13 +217,23 @@ export const WorkoutVideoScreen: React.FC = () => {
     return null;
   }, [offlineItems]);
 
+  const openPremiumScreen = () => {
+    try {
+      navigation.getParent()?.navigate('Settings', {
+        screen: 'Premium',
+      });
+    } catch {
+      navigation.navigate('Premium');
+    }
+  };
+
   const onDownloadOffline = async () => {
-    if (!isPremium) {
+    if (!canDownloadOffline) {
       Alert.alert(
-        t('premium.lockedTitle', 'Premium required'),
+        t('premium.lockedTitle', 'Premium Plus required'),
         t(
-          'premium.downloadOfflinePremium',
-          'Upgrade Premium to download workout videos and watch offline.',
+          'premium.downloadOfflinePlusRequired',
+          'Upgrade to Premium Plus to download workout videos and watch offline.',
         ),
         [
           {
@@ -203,10 +242,7 @@ export const WorkoutVideoScreen: React.FC = () => {
           },
           {
             text: t('premium.cta', 'Upgrade now'),
-            onPress: () =>
-              navigation.getParent()?.navigate('Settings', {
-                screen: 'Premium',
-              }),
+            onPress: openPremiumScreen,
           },
         ],
       );
@@ -291,6 +327,14 @@ export const WorkoutVideoScreen: React.FC = () => {
           'gamification.workoutCompletedMessage',
           'Great job! XP and streak updated.',
         ),
+        [
+          {
+            text: t('common.ok', 'OK'),
+            onPress: () => {
+              trackWorkoutCompletedAndMaybeAsk(t as any);
+            },
+          },
+        ],
       );
     } catch (e) {
       Alert.alert(
@@ -415,11 +459,14 @@ export const WorkoutVideoScreen: React.FC = () => {
           <Text style={styles.offlineDesc}>
             {canUseOffline
               ? offlineItems.length > 1
-                ? `${t('video.downloaded', 'Downloaded')} • ${downloadedCount}/${offlineSources.length}`
+                ? `${t(
+                    'video.downloaded',
+                    'Downloaded',
+                  )} • ${downloadedCount}/${offlineSources.length}`
                 : `${t('video.downloaded', 'Downloaded')}${
                     downloadedSizeText ? ` • ${downloadedSizeText}` : ''
                   }`
-              : isPremium
+              : canDownloadOffline
                 ? hasOfflineSources
                   ? offlineSources.length > 1
                     ? t(
@@ -435,8 +482,8 @@ export const WorkoutVideoScreen: React.FC = () => {
                       'Offline video is not available for this workout yet.',
                     )
                 : t(
-                    'premium.downloadOfflinePremium',
-                    'Upgrade Premium to download workout videos and watch offline.',
+                    'premium.downloadOfflinePlusRequired',
+                    'Upgrade to Premium Plus to download workout videos and watch offline.',
                   )}
           </Text>
         </View>
@@ -453,7 +500,7 @@ export const WorkoutVideoScreen: React.FC = () => {
             style={[
               styles.smallDownloadButton,
               downloading && styles.buttonDisabled,
-              !isPremium && styles.premiumLockedButton,
+              !canDownloadOffline && styles.premiumLockedButton,
             ]}
             onPress={onDownloadOffline}
             disabled={downloading}
@@ -462,11 +509,11 @@ export const WorkoutVideoScreen: React.FC = () => {
               <ActivityIndicator color="#06111D" />
             ) : (
               <Text style={styles.smallDownloadText}>
-                {isPremium
+                {canDownloadOffline
                   ? hasOfflineSources
                     ? t('video.downloadOffline', 'Download')
                     : t('video.notAvailable', 'N/A')
-                  : t('premium.premium', 'Premium')}
+                  : t('premium.plusTitle', 'Plus')}
               </Text>
             )}
           </TouchableOpacity>

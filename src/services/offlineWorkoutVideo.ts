@@ -1,46 +1,33 @@
 // FILE: src/services/offlineWorkoutVideo.ts
-import RNFS from 'react-native-fs';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OFFLINE_VIDEO_KEY = 'offlineWorkoutVideos:v1';
 
-const VIDEO_DIR = `${RNFS.DocumentDirectoryPath}/workout-videos`;
+const VIDEO_DIR = `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/workout-videos`;
 
 export type OfflineVideoMap = Record<string, string>;
 
 const CDN_BASE = 'https://insanity-workouts-cdn.b-cdn.net';
 
-/**
- * Map video HTML trong app sang video MP4 trên Bunny.
- *
- * Vì app của bạn hiện đang mở WebView bằng index1.html, findex1.html...
- * còn Bunny là file mp4, nên cần map.
- *
- * Ví dụ screenshot của bạn:
- * https://insanity-workouts-cdn.b-cdn.net/T25Focus/ab_intervals.mp4
- */
 const BUNNY_VIDEO_MAP: Record<string, string> = {
-  /**
-   * Format key:
-   * programId|videoUrl
-   *
-   * Bạn thêm dần các video thật ở đây.
-   */
-
   // Focus T25
-  'FocusT25|findex1.html': `${CDN_BASE}/T25Focus/ab_intervals.mp4`,
+  'FocusT25|findex1.html':
+    `${CDN_BASE}/T25Focus/ab_intervals.mp4`,
 
-  // Ví dụ nếu bạn upload theo tên file giống html:
-  // 'Insanity|index1.html': `${CDN_BASE}/Insanity/index1.mp4`,
-  // 'Insanity|index2.html': `${CDN_BASE}/Insanity/index2.mp4`,
-  // 'FocusT25|findex2.html': `${CDN_BASE}/T25Focus/findex2.mp4`,
+  // Ví dụ:
+  // 'FocusT25|findex2.html':
+  //   `${CDN_BASE}/T25Focus/cardio.mp4`,
+  //
+  // 'Insanity|index1.html':
+  //   `${CDN_BASE}/Insanity/fit_test.mp4`,
 };
 
 const ensureVideoDir = async () => {
-  const exists = await RNFS.exists(VIDEO_DIR);
+  const exists = await ReactNativeBlobUtil.fs.exists(VIDEO_DIR);
 
   if (!exists) {
-    await RNFS.mkdir(VIDEO_DIR);
+    await ReactNativeBlobUtil.fs.mkdir(VIDEO_DIR);
   }
 };
 
@@ -59,19 +46,15 @@ const safeFileName = (key: string) => {
   return `${hashText(key)}.mp4`;
 };
 
-const normalizeProgramId = (programId: string) => {
-  return String(programId || '').trim();
-};
-
-const normalizeVideoUrl = (videoUrl: string) => {
-  return String(videoUrl || '').trim();
+const normalize = (value: string | undefined | null) => {
+  return String(value || '').trim();
 };
 
 export const getOfflineVideoKey = (
   programId: string,
   videoUrl: string,
 ) => {
-  return `${normalizeProgramId(programId)}|${normalizeVideoUrl(videoUrl)}`;
+  return `${normalize(programId)}|${normalize(videoUrl)}`;
 };
 
 export const getWorkoutDownloadUrl = (
@@ -87,52 +70,75 @@ export const loadOfflineVideos = async (): Promise<OfflineVideoMap> => {
   try {
     const raw = await AsyncStorage.getItem(OFFLINE_VIDEO_KEY);
 
-    if (!raw) return {};
+    if (!raw) {
+      return {};
+    }
 
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+
+    if (!parsed || typeof parsed !== 'object') {
+      return {};
+    }
+
+    return parsed;
   } catch {
     return {};
   }
 };
 
 const saveOfflineVideos = async (map: OfflineVideoMap) => {
-  await AsyncStorage.setItem(OFFLINE_VIDEO_KEY, JSON.stringify(map));
+  await AsyncStorage.setItem(
+    OFFLINE_VIDEO_KEY,
+    JSON.stringify(map),
+  );
 };
 
 export const getOfflineVideoPath = async (
   offlineKey: string,
 ): Promise<string | null> => {
-  const map = await loadOfflineVideos();
-  const path = map[offlineKey];
+  try {
+    const map = await loadOfflineVideos();
+    const path = map[offlineKey];
 
-  if (!path) return null;
+    if (!path) {
+      return null;
+    }
 
-  const exists = await RNFS.exists(path);
+    const exists = await ReactNativeBlobUtil.fs.exists(path);
 
-  if (!exists) {
-    delete map[offlineKey];
-    await saveOfflineVideos(map);
+    if (!exists) {
+      delete map[offlineKey];
+      await saveOfflineVideos(map);
+      return null;
+    }
+
+    return path;
+  } catch {
     return null;
   }
-
-  return path;
 };
 
 export const getOfflineVideoSizeText = async (
   offlineKey: string,
 ) => {
-  const path = await getOfflineVideoPath(offlineKey);
+  try {
+    const path = await getOfflineVideoPath(offlineKey);
 
-  if (!path) return null;
+    if (!path) {
+      return null;
+    }
 
-  const stat = await RNFS.stat(path);
-  const size = Number(stat.size || 0);
+    const stat = await ReactNativeBlobUtil.fs.stat(path);
+    const size = Number(stat.size || 0);
 
-  if (size >= 1024 * 1024 * 1024) {
-    return `${(size / 1024 / 1024 / 1024).toFixed(2)} GB`;
+    if (size >= 1024 * 1024 * 1024) {
+      return `${(size / 1024 / 1024 / 1024).toFixed(2)} GB`;
+    }
+
+    return `${(size / 1024 / 1024).toFixed(1)} MB`;
+  } catch {
+    return null;
   }
-
-  return `${(size / 1024 / 1024).toFixed(1)} MB`;
 };
 
 export const downloadWorkoutVideo = async (
@@ -140,11 +146,15 @@ export const downloadWorkoutVideo = async (
   downloadUrl: string,
   onProgress?: (progress: number) => void,
 ) => {
+  if (!downloadUrl) {
+    throw new Error('Download URL is empty.');
+  }
+
   await ensureVideoDir();
 
   const filePath = `${VIDEO_DIR}/${safeFileName(offlineKey)}`;
 
-  const exists = await RNFS.exists(filePath);
+  const exists = await ReactNativeBlobUtil.fs.exists(filePath);
 
   if (exists) {
     const map = await loadOfflineVideos();
@@ -156,27 +166,45 @@ export const downloadWorkoutVideo = async (
     return filePath;
   }
 
-  const result = RNFS.downloadFile({
-    fromUrl: downloadUrl,
-    toFile: filePath,
-    background: true,
-    discretionary: true,
-    progressDivider: 1,
-    progress: (res) => {
-      if (!res.contentLength) return;
+  const task = ReactNativeBlobUtil.config({
+    path: filePath,
+    fileCache: true,
+  }).fetch('GET', downloadUrl);
 
-      const percent = Math.round(
-        (res.bytesWritten / res.contentLength) * 100,
-      );
-
-      onProgress?.(Math.min(100, Math.max(0, percent)));
+  task.progress(
+    {
+      interval: 250,
     },
-  });
+    (received, total) => {
+      const totalNum = Number(total);
+      const receivedNum = Number(received);
 
-  const response = await result.promise;
+      if (!totalNum) {
+        return;
+      }
 
-  if (response.statusCode && response.statusCode >= 400) {
-    throw new Error(`Download failed: ${response.statusCode}`);
+      const percent = Math.round((receivedNum / totalNum) * 100);
+
+      onProgress?.(
+        Math.min(100, Math.max(0, percent)),
+      );
+    },
+  );
+
+  const response = await task;
+
+  const status = response.info().status;
+
+  if (status >= 400) {
+    try {
+      const failedExists = await ReactNativeBlobUtil.fs.exists(filePath);
+
+      if (failedExists) {
+        await ReactNativeBlobUtil.fs.unlink(filePath);
+      }
+    } catch {}
+
+    throw new Error(`Download failed: ${status}`);
   }
 
   const map = await loadOfflineVideos();
@@ -186,20 +214,4 @@ export const downloadWorkoutVideo = async (
   onProgress?.(100);
 
   return filePath;
-};
-
-export const deleteOfflineVideo = async (offlineKey: string) => {
-  const map = await loadOfflineVideos();
-  const path = map[offlineKey];
-
-  if (path) {
-    const exists = await RNFS.exists(path);
-
-    if (exists) {
-      await RNFS.unlink(path);
-    }
-  }
-
-  delete map[offlineKey];
-  await saveOfflineVideos(map);
 };
