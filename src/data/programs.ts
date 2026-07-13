@@ -720,123 +720,123 @@ const FocusT25: PlanItem[] = [
 ];
 const P90X1: PlanItem[] = [
   // PHASE 1 – Week 1 (Day 1–7)
-  W('upper', 'Chest And Back',          'pindex12.html', 60), // 1
-  W('hiit',  'Plyometrics',             'pindex7.html',  60), // 2
-  W('upper', 'Shoulders And Arms',      'pindex8.html',  60), // 3
-  W('core',  'Yoga X',                  'pindex9.html',  60), // 4
-  W('lower', 'Legs And Back',           'pindex3.html',  60), // 5
-  W('hiit',  'Kenpo X',                 'pindex10.html', 60), // 6
-  W('core',  'Rest Or Stretch',         'pindex6.html',  60), // 7
+  W('upper', 'Chest And Back',          'pindex12.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 1
+  W('hiit',  'Plyometrics',             'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 2
+  W('upper', 'Shoulders And Arms',      'pindex8.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 3
+  W('core',  'Yoga X',                  'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 4
+  W('lower', 'Legs And Back',           'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 5
+  W('hiit',  'Kenpo X',                 'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 6
+  W('core',  'Rest Or Stretch',         'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 7
 
   // PHASE 1 – Week 2 (Day 8–14)
-  W('upper', 'Chest And Back',          'pindex12.html', 60), // 8
-  W('hiit',  'Plyometrics',             'pindex7.html',  60), // 9
-  W('upper', 'Shoulders And Arms',      'pindex8.html',  60), // 10
-  W('core',  'Yoga X',                  'pindex9.html',  60), // 11
-  W('lower', 'Legs And Back',           'pindex3.html',  60), // 12
-  W('hiit',  'Kenpo X',                 'pindex10.html', 60), // 13
-  W('core',  'Rest Or Stretch',         'pindex6.html',  60), // 14
+  W('upper', 'Chest And Back',          'pindex12.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 8
+  W('hiit',  'Plyometrics',             'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 9
+  W('upper', 'Shoulders And Arms',      'pindex8.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 10
+  W('core',  'Yoga X',                  'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 11
+  W('lower', 'Legs And Back',           'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 12
+  W('hiit',  'Kenpo X',                 'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 13
+  W('core',  'Rest Or Stretch',         'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 14
 
   // PHASE 1 – Week 3 (Day 15–21)
-  W('upper', 'Chest And Back',          'pindex12.html', 60), // 15
-  W('hiit',  'Plyometrics',             'pindex7.html',  60), // 16
-  W('upper', 'Shoulders And Arms',      'pindex8.html',  60), // 17
-  W('core',  'Yoga X',                  'pindex9.html',  60), // 18
-  W('lower', 'Legs And Back',           'pindex3.html',  60), // 19
-  W('hiit',  'Kenpo X',                 'pindex10.html', 60), // 20
-  W('core',  'Rest Or Stretch',         'pindex6.html',  60), // 21
+  W('upper', 'Chest And Back',          'pindex12.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 15
+  W('hiit',  'Plyometrics',             'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 16
+  W('upper', 'Shoulders And Arms',      'pindex8.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 17
+  W('core',  'Yoga X',                  'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 18
+  W('lower', 'Legs And Back',           'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 19
+  W('hiit',  'Kenpo X',                 'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 20
+  W('core',  'Rest Or Stretch',         'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 21
 
   // PHASE 1 – Week 4 (Recovery) (Day 22–28)
-  W('core',  'Yoga X',                  'pindex9.html',  60), // 22
-  W('core',  'Core Synergistics',       'pindex4.html',  60), // 23
-  W('hiit',  'Kenpo X',                 'pindex10.html', 60), // 24
-  W('core',  'Stretch',                 'pindex6.html',  60), // 25
-  W('hiit',  'Cardio X',                'pindex2.html',  60), // 26
-  W('core',  'Yoga X',                  'pindex9.html',  60), // 27
-  W('core',  'Rest Or Stretch',         'pindex6.html',  60), // 28
+  W('core',  'Yoga X',                  'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 22
+  W('core',  'Core Synergistics',       'pindex4.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/core_synergistics.mp4'), // 23
+  W('hiit',  'Kenpo X',                 'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 24
+  W('core',  'Stretch',                 'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 25
+  W('hiit',  'Cardio X',                'pindex2.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/cardio_x.mp4'), // 26
+  W('core',  'Yoga X',                  'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 27
+  W('core',  'Rest Or Stretch',         'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 28
 
   // PHASE 2 – Week 5 (Day 29–35)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 29
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 30
-  W('upper', 'Back And Biceps',            'pindex5.html',  60), // 31
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 32
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 33
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 34
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 35
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 29
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 30
+  W('upper', 'Back And Biceps',            'pindex5.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 31
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 32
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 33
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 34
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 35
 
   // PHASE 2 – Week 6 (Day 36–42)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 36
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 37
-  W('upper', 'Back And Biceps',            'pindex5.html',  60), // 38
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 39
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 40
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 36
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 37
+  W('upper', 'Back And Biceps',            'pindex5.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 38
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 39
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 40
   // gốc dùng pindex11.html cho Kenpo X, mình sửa về pindex10.html cho đúng pattern
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 41
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 42
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 41
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 42
 
   // PHASE 2 – Week 7 (Day 43–49)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 43
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 44
-  W('upper', 'Back And Biceps',            'pindex5.html',  60), // 45
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 46
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 43
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 44
+  W('upper', 'Back And Biceps',            'pindex5.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 45
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 46
   // gốc: "index3.html" / "index10.html" -> sửa thành pindex3 / pindex10 cho đúng
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 47
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 48
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 49
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 47
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 48
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 49
 
   // PHASE 2 – Week 8 (Recovery) (Day 50–56)
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 50
-  W('core',  'Core Synergistics',          'pindex4.html',  60), // 51
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 52
-  W('core',  'Stretch',                    'pindex6.html',  60), // 53
-  W('hiit',  'Cardio X',                   'pindex2.html',  60), // 54
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 55
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 56
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 50
+  W('core',  'Core Synergistics',          'pindex4.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/core_synergistics.mp4'), // 51
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 52
+  W('core',  'Stretch',                    'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 53
+  W('hiit',  'Cardio X',                   'pindex2.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/cardio_x.mp4'), // 54
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 55
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 56
 
   // PHASE 3 – Week 9 (Day 57–63)
-  W('upper', 'Chest And Back',             'pindex12.html', 60), // 57
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 58
-  W('upper', 'Shoulders And Arms',         'pindex8.html',  60), // 59
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 60
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 61
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 62
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 63
+  W('upper', 'Chest And Back',             'pindex12.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 57
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 58
+  W('upper', 'Shoulders And Arms',         'pindex8.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 59
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 60
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 61
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 62
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 63
 
   // PHASE 3 – Week 10 (Day 64–70)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 64
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 65
-  W('upper', 'Back And Biceps',            'pindex5.html',  60), // 66
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 67
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 68
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 69
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 70
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 64
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 65
+  W('upper', 'Back And Biceps',            'pindex5.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 66
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 67
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 68
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 69
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 70
 
   // PHASE 3 – Week 11 (Day 71–77)
-  W('upper', 'Chest And Back',             'pindex12.html', 60), // 71
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 72
-  W('upper', 'Shoulders And Arms',         'pindex8.html',  60), // 73
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 74
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 75
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 76
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 77
+  W('upper', 'Chest And Back',             'pindex12.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 71
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 72
+  W('upper', 'Shoulders And Arms',         'pindex8.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 73
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 74
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 75
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 76
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 77
 
   // PHASE 3 – Week 12 (Day 78–84)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 78
-  W('hiit',  'Plyometrics',                'pindex7.html',  60), // 79
-  W('upper', 'Back And Biceps',            'pindex5.html',  60), // 80
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 81
-  W('lower', 'Legs And Back',              'pindex3.html',  60), // 82
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 83
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 84
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 78
+  W('hiit',  'Plyometrics',                'pindex7.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/plyometrics.mp4'), // 79
+  W('upper', 'Back And Biceps',            'pindex5.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 80
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 81
+  W('lower', 'Legs And Back',              'pindex3.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 82
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 83
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 84
 
   // PHASE 3 – Final Recovery (Day 85–91)
-  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60), // 85
-  W('core',  'Core Synergistics',          'pindex4.html',  60), // 86
-  W('hiit',  'Kenpo X',                    'pindex10.html', 60), // 87
-  W('core',  'Stretch',                    'pindex6.html',  60), // 88
-  W('hiit',  'Cardio X',                   'pindex2.html',  60), // 89
-  W('core',  'Yoga X',                     'pindex9.html',  60), // 90
-  W('core',  'Rest Or Stretch',            'pindex6.html',  60), // 91
+  W('upper', 'Check Shoulder And Triceps', 'pindex11.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/check_shoulder_and_triceps.mp4'), // 85
+  W('core',  'Core Synergistics',          'pindex4.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/core_synergistics.mp4'), // 86
+  W('hiit',  'Kenpo X',                    'pindex10.html', 60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/kenpo_x.mp4'), // 87
+  W('core',  'Stretch',                    'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 88
+  W('hiit',  'Cardio X',                   'pindex2.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/cardio_x.mp4'), // 89
+  W('core',  'Yoga X',                     'pindex9.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 90
+  W('core',  'Rest Or Stretch',            'pindex6.html',  60,'https://insanity-workouts-cdn.b-cdn.net/P90X1/stretch.mp4'), // 91
 ];
 const P90X2: PlanItem[] = [
   // PHASE 1: FOUNDATION (Day 1–7)
@@ -1069,77 +1069,198 @@ const Insanity: PlanItem[] = [
 ];
 const HipHopAbs: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 1
-  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 2
-  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 3
-  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 4
-  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 5
-  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 6
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4'), // 1
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4'), // 2
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4'), // 3
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4'), // 4
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4'), // 5
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4'), // 6
   { type: 'rest' },                                                  // 7 (Off)
 
   // Week 2 (Day 8–14)
-  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30), // 8
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 9
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 10
-  W('core',  'Ab Sculpt',                          'hindex2.html', 25), // 11
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 12
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 13
+  W('hiit',  'Fat Burning Cardio',                 'hindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4'), // 8
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+             [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 9
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+    [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 10
+  W('core',  'Ab Sculpt',                          'hindex2.html', 25,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4'), // 11
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+    [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 12
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+    [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 13
   { type: 'rest' },                                                  // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 15
-  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 16
-  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40), // 17
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 18
-  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 19
-  W('lower', 'Hips, Buns & Thighs',                'hindex3.html', 30), // 20
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+        [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 15
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/total_body_burn.mov'), // 16
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40,
+            [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 17
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+            [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 18
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/total_body_burn.mov'), // 19
+  W('lower', 'Hips, Buns & Thighs',                'hindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/hips_buns_and_thighs.mp4'), // 20
   { type: 'rest' },                                                  // 21 (Off)
 
   // Week 4 (Day 22–28)
-  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 22
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 23
-  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex5.html',40), // 24
-  W('hiit',  'Total Body Burn',                    'hindex4.html', 35), // 25
-  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40), // 26
-  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40), // 27
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/total_body_burn.mov'), // 22
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+                [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 23
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex5.html',40,
+                    [
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+    {
+      title: 'Hips, Buns & Thighs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/hips_buns_and_thighs.mp4',
+    },
+  ],
+  ), // 24
+  W('hiit',  'Total Body Burn',                    'hindex4.html', 35,'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/total_body_burn.mov'), // 25
+  W('core',  'Ab Sculpt & Fat Burning Cardio',     'hindex5.html', 40,
+                [
+    {
+      title: 'Ab Sculpt',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/ab_sculpt.mp4',
+    },
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+  ],
+  ), // 26
+  W('lower', 'Fat Burning Cardio & Hips,Buns,Thighs','hindex6.html',40,
+                [
+    {
+      title: 'Fat Burning Cardio',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/fat_burning_cardio.mp4',
+    },
+    {
+      title: 'Hips,Buns,Thighs',
+      url: 'https://insanity-workouts-cdn.b-cdn.net/HitHopABS/hips_buns_and_thighs.mp4',
+    },
+  ],
+  ), // 27
   { type: 'rest' },                                                  // 28 (Off)
 ];
 const FourWeeksOfThePrep: PlanItem[] = [
   // Week 1
-  W('upper', 'Push',                'w4index8.html', 45), // Mon
-  W('lower', 'Legs',                'w4index5.html', 45), // Tue
+  W('upper', 'Push',                'w4index8.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/push.mp4'), // Mon
+  W('lower', 'Legs',                'w4index5.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/legs.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('hiit',  'Endurance & Agility', 'w4index3.html', 40), // Thu
-  W('upper', 'Pull',                'w4index6.html', 45), // Fri
-  W('full',  'Full Body Tempo',     'w4index1.html', 40), // Sat
-  W('core',  'Range And Repair',    'w4index9.html', 30), // Sun
+  W('hiit',  'Endurance & Agility', 'w4index3.html', 40,'https://insanity-workouts-cdn.b-cdn.net/4Week/endurance_and_agility.mp4'), // Thu
+  W('upper', 'Pull',                'w4index6.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/pull.mp4'), // Fri
+  W('full',  'Full Body Tempo',     'w4index1.html', 40,'https://insanity-workouts-cdn.b-cdn.net/4Week/full_body_tempo.mp4'), // Sat
+  W('core',  'Range And Repair',    'w4index9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/4Week/range_and_repair.mp4'), // Sun
 
   // Week 2
-  W('full',  'Total Body Push/Pull','w4index10.html', 45), // Mon
-  W('full',  'Strength & Power',    'w4index7.html',  45), // Tue
+  W('full',  'Total Body Push/Pull','w4index10.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/total_body_push_pull.mp4'), // Mon
+  W('full',  'Strength & Power',    'w4index7.html',  45,'https://insanity-workouts-cdn.b-cdn.net/4Week/strength_and_power.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('core',  'Cardio & Core',       'w4index2.html',  35), // Thu
-  W('full',  'Isometrics',          'w4index4.html',  40), // Fri
-  W('full',  'The Crucible',        'w4index11.html', 50), // Sat
-  W('core',  'Range And Repair',    'w4index9.html',  30), // Sun
+  W('core',  'Cardio & Core',       'w4index2.html',  35,'https://insanity-workouts-cdn.b-cdn.net/4Week/cardio_and_core.mp4'), // Thu
+  W('full',  'Isometrics',          'w4index4.html',  40,'https://insanity-workouts-cdn.b-cdn.net/4Week/isometrics.mp4'), // Fri
+  W('full',  'The Crucible',        'w4index11.html', 50,'https://insanity-workouts-cdn.b-cdn.net/4Week/the_crucible.mp4'), // Sat
+  W('core',  'Range And Repair',    'w4index9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/4Week/range_and_repair.mp4'), // Sun
 
   // Week 3 (same pattern as Week 1)
-  W('upper', 'Push',                'w4index8.html', 45), // Mon
-  W('lower', 'Legs',                'w4index5.html', 45), // Tue
+  W('upper', 'Push',                'w4index8.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/push.mp4'), // Mon
+  W('lower', 'Legs',                'w4index5.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/legs.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('hiit',  'Endurance & Agility', 'w4index3.html', 40), // Thu
-  W('upper', 'Pull',                'w4index6.html', 45), // Fri
-  W('full',  'Full Body Tempo',     'w4index1.html', 40), // Sat
-  W('core',  'Range And Repair',    'w4index9.html', 30), // Sun
+  W('hiit',  'Endurance & Agility', 'w4index3.html', 40,'https://insanity-workouts-cdn.b-cdn.net/4Week/endurance_and_agility.mp4'), // Thu
+  W('upper', 'Pull',                'w4index6.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/pull.mp4'), // Fri
+  W('full',  'Full Body Tempo',     'w4index1.html', 40,'https://insanity-workouts-cdn.b-cdn.net/4Week/full_body_tempo.mp4'), // Sat
+  W('core',  'Range And Repair',    'w4index9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/4Week/range_and_repair.mp4'), // Sun
 
   // Week 4 (same pattern as Week 2)
-  W('full',  'Total Body Push/Pull','w4index10.html', 45), // Mon
-  W('full',  'Strength & Power',    'w4index7.html',  45), // Tue
+  W('full',  'Total Body Push/Pull','w4index10.html', 45,'https://insanity-workouts-cdn.b-cdn.net/4Week/total_body_push_pull.mp4'), // Mon
+  W('full',  'Strength & Power',    'w4index7.html',  45,'https://insanity-workouts-cdn.b-cdn.net/4Week/strength_and_power.mp4'), // Tue
   { type: 'rest' },                                           // Wed (Off)
-  W('core',  'Cardio & Core',       'w4index2.html',  35), // Thu
-  W('full',  'Isometrics',          'w4index4.html',  40), // Fri
-  W('full',  'The Crucible',        'w4index11.html', 50), // Sat
-  W('core',  'Range And Repair',    'w4index9.html',  30), // Sun
+  W('core',  'Cardio & Core',       'w4index2.html',  35,'https://insanity-workouts-cdn.b-cdn.net/4Week/cardio_and_core.mp4'), // Thu
+  W('full',  'Isometrics',          'w4index4.html',  40,'https://insanity-workouts-cdn.b-cdn.net/4Week/isometrics.mp4'), // Fri
+  W('full',  'The Crucible',        'w4index11.html', 50,'https://insanity-workouts-cdn.b-cdn.net/4Week/the_crucible.mp4'), // Sat
+  W('core',  'Range And Repair',    'w4index9.html',  30,'https://insanity-workouts-cdn.b-cdn.net/4Week/range_and_repair.mp4'), // Sun
 ];
 const SixWeeksOfTheWork: PlanItem[] = [
   // Week 1
@@ -1198,55 +1319,55 @@ const SixWeeksOfTheWork: PlanItem[] = [
 ];
 const Transform20: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Burn',                 'tindex1.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex2.html', 30), // 2
-  W('core',  'Stronger',                          'tindex3.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex4.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex5.html', 30), // 5
-  W('core',  'Balanced',                          'tindex6.html', 25), // 6
+  W('hiit',  'Burn',                 'tindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_cut.mp4'), // 5
+  W('core',  'Balanced',                          'tindex6.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week1_balanced.mp4'), // 6
   { type: 'rest' },                                                  // 7 (Off)
 
   // Week 2 (Day 8–14)
-  W('hiit',  'Burn',                 'tindex7.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex8.html', 30), // 2
-  W('core',  'Stronger',                          'tindex9.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex10.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex11.html', 30), // 5
-  W('core',  'Balanced',                          'tindex12.html', 25), // 6
+  W('hiit',  'Burn',                 'tindex7.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex9.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex11.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_cut.mp4'), // 5
+  W('core',  'Balanced',                          'tindex12.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week2_balanced.mp4'), // 6
   { type: 'rest' },                                                 // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('hiit',  'Burn',                 'tindex13.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex14.html', 30), // 2
-  W('core',  'Stronger',                          'tindex15.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex16.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex17.html', 30), // 5
-  W('core',  'Balanced',                          'tindex18.html', 25), // 6
+  W('hiit',  'Burn',                 'tindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex14.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex16.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex17.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_cut.mp4'), // 5
+  W('core',  'Balanced',                          'tindex18.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week3_balanced.mp4'), // 6
   { type: 'rest' },                                                  // 21 (Off)
 
   // Week 4 (Day 22–28)
-  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
-  W('core',  'Stronger',                          'tindex21.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
-  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  W('hiit',  'Burn',                 'tindex19.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_cut.mp4'), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week4_balanced.mp4'), // 6
   { type: 'rest' }, 
     // Week 5 (Day 22–28)
-  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
-  W('core',  'Stronger',                          'tindex21.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
+  W('hiit',  'Burn',                 'tindex19.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week5_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week5_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week5_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week5_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week5_cut.mp4'), // 5
   W('core',  'Balanced',                          'tindex24.html', 25), // 6
   { type: 'rest' }, 
     // Week 6 (Day 22–28)
-  W('hiit',  'Burn',                 'tindex19.html', 30), // 1
-  W('hiit',  'Faster',                 'tindex20.html', 30), // 2
-  W('core',  'Stronger',                          'tindex21.html', 25), // 3
-  W('hiit',  'Powerful',                 'tindex22.html', 30), // 4
-  W('hiit',  'Cut',                 'tindex23.html', 30), // 5
-  W('core',  'Balanced',                          'tindex24.html', 25), // 6
+  W('hiit',  'Burn',                 'tindex19.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_burn.mp4'), // 1
+  W('hiit',  'Faster',                 'tindex20.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_faster.mp4'), // 2
+  W('core',  'Stronger',                          'tindex21.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_stronger.mp4'), // 3
+  W('hiit',  'Powerful',                 'tindex22.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_powerful.mp4'), // 4
+  W('hiit',  'Cut',                 'tindex23.html', 30,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_cut.mp4'), // 5
+  W('core',  'Balanced',                          'tindex24.html', 25,'https://insanity-workouts-cdn.b-cdn.net/Transform20/Week6_balanced.mp4'), // 6
   { type: 'rest' },                                                  // 28 (Off)
 ];
 const Asymum1: PlanItem[] = [
@@ -1387,41 +1508,115 @@ const AsymumInsanity: PlanItem[] = [
 ];
 const AsymumP90x: PlanItem[] = [
   // Week 1 (Day 1–7)
-  W('hiit',  'Chest & Back',                 'pindex12.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
-  W('hiit',  'Yoga X',                 'pindex9.html', 30), // 4
-  W('hiit',  'Legs And Back',                 'pindex3.html', 30), // 5
-  W('core',  'Speed & Agility',                          'aindex1.html', 25), // 6
+  W('hiit',  'Chest & Back',                 'pindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/chest_and_back.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 3
+  W('hiit',  'Yoga X',                 'pindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 4
+  W('hiit',  'Legs And Back',                 'pindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 5
+  W('core',  'Speed & Agility',                          'aindex1.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 6
   { type: 'rest' }, 
   // Week 2 (Day 8–14)
-  W('hiit',  'Back And Biceps',                 'pindex5.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-  W('hiit',  'Legs And Back',                 'pindex3.html', 30), // 5
-  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  W('hiit',  'Back And Biceps',                 'pindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/back_and_biceps.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+  W('hiit',  'Legs And Back',                 'pindex3.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/legs_and_back.mp4'), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 6
   { type: 'rest' },                                     // 14 (Off)
 
   // Week 3 (Day 15–21)
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Shoulders And Arms',                          'pindex8.html', 25), // 3
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 5
-  W('core',  'Game Day',                          'aindex5.html', 25), // 6
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Shoulders And Arms',                          'pindex8.html', 25,'https://insanity-workouts-cdn.b-cdn.net/P90X1/shoulders_and_arms.mp4'), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 6
   { type: 'rest' }, 
 
   // Week 4 (Day 22–28)
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 1
-  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30), // 2
-  W('core',  'Back to Core',                          'aindex4.html', 25), // 3
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-  W('hiit',  'Strength',                 'aindex4.html', 30), // 5
-  W('core',  'Game Day',                          'aindex5.html', 25), // 6
-  W('hiit',  'Yoga X',                 'pindex9.html', 30), // 4
-  W('hiit',  'Speed & Agility',                 'aindex1.html', 30), // 4
-    W('hiit', 'Fit Test',                     'index1.html',  25), // 1
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 1
+  W('hiit',  'Vertical Plyo',                 'aindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_vertical_plyo.mp4'), // 2
+  W('core',  'Back to Core',                          'aindex4.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_back_to_core.mp4'), // 3
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+  W('hiit',  'Strength',                 'aindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_strength.mp4'), // 5
+  W('core',  'Game Day',                          'aindex5.html', 25,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_game_day.mp4'), // 6
+  W('hiit',  'Yoga X',                 'pindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/P90X1/yoga_x.mp4'), // 4
+  W('hiit',  'Speed & Agility',                 'aindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/ASYLUM1/ASYLUM1_speed_and_agility.mp4'), // 4
+    W('hiit', 'Fit Test',                     'index1.html',  25,'https://insanity-workouts-cdn.b-cdn.net/Insanity/fit_test.m4v'), // 1
+];
+const LIIFT4: PlanItem[] = [
+  // Week 1 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex1.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week1_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex2.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week1_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex3.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week1_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex4.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week1_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' }, 
+  
+    // Week 2 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex5.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week2_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex6.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week2_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex7.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week2_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex8.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week2_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 3 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex9.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week3_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex10.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week3_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex11.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week3_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex12.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week3_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 4 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex13.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week4_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex14.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week4_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex15.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week4_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex16.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week4_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 5 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex17.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week5_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex18.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week5_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex19.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week5_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex20.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week5_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 6 (Day 1–7)
+  W('hiit','Chest/Triceps','lindex21.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week6_chest_triceps.mp4'), // 1
+  W('hiit','Back/Biceps','lindex22.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week6_back_and_biceps.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders','lindex23.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week6_shoulders.mp4'), // 3
+  W('hiit','Legs','lindex24.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week6_legs.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 7 (Day 1–7)
+  W('hiit','Chest/Back','lindex25.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week7_chest_back.mp4'), // 1
+  W('hiit','Legs','lindex26.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week7_legs.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders/Arms','lindex27.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week7_shoulders.mp4'), // 3
+  W('hiit','Full Body','lindex28.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week7_full_body.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },   
+
+    // Week 8 (Day 1–7)
+  W('hiit','Chest/Back','lindex29.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week8_chest_back.mp4'), // 1
+  W('hiit','Legs','lindex30.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week8_legs.mp4'), // 2
+  { type: 'rest' },   
+  W('core','Shoulders/Arms','lindex31.html', 25,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week8_shoulders.mp4'), // 3
+  W('hiit','Full Body','lindex32.html', 30,'https://insanity-workouts-cdn.b-cdn.net/LIIFT4/Week8_full_body.mp4'), // 5
+  { type: 'rest' },   
+  { type: 'rest' },    
+
 ];
 export const PROGRAMS: WorkoutProgram[] = [
     {
@@ -1533,13 +1728,22 @@ export const PROGRAMS: WorkoutProgram[] = [
     plan: AsymumInsanity,
     premium: true,
   },
-     {
+  {
     id: 'TheAsylump90x',
     titleKey: 'The Asylum & P90X',
     durationDays: AsymumP90x.length,
     iconColor: '#4ECDC4',
     icon: require('../../assets/images/theasylump90x.png'),
     plan: AsymumP90x,
+    premium: true,
+  },
+    {
+    id: 'LIIFT4',
+    titleKey: 'LIIFT4',
+    durationDays: LIIFT4.length,
+    iconColor: '#4ECDC4',
+    icon: require('../../assets/images/liift4.png'),
+    plan: LIIFT4,
     premium: true,
   }
 ];
