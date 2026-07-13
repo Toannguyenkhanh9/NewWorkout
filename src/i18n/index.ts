@@ -19,7 +19,8 @@ const base = {
     "more": "More",
     "program": "Program",
     "profile": "User Profile",
-    "weightChart": "Weight Chart"
+    "weightChart": "Weight Chart",
+    "gym": "Gym"
   },
   "home": {
     "title": "Choose your workout plan",
@@ -770,6 +771,72 @@ todayMenu: {
     water7: 'Drink water 7 days',
   },
 },
+gym: {
+  kicker: 'GYM TRAINING',
+  title: 'Gym workout plans',
+  subtitle:
+    'Follow structured gym programs with exercises, sets, reps and rest time.',
+  entryTitle: 'Gym training plans',
+  entryDesc:
+    'Structured gym plans with exercises, sets, reps and rest time.',
+  weeks: 'weeks',
+  daysPerWeek: 'days/week',
+  exercises: 'exercises',
+  plan: 'GYM PLAN',
+  trainingDays: 'Training days',
+  workoutDay: 'WORKOUT DAY',
+  sets: 'sets',
+  rest: 'Rest',
+  exercisesCompleted: 'exercises completed',
+  finishWorkoutDay: 'Finish workout day',
+  notDoneTitle: 'Not finished yet',
+  notDoneText:
+    'Complete all exercises before finishing this workout day.',
+  dayCompletedMessage:
+    'Great job! This gym workout day has been completed.',
+  programNotFound: 'Gym program not found',
+  dayNotFound: 'Gym workout day not found',
+
+  programs: {
+    beginnerFullBody: {
+      title: 'Beginner Full Body',
+      desc:
+        'A simple 3-day gym plan to build strength, learn technique and train the whole body.',
+    },
+    pushPullLegs: {
+      title: 'Push Pull Legs',
+      desc:
+        'A 6-day split for muscle gain using push, pull and leg training days.',
+    },
+  },
+
+  days: {
+    fullBodyA: {
+      title: 'Full Body A',
+      focus: 'Chest • Back • Legs',
+    },
+    fullBodyB: {
+      title: 'Full Body B',
+      focus: 'Legs • Back • Arms',
+    },
+    fullBodyC: {
+      title: 'Full Body C',
+      focus: 'Strength • Core • Conditioning',
+    },
+    push: {
+      title: 'Push Day',
+      focus: 'Chest • Shoulders • Triceps',
+    },
+    pull: {
+      title: 'Pull Day',
+      focus: 'Back • Biceps',
+    },
+    legs: {
+      title: 'Legs Day',
+      focus: 'Quads • Hamstrings • Glutes',
+    },
+  },
+},
 };
 
 const vi = {
@@ -787,7 +854,8 @@ const vi = {
     "more": "Thêm",
     "program": "Chương trình",
     "profile": "Hồ sơ người dùng",
-    "weightChart": "Biểu đồ cân nặng"
+    "weightChart": "Biểu đồ cân nặng",
+    gym: 'Gym',
   },
   "home": {
     "title": "Chọn chương trình tập",
@@ -1578,6 +1646,72 @@ todayMenu: {
     level10: 'Đạt cấp 10',
     mission10: 'Hoàn thành 10 nhiệm vụ',
     water7: 'Uống nước đủ 7 ngày',
+  },
+},
+gym: {
+  kicker: 'GIÁO ÁN GYM',
+  title: 'Giáo án tập thể hình',
+  subtitle:
+    'Tập theo giáo án có cấu trúc rõ ràng gồm bài tập, số hiệp, số lần và thời gian nghỉ.',
+  entryTitle: 'Giáo án tập thể hình',
+  entryDesc:
+    'Giáo án gym có bài tập, số hiệp, số lần và thời gian nghỉ rõ ràng.',
+  weeks: 'tuần',
+  daysPerWeek: 'ngày/tuần',
+  exercises: 'bài tập',
+  plan: 'GIÁO ÁN GYM',
+  trainingDays: 'Ngày tập',
+  workoutDay: 'BUỔI TẬP',
+  sets: 'hiệp',
+  rest: 'Nghỉ',
+  exercisesCompleted: 'bài đã hoàn thành',
+  finishWorkoutDay: 'Hoàn thành buổi tập',
+  notDoneTitle: 'Chưa hoàn thành',
+  notDoneText:
+    'Hãy hoàn thành tất cả bài tập trước khi kết thúc buổi tập.',
+  dayCompletedMessage:
+    'Tuyệt vời! Buổi tập gym này đã được hoàn thành.',
+  programNotFound: 'Không tìm thấy giáo án gym',
+  dayNotFound: 'Không tìm thấy buổi tập gym',
+
+  programs: {
+    beginnerFullBody: {
+      title: 'Toàn thân cho người mới',
+      desc:
+        'Giáo án gym 3 buổi/tuần giúp xây sức mạnh, học kỹ thuật và tập toàn thân.',
+    },
+    pushPullLegs: {
+      title: 'Đẩy Kéo Chân',
+      desc:
+        'Giáo án 6 buổi/tuần để tăng cơ theo nhóm Đẩy, Kéo và Chân.',
+    },
+  },
+
+  days: {
+    fullBodyA: {
+      title: 'Toàn thân A',
+      focus: 'Ngực • Lưng • Chân',
+    },
+    fullBodyB: {
+      title: 'Toàn thân B',
+      focus: 'Chân • Lưng • Tay',
+    },
+    fullBodyC: {
+      title: 'Toàn thân C',
+      focus: 'Sức mạnh • Core • Thể lực',
+    },
+    push: {
+      title: 'Ngày Đẩy',
+      focus: 'Ngực • Vai • Tay sau',
+    },
+    pull: {
+      title: 'Ngày Kéo',
+      focus: 'Lưng • Tay trước',
+    },
+    legs: {
+      title: 'Ngày Chân',
+      focus: 'Đùi trước • Đùi sau • Mông',
+    },
   },
 },
 };

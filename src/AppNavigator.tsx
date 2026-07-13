@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import i18n from './i18n';
 
@@ -28,9 +29,13 @@ import { UserProfileScreen } from './screens/UserProfileScreen';
 import { WorkoutScreen } from './screens/WorkoutScreen';
 import { WeightChartScreen } from './screens/WeightChartScreen';
 import { WorkoutHistoryScreen } from './screens/WorkoutHistoryScreen';
-import { AdBanner } from './components/AdBanner';
 import { AdvancedMealPlanScreen } from './screens/AdvancedMealPlanScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import GymProgramListScreen from './screens/GymProgramListScreen';
+import GymProgramDetailScreen from './screens/GymProgramDetailScreen';
+import GymWorkoutDayScreen from './screens/GymWorkoutDayScreen';
+
+import { AdBanner } from './components/AdBanner';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -40,6 +45,7 @@ const CARD = '#0B1624';
 const TEXT = '#F8FAFC';
 const MUTED = '#94A3B8';
 const NEON = '#7CFF3A';
+
 const PREMIUM_KEY = 'app:isPremium';
 const REMOVE_ADS_KEY = 'app:adsRemoved';
 
@@ -48,6 +54,9 @@ const enNavigator = {
     stack: {
       program: 'Program',
       workout: 'Workout',
+      gym: 'Gym Training',
+      gymPlan: 'Gym Plan',
+      workoutDay: 'Workout Day',
       more: 'More',
       profile: 'User Profile',
       guide: 'Guide',
@@ -55,8 +64,9 @@ const enNavigator = {
       weightChart: 'Weight Tracking',
     },
     tabs: {
-      main: 'Insanity Deluxe Edition',
+      main: 'Home',
       workout: 'Workout',
+      gym: 'Gym',
       nutrition: 'Nutrition',
       more: 'More',
     },
@@ -119,6 +129,70 @@ const MainStack: React.FC = () => {
         component={WorkoutHistoryScreen}
         options={{
           title: t('history.screenTitle', 'Workout History'),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const WorkoutStack: React.FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
+      <Stack.Screen
+        name="WorkoutHome"
+        component={WorkoutScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ProgramDetail"
+        component={ProgramDetailScreen}
+        options={{ title: t('tabs.program', 'Program') }}
+      />
+
+      <Stack.Screen
+        name="WorkoutVideo"
+        component={WorkoutVideoScreen}
+        options={{ title: t('tabs.workout', 'Workout') }}
+      />
+
+      <Stack.Screen
+        name="WorkoutWeb"
+        component={WorkoutVideoScreen as any}
+        options={{
+          title: t('Navigator.stack.workout', 'Workout'),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const GymStack: React.FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Stack.Navigator screenOptions={screenHeaderOptions}>
+      <Stack.Screen
+        name="GymHome"
+        component={GymProgramListScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="GymProgramDetail"
+        component={GymProgramDetailScreen}
+        options={{
+          title: t('Navigator.stack.gymPlan', 'Gym Plan'),
+        }}
+      />
+
+      <Stack.Screen
+        name="GymWorkoutDay"
+        component={GymWorkoutDayScreen}
+        options={{
+          title: t('Navigator.stack.workoutDay', 'Workout Day'),
         }}
       />
     </Stack.Navigator>
@@ -199,40 +273,6 @@ const SettingsStack: React.FC = () => {
   );
 };
 
-const WorkoutStack: React.FC = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Stack.Navigator screenOptions={screenHeaderOptions}>
-      <Stack.Screen
-        name="WorkoutHome"
-        component={WorkoutScreen}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="ProgramDetail"
-        component={ProgramDetailScreen}
-        options={{ title: t('tabs.program', 'Program') }}
-      />
-
-      <Stack.Screen
-        name="WorkoutVideo"
-        component={WorkoutVideoScreen}
-        options={{ title: t('tabs.workout', 'Workout') }}
-      />
-
-      <Stack.Screen
-        name="WorkoutWeb"
-        component={WorkoutVideoScreen as any}
-        options={{
-          title: t('Navigator.stack.workout', 'Workout'),
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const TabIcon: React.FC<{
   icon: string;
   color: string;
@@ -282,6 +322,7 @@ export const AppNavigator: React.FC = () => {
       hideSub.remove();
     };
   }, []);
+
   useEffect(() => {
     loadPremiumState();
 
@@ -335,7 +376,7 @@ export const AppNavigator: React.FC = () => {
           tabBarActiveTintColor: NEON,
           tabBarInactiveTintColor: MUTED,
           tabBarLabelStyle: {
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: '900',
             marginBottom: 2,
           },
@@ -362,7 +403,18 @@ export const AppNavigator: React.FC = () => {
           options={{
             tabBarLabel: t('tabs.workout', 'Workout'),
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon="🏋️‍♂️" color={color} focused={focused} />
+              <TabIcon icon="💪" color={color} focused={focused} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Gym"
+          component={GymStack}
+          options={{
+            tabBarLabel: t('tabs.gym', 'Gym'),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon icon="🏋️" color={color} focused={focused} />
             ),
           }}
         />
