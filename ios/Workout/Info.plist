@@ -48,5 +48,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+<string>This app uses the camera to take progress photos.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app uses your photo library to select progress photos.</string>
 </dict>
 </plist>

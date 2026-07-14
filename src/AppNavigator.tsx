@@ -34,6 +34,14 @@ import { AdvancedMealPlanScreen } from './screens/AdvancedMealPlanScreen';
 import GymProgramListScreen from './screens/GymProgramListScreen';
 import GymProgramDetailScreen from './screens/GymProgramDetailScreen';
 import GymWorkoutDayScreen from './screens/GymWorkoutDayScreen';
+import GymWorkoutModeScreen from './screens/GymWorkoutModeScreen';
+import GymProgressChartScreen from './screens/GymProgressChartScreen';
+import GymPersonalRecordsScreen from './screens/GymPersonalRecordsScreen';
+import GymInsightsScreen from './screens/GymInsightsScreen';
+import GymBodyProgressScreen from './screens/GymBodyProgressScreen';
+import GymQuickWorkoutScreen from './screens/GymQuickWorkoutScreen';
+import GymOnboardingScreen from './screens/GymOnboardingScreen';
+import GymCalendarScreen from './screens/GymCalendarScreen';
 
 import { AdBanner } from './components/AdBanner';
 
@@ -195,6 +203,66 @@ const GymStack: React.FC = () => {
           title: t('Navigator.stack.workoutDay', 'Workout Day'),
         }}
       />
+      <Stack.Screen
+  name="GymWorkoutMode"
+  component={GymWorkoutModeScreen}
+  options={{
+    title: t('gym.workoutMode', 'Workout Mode'),
+  }}
+/>
+
+<Stack.Screen
+  name="GymProgressChart"
+  component={GymProgressChartScreen}
+  options={{
+    title: t('gym.progressTitle', 'Gym progress'),
+  }}
+/>
+<Stack.Screen
+  name="GymPersonalRecords"
+  component={GymPersonalRecordsScreen}
+  options={{
+    title: t('gym.personalRecordsTitle', 'Personal Records'),
+  }}
+/>
+<Stack.Screen
+  name="GymInsights"
+  component={GymInsightsScreen}
+  options={{
+    title: t('gym.insightsTitle', 'Training insights'),
+  }}
+/>
+
+<Stack.Screen
+  name="GymBodyProgress"
+  component={GymBodyProgressScreen}
+  options={{
+    title: t('gym.bodyProgress', 'Body progress'),
+  }}
+/>
+
+<Stack.Screen
+  name="GymQuickWorkout"
+  component={GymQuickWorkoutScreen}
+  options={{
+    title: t('gym.quickWorkout', 'Quick workout'),
+  }}
+/>
+<Stack.Screen
+  name="GymOnboarding"
+  component={GymOnboardingScreen}
+  options={{
+    title: t('gym.onboardingTitle', 'Set up your gym plan'),
+  }}
+/>
+
+<Stack.Screen
+  name="GymCalendar"
+  component={GymCalendarScreen}
+  options={{
+    title: t('gym.calendarTitle', 'Workout calendar'),
+  }}
+/>
     </Stack.Navigator>
   );
 };
