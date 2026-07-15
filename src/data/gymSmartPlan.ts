@@ -614,6 +614,17 @@ const EXERCISES: Record<string, SmartGymExercise> = {
     note: 'Set up for the one-arm cable tricep extension by attaching a single grip handle to a high pulley cable and selecting the weight you want to use on the stack',
     demoUrl: v('cableonearmtricepextension.mp4'),
   },
+    dumbbellskullcrusher: {
+    id: 'dumbbell-skull-crusher',
+    name: 'Dumbbell Skull Crusher',
+    muscleGroup: 'triceps',
+    sets: 3,
+    reps: '10-12',
+    restSeconds: 60,
+    note: 'Lay on a flat bench, hold dumbbells over your head, and lower them to about 90 degrees.',
+    demoUrl: v('dumbbellskullcrusher.mp4'),
+  },
+
 
   // --------------------
   // CORE / CARDIO
