@@ -639,25 +639,55 @@ const EXERCISES: Record<string, SmartGymExercise> = {
     note: 'Keep your body straight and avoid dropping your hips.',
     demoUrl: v('plank.mp4'),
   },
-  deadBug: {
-    id: 'dead-bug',
-    name: 'Dead Bug',
-    muscleGroup: 'core',
-    sets: 3,
-    reps: '10 each side',
-    restSeconds: 45,
-    note: 'Keep your lower back close to the floor and move slowly.',
-    demoUrl: v('dead_bug.mp4'),
-  },
-  cableCrunch: {
-    id: 'cable-crunch',
-    name: 'Cable Crunch',
+    declineabcrunch: {
+    id: 'decline-ab-crunch',
+    name: 'Decline AB Crunch',
     muscleGroup: 'core',
     sets: 3,
     reps: '12-15',
     restSeconds: 60,
-    note: 'Crunch with control and avoid pulling only with your arms.',
-    demoUrl: v('cable_crunch.mp4'),
+    note: 'Lie on a decline bench with your legs secured on the end. Position your hands so they are interlocked behind your head',
+    demoUrl: v('declineabcrunch.mp4'),
+  },
+    crunch: {
+    id: 'crunch',
+    name: 'Crunch',
+    muscleGroup: 'core',
+    sets: 3,
+    reps: '12-15',
+    restSeconds: 60,
+    note: 'Lie down on your back. Plant your feet on the floor, hip-width apart',
+    demoUrl: v('crunch.mp4'),
+  },
+    abroller: {
+    id: 'ab-roller',
+    name: 'Ab Roller',
+    muscleGroup: 'core',
+    sets: 3,
+    reps: '12-15',
+    restSeconds: 60,
+    note: 'Brace your core, move hips forward, and keep a straight line',
+    demoUrl: v('abroller.mp4'),
+  },
+    mountainclimbers: {
+    id: 'mountain-climbers',
+    name: 'Mountain Climbers',
+    muscleGroup: 'core',
+    sets: 3,
+    reps: '12-15',
+    restSeconds: 60,
+    note: 'Start in a high plank position. Bring one knee toward your chest. Quickly switch legs as if running in place',
+    demoUrl: v('mountainclimbers.mp4'),
+  },
+    dumbbellsidebend: {
+    id: 'dumbbell-side-bend',
+    name: 'Dumbbell Side Bend',
+    muscleGroup: 'core',
+    sets: 3,
+    reps: '12-15',
+    restSeconds: 60,
+    note: 'Grab a set of dumbbells and sit down on the end of a flat bench with one dumbbell in each hand, palms facing in and hanging by your side',
+    demoUrl: v('dumbbellsidebend.mp4'),
   },
   treadmillWalk: {
     id: 'treadmill-walk',
@@ -667,7 +697,7 @@ const EXERCISES: Record<string, SmartGymExercise> = {
     reps: '8-12 min',
     restSeconds: 30,
     note: 'Keep a steady pace. You should be able to talk but still feel challenged.',
-    demoUrl: v('incline_treadmill_walk.mp4'),
+    demoUrl: v('treadmillWalk.mp4'),
   },
 };
 
@@ -881,7 +911,7 @@ export const buildSmartGymPlan = (
   profile?: UserGymProfile | null,
 ): SmartGymPlan => {
   const light = shouldUseLightPlan(profile);
-  const weekNumber = getAutoGymWeekNumber();
+  //const weekNumber = getAutoGymWeekNumber();
   const weekVariant = getAutoGymWeekVariant();
 
   let days: SmartGymDay[] = [];
