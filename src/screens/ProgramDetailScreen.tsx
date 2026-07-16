@@ -20,7 +20,6 @@ import { useSubscription } from '../iap/SubscriptionProvider';
 import { useToast } from '../ui/Toast';
 import { trackWorkoutTapAndMaybeAsk } from '../review/rate';
 import { markWorkoutActivity } from '../notifications/reminder';
-import { ensureTrialAccess } from '../ads/trial';
 import { markSessionCompleted } from '../store/progressStats';
 import { addWorkoutHistory } from '../store/workoutHistory';
 
@@ -189,42 +188,60 @@ title: t('program.weekTitle', {
   }, [STORAGE_KEY]);
 
   useEffect(() => {
-    (async () => {
-      if (!program) return;
+    if (!program) {
+      return;
+    }
 
-      let trial = false;
+    const locked =
+      !!program.premium &&
+      !isPremium;
 
-      if (!isPremium) {
-        trial = await ensureTrialAccess();
-      }
+    if (!locked) {
+      return;
+    }
 
-      const locked = !!program.premium && !isPremium && !trial;
-
-      if (locked) {
-        Alert.alert(
-          t('premium.lockedTitle', 'Premium required'),
-          t(
-            'premium.lockedText',
-            'This program is available for Premium users only. Upgrade to continue.',
+    Alert.alert(
+      t(
+        'premium.lockedTitle',
+        'Premium required',
+      ),
+      t(
+        'premium.lockedText',
+        'This program is available for Premium users only. Upgrade to continue.',
+      ),
+      [
+        {
+          text: t(
+            'common.cancel',
+            'Cancel',
           ),
-          [
-            {
-              text: t('common.cancel', 'Cancel'),
-              style: 'cancel',
-              onPress: () => navigation.goBack(),
-            },
-            {
-              text: t('premium.cta', 'Upgrade now'),
-              onPress: () =>
-                navigation.getParent()?.navigate('Settings', {
+          style: 'cancel',
+          onPress: () =>
+            navigation.goBack(),
+        },
+        {
+          text: t(
+            'premium.cta',
+            'Upgrade now',
+          ),
+          onPress: () =>
+            navigation
+              .getParent()
+              ?.navigate(
+                'Settings',
+                {
                   screen: 'Premium',
-                }),
-            },
-          ],
-        );
-      }
-    })();
-  }, [program, isPremium, navigation, t]);
+                },
+              ),
+        },
+      ],
+    );
+  }, [
+    program,
+    isPremium,
+    navigation,
+    t,
+  ]);
 
   const goPremium = () => {
     try {
@@ -250,10 +267,23 @@ title: t('program.weekTitle', {
        * Premium được vào ngay.
        */
       if (!isPremium) {
+        console.log(
+          '[ProgramDetail] requesting rewarded ad',
+          {
+            dayId: day.id,
+            isPremium,
+          },
+        );
+
         const result = await gateWorkout({
           isPremium: false,
           startTrialOnFirstUse: false,
         });
+
+        console.log(
+          '[ProgramDetail] rewarded result',
+          result,
+        );
 
         if (result === 'closed') {
           toast.show(
