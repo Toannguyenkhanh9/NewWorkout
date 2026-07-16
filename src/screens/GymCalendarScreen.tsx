@@ -16,6 +16,10 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import {
+  normalizeGymKey,
+  translateGymDayTitle,
+} from '../utils/gymI18n';
 
 import {
   buildSmartGymPlan,
@@ -186,7 +190,9 @@ export const GymCalendarScreen: React.FC = () => {
       >
         <View style={styles.dateBox}>
           <Text style={styles.weekdayText}>
-            {item.weekdayLabel}
+            {t(`gym.weekdays.${normalizeGymKey(item.weekdayLabel)}`, {
+              defaultValue: item.weekdayLabel,
+            })}
           </Text>
 
           <Text style={styles.dateText}>
@@ -197,7 +203,7 @@ export const GymCalendarScreen: React.FC = () => {
         <View style={styles.dayBody}>
           <Text style={styles.workoutTitle}>
             {item.workoutDay
-              ? item.workoutDay.title
+              ? translateGymDayTitle(item.workoutDay, t)
               : t('gym.recoveryDay', 'Recovery day')}
           </Text>
 

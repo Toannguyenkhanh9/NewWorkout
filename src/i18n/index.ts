@@ -1,6 +1,22 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import gymDisplayEn from './locales/gymDisplay.en';
+import gymDisplayVi from './locales/gymDisplay.vi';
+import gymDisplayEs from './locales/gymDisplay.es';
+import gymDisplayFr from './locales/gymDisplay.fr';
+import gymDisplayDe from './locales/gymDisplay.de';
+import gymDisplayZh from './locales/gymDisplay.zh';
+import gymDisplayJa from './locales/gymDisplay.ja';
+import gymDisplayKo from './locales/gymDisplay.ko';
+import gymDisplayRu from './locales/gymDisplay.ru';
+import gymDisplayAr from './locales/gymDisplay.ar';
+import gymDisplayHi from './locales/gymDisplay.hi';
+import gymDisplayTh from './locales/gymDisplay.th';
+import gymDisplayId from './locales/gymDisplay.id';
+import gymDisplayMs from './locales/gymDisplay.ms';
+import gymDisplayFil from './locales/gymDisplay.fil';
+import gymDisplayPt from './locales/gymDisplay.pt';
 
 const LANG_KEY = 'app:lang';
 
@@ -899,8 +915,7 @@ estimatedOneRepMax: 'Estimated 1RM',
 noPersonalRecords: 'No personal records yet.',
 noPersonalRecordsText:
   'Complete gym workouts and enter kg/reps to create your first PR.',
-},
-insightsKicker: 'GYM INSIGHTS',
+  insightsKicker: 'GYM INSIGHTS',
 insightsTitle: 'Training insights',
 insightsSubtitle:
   'Weekly recap, recovery, achievements and smart workout adjustment.',
@@ -985,6 +1000,143 @@ recoveryCalendarText: 'No planned workout today.',
 prevWeek: 'Prev',
 thisWeek: 'This week',
 nextWeek: 'Next',
+swapExercise: 'Swap exercise',
+chooseSimilarExercise:
+  'Choose a similar exercise for the same muscle group.',
+noSimilarExercise: 'No similar exercise found.',
+},
+exerciseNotes: {
+  light_safety:
+    'Use a comfortable weight and avoid painful range of motion.',
+  high_bmi_leg_safety:
+    'Keep the load moderate and prioritize joint-friendly control.',
+
+  squat:
+    'Brace your core, keep your chest up and push through your mid-foot.',
+  goblet_squat:
+    'Keep your chest up, brace your core and control the movement.',
+  smith_low_bar_squat:
+    'Keep your feet close enough under you, stay balanced and use full range of motion.',
+  leg_press:
+    'Keep your feet stable and do not let your knees collapse inward.',
+  leg_extensions:
+    'Control the lift and squeeze your quads at the top.',
+  lying_leg_curl:
+    'Keep your hips down and curl with controlled hamstring tension.',
+  romanian_deadlift:
+    'Push your hips back, keep your back neutral and feel your hamstrings stretch.',
+  trap_bar_deadlift:
+    'Keep your lats tight, brace your core and drive your feet into the floor.',
+  hip_thrust:
+    'Drive through your heels and squeeze your glutes at the top.',
+  hip_abduction:
+    'Control the movement and squeeze your glutes at the outer range.',
+  bulgarian_split_squat:
+    'Keep your front foot stable and lower with control.',
+  dumbbell_squat:
+    'Keep your head up, back straight and knees tracking with your toes.',
+
+  machine_chest_press:
+    'Press with control and avoid locking your elbows aggressively.',
+  bench_press:
+    'Keep your shoulder blades tight and press with control.',
+  incline_bb_bench_press:
+    'Keep your upper back tight and press slightly upward with control.',
+  incline_dumbbell_press:
+    'Press upward with control and keep your shoulders stable.',
+  upper_cable_fly:
+    'Bring the handles upward and inward, focusing on upper chest squeeze.',
+  machine_chest_fly:
+    'Keep a slight bend in your elbows and squeeze your chest as the handles meet.',
+  lever_chest_press:
+    'Adjust the seat and press forward smoothly, then return with control.',
+
+  lat_pulldown:
+    'Pull your elbows down and squeeze your back at the bottom.',
+  single_arm_lat_pull_down:
+    'Pull your elbow toward your hip and feel one lat working at a time.',
+  seated_row:
+    'Pull toward your lower ribs and squeeze your shoulder blades.',
+  low_row:
+    'Pull low toward your waist and keep your torso stable.',
+  assisted_pull_up:
+    'Pull your chest toward the bar and control the way down.',
+  straight_arm_pushdown:
+    'Keep your arms nearly straight and pull the bar toward your thighs.',
+  chest_support_db_row:
+    'Keep your chest supported and pull the dumbbells toward your hips.',
+  wide_neutral_grip_lat_pulldown:
+    'Pull down with control and keep your chest lifted.',
+  single_arm_dumbbell_row:
+    'Pull the dumbbell toward your hip and avoid twisting your torso.',
+  underhand_lat_pulldown:
+    'Use an underhand grip, lean back slightly and pull toward your upper chest.',
+  t_bar_row:
+    'Keep your back flat and row the handle toward your lower chest.',
+
+  dumbbell_shoulder_press:
+    'Keep your ribs down and press the dumbbells overhead smoothly.',
+  lateral_raise:
+    'Raise with control and avoid shrugging your shoulders.',
+  machine_shoulder_press:
+    'Set the handles around shoulder height and press with a stable torso.',
+  cable_lateral_raise:
+    'Raise the cable with control and keep tension on the side delts.',
+  dumbbell_front_raise:
+    'Raise the dumbbells to shoulder height while keeping your core braced.',
+  dumbbell_rear_delt_fly:
+    'Hinge forward slightly and raise the dumbbells with rear delt control.',
+  wide_grip_barbell_upright_row:
+    'Use a wide grip and lift with control without shrugging aggressively.',
+  seated_barbell_shoulder_press:
+    'Brace your core and press overhead with a controlled bar path.',
+  cable_front_raise:
+    'Use a low cable and raise the bar forward with steady control.',
+  cable_upright_row:
+    'Pull the cable upward with elbows leading and shoulders controlled.',
+
+  dumbbell_curl:
+    'Keep your elbows close to your body and avoid swinging.',
+  db_hammer_curl:
+    'Keep your palms facing each other and curl without swinging.',
+  normal_grip_ez_bb_curl:
+    'Use a shoulder-width grip and keep your elbows steady.',
+  cable_curls:
+    'Keep constant cable tension and curl without leaning back.',
+  cprone_incline_dumbbell_curl:
+    'Keep your chest on the bench and curl with strict control.',
+  cable_preacher_curl:
+    'Keep your upper arms on the pad and curl with smooth cable tension.',
+
+  triceps_pushdown:
+    'Keep your elbows near your sides and fully extend with control.',
+  db_triceps_extension:
+    'Keep your upper arm stable and extend the dumbbell with control.',
+  one_arm_cable_underhand_tricep_extension:
+    'Use an underhand grip and extend the arm without moving your shoulder.',
+  overhead_cable_tricep_extension:
+    'Keep elbows forward and stretch the triceps at the bottom.',
+  cable_one_arm_tricep_extension:
+    'Extend one arm with control and keep your elbow fixed.',
+  dumbbell_skull_crusher:
+    'Lower the dumbbells carefully and extend without flaring your elbows.',
+
+  plank:
+    'Keep your body straight and avoid dropping your hips.',
+  decline_ab_crunch:
+    'Crunch upward with control and avoid pulling your neck.',
+  crunch:
+    'Keep your lower back controlled and lift your shoulders from the floor.',
+  ab_roller:
+    'Brace your core, roll forward slowly and avoid arching your lower back.',
+  mountain_climbers:
+    'Keep a strong plank position and drive your knees forward quickly.',
+  dumbbell_side_bend:
+    'Move slowly and avoid twisting your torso.',
+  treadmill_walk:
+    'Keep a steady pace. You should be able to talk but still feel challenged.',
+},
+
 };
 
 const vi = {
@@ -1119,6 +1271,8 @@ premium: {
   plusSuccess: 'Premium Plus đang hoạt động. Đã mở khóa tải video offline.',
   plusSubUnavailable: 'Không tìm thấy gói Premium Plus theo tháng. Hãy kiểm tra Play Console / App Store.',
   plusProductUnavailable: 'Không tìm thấy gói Premium Plus trọn đời. Hãy kiểm tra Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Người dùng miễn phí sẽ xem quảng cáo có thưởng trước mỗi buổi tập. Nâng cấp Premium để bắt đầu ngay mà không có quảng cáo.',
 },
   "video": {
     "loading": "Đang tải video...",
@@ -1924,8 +2078,7 @@ estimatedOneRepMax: 'Ước tính 1RM',
 noPersonalRecords: 'Chưa có kỷ lục cá nhân.',
 noPersonalRecordsText:
   'Hoàn thành buổi tập gym và nhập kg/lần để tạo PR đầu tiên.',
-},
-insightsKicker: 'THỐNG KÊ GYM',
+  insightsKicker: 'THỐNG KÊ GYM',
 insightsTitle: 'Phân tích tập luyện',
 insightsSubtitle:
   'Tổng kết tuần, phục hồi cơ, thành tích và tự điều chỉnh lịch tập.',
@@ -2010,6 +2163,143 @@ recoveryCalendarText: 'Hôm nay không có buổi tập.',
 prevWeek: 'Trước',
 thisWeek: 'Tuần này',
 nextWeek: 'Tiếp',
+swapExercise: 'Đổi bài tập',
+chooseSimilarExercise:
+  'Chọn một bài tương tự cho cùng nhóm cơ.',
+noSimilarExercise: 'Không tìm thấy bài tương tự.',
+},
+exerciseNotes: {
+  light_safety:
+    'Dùng mức tạ vừa sức và tránh biên độ gây đau.',
+  high_bmi_leg_safety:
+    'Giữ mức tạ vừa phải và ưu tiên kiểm soát an toàn cho khớp.',
+
+  squat:
+    'Siết core, giữ ngực cao và đẩy lực qua giữa bàn chân.',
+  goblet_squat:
+    'Giữ ngực cao, siết core và kiểm soát toàn bộ chuyển động.',
+  smith_low_bar_squat:
+    'Đặt chân đủ gần dưới người, giữ thăng bằng và tập đủ biên độ.',
+  leg_press:
+    'Giữ bàn chân ổn định và không để gối đổ vào trong.',
+  leg_extensions:
+    'Nâng có kiểm soát và siết cơ đùi trước ở điểm trên cùng.',
+  lying_leg_curl:
+    'Giữ hông sát ghế và cuộn chân bằng lực cơ đùi sau.',
+  romanian_deadlift:
+    'Đẩy hông ra sau, giữ lưng trung lập và cảm nhận căng đùi sau.',
+  trap_bar_deadlift:
+    'Siết lưng xô, gồng core và đạp mạnh chân xuống sàn.',
+  hip_thrust:
+    'Đẩy qua gót chân và siết mông ở điểm trên cùng.',
+  hip_abduction:
+    'Kiểm soát chuyển động và siết mông ở biên ngoài.',
+  bulgarian_split_squat:
+    'Giữ chân trước ổn định và hạ người có kiểm soát.',
+  dumbbell_squat:
+    'Giữ đầu cao, lưng thẳng và gối đi theo hướng mũi chân.',
+
+  machine_chest_press:
+    'Đẩy có kiểm soát và không khóa mạnh khuỷu tay.',
+  bench_press:
+    'Ép chặt xương bả vai và đẩy tạ có kiểm soát.',
+  incline_bb_bench_press:
+    'Giữ lưng trên chắc và đẩy hơi chếch lên có kiểm soát.',
+  incline_dumbbell_press:
+    'Đẩy lên có kiểm soát và giữ vai ổn định.',
+  upper_cable_fly:
+    'Kéo tay cáp lên và vào trong, tập trung siết ngực trên.',
+  machine_chest_fly:
+    'Giữ khuỷu hơi cong và siết ngực khi hai tay gặp nhau.',
+  lever_chest_press:
+    'Chỉnh ghế phù hợp, đẩy ra mượt và hạ về có kiểm soát.',
+
+  lat_pulldown:
+    'Kéo khuỷu tay xuống và siết lưng ở điểm dưới.',
+  single_arm_lat_pull_down:
+    'Kéo khuỷu về phía hông và cảm nhận từng bên xô làm việc.',
+  seated_row:
+    'Kéo về phía sườn dưới và ép hai xương bả vai lại.',
+  low_row:
+    'Kéo thấp về phía eo và giữ thân người ổn định.',
+  assisted_pull_up:
+    'Kéo ngực về phía thanh và kiểm soát khi hạ xuống.',
+  straight_arm_pushdown:
+    'Giữ tay gần thẳng và kéo thanh về phía đùi.',
+  chest_support_db_row:
+    'Tựa ngực chắc trên ghế và kéo tạ về phía hông.',
+  wide_neutral_grip_lat_pulldown:
+    'Kéo xuống có kiểm soát và giữ ngực mở.',
+  single_arm_dumbbell_row:
+    'Kéo tạ về phía hông và tránh xoay thân người.',
+  underhand_lat_pulldown:
+    'Dùng tay nắm ngửa, hơi ngả người và kéo về ngực trên.',
+  t_bar_row:
+    'Giữ lưng phẳng và kéo tay cầm về phía ngực dưới.',
+
+  dumbbell_shoulder_press:
+    'Giữ sườn ổn định và đẩy tạ qua đầu mượt mà.',
+  lateral_raise:
+    'Nâng tay có kiểm soát và tránh nhún vai.',
+  machine_shoulder_press:
+    'Chỉnh tay cầm ngang vai và đẩy với thân người ổn định.',
+  cable_lateral_raise:
+    'Nâng cáp có kiểm soát và giữ lực căng ở vai giữa.',
+  dumbbell_front_raise:
+    'Nâng tạ lên ngang vai và giữ core chắc.',
+  dumbbell_rear_delt_fly:
+    'Gập người nhẹ và nâng tạ bằng cơ vai sau.',
+  wide_grip_barbell_upright_row:
+    'Dùng tay nắm rộng và kéo có kiểm soát, tránh nhún vai quá mạnh.',
+  seated_barbell_shoulder_press:
+    'Gồng core và đẩy thanh qua đầu theo đường đi ổn định.',
+  cable_front_raise:
+    'Dùng cáp thấp và nâng thanh ra trước có kiểm soát.',
+  cable_upright_row:
+    'Kéo cáp lên với khuỷu tay dẫn hướng và vai kiểm soát.',
+
+  dumbbell_curl:
+    'Giữ khuỷu sát thân người và tránh vung tạ.',
+  db_hammer_curl:
+    'Giữ lòng bàn tay hướng vào nhau và cuốn tạ không đung đưa.',
+  normal_grip_ez_bb_curl:
+    'Dùng tay nắm rộng bằng vai và giữ khuỷu ổn định.',
+  cable_curls:
+    'Giữ lực căng cáp liên tục và không ngả người khi cuốn.',
+  cprone_incline_dumbbell_curl:
+    'Giữ ngực trên ghế và cuốn tạ thật nghiêm ngặt.',
+  cable_preacher_curl:
+    'Giữ tay trên trên đệm và cuốn bằng lực căng cáp ổn định.',
+
+  triceps_pushdown:
+    'Giữ khuỷu sát thân và duỗi tay hết biên độ có kiểm soát.',
+  db_triceps_extension:
+    'Giữ tay trên ổn định và duỗi tạ có kiểm soát.',
+  one_arm_cable_underhand_tricep_extension:
+    'Dùng tay nắm ngửa và duỗi tay mà không di chuyển vai.',
+  overhead_cable_tricep_extension:
+    'Giữ khuỷu hướng về trước và kéo giãn tay sau ở điểm dưới.',
+  cable_one_arm_tricep_extension:
+    'Duỗi từng tay có kiểm soát và giữ khuỷu cố định.',
+  dumbbell_skull_crusher:
+    'Hạ tạ cẩn thận và duỗi lên mà không xòe khuỷu quá nhiều.',
+
+  plank:
+    'Giữ thân người thẳng và không để hông rơi xuống.',
+  decline_ab_crunch:
+    'Gập bụng có kiểm soát và tránh kéo cổ.',
+  crunch:
+    'Kiểm soát lưng dưới và nâng vai khỏi sàn.',
+  ab_roller:
+    'Siết core, lăn ra chậm và tránh võng lưng dưới.',
+  mountain_climbers:
+    'Giữ tư thế plank chắc và kéo gối về trước nhanh.',
+  dumbbell_side_bend:
+    'Di chuyển chậm và tránh xoay thân người.',
+  treadmill_walk:
+    'Giữ nhịp đi đều. Bạn vẫn có thể nói chuyện nhưng vẫn thấy thử thách.',
+},
+
 };
 
 const es = {
@@ -2027,7 +2317,8 @@ const es = {
     "more": "Mais",
     "program": "Programa",
     "profile": "Perfil do Usuário",
-    "weightChart": "Gráfico de Peso"
+    "weightChart": "Gráfico de Peso",
+    "gym": "Gimnasio"
   },
   "home": {
     "title": "Escolha seu plano de treino",
@@ -2142,6 +2433,8 @@ premium: {
   plusSuccess: 'Premium Plus está activo. Descarga de videos sin conexión desbloqueada.',
   plusSubUnavailable: 'No se encontró la suscripción Premium Plus. Revisa Play Console / App Store.',
   plusProductUnavailable: 'No se encontró el producto Premium Plus. Revisa Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Los usuarios gratuitos deben ver un anuncio con recompensa antes de cada entrenamiento. Actualiza a Premium para comenzar al instante y sin anuncios.',
 },
   "video": {
     "loading": "Carregando vídeo...",
@@ -2697,7 +2990,8 @@ const fr = {
     "more": "Plus",
     "program": "Programme",
     "profile": "Profil utilisateur",
-    "weightChart": "Graphique de poids"
+    "weightChart": "Graphique de poids",
+    "gym": "Fitness"
   },
   "home": {
     "title": "Choisissez votre plan d’entraînement",
@@ -2812,6 +3106,8 @@ premium: {
   plusSuccess: 'Premium Plus est actif. Téléchargement vidéo hors ligne débloqué.',
   plusSubUnavailable: 'Abonnement Premium Plus introuvable. Vérifiez Play Console / App Store.',
   plusProductUnavailable: 'Produit Premium Plus introuvable. Vérifiez Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Les utilisateurs gratuits doivent regarder une publicité récompensée avant chaque entraînement. Passez à Premium pour commencer immédiatement et sans publicité.',
 },
   "video": {
     "loading": "Chargement...",
@@ -3360,7 +3656,8 @@ const de = {
     "more": "Mehr",
     "program": "Programm",
     "profile": "Benutzerprofil",
-    "weightChart": "Gewichtsverlauf"
+    "weightChart": "Gewichtsverlauf",
+    "gym": "Fitness"
   },
   "home": {
     "title": "Wähle deinen Trainingsplan",
@@ -3475,6 +3772,8 @@ premium: {
   plusSuccess: 'Premium Plus ist aktiv. Offline-Video-Downloads freigeschaltet.',
   plusSubUnavailable: 'Premium Plus-Abo nicht gefunden. Prüfe Play Console / App Store.',
   plusProductUnavailable: 'Premium Plus-Produkt nicht gefunden. Prüfe Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Kostenlose Nutzer müssen vor jedem Training eine Rewarded-Anzeige ansehen. Upgrade auf Premium, um sofort und ohne Werbung zu starten.',
 },
   "video": {
     "loading": "Video lädt...",
@@ -4023,7 +4322,8 @@ const zh = {
     "more": "更多",
     "program": "计划",
     "profile": "用户个人资料",
-    "weightChart": "体重图表"
+    "weightChart": "体重图表",
+    "gym": "健身"
   },
   "home": {
     "title": "选择你的训练计划",
@@ -4138,6 +4438,9 @@ premium: {
   plusSuccess: 'Premium Plus 已激活。离线视频下载已解锁。',
   plusSubUnavailable: '未找到 Premium Plus 订阅。请检查 Play Console / App Store。',
   plusProductUnavailable: '未找到 Premium Plus 产品。请检查 Play Console / App Store。',
+  removeAdsWorkoutNotice:
+  '免费用户在每次训练前都需要观看一段激励广告。升级到 Premium，即可立即开始训练并移除广告。',
+
 },
   "video": {
     "loading": "视频加载中...",
@@ -4686,7 +4989,8 @@ const ja = {
     "more": "その他",
     "program": "プログラム",
     "profile": "プロフィール",
-    "weightChart": "体重グラフ"
+    "weightChart": "体重グラフ",
+    "gym": "ジム"
   },
   "home": {
     "title": "プランを選択",
@@ -4801,6 +5105,8 @@ premium: {
   plusSuccess: 'Premium Plus が有効です。オフライン動画ダウンロードが解放されました。',
   plusSubUnavailable: 'Premium Plus サブスクリプションが見つかりません。Play Console / App Store を確認してください。',
   plusProductUnavailable: 'Premium Plus 商品が見つかりません。Play Console / App Store を確認してください。',
+  removeAdsWorkoutNotice:
+  '無料ユーザーは各ワークアウトの開始前にリワード広告を視聴する必要があります。Premiumにアップグレードすると、広告なしですぐに開始できます。',
 },
   "video": {
     "loading": "動画を読み込み中...",
@@ -5349,7 +5655,8 @@ const ko = {
     "more": "더보기",
     "program": "프로그램",
     "profile": "프로필",
-    "weightChart": "체중 그래프"
+    "weightChart": "체중 그래프",
+    "gym": "헬스장"
   },
   "home": {
     "title": "운동 플랜 선택",
@@ -5464,6 +5771,8 @@ premium: {
   plusSuccess: 'Premium Plus가 활성화되었습니다. 오프라인 영상 다운로드가 잠금 해제되었습니다.',
   plusSubUnavailable: 'Premium Plus 구독을 찾을 수 없습니다. Play Console / App Store를 확인하세요.',
   plusProductUnavailable: 'Premium Plus 상품을 찾을 수 없습니다. Play Console / App Store를 확인하세요.',
+  removeAdsWorkoutNotice:
+  '무료 사용자는 운동을 시작할 때마다 보상형 광고를 시청해야 합니다. Premium으로 업그레이드하면 광고 없이 바로 시작할 수 있습니다.',
 },
   "video": {
     "loading": "동영상 로딩 중...",
@@ -6012,7 +6321,8 @@ const ru = {
     "more": "Ещё",
     "program": "Программа",
     "profile": "Профиль",
-    "weightChart": "График веса"
+    "weightChart": "График веса",
+    "gym": "Зал"
   },
   "home": {
     "title": "Выберите план тренировок",
@@ -6127,6 +6437,8 @@ premium: {
   plusSuccess: 'Premium Plus активен. Офлайн-загрузка видео разблокирована.',
   plusSubUnavailable: 'Подписка Premium Plus не найдена. Проверьте Play Console / App Store.',
   plusProductUnavailable: 'Продукт Premium Plus не найден. Проверьте Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Бесплатные пользователи должны смотреть рекламу с вознаграждением перед каждой тренировкой. Перейдите на Premium, чтобы начинать сразу и без рекламы.',
 },
   "video": {
     "loading": "Загрузка видео...",
@@ -6675,7 +6987,8 @@ const ar = {
     "more": "المزيد",
     "program": "البرنامج",
     "profile": "الملف الشخصي",
-    "weightChart": "مخطط الوزن"
+    "weightChart": "مخطط الوزن",
+    "gym": "النادي"
   },
   "home": {
     "title": "اختر خطة التمرين",
@@ -6790,6 +7103,8 @@ premium: {
   plusSuccess: 'Premium Plus نشط. تم فتح تنزيل الفيديو بدون إنترنت.',
   plusSubUnavailable: 'لم يتم العثور على اشتراك Premium Plus. تحقق من Play Console / App Store.',
   plusProductUnavailable: 'لم يتم العثور على منتج Premium Plus. تحقق من Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'يجب على المستخدمين المجانيين مشاهدة إعلان بمكافأة قبل كل تمرين. قم بالترقية إلى Premium لبدء التمرين فورًا ومن دون إعلانات.',
 },
   "video": {
     "loading": "جاري تحميل الفيديو...",
@@ -7338,7 +7653,8 @@ const hi = {
     "more": "अधिक",
     "program": "प्रोग्राम",
     "profile": "प्रोफ़ाइल",
-    "weightChart": "वजन चार्ट"
+    "weightChart": "वजन चार्ट",
+    "gym": "जिम"
   },
   "home": {
     "title": "अपना वर्कआउट प्लान चुनें",
@@ -7453,6 +7769,9 @@ premium: {
   plusSuccess: 'Premium Plus सक्रिय है। Offline video download unlock हो गया।',
   plusSubUnavailable: 'Premium Plus subscription नहीं मिला। Play Console / App Store जांचें।',
   plusProductUnavailable: 'Premium Plus product नहीं मिला। Play Console / App Store जांचें।',
+  removeAdsWorkoutNotice:
+  'मुफ़्त उपयोगकर्ताओं को हर वर्कआउट से पहले एक रिवॉर्डेड विज्ञापन देखना होगा। बिना विज्ञापन तुरंत शुरू करने के लिए Premium में अपग्रेड करें।',
+
 },
   "video": {
     "loading": "वीडियो लोड हो रहा है...",
@@ -7997,7 +8316,8 @@ const th = {
     "more": "เพิ่มเติม",
     "program": "โปรแกรม",
     "profile": "โปรไฟล์",
-    "weightChart": "กราฟน้ำหนัก"
+    "weightChart": "กราฟน้ำหนัก",
+    "gym": "ฟิตเนส"
   },
   "home": {
     "title": "เลือกแผนการออกกำลังกาย",
@@ -8416,6 +8736,8 @@ premium: {
   plusSuccess: 'Premium Plus เปิดใช้งานแล้ว ปลดล็อกการดาวน์โหลดวิดีโอออฟไลน์แล้ว',
   plusSubUnavailable: 'ไม่พบ subscription Premium Plus โปรดตรวจสอบ Play Console / App Store',
   plusProductUnavailable: 'ไม่พบผลิตภัณฑ์ Premium Plus โปรดตรวจสอบ Play Console / App Store',
+  removeAdsWorkoutNotice:
+  'ผู้ใช้ฟรีต้องดูโฆษณาแบบมีรางวัลก่อนเริ่มออกกำลังกายทุกครั้ง อัปเกรดเป็น Premium เพื่อเริ่มได้ทันทีโดยไม่มีโฆษณา',
 },
   "filters": {
     "all": "ทั้งหมด",
@@ -8664,7 +8986,8 @@ const id = {
     "more": "Lainnya",
     "program": "Program",
     "profile": "Profil",
-    "weightChart": "Grafik Berat"
+    "weightChart": "Gym",
+    "gym": "ฟิตเนส"
   },
   "home": {
     "title": "Pilih rencana latihanmu",
@@ -8779,6 +9102,8 @@ premium: {
   plusSuccess: 'Premium Plus aktif. Download video offline terbuka.',
   plusSubUnavailable: 'Langganan Premium Plus tidak ditemukan. Periksa Play Console / App Store.',
   plusProductUnavailable: 'Produk Premium Plus tidak ditemukan. Periksa Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Pengguna gratis harus menonton iklan berhadiah sebelum setiap sesi latihan. Tingkatkan ke Premium untuk langsung memulai tanpa iklan.',
 },
   "video": {
     "loading": "Memuat video...",
@@ -9327,7 +9652,8 @@ const ms = {
     "more": "Lagi",
     "program": "Program",
     "profile": "Profil",
-    "weightChart": "Carta Berat"
+    "weightChart": "Gim",
+    "gym": "Gim"
   },
   "home": {
     "title": "Pilih pelan senaman anda",
@@ -9442,6 +9768,8 @@ premium: {
   plusSuccess: 'Premium Plus aktif. Muat turun video luar talian dibuka.',
   plusSubUnavailable: 'Langganan Premium Plus tidak ditemui. Semak Play Console / App Store.',
   plusProductUnavailable: 'Produk Premium Plus tidak ditemui. Semak Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Pengguna percuma perlu menonton iklan berhadiah sebelum setiap sesi senaman. Naik taraf kepada Premium untuk bermula serta-merta tanpa iklan.',
 },
   "video": {
     "loading": "Memuatkan video...",
@@ -9990,7 +10318,8 @@ const fil = {
     "more": "Iba pa",
     "program": "Programa",
     "profile": "Profile",
-    "weightChart": "Tsart ng Timbang"
+    "weightChart": "Gym",
+    "gym": "Gym"
   },
   "home": {
     "title": "Piliin ang iyong plano",
@@ -10105,6 +10434,8 @@ premium: {
   plusSuccess: 'Active ang Premium Plus. Unlocked na ang offline video download.',
   plusSubUnavailable: 'Hindi nahanap ang Premium Plus subscription. Pakicheck ang Play Console / App Store.',
   plusProductUnavailable: 'Hindi nahanap ang Premium Plus product. Pakicheck ang Play Console / App Store.',
+  removeAdsWorkoutNotice:
+  'Kailangang manood ng rewarded ad ang mga libreng user bago ang bawat workout. Mag-upgrade sa Premium upang makapagsimula agad nang walang mga ad.',
 },
   "video": {
     "loading": "Naglo-load ng video...",
@@ -10653,7 +10984,8 @@ const pt = {
     "more": "Más",
     "program": "Programa",
     "profile": "Perfil",
-    "weightChart": "Gráfico de peso"
+    "weightChart": "Gráfico de peso",
+    "gym": "Academia"
   },
   "home": {
     "title": "Elige tu plan de entrenamiento",
@@ -10768,6 +11100,8 @@ premium: {
   plusSuccess: 'Premium Plus está ativo. Download de vídeo offline desbloqueado.',
   plusSubUnavailable: 'Assinatura Premium Plus não encontrada. Verifique Play Console / App Store.',
   plusProductUnavailable: 'Produto Premium Plus não encontrado. Verifique Play Console / App Store.',
+removeAdsWorkoutNotice:
+  'Os usuários gratuitos precisam assistir a um anúncio premiado antes de cada treino. Atualize para o Premium para começar imediatamente e sem anúncios.',
 },
   "video": {
     "loading": "Cargando video...",
@@ -14114,23 +14448,171 @@ const baseWithNutrition = deepMerge(base, {
   nutrition: nutritionI18nPatch.en,
 });
 
+const viTranslation = deepMerge(
+  deepMerge(
+    deepMerge(baseWithNutrition, vi),
+    { nutrition: nutritionI18nPatch.vi },
+  ),
+  gymDisplayVi,
+);
+
 const resources = {
-  en: { translation: deepMerge(deepMerge(baseWithNutrition, base), { nutrition: nutritionI18nPatch.en }) },
-  vi: { translation: deepMerge(deepMerge(baseWithNutrition, vi), { nutrition: nutritionI18nPatch.vi }) },
-  es: { translation: deepMerge(deepMerge(baseWithNutrition, es), { nutrition: nutritionI18nPatch.es }) },
-  fr: { translation: deepMerge(deepMerge(baseWithNutrition, fr), { nutrition: nutritionI18nPatch.fr }) },
-  de: { translation: deepMerge(deepMerge(baseWithNutrition, de), { nutrition: nutritionI18nPatch.de }) },
-  zh: { translation: deepMerge(deepMerge(baseWithNutrition, zh), { nutrition: nutritionI18nPatch.zh }) },
-  ja: { translation: deepMerge(deepMerge(baseWithNutrition, ja), { nutrition: nutritionI18nPatch.ja }) },
-  ko: { translation: deepMerge(deepMerge(baseWithNutrition, ko), { nutrition: nutritionI18nPatch.ko }) },
-  ru: { translation: deepMerge(deepMerge(baseWithNutrition, ru), { nutrition: nutritionI18nPatch.ru }) },
-  ar: { translation: deepMerge(deepMerge(baseWithNutrition, ar), { nutrition: nutritionI18nPatch.ar }) },
-  hi: { translation: deepMerge(deepMerge(baseWithNutrition, hi), { nutrition: nutritionI18nPatch.hi }) },
-  th: { translation: deepMerge(deepMerge(baseWithNutrition, th), { nutrition: nutritionI18nPatch.th }) },
-  id: { translation: deepMerge(deepMerge(baseWithNutrition, id), { nutrition: nutritionI18nPatch.id }) },
-  ms: { translation: deepMerge(deepMerge(baseWithNutrition, ms), { nutrition: nutritionI18nPatch.ms }) },
-  fil: { translation: deepMerge(deepMerge(baseWithNutrition, fil), { nutrition: nutritionI18nPatch.fil }) },
-  pt: { translation: deepMerge(deepMerge(baseWithNutrition, pt), { nutrition: nutritionI18nPatch.pt }) },
+  en: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, base),
+        { nutrition: nutritionI18nPatch.en },
+      ),
+      gymDisplayEn,
+    ),
+  },
+
+  vi: {
+    translation: viTranslation,
+  },
+
+  // Trong source hiện tại, object `es` chứa tiếng Bồ Đào Nha
+  // và object `pt` chứa tiếng Tây Ban Nha. Hai object được dùng đảo lại
+  // tại đây để mã ngôn ngữ es/pt hiển thị đúng nội dung.
+  es: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, pt),
+        { nutrition: nutritionI18nPatch.es },
+      ),
+      gymDisplayEs,
+    ),
+  },
+
+  fr: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, fr),
+        { nutrition: nutritionI18nPatch.fr },
+      ),
+      gymDisplayFr,
+    ),
+  },
+
+  de: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, de),
+        { nutrition: nutritionI18nPatch.de },
+      ),
+      gymDisplayDe,
+    ),
+  },
+
+  zh: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, zh),
+        { nutrition: nutritionI18nPatch.zh },
+      ),
+      gymDisplayZh,
+    ),
+  },
+
+  ja: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, ja),
+        { nutrition: nutritionI18nPatch.ja },
+      ),
+      gymDisplayJa,
+    ),
+  },
+
+  ko: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, ko),
+        { nutrition: nutritionI18nPatch.ko },
+      ),
+      gymDisplayKo,
+    ),
+  },
+
+  ru: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, ru),
+        { nutrition: nutritionI18nPatch.ru },
+      ),
+      gymDisplayRu,
+    ),
+  },
+
+  ar: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, ar),
+        { nutrition: nutritionI18nPatch.ar },
+      ),
+      gymDisplayAr,
+    ),
+  },
+
+  hi: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, hi),
+        { nutrition: nutritionI18nPatch.hi },
+      ),
+      gymDisplayHi,
+    ),
+  },
+
+  th: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, th),
+        { nutrition: nutritionI18nPatch.th },
+      ),
+      gymDisplayTh,
+    ),
+  },
+
+  id: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, id),
+        { nutrition: nutritionI18nPatch.id },
+      ),
+      gymDisplayId,
+    ),
+  },
+
+  ms: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, ms),
+        { nutrition: nutritionI18nPatch.ms },
+      ),
+      gymDisplayMs,
+    ),
+  },
+
+  fil: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, fil),
+        { nutrition: nutritionI18nPatch.fil },
+      ),
+      gymDisplayFil,
+    ),
+  },
+
+  pt: {
+    translation: deepMerge(
+      deepMerge(
+        deepMerge(baseWithNutrition, es),
+        { nutrition: nutritionI18nPatch.pt },
+      ),
+      gymDisplayPt,
+    ),
+  },
 };
 
 i18n.use(initReactI18next).init({

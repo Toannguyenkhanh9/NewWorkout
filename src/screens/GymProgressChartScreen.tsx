@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { translateExerciseName } from '../utils/gymI18n';
 
 import {
   GymWorkoutHistoryEntry,
@@ -95,9 +96,13 @@ export const GymProgressChartScreen: React.FC = () => {
     }));
   }, [history]);
 
-  const selectedName =
-    exerciseOptions.find(item => item.id === selectedExerciseId)?.name ||
-    t('gym.selectExercise', 'Select exercise');
+  const selectedExercise = exerciseOptions.find(
+    item => item.id === selectedExerciseId,
+  );
+
+  const selectedName = selectedExercise
+    ? translateExerciseName(selectedExercise, t)
+    : t('gym.selectExercise', { defaultValue: 'Select exercise' });
 
   const chartPoints = useMemo<ChartPoint[]>(() => {
     return history
@@ -201,7 +206,7 @@ export const GymProgressChartScreen: React.FC = () => {
                         active && styles.exerciseTabTextActive,
                       ]}
                     >
-                      {item.name}
+                      {translateExerciseName(item, t)}
                     </Text>
                   </TouchableOpacity>
                 );

@@ -46,6 +46,17 @@ import TodayGymWorkoutCard from '../components/TodayGymWorkoutCard';
 import {
   loadGymOnboarding,
 } from '../services/gymOnboarding';
+import {
+  translateEquipmentMode,
+  translateGender,
+  translateGymDayFocus,
+  translateGymDayTitle,
+  translateGymIntensity,
+  translateGymPhase,
+  translateGymPlanAdvice,
+  translateGymPlanTitle,
+  translateGymWeekAdvice,
+} from '../utils/gymI18n';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -160,7 +171,7 @@ const currentWeek = getAutoGymWeekNumber();
     }
 
     if (profile.gender) {
-      parts.push(`${t('gym.profileGender', 'Gender')}: ${profile.gender}`);
+      parts.push(`${t('gym.profileGender', 'Gender')}: ${translateGender(profile.gender, t)}`);
     }
 
     if (profile.weightKg) {
@@ -258,17 +269,17 @@ const currentWeek = getAutoGymWeekNumber();
 
         <View style={styles.dayBody}>
           <Text style={styles.dayTitle}>
-            {item.title}
+            {translateGymDayTitle(item, t)}
           </Text>
 
           <Text style={styles.dayFocus}>
-            {item.focus}
+            {translateGymDayFocus(item, t)}
           </Text>
 
           <Text style={styles.dayMeta}>
             {item.durationMin} {t('workouts.min', 'min')} •{' '}
             {item.exercises.length} {t('gym.exercises', 'exercises')} •{' '}
-            {item.intensity}
+            {translateGymIntensity(item.intensity, t)}
           </Text>
         </View>
 
@@ -457,7 +468,7 @@ const currentWeek = getAutoGymWeekNumber();
                         active && styles.equipmentChipTextActive,
                       ]}
                     >
-                      {item.label}
+                      {translateEquipmentMode(item.value, t, item.label)}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -470,21 +481,33 @@ const currentWeek = getAutoGymWeekNumber();
               </Text>
 
               <Text style={styles.adviceTitle}>
-                {totalWeeks} {t('gym.weeks', 'weeks')} • {phaseLabel}
+                {totalWeeks} {t('gym.weeks', 'weeks')} •{' '}
+                {translateGymPhase(phaseLabel, t)}
               </Text>
 
               <Text style={styles.adviceText}>
-                {plan.advice}
+                {translateGymPlanAdvice({
+                  t,
+                  fallback: plan.advice,
+                  currentWeek,
+                  daysPerWeek,
+                  profile,
+                })}
               </Text>
 
               <Text style={styles.weekAdviceText}>
-                {weekAdvice}
+                {translateGymWeekAdvice(
+                  phaseLabel,
+                  t,
+                  weekAdvice,
+                  { week: currentWeek, totalWeeks },
+                )}
               </Text>
             </View>
 
             <View style={styles.planHeaderRow}>
               <Text style={styles.sectionTitleNoMargin}>
-                {plan.title}
+                {translateGymPlanTitle(plan.title, daysPerWeek, t)}
               </Text>
 
               <Text style={styles.planCount}>

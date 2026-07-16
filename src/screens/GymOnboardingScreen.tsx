@@ -30,6 +30,10 @@ import {
   GymGoal,
   saveGymOnboarding,
 } from '../services/gymOnboarding';
+import {
+  normalizeGymKey,
+  translateEquipmentMode,
+} from '../utils/gymI18n';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -196,7 +200,10 @@ export const GymOnboardingScreen: React.FC = () => {
                     active && styles.optionTitleActive,
                   ]}
                 >
-                  {item.title}
+                  {t(
+                    `gym.goals.${normalizeGymKey(item.value)}.title`,
+                    { defaultValue: item.title },
+                  )}
                 </Text>
 
                 <Text
@@ -205,7 +212,10 @@ export const GymOnboardingScreen: React.FC = () => {
                     active && styles.optionDescActive,
                   ]}
                 >
-                  {item.desc}
+                  {t(
+                    `gym.goals.${normalizeGymKey(item.value)}.desc`,
+                    { defaultValue: item.desc },
+                  )}
                 </Text>
               </View>
 
@@ -285,7 +295,7 @@ export const GymOnboardingScreen: React.FC = () => {
                     active && styles.chipTextActive,
                   ]}
                 >
-                  {item.label}
+                  {translateEquipmentMode(item.value, t, item.label)}
                 </Text>
               </TouchableOpacity>
             );

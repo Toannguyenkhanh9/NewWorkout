@@ -19,6 +19,13 @@ export type UserGymProfile = {
 
 export type SmartGymExercise = {
   id: string;
+
+  /**
+   * ID gốc của bài tập.
+   * Dùng để tìm note i18n và bài tương tự khi id bị đổi thành unique id.
+   */
+  baseExerciseId?: string;
+
   name: string;
   muscleGroup:
     | 'chest'
@@ -33,6 +40,7 @@ export type SmartGymExercise = {
   reps: string;
   restSeconds: number;
   note: string;
+  extraNoteKeys?: string[];
   demoUrl?: string;
 };
 
@@ -60,7 +68,13 @@ const GYM_DAYS_KEY = 'gym:daysPerWeek';
 
 const CDN_BASE = 'https://insanity-workouts-cdn.b-cdn.net/Gym';
 
-const v = (file: string) => `${CDN_BASE}/${file}`;
+const v = (file: string) => {
+  if (file.startsWith('http://') || file.startsWith('https://')) {
+    return file;
+  }
+
+  return `${CDN_BASE}/${file.replace(/^\/+/, '')}`;
+};
 
 /**
  * Tự đổi giáo án theo tuần.
@@ -166,7 +180,7 @@ const EXERCISES: Record<string, SmartGymExercise> = {
     reps: '8-10',
     restSeconds: 90,
     note: 'Keep your lats tight by crushing your armpits, hinge and bend your knees, and drive your feet into the ground to execute a trap bar deadlift.',
-    demoUrl: v('trapbardeadlift.MP4'),
+    demoUrl: v('trapbardeadlift.mp4'),
   },
   hipThrust: {
     id: 'hip-thrust',
@@ -702,6 +716,371 @@ const EXERCISES: Record<string, SmartGymExercise> = {
 };
 
 type ExerciseKey = keyof typeof EXERCISES;
+export const stripExerciseInstanceId = (id: string) => {
+  return String(id).replace(/__\d+$/g, '');
+};
+
+export const ensureUniqueExerciseIds = (
+  exercises: SmartGymExercise[],
+): SmartGymExercise[] => {
+  const used: Record<string, number> = {};
+
+  return exercises.map((exercise) => {
+    const baseExerciseId =
+      exercise.baseExerciseId ||
+      stripExerciseInstanceId(exercise.id);
+
+    const count = (used[baseExerciseId] || 0) + 1;
+    used[baseExerciseId] = count;
+
+    return {
+      ...exercise,
+      baseExerciseId,
+      id:
+        count === 1
+          ? baseExerciseId
+          : `${baseExerciseId}__${count}`,
+    };
+  });
+};
+export const getExerciseNoteKey = (
+  exercise: Pick<SmartGymExercise, 'id' | 'baseExerciseId'>,
+) => {
+  const rawId =
+    exercise.baseExerciseId ||
+    stripExerciseInstanceId(exercise.id);
+
+  const safeId = rawId
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+
+  return `gym.exerciseNotes.${safeId}`;
+};
+
+const getExerciseKeyById = (
+  exerciseId: string,
+): ExerciseKey | null => {
+  const cleanId = stripExerciseInstanceId(exerciseId);
+
+  const found = Object.entries(EXERCISES).find(
+    ([, exercise]) => exercise.id === cleanId,
+  );
+
+  return found ? (found[0] as ExerciseKey) : null;
+};
+
+const SIMILAR_EXERCISES: Partial<Record<ExerciseKey, ExerciseKey[]>> = {
+  // Legs
+  squat: [
+    'smithlowbarsquat',
+    'legPress',
+    'dumbbellsquat',
+    'bulgariansplitsquat',
+  ],
+  gobletSquat: [
+    'dumbbellsquat',
+    'legPress',
+    'smithlowbarsquat',
+  ],
+  smithlowbarsquat: [
+    'squat',
+    'legPress',
+    'dumbbellsquat',
+  ],
+  legPress: [
+    'squat',
+    'smithlowbarsquat',
+    'dumbbellsquat',
+    'legextensions',
+  ],
+  romanianDeadlift: [
+    'trapbardeadlift',
+    'lyinglegcurl',
+    'hipThrust',
+  ],
+  trapbardeadlift: [
+    'romanianDeadlift',
+    'legPress',
+    'smithlowbarsquat',
+  ],
+  hipThrust: [
+    'hipAbduction',
+    'romanianDeadlift',
+    'lyinglegcurl',
+  ],
+  hipAbduction: [
+    'hipThrust',
+    'bulgariansplitsquat',
+    'legPress',
+  ],
+  legextensions: [
+    'legPress',
+    'smithlowbarsquat',
+    'dumbbellsquat',
+  ],
+  lyinglegcurl: [
+    'romanianDeadlift',
+    'trapbardeadlift',
+    'hipThrust',
+  ],
+  bulgariansplitsquat: [
+    'dumbbellsquat',
+    'legPress',
+    'smithlowbarsquat',
+  ],
+  dumbbellsquat: [
+    'gobletSquat',
+    'squat',
+    'legPress',
+  ],
+
+  // Chest
+  benchPress: [
+    'inclineBarbellBenchPress',
+    'machineChestPress',
+    'leverchestpress',
+    'inclineDumbbellPress',
+  ],
+  machineChestPress: [
+    'benchPress',
+    'leverchestpress',
+    'inclineDumbbellPress',
+  ],
+  inclineBarbellBenchPress: [
+    'inclineDumbbellPress',
+    'benchPress',
+    'machineChestPress',
+  ],
+  inclineDumbbellPress: [
+    'inclineBarbellBenchPress',
+    'machineChestPress',
+    'benchPress',
+  ],
+  upperCableFly: [
+    'machinechestfly',
+    'inclineDumbbellPress',
+    'leverchestpress',
+  ],
+  machinechestfly: [
+    'upperCableFly',
+    'leverchestpress',
+    'machineChestPress',
+  ],
+  leverchestpress: [
+    'machineChestPress',
+    'benchPress',
+    'machinechestfly',
+  ],
+
+  // Back
+  latPulldown: [
+    'wideneutralgriplatpulldown',
+    'underhandlatpulldown',
+    'singleArmLatPulldown',
+    'assistedPullUp',
+  ],
+  singleArmLatPulldown: [
+    'latPulldown',
+    'wideneutralgriplatpulldown',
+    'underhandlatpulldown',
+  ],
+  wideneutralgriplatpulldown: [
+    'latPulldown',
+    'singleArmLatPulldown',
+    'underhandlatpulldown',
+  ],
+  underhandlatpulldown: [
+    'latPulldown',
+    'singleArmLatPulldown',
+    'assistedPullUp',
+  ],
+  seatedRow: [
+    'lowRow',
+    'chestsupportdbrow',
+    'singlearmdumbbellrow',
+    'tbarrow',
+  ],
+  lowRow: [
+    'seatedRow',
+    'chestsupportdbrow',
+    'tbarrow',
+  ],
+  chestsupportdbrow: [
+    'singlearmdumbbellrow',
+    'seatedRow',
+    'lowRow',
+  ],
+  singlearmdumbbellrow: [
+    'chestsupportdbrow',
+    'seatedRow',
+    'tbarrow',
+  ],
+  tbarrow: [
+    'seatedRow',
+    'lowRow',
+    'chestsupportdbrow',
+  ],
+  straightarmpushdown: [
+    'latPulldown',
+    'singleArmLatPulldown',
+    'wideneutralgriplatpulldown',
+  ],
+
+  // Shoulders
+  dumbbellShoulderPress: [
+    'machineshoulderpress',
+    'seatedbarbellshoulderpress',
+    'lateralRaise',
+  ],
+  machineshoulderpress: [
+    'dumbbellShoulderPress',
+    'seatedbarbellshoulderpress',
+  ],
+  seatedbarbellshoulderpress: [
+    'dumbbellShoulderPress',
+    'machineshoulderpress',
+  ],
+  lateralRaise: [
+    'cablelateralraise',
+    'dumbbellreardeltfly',
+    'cableuprightrow',
+  ],
+  cablelateralraise: [
+    'lateralRaise',
+    'dumbbellreardeltfly',
+  ],
+  dumbbellreardeltfly: [
+    'lateralRaise',
+    'cablelateralraise',
+  ],
+
+  // Biceps
+  dumbbellCurl: [
+    'dbHammerCurl',
+    'normalGripEzBbCurl',
+    'cablecurls',
+    'proneinclinedumbbellcurl',
+  ],
+  dbHammerCurl: [
+    'dumbbellCurl',
+    'normalGripEzBbCurl',
+    'cablecurls',
+  ],
+  normalGripEzBbCurl: [
+    'dumbbellCurl',
+    'dbHammerCurl',
+    'cablepreachercurl',
+  ],
+  cablecurls: [
+    'normalGripEzBbCurl',
+    'dumbbellCurl',
+    'cablepreachercurl',
+  ],
+  cablepreachercurl: [
+    'cablecurls',
+    'normalGripEzBbCurl',
+    'proneinclinedumbbellcurl',
+  ],
+
+  // Triceps
+  tricepsPushdown: [
+    'cableonearmtricepextension',
+    'overheadcabletricepextension',
+    'dbTricepsExtension',
+  ],
+  dbTricepsExtension: [
+    'dumbbellskullcrusher',
+    'overheadcabletricepextension',
+    'tricepsPushdown',
+  ],
+  overheadcabletricepextension: [
+    'dbTricepsExtension',
+    'tricepsPushdown',
+    'cableonearmtricepextension',
+  ],
+  cableonearmtricepextension: [
+    'onearmcableunderhandtricepextension',
+    'tricepsPushdown',
+    'overheadcabletricepextension',
+  ],
+  dumbbellskullcrusher: [
+    'dbTricepsExtension',
+    'overheadcabletricepextension',
+  ],
+
+  // Core
+  plank: [
+    'abroller',
+    'crunch',
+    'declineabcrunch',
+    'mountainclimbers',
+  ],
+  crunch: [
+    'declineabcrunch',
+    'abroller',
+    'plank',
+  ],
+  declineabcrunch: [
+    'crunch',
+    'abroller',
+    'plank',
+  ],
+  abroller: [
+    'plank',
+    'crunch',
+    'mountainclimbers',
+  ],
+};
+
+export const getSimilarExercises = (
+  exercise: SmartGymExercise,
+  profile?: UserGymProfile | null,
+): SmartGymExercise[] => {
+  const key = getExerciseKeyById(exercise.id);
+
+  if (!key) {
+    return [];
+  }
+
+  const similarKeys =
+    SIMILAR_EXERCISES[key] ||
+    (Object.entries(EXERCISES)
+      .filter(([, item]) => item.muscleGroup === exercise.muscleGroup)
+      .map(([itemKey]) => itemKey as ExerciseKey));
+
+  return similarKeys
+    .filter((itemKey) => EXERCISES[itemKey].id !== exercise.id)
+    .map((itemKey) => personalizeExercise(cloneExercise(itemKey), profile))
+    .slice(0, 6);
+};
+
+export const replaceExerciseInDay = (
+  day: SmartGymDay,
+  oldExerciseId: string,
+  newExerciseId: string,
+  profile?: UserGymProfile | null,
+): SmartGymDay => {
+  const newKey = getExerciseKeyById(newExerciseId);
+
+  if (!newKey) {
+    return day;
+  }
+
+  const replacement = personalizeExercise(
+    cloneExercise(newKey),
+    profile,
+  );
+
+  return {
+    ...day,
+    exercises: ensureUniqueExerciseIds(
+      day.exercises.map((item) =>
+        item.id === oldExerciseId ? replacement : item,
+      ),
+    ),
+  };
+};
 type ExerciseSpec =
   | ExerciseKey
   | [ExerciseKey, Partial<SmartGymExercise>];
@@ -709,11 +1088,36 @@ type ExerciseSpec =
 const cloneExercise = (
   key: ExerciseKey,
   override?: Partial<SmartGymExercise>,
-): SmartGymExercise => ({
-  ...EXERCISES[key],
-  ...override,
-});
+): SmartGymExercise => {
+  const exercise = EXERCISES[key];
 
+  return {
+    ...exercise,
+    baseExerciseId: exercise.id,
+    ...override,
+  };
+};
+export type GymExerciseKey =
+  keyof typeof EXERCISES;
+
+/**
+ * Trả về bài tập từ thư viện chính.
+ *
+ * Tất cả màn hình phải lấy bài tập từ hàm này để giữ nguyên:
+ * - exercise.id
+ * - demoUrl
+ * - tên file video
+ * - offline video key
+ */
+export const getGymExercise = (
+  key: GymExerciseKey,
+  override?: Partial<SmartGymExercise>,
+): SmartGymExercise => {
+  return {
+    ...EXERCISES[key],
+    ...override,
+  };
+};
 const makeExercises = (
   specs: ExerciseSpec[],
 ): SmartGymExercise[] => {
@@ -803,14 +1207,20 @@ const personalizeExercise = (
   const light = shouldUseLightPlan(profile);
   const bmi = calcBmi(profile);
 
-  let next = { ...exercise };
+  let next: SmartGymExercise = {
+    ...exercise,
+    extraNoteKeys: exercise.extraNoteKeys || [],
+  };
 
   if (light) {
     next = {
       ...next,
       sets: Math.max(2, next.sets - 1),
       restSeconds: next.restSeconds + 15,
-      note: `${next.note} Use a comfortable weight and avoid painful range of motion.`,
+      extraNoteKeys: [
+        ...(next.extraNoteKeys || []),
+        'gym.exerciseNotes.light_safety',
+      ],
     };
   }
 
@@ -818,13 +1228,15 @@ const personalizeExercise = (
     next = {
       ...next,
       reps: next.reps.includes('6-8') ? '8-10' : next.reps,
-      note: `${next.note} Keep the load moderate and prioritize joint-friendly control.`,
+      extraNoteKeys: [
+        ...(next.extraNoteKeys || []),
+        'gym.exerciseNotes.high_bmi_leg_safety',
+      ],
     };
   }
 
   return next;
 };
-
 const makeDay = (
   dayNumber: number,
   title: string,
@@ -834,9 +1246,11 @@ const makeDay = (
   exercises: SmartGymExercise[],
   profile?: UserGymProfile | null,
 ): SmartGymDay => {
-  const personalized = exercises.map((item) =>
+const personalized = ensureUniqueExerciseIds(
+  exercises.map((item) =>
     personalizeExercise(item, profile),
-  );
+  ),
+);
 
   return {
     id: `day-${dayNumber}`,
@@ -911,7 +1325,6 @@ export const buildSmartGymPlan = (
   profile?: UserGymProfile | null,
 ): SmartGymPlan => {
   const light = shouldUseLightPlan(profile);
-  //const weekNumber = getAutoGymWeekNumber();
   const weekVariant = getAutoGymWeekVariant();
 
   let days: SmartGymDay[] = [];
@@ -922,41 +1335,41 @@ export const buildSmartGymPlan = (
         1,
         'Full Body A',
         'Chest • Back • Legs',
-        light ? 40 : 50,
+        light ? 45 : 55,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
             [
-              light ? 'gobletSquat' : 'squat',
+              light ? 'dumbbellsquat' : 'squat',
               light ? 'machineChestPress' : 'benchPress',
               'latPulldown',
               'seatedRow',
-              'dumbbellCurl',
+              'legextensions',
               'plank',
             ],
             [
-              'hackSquat',
-              light ? 'machineChestPress' : 'inclineBarbellBenchPress',
+              'smithlowbarsquat',
+              'inclineBarbellBenchPress',
               'singleArmLatPulldown',
               'lowRow',
-              'dbHammerCurl',
-              'cableCrunch',
+              'lyinglegcurl',
+              'crunch',
             ],
             [
               'legPress',
-              'upperCableFly',
-              'latPulldown',
-              'linearBentOverRow',
-              'normalGripEzBbCurl',
-              'deadBug',
+              'inclineDumbbellPress',
+              'wideneutralgriplatpulldown',
+              'chestsupportdbrow',
+              'hipThrust',
+              'abroller',
             ],
             [
-              'gobletSquat',
+              'trapbardeadlift',
               'machineChestPress',
-              'seatedRow',
-              'lowerCableFly',
-              'dbOverheadTricepsExtension',
-              'plank',
+              'underhandlatpulldown',
+              'singlearmdumbbellrow',
+              'hipAbduction',
+              'declineabcrunch',
             ],
           ],
           weekVariant,
@@ -967,41 +1380,41 @@ export const buildSmartGymPlan = (
         2,
         'Full Body B',
         'Legs • Shoulders • Arms',
-        light ? 40 : 50,
+        light ? 45 : 55,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
             [
               'romanianDeadlift',
               'hipThrust',
-              'hipAbduction',
               'dumbbellShoulderPress',
-              'dbTricepsExtension',
-              'deadBug',
+              'lateralRaise',
+              'dbHammerCurl',
+              'tricepsPushdown',
             ],
             [
-              light ? 'legPress' : 'squat',
               'legPress',
               'hipAbduction',
-              'lateralRaise',
-              'tricepsPushdown',
+              'machineshoulderpress',
+              'cablelateralraise',
+              'normalGripEzBbCurl',
+              'dbTricepsExtension',
+            ],
+            [
+              'smithlowbarsquat',
+              'lyinglegcurl',
+              'dumbbellreardeltfly',
+              'cablecurls',
+              'overheadcabletricepextension',
               'plank',
             ],
             [
-              'hackSquat',
+              'bulgariansplitsquat',
               'romanianDeadlift',
-              'hipThrust',
-              'dumbbellShoulderPress',
-              'dbOverheadTricepsExtension',
-              'cableCrunch',
-            ],
-            [
-              'legPress',
-              'gobletSquat',
-              'hipAbduction',
-              'lateralRaise',
-              'ezBarCurlNarrowGrip',
-              'deadBug',
+              'seatedbarbellshoulderpress',
+              'proneinclinedumbbellcurl',
+              'dumbbellskullcrusher',
+              'mountainclimbers',
             ],
           ],
           weekVariant,
@@ -1011,42 +1424,42 @@ export const buildSmartGymPlan = (
       makeDay(
         3,
         'Full Body C',
-        'Strength • Core • Conditioning',
+        'Strength • Hypertrophy • Core',
         light ? 45 : 55,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
             [
               'legPress',
-              'inclineDumbbellPress',
-              'singleArmLatPulldown',
-              'lowRow',
-              'hipThrust',
-              'cableCrunch',
-            ],
-            [
-              'hackSquat',
-              'machineChestPress',
-              'latPulldown',
-              'linearBentOverRow',
-              'dbHammerCurl',
-              'plank',
-            ],
-            [
-              light ? 'gobletSquat' : 'squat',
               'upperCableFly',
-              'seatedRow',
-              'lowerCableFly',
-              'dbTricepsExtension',
-              'deadBug',
+              'singleArmLatPulldown',
+              'chestsupportdbrow',
+              'dbHammerCurl',
+              'cableonearmtricepextension',
             ],
             [
-              'romanianDeadlift',
-              light ? 'machineChestPress' : 'inclineBarbellBenchPress',
-              'assistedPullUp',
+              light ? 'machineChestPress' : 'benchPress',
+              'tbarrow',
+              'lyinglegcurl',
+              'hipAbduction',
+              'cablepreachercurl',
+              'declineabcrunch',
+            ],
+            [
+              'inclineBarbellBenchPress',
+              'underhandlatpulldown',
               'lowRow',
+              'legextensions',
+              'overheadcabletricepextension',
+              'abroller',
+            ],
+            [
+              'leverchestpress',
+              'wideneutralgriplatpulldown',
+              'singlearmdumbbellrow',
+              'hipThrust',
               'dumbbellCurl',
-              'cableCrunch',
+              'tricepsPushdown',
             ],
           ],
           weekVariant,
@@ -1062,7 +1475,7 @@ export const buildSmartGymPlan = (
         1,
         'Upper Body A',
         'Chest • Back • Shoulders',
-        light ? 45 : 55,
+        light ? 45 : 60,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
@@ -1071,32 +1484,32 @@ export const buildSmartGymPlan = (
               'latPulldown',
               'inclineDumbbellPress',
               'seatedRow',
+              'dumbbellShoulderPress',
               'lateralRaise',
-              'plank',
             ],
             [
               light ? 'machineChestPress' : 'inclineBarbellBenchPress',
               'singleArmLatPulldown',
               'upperCableFly',
               'lowRow',
-              'dumbbellShoulderPress',
-              'cableCrunch',
+              'machineshoulderpress',
+              'cablelateralraise',
             ],
             [
-              'machineChestPress',
-              'linearBentOverRow',
-              'lowerCableFly',
-              'latPulldown',
+              'leverchestpress',
+              'wideneutralgriplatpulldown',
+              'machinechestfly',
+              'chestsupportdbrow',
+              'dumbbellreardeltfly',
               'lateralRaise',
-              'deadBug',
             ],
             [
               light ? 'machineChestPress' : 'benchPress',
-              'assistedPullUp',
+              'underhandlatpulldown',
               'inclineDumbbellPress',
-              'seatedRow',
-              'dumbbellShoulderPress',
-              'plank',
+              'tbarrow',
+              'seatedbarbellshoulderpress',
+              'cablelateralraise',
             ],
           ],
           weekVariant,
@@ -1107,37 +1520,38 @@ export const buildSmartGymPlan = (
         2,
         'Lower Body A',
         'Quads • Hamstrings • Core',
-        light ? 45 : 55,
+        light ? 45 : 60,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
             [
-              light ? 'gobletSquat' : 'squat',
+              light ? 'dumbbellsquat' : 'squat',
               'romanianDeadlift',
               'legPress',
-              'hipThrust',
-              'deadBug',
-            ],
-            [
-              'hackSquat',
-              'legPress',
-              'hipAbduction',
-              'romanianDeadlift',
+              'legextensions',
+              'lyinglegcurl',
               'plank',
             ],
             [
+              'smithlowbarsquat',
               'legPress',
-              'hipThrust',
-              'gobletSquat',
               'hipAbduction',
-              'cableCrunch',
+              'lyinglegcurl',
+              'crunch',
             ],
             [
-              light ? 'gobletSquat' : 'squat',
-              'hackSquat',
+              'trapbardeadlift',
+              'legextensions',
               'romanianDeadlift',
               'hipThrust',
-              'deadBug',
+              'abroller',
+            ],
+            [
+              'dumbbellsquat',
+              'bulgariansplitsquat',
+              'lyinglegcurl',
+              'hipAbduction',
+              'declineabcrunch',
             ],
           ],
           weekVariant,
@@ -1148,41 +1562,41 @@ export const buildSmartGymPlan = (
         3,
         'Upper Body B',
         'Back • Chest • Arms',
-        light ? 45 : 55,
+        light ? 45 : 60,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
             [
               'seatedRow',
               'machineChestPress',
-              'latPulldown',
-              'dumbbellShoulderPress',
-              'dumbbellCurl',
+              'singleArmLatPulldown',
+              'dbHammerCurl',
               'tricepsPushdown',
+              'plank',
             ],
             [
               'lowRow',
               'upperCableFly',
-              'singleArmLatPulldown',
-              'lateralRaise',
-              'dbHammerCurl',
-              'dbOverheadTricepsExtension',
-            ],
-            [
-              'linearBentOverRow',
-              light ? 'machineChestPress' : 'inclineBarbellBenchPress',
-              'latPulldown',
-              'lowerCableFly',
+              'wideneutralgriplatpulldown',
               'normalGripEzBbCurl',
               'dbTricepsExtension',
+              'crunch',
             ],
             [
-              'seatedRow',
-              'machineChestPress',
-              'assistedPullUp',
-              'dumbbellShoulderPress',
-              'ezBarCurlNarrowGrip',
-              'tricepsPushdown',
+              'tbarrow',
+              'inclineBarbellBenchPress',
+              'straightarmpushdown',
+              'cablecurls',
+              'overheadcabletricepextension',
+              'abroller',
+            ],
+            [
+              'chestsupportdbrow',
+              'leverchestpress',
+              'underhandlatpulldown',
+              'cablepreachercurl',
+              'dumbbellskullcrusher',
+              'declineabcrunch',
             ],
           ],
           weekVariant,
@@ -1193,7 +1607,7 @@ export const buildSmartGymPlan = (
         4,
         'Lower Body B',
         'Glutes • Legs • Core',
-        light ? 45 : 55,
+        light ? 45 : 60,
         light ? 'light' : 'moderate',
         weeklyExercises(
           [
@@ -1201,29 +1615,30 @@ export const buildSmartGymPlan = (
               'legPress',
               'hipThrust',
               'romanianDeadlift',
-              'gobletSquat',
-              'cableCrunch',
+              'hipAbduction',
+              'cableonearmtricepextension',
+              'crunch',
             ],
             [
-              'hackSquat',
-              'hipAbduction',
-              'legPress',
-              'romanianDeadlift',
+              'smithlowbarsquat',
+              'lyinglegcurl',
+              'legextensions',
+              'hipThrust',
               'plank',
             ],
             [
-              light ? 'gobletSquat' : 'squat',
-              'hipThrust',
+              light ? 'dumbbellsquat' : 'squat',
+              'trapbardeadlift',
               'hipAbduction',
               'legPress',
-              'deadBug',
+              'mountainclimbers',
             ],
             [
+              'bulgariansplitsquat',
               'legPress',
-              'romanianDeadlift',
-              'hackSquat',
+              'lyinglegcurl',
               'hipThrust',
-              'cableCrunch',
+              'abroller',
             ],
           ],
           weekVariant,
@@ -1253,23 +1668,23 @@ export const buildSmartGymPlan = (
             [
               light ? 'machineChestPress' : 'inclineBarbellBenchPress',
               'upperCableFly',
-              'dumbbellShoulderPress',
-              'dbOverheadTricepsExtension',
-              'lateralRaise',
+              'machineshoulderpress',
+              'cablelateralraise',
+              'overheadcabletricepextension',
             ],
             [
-              'machineChestPress',
-              'lowerCableFly',
-              'inclineDumbbellPress',
-              'lateralRaise',
+              'leverchestpress',
+              'machinechestfly',
+              'seatedbarbellshoulderpress',
+              'dumbbellreardeltfly',
               'dbTricepsExtension',
             ],
             [
               light ? 'machineChestPress' : 'benchPress',
-              'upperCableFly',
-              'dumbbellShoulderPress',
-              'tricepsPushdown',
-              'dbOverheadTricepsExtension',
+              'inclineDumbbellPress',
+              'machineshoulderpress',
+              'lateralRaise',
+              'dumbbellskullcrusher',
             ],
           ],
           weekVariant,
@@ -1287,30 +1702,30 @@ export const buildSmartGymPlan = (
             [
               'latPulldown',
               'seatedRow',
-              light ? 'latPulldown' : 'assistedPullUp',
+              'straightarmpushdown',
               'dumbbellCurl',
-              'plank',
+              'dbHammerCurl',
             ],
             [
               'singleArmLatPulldown',
               'lowRow',
-              'linearBentOverRow',
-              'dbHammerCurl',
-              'deadBug',
+              'chestsupportdbrow',
+              'normalGripEzBbCurl',
+              'cablecurls',
             ],
             [
-              'latPulldown',
-              'seatedRow',
-              'lowRow',
-              'normalGripEzBbCurl',
-              'cableCrunch',
+              'wideneutralgriplatpulldown',
+              'tbarrow',
+              'underhandlatpulldown',
+              'proneinclinedumbbellcurl',
+              'cablepreachercurl',
             ],
             [
               'assistedPullUp',
-              'linearBentOverRow',
-              'singleArmLatPulldown',
-              'ezBarCurlNarrowGrip',
-              'plank',
+              'singlearmdumbbellrow',
+              'straightarmpushdown',
+              'dbHammerCurl',
+              'normalGripEzBbCurl',
             ],
           ],
           weekVariant,
@@ -1321,37 +1736,38 @@ export const buildSmartGymPlan = (
         3,
         'Legs Day',
         'Quads • Hamstrings • Glutes',
-        light ? 45 : 60,
+        light ? 45 : 65,
         light ? 'moderate' : 'hard',
         weeklyExercises(
           [
             [
-              light ? 'gobletSquat' : 'squat',
+              light ? 'dumbbellsquat' : 'squat',
               'romanianDeadlift',
               'legPress',
-              'hipThrust',
-              'deadBug',
-            ],
-            [
-              'hackSquat',
-              'legPress',
-              'hipAbduction',
-              'romanianDeadlift',
+              'legextensions',
+              'lyinglegcurl',
               'plank',
             ],
             [
+              'smithlowbarsquat',
               'legPress',
-              'hipThrust',
-              light ? 'gobletSquat' : 'squat',
               'hipAbduction',
-              'cableCrunch',
+              'lyinglegcurl',
+              'crunch',
             ],
             [
-              'hackSquat',
-              'romanianDeadlift',
-              'legPress',
+              'trapbardeadlift',
               'hipThrust',
-              'deadBug',
+              'legextensions',
+              'romanianDeadlift',
+              'abroller',
+            ],
+            [
+              'bulgariansplitsquat',
+              'dumbbellsquat',
+              'hipAbduction',
+              'lyinglegcurl',
+              'declineabcrunch',
             ],
           ],
           weekVariant,
@@ -1369,34 +1785,34 @@ export const buildSmartGymPlan = (
             [
               'machineChestPress',
               'seatedRow',
-              'inclineDumbbellPress',
+              'upperCableFly',
               'latPulldown',
-              'dumbbellCurl',
+              'cablecurls',
               'tricepsPushdown',
             ],
             [
-              'upperCableFly',
+              'inclineDumbbellPress',
               'lowRow',
+              'machinechestfly',
               'singleArmLatPulldown',
-              'lowerCableFly',
               'dbHammerCurl',
               'dbTricepsExtension',
             ],
             [
-              light ? 'machineChestPress' : 'inclineBarbellBenchPress',
-              'linearBentOverRow',
-              'latPulldown',
-              'lowerCableFly',
+              'leverchestpress',
+              'chestsupportdbrow',
+              'wideneutralgriplatpulldown',
               'normalGripEzBbCurl',
-              'dbOverheadTricepsExtension',
+              'overheadcabletricepextension',
+              'plank',
             ],
             [
               'machineChestPress',
-              'seatedRow',
+              'tbarrow',
               'upperCableFly',
-              'singleArmLatPulldown',
-              'ezBarCurlNarrowGrip',
-              'tricepsPushdown',
+              'underhandlatpulldown',
+              'cablepreachercurl',
+              'dumbbellskullcrusher',
             ],
           ],
           weekVariant,
@@ -1414,30 +1830,30 @@ export const buildSmartGymPlan = (
             [
               'legPress',
               'hipThrust',
-              'romanianDeadlift',
+              'lyinglegcurl',
               'plank',
-              'cableCrunch',
+              'crunch',
             ],
             [
-              'hackSquat',
+              'smithlowbarsquat',
               'hipAbduction',
-              'gobletSquat',
-              'deadBug',
-              'cableCrunch',
+              'legextensions',
+              'declineabcrunch',
+              'abroller',
             ],
             [
-              light ? 'gobletSquat' : 'squat',
-              'legPress',
+              'dumbbellsquat',
+              'romanianDeadlift',
               'hipThrust',
+              'mountainclimbers',
               'plank',
-              'deadBug',
             ],
             [
-              'romanianDeadlift',
-              'hipAbduction',
-              'hackSquat',
-              'cableCrunch',
-              'plank',
+              'trapbardeadlift',
+              'legPress',
+              'lyinglegcurl',
+              'crunch',
+              'abroller',
             ],
           ],
           weekVariant,
@@ -1466,20 +1882,20 @@ export const buildSmartGymPlan = (
             [
               light ? 'machineChestPress' : 'inclineBarbellBenchPress',
               'upperCableFly',
-              'dumbbellShoulderPress',
-              'dbOverheadTricepsExtension',
+              'machineshoulderpress',
+              'overheadcabletricepextension',
             ],
             [
-              'machineChestPress',
-              'lowerCableFly',
+              'leverchestpress',
+              'machinechestfly',
               'lateralRaise',
               'dbTricepsExtension',
             ],
             [
               light ? 'machineChestPress' : 'benchPress',
-              'upperCableFly',
-              'lateralRaise',
-              'tricepsPushdown',
+              'inclineDumbbellPress',
+              'cablelateralraise',
+              'dumbbellskullcrusher',
             ],
           ],
           weekVariant,
@@ -1497,26 +1913,26 @@ export const buildSmartGymPlan = (
             [
               'latPulldown',
               'seatedRow',
-              'assistedPullUp',
+              'straightarmpushdown',
               'dumbbellCurl',
             ],
             [
               'singleArmLatPulldown',
               'lowRow',
-              'linearBentOverRow',
+              'chestsupportdbrow',
               'dbHammerCurl',
             ],
             [
-              'latPulldown',
-              'seatedRow',
+              'wideneutralgriplatpulldown',
+              'tbarrow',
+              'underhandlatpulldown',
               'normalGripEzBbCurl',
-              'deadBug',
             ],
             [
               'assistedPullUp',
-              'linearBentOverRow',
-              'ezBarCurlNarrowGrip',
-              'plank',
+              'singlearmdumbbellrow',
+              'straightarmpushdown',
+              'cablepreachercurl',
             ],
           ],
           weekVariant,
@@ -1532,28 +1948,28 @@ export const buildSmartGymPlan = (
         weeklyExercises(
           [
             [
-              light ? 'gobletSquat' : 'squat',
+              light ? 'dumbbellsquat' : 'squat',
               'romanianDeadlift',
               'legPress',
-              'plank',
+              'legextensions',
             ],
             [
-              'hackSquat',
+              'smithlowbarsquat',
               'legPress',
+              'lyinglegcurl',
               'hipAbduction',
-              'deadBug',
             ],
             [
-              'legPress',
-              'romanianDeadlift',
-              'gobletSquat',
-              'cableCrunch',
-            ],
-            [
-              'hackSquat',
-              'hipThrust',
+              'trapbardeadlift',
+              'legextensions',
               'romanianDeadlift',
               'plank',
+            ],
+            [
+              'bulgariansplitsquat',
+              'dumbbellsquat',
+              'lyinglegcurl',
+              'crunch',
             ],
           ],
           weekVariant,
@@ -1570,27 +1986,27 @@ export const buildSmartGymPlan = (
           [
             [
               'machineChestPress',
-              'inclineDumbbellPress',
+              'upperCableFly',
               'lateralRaise',
               'dbTricepsExtension',
             ],
             [
-              'upperCableFly',
-              'dumbbellShoulderPress',
-              'lowerCableFly',
-              'dbOverheadTricepsExtension',
+              'inclineDumbbellPress',
+              'machinechestfly',
+              'cablelateralraise',
+              'cableonearmtricepextension',
             ],
             [
-              light ? 'machineChestPress' : 'inclineBarbellBenchPress',
-              'lateralRaise',
-              'tricepsPushdown',
-              'plank',
+              'leverchestpress',
+              'machineshoulderpress',
+              'dumbbellreardeltfly',
+              'overheadcabletricepextension',
             ],
             [
               'machineChestPress',
               'upperCableFly',
               'dumbbellShoulderPress',
-              'dbTricepsExtension',
+              'dumbbellskullcrusher',
             ],
           ],
           weekVariant,
@@ -1606,28 +2022,28 @@ export const buildSmartGymPlan = (
         weeklyExercises(
           [
             [
-              'latPulldown',
-              'seatedRow',
-              'dumbbellCurl',
-              'deadBug',
-            ],
-            [
               'singleArmLatPulldown',
               'lowRow',
               'dbHammerCurl',
-              'plank',
-            ],
-            [
-              'linearBentOverRow',
-              'latPulldown',
-              'normalGripEzBbCurl',
-              'cableCrunch',
+              'tricepsPushdown',
             ],
             [
               'seatedRow',
-              'singleArmLatPulldown',
-              'ezBarCurlNarrowGrip',
-              'deadBug',
+              'underhandlatpulldown',
+              'cablecurls',
+              'dbTricepsExtension',
+            ],
+            [
+              'chestsupportdbrow',
+              'wideneutralgriplatpulldown',
+              'normalGripEzBbCurl',
+              'overheadcabletricepextension',
+            ],
+            [
+              'tbarrow',
+              'straightarmpushdown',
+              'cablepreachercurl',
+              'cableonearmtricepextension',
             ],
           ],
           weekVariant,
@@ -1645,26 +2061,26 @@ export const buildSmartGymPlan = (
             [
               'legPress',
               'hipThrust',
-              'romanianDeadlift',
-              'cableCrunch',
-            ],
-            [
-              'hackSquat',
-              'hipAbduction',
-              'gobletSquat',
+              'lyinglegcurl',
               'plank',
             ],
             [
-              light ? 'gobletSquat' : 'squat',
-              'hipThrust',
-              'legPress',
-              'deadBug',
+              'smithlowbarsquat',
+              'hipAbduction',
+              'legextensions',
+              'crunch',
             ],
             [
+              'dumbbellsquat',
               'romanianDeadlift',
+              'hipThrust',
+              'abroller',
+            ],
+            [
+              'trapbardeadlift',
               'hipAbduction',
-              'hackSquat',
-              'cableCrunch',
+              'lyinglegcurl',
+              'declineabcrunch',
             ],
           ],
           weekVariant,

@@ -15,6 +15,7 @@ import {
   Alert,
   ActivityIndicator,
   TextInput,
+  Modal
 } from 'react-native';
 import {
   useFocusEffect,
@@ -27,6 +28,8 @@ import Video from 'react-native-video';
 import {
   SmartGymDay,
   SmartGymExercise,
+  getSimilarExercises,
+  replaceExerciseInDay,
 } from '../data/gymSmartPlan';
 
 import {
@@ -49,22 +52,21 @@ import { playRestFinishedAlert } from '../services/restAlert';
 
 import {
   downloadWorkoutVideo,
-  getOfflineVideoKey,
+  getGymExerciseOfflineKey,
   getOfflineVideoPath,
   getOfflineVideoSizeText,
 } from '../services/offlineWorkoutVideo';
 
-import {
-  hasOfflineVideoAccess,
-} from '../services/premiumAccess';
+import { gateWorkout } from '../ads/adGate';
+import { useSubscription } from '../iap/SubscriptionProvider';
 
 import GymRpeModal from '../components/GymRpeModal';
-
-/**
- * Bật true để test video demo mà chưa cần mua Premium Plus.
- * Trước khi build release / submit store thì đổi thành false.
- */
-const TEST_UNLOCK_GYM_DEMO_VIDEO = true;
+import {
+  translateExerciseName,
+  translateExerciseNote,
+  translateGymDayFocus,
+  translateGymDayTitle,
+} from '../utils/gymI18n';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -114,6 +116,7 @@ const normalizeSets = (
   }));
 };
 
+
 type ExerciseCardProps = {
   programId: string;
   dayId: string;
@@ -122,7 +125,9 @@ type ExerciseCardProps = {
   done: boolean;
   logSets: GymExerciseSetLog[];
   exerciseRpe?: number | null;
+  isPremium: boolean;
   onProgressUpdated: (next: GymDayProgress) => void;
+  onSwapPress: (exercise: SmartGymExercise) => void;
 };
 
 const ExerciseCard: React.FC<ExerciseCardProps> = ({
@@ -133,20 +138,18 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
   done,
   logSets,
   exerciseRpe,
+  isPremium,
   onProgressUpdated,
+  onSwapPress,
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<any>();
 
   const [videoPath, setVideoPath] = useState<string | null>(null);
   const [videoSize, setVideoSize] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
-  const [hasPremiumPlus, setHasPremiumPlus] = useState(false);
+  const [preparingReward, setPreparingReward] = useState(false);
   const [restRemaining, setRestRemaining] = useState(0);
-
-  const canViewDemoVideo =
-    TEST_UNLOCK_GYM_DEMO_VIDEO || hasPremiumPlus;
 
   const sets = useMemo(() => {
     return normalizeSets(
@@ -158,12 +161,12 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
 
   const completedSets = sets.filter(item => item.completed).length;
 
-  const offlineKey = useMemo(() => {
-    return getOfflineVideoKey(
-      'gym-exercise',
-      `${exercise.id}|${exercise.demoUrl || ''}`,
-    );
-  }, [exercise.id, exercise.demoUrl]);
+const offlineKey = useMemo(() => {
+  return getGymExerciseOfflineKey(
+    exercise.id,
+    exercise.demoUrl,
+  );
+}, [exercise.id, exercise.demoUrl]);
 
   useEffect(() => {
     if (restRemaining <= 0) {
@@ -184,11 +187,6 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
     return () => clearTimeout(timer);
   }, [restRemaining]);
 
-  const reloadAccess = useCallback(async () => {
-    const ok = await hasOfflineVideoAccess();
-    setHasPremiumPlus(ok);
-  }, []);
-
   const reloadVideoState = useCallback(async () => {
     if (!exercise.demoUrl) {
       setVideoPath(null);
@@ -205,40 +203,9 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
 
   useFocusEffect(
     useCallback(() => {
-      reloadAccess();
       reloadVideoState();
-    }, [reloadAccess, reloadVideoState]),
+    }, [reloadVideoState]),
   );
-
-  const openPremium = () => {
-    try {
-      navigation.getParent()?.navigate('Settings', {
-        screen: 'Premium',
-      });
-    } catch {
-      navigation.navigate('Premium');
-    }
-  };
-
-  const showPremiumPlusAlert = () => {
-    Alert.alert(
-      t('premium.lockedTitle', 'Premium Plus required'),
-      t(
-        'gym.premiumPlusRequiredText',
-        'Upgrade to Premium Plus to watch and download demo videos offline.',
-      ),
-      [
-        {
-          text: t('common.cancel', 'Cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('premium.cta', 'Upgrade now'),
-          onPress: openPremium,
-        },
-      ],
-    );
-  };
 
   const onToggleWholeExercise = async () => {
     const next = await setGymExerciseCompleted(
@@ -317,9 +284,54 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
       return;
     }
 
-    if (!canViewDemoVideo) {
-      showPremiumPlusAlert();
+    if (downloading || preparingReward) {
       return;
+    }
+
+    if (!isPremium) {
+      try {
+        setPreparingReward(true);
+
+        const rewardResult = await gateWorkout({
+          isPremium,
+          startTrialOnFirstUse: false,
+        });
+
+        if (rewardResult === 'closed') {
+          Alert.alert(
+            t('ads.rewardRequiredTitle', 'Watch the full ad'),
+            t(
+              'ads.need_full',
+              'You need to watch the entire ad to continue.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'not_ready') {
+          Alert.alert(
+            t('ads.not_ready_title', 'Ad not ready'),
+            t(
+              'ads.not_ready',
+              'Ad is loading. Please try again in a few seconds.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'error') {
+          Alert.alert(
+            t('ads.load_failed_title', 'Unable to load ad'),
+            t(
+              'ads.load_failed',
+              'Unable to load the ad. Please check your connection and try again.',
+            ),
+          );
+          return;
+        }
+      } finally {
+        setPreparingReward(false);
+      }
     }
 
     try {
@@ -329,9 +341,9 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
       await downloadWorkoutVideo(
         offlineKey,
         exercise.demoUrl,
-        progress => {
+        progressValue => {
           setDownloadProgress(
-            Math.min(100, Math.max(0, progress)),
+            Math.min(100, Math.max(0, progressValue)),
           );
         },
       );
@@ -363,7 +375,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
 
         <View style={styles.exerciseBody}>
           <Text style={styles.exerciseName}>
-            {exercise.name}
+            {translateExerciseName(exercise, t)}
           </Text>
 
           <Text style={styles.exerciseMeta}>
@@ -371,9 +383,19 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
             {t('gym.rest', 'Rest')} {formatRest(exercise.restSeconds)}
           </Text>
 
-          <Text style={styles.exerciseNote}>
-            {exercise.note}
-          </Text>
+<Text style={styles.exerciseNote}>
+  {translateExerciseNote(exercise, t)}
+</Text>
+
+<TouchableOpacity
+  activeOpacity={0.86}
+  style={styles.swapExerciseButton}
+  onPress={() => onSwapPress(exercise)}
+>
+  <Text style={styles.swapExerciseText}>
+    {t('gym.swapExercise', 'Swap exercise')}
+  </Text>
+</TouchableOpacity>
 
           <Text style={styles.setProgressText}>
             {completedSets}/{sets.length} {t('gym.setsCompleted', 'sets completed')}
@@ -511,14 +533,8 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
             {t('gym.videoDemo', 'Demo video')}
           </Text>
 
-          {TEST_UNLOCK_GYM_DEMO_VIDEO ? (
-            <Text style={styles.testBadge}>TEST</Text>
-          ) : null}
-
-          {canViewDemoVideo && videoSize ? (
-            <Text style={styles.demoSize}>
-              {videoSize}
-            </Text>
+          {videoSize ? (
+            <Text style={styles.demoSize}>{videoSize}</Text>
           ) : null}
         </View>
 
@@ -528,31 +544,6 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
               {t('gym.videoNotReady', 'Demo video is not available yet.')}
             </Text>
           </View>
-        ) : !canViewDemoVideo ? (
-          <TouchableOpacity
-            activeOpacity={0.86}
-            style={styles.lockedVideoBox}
-            onPress={showPremiumPlusAlert}
-          >
-            <Text style={styles.lockedIcon}>🔒</Text>
-
-            <Text style={styles.lockedTitle}>
-              {t('premium.plusTitle', 'Premium Plus')}
-            </Text>
-
-            <Text style={styles.lockedText}>
-              {t(
-                'gym.videoPremiumPlusOnly',
-                'Demo videos are available for Premium Plus users only.',
-              )}
-            </Text>
-
-            <View style={styles.upgradeButton}>
-              <Text style={styles.upgradeButtonText}>
-                {t('premium.cta', 'Upgrade now')}
-              </Text>
-            </View>
-          </TouchableOpacity>
         ) : videoPath ? (
           <View style={styles.videoWrap}>
             <Video
@@ -578,25 +569,39 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
             activeOpacity={0.86}
             style={[
               styles.downloadButton,
-              downloading && styles.buttonDisabled,
+              (downloading || preparingReward) && styles.buttonDisabled,
             ]}
             onPress={onDownload}
-            disabled={downloading}
+            disabled={downloading || preparingReward}
           >
-            {downloading ? (
+            {preparingReward ? (
               <View style={styles.downloadRow}>
                 <ActivityIndicator
                   color={BG}
                   style={styles.downloadSpinner}
                 />
-
+                <Text style={styles.downloadText}>
+                  {t('ads.loading', 'Loading ad...')}
+                </Text>
+              </View>
+            ) : downloading ? (
+              <View style={styles.downloadRow}>
+                <ActivityIndicator
+                  color={BG}
+                  style={styles.downloadSpinner}
+                />
                 <Text style={styles.downloadText}>
                   {t('video.downloading', 'Downloading')} {downloadProgress}%
                 </Text>
               </View>
             ) : (
               <Text style={styles.downloadText}>
-                {t('gym.downloadVideo', 'Download video')}
+                {isPremium
+                  ? t('gym.downloadVideo', 'Download video')
+                  : t(
+                      'gym.watchAdToDownloadVideo',
+                      'Watch ad & download video',
+                    )}
               </Text>
             )}
           </TouchableOpacity>
@@ -607,18 +612,35 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({
 };
 
 export const GymWorkoutDayScreen: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
+  const { isPremium } =
+    useSubscription?.() || { isPremium: false };
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: t('gym.workoutDayTitle', {
+        defaultValue: 'Workout Day',
+      }),
+    });
+  }, [navigation, t, i18n.language]);
 
   const {
     programId = 'smart-gym',
     dayId = 'day-1',
     plannedDay,
     profile,
+    rewardedStartGranted = false,
   } = route.params || {};
 
-  const day = plannedDay as SmartGymDay | undefined;
+const routeDay = plannedDay as SmartGymDay | undefined;
+
+const [day, setDay] =
+  useState<SmartGymDay | undefined>(routeDay);
+
+const [swapTarget, setSwapTarget] =
+  useState<SmartGymExercise | null>(null);
 
   const [progress, setProgress] = useState<GymDayProgress>({
     completedExercises: {},
@@ -629,6 +651,7 @@ export const GymWorkoutDayScreen: React.FC = () => {
 
   const [sessionRpeVisible, setSessionRpeVisible] = useState(false);
   const [finishing, setFinishing] = useState(false);
+  const [startingWorkout, setStartingWorkout] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -637,7 +660,9 @@ export const GymWorkoutDayScreen: React.FC = () => {
       loadGymDayProgress(programId, dayId).then(setProgress);
     }, [programId, dayId, day]),
   );
-
+useEffect(() => {
+  setDay(routeDay);
+}, [routeDay]);
   const completedCount = useMemo(() => {
     if (!day) return 0;
 
@@ -650,6 +675,76 @@ export const GymWorkoutDayScreen: React.FC = () => {
     !!day &&
     completedCount === day.exercises.length &&
     day.exercises.length > 0;
+
+  const startWorkoutMode = async () => {
+    if (startingWorkout) {
+      return;
+    }
+
+    try {
+      setStartingWorkout(true);
+
+      if (!isPremium && !rewardedStartGranted) {
+        const rewardResult = await gateWorkout({
+          isPremium,
+          startTrialOnFirstUse: false,
+        });
+
+        if (rewardResult === 'closed') {
+          Alert.alert(
+            t('ads.rewardRequiredTitle', 'Watch the full ad'),
+            t(
+              'ads.need_full',
+              'You need to watch the entire ad to continue.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'not_ready') {
+          Alert.alert(
+            t('ads.not_ready_title', 'Ad not ready'),
+            t(
+              'ads.not_ready',
+              'Ad is loading. Please try again in a few seconds.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'error') {
+          Alert.alert(
+            t('ads.load_failed_title', 'Unable to load ad'),
+            t(
+              'ads.load_failed',
+              'Unable to load the ad. Please check your connection and try again.',
+            ),
+          );
+          return;
+        }
+      }
+
+      navigation.navigate('GymWorkoutMode', {
+        programId,
+        dayId,
+        plannedDay: day,
+        profile,
+        rewardedStartGranted: true,
+      });
+    } finally {
+      setStartingWorkout(false);
+    }
+  };
+
+  const goPremium = () => {
+    try {
+      navigation.getParent()?.navigate('Settings', {
+        screen: 'Premium',
+      });
+    } catch {
+      navigation.navigate('Premium');
+    }
+  };
 
   const onFinishDay = async () => {
     if (!day) return;
@@ -667,7 +762,27 @@ export const GymWorkoutDayScreen: React.FC = () => {
 
     setSessionRpeVisible(true);
   };
+const similarExercises = useMemo(() => {
+  if (!swapTarget) return [];
 
+  return getSimilarExercises(swapTarget, profile);
+}, [swapTarget, profile]);
+
+const onSelectReplacementExercise = (
+  newExercise: SmartGymExercise,
+) => {
+  if (!day || !swapTarget) return;
+
+  const nextDay = replaceExerciseInDay(
+    day,
+    swapTarget.id,
+    newExercise.id,
+    profile,
+  );
+
+  setDay(nextDay);
+  setSwapTarget(null);
+};
   const completeWorkoutWithRpe = async (sessionRpe: number) => {
     if (!day || finishing) return;
 
@@ -755,26 +870,65 @@ export const GymWorkoutDayScreen: React.FC = () => {
 
       <FlatList
         data={day.exercises}
-        keyExtractor={(item) => item.id}
+keyExtractor={(item, index) => `${item.id}-${index}`}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
         renderItem={({ item, index }) => (
-          <ExerciseCard
-            programId={programId}
-            dayId={dayId}
-            exercise={item}
-            index={index}
-            done={!!progress.completedExercises[item.id]}
-            logSets={
-              progress.exerciseLogs[item.id]?.sets ||
-              makeDefaultGymSets(item.sets, item.reps)
-            }
-            exerciseRpe={progress.exerciseLogs[item.id]?.exerciseRpe}
-            onProgressUpdated={setProgress}
-          />
+<ExerciseCard
+  programId={programId}
+  dayId={dayId}
+  exercise={item}
+  index={index}
+  done={!!progress.completedExercises[item.id]}
+  logSets={
+    progress.exerciseLogs[item.id]?.sets ||
+    makeDefaultGymSets(item.sets, item.reps)
+  }
+  exerciseRpe={progress.exerciseLogs[item.id]?.exerciseRpe}
+  isPremium={isPremium}
+  onProgressUpdated={setProgress}
+  onSwapPress={setSwapTarget}
+/>
         )}
         ListHeaderComponent={
           <View style={styles.header}>
+            {!isPremium ? (
+              <TouchableOpacity
+                activeOpacity={0.88}
+                style={styles.removeAdsBanner}
+                onPress={goPremium}
+              >
+                <View style={styles.removeAdsIconBox}>
+                  <Text style={styles.removeAdsIcon}>👑</Text>
+                </View>
+
+                <View style={styles.removeAdsBody}>
+                  <Text style={styles.removeAdsTitle}>
+                    {t(
+                      'premium.removeAds',
+                      'Remove ads',
+                    )}
+                  </Text>
+
+                  <Text style={styles.removeAdsText}>
+                    {t(
+                      'premium.removeAdsWorkoutNotice',
+                      'Free users watch a rewarded ad before every workout. Upgrade to Premium to start instantly without ads.',
+                    )}
+                  </Text>
+                </View>
+
+                <View style={styles.removeAdsCta}>
+                  <Text style={styles.removeAdsCtaText}>
+                    {t(
+                      'premium.cta',
+                      'Upgrade',
+                    )}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+
             <View style={styles.kickerPill}>
               <Text style={styles.kickerText}>
                 {t('gym.workoutDay', 'WORKOUT DAY')}
@@ -782,11 +936,11 @@ export const GymWorkoutDayScreen: React.FC = () => {
             </View>
 
             <Text style={styles.title}>
-              {day.title}
+              {translateGymDayTitle(day, t)}
             </Text>
 
             <Text style={styles.subtitle}>
-              {day.focus}
+              {translateGymDayFocus(day, t)}
             </Text>
 
             <View style={styles.progressCard}>
@@ -811,19 +965,28 @@ export const GymWorkoutDayScreen: React.FC = () => {
 
             <TouchableOpacity
               activeOpacity={0.86}
-              style={styles.workoutModeButton}
-              onPress={() =>
-                navigation.navigate('GymWorkoutMode', {
-                  programId,
-                  dayId,
-                  plannedDay: day,
-                  profile,
-                })
-              }
+              style={[
+                styles.workoutModeButton,
+                startingWorkout && styles.buttonDisabled,
+              ]}
+              onPress={startWorkoutMode}
+              disabled={startingWorkout}
             >
-              <Text style={styles.workoutModeButtonText}>
-                {t('gym.startWorkoutMode', 'Start workout mode')}
-              </Text>
+              {startingWorkout ? (
+                <View style={styles.downloadRow}>
+                  <ActivityIndicator
+                    color={BG}
+                    style={styles.downloadSpinner}
+                  />
+                  <Text style={styles.workoutModeButtonText}>
+                    {t('ads.loading', 'Loading ad...')}
+                  </Text>
+                </View>
+              ) : (
+                <Text style={styles.workoutModeButtonText}>
+                  {t('gym.startWorkoutMode', 'Start workout mode')}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         }
@@ -858,6 +1021,73 @@ export const GymWorkoutDayScreen: React.FC = () => {
         onSelect={completeWorkoutWithRpe}
         onClose={() => setSessionRpeVisible(false)}
       />
+      <Modal
+  visible={!!swapTarget}
+  transparent
+  animationType="fade"
+  onRequestClose={() => setSwapTarget(null)}
+>
+  <View style={styles.swapOverlay}>
+    <View style={styles.swapModal}>
+      <Text style={styles.swapKicker}>
+        {t('gym.swapExercise', 'Swap exercise')}
+      </Text>
+
+      <Text style={styles.swapTitle}>
+        {swapTarget ? translateExerciseName(swapTarget, t) : ''}
+      </Text>
+
+      <Text style={styles.swapSubtitle}>
+        {t(
+          'gym.chooseSimilarExercise',
+          'Choose a similar exercise for the same muscle group.',
+        )}
+      </Text>
+
+      {similarExercises.length === 0 ? (
+        <Text style={styles.swapEmpty}>
+          {t('gym.noSimilarExercise', 'No similar exercise found.')}
+        </Text>
+      ) : (
+        similarExercises.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            activeOpacity={0.86}
+            style={styles.swapOption}
+            onPress={() => onSelectReplacementExercise(item)}
+          >
+            <View style={styles.swapOptionBody}>
+              <Text style={styles.swapOptionTitle}>
+                {translateExerciseName(item, t)}
+              </Text>
+
+              <Text style={styles.swapOptionMeta}>
+                {item.sets} {t('gym.sets', 'sets')} × {item.reps} •{' '}
+                {t('gym.rest', 'Rest')} {formatRest(item.restSeconds)}
+              </Text>
+
+              <Text style={styles.swapOptionNote} numberOfLines={2}>
+                {translateExerciseNote(item, t)}
+              </Text>
+            </View>
+
+            <Text style={styles.swapArrow}>›</Text>
+          </TouchableOpacity>
+        ))
+      )}
+
+      <TouchableOpacity
+        activeOpacity={0.86}
+        style={styles.swapCancelButton}
+        onPress={() => setSwapTarget(null)}
+      >
+        <Text style={styles.swapCancelText}>
+          {t('common.cancel', 'Cancel')}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
     </View>
   );
 };
@@ -873,6 +1103,54 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 14,
+  },
+  removeAdsBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(250, 204, 21, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(250, 204, 21, 0.42)',
+    borderRadius: 18,
+    padding: 12,
+    marginBottom: 14,
+  },
+  removeAdsIconBox: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: 'rgba(250, 204, 21, 0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  removeAdsIcon: {
+    fontSize: 21,
+  },
+  removeAdsBody: {
+    flex: 1,
+  },
+  removeAdsTitle: {
+    color: '#FACC15',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  removeAdsText: {
+    color: '#E5E7EB',
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 3,
+  },
+  removeAdsCta: {
+    backgroundColor: NEON,
+    borderRadius: 999,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    marginLeft: 10,
+  },
+  removeAdsCtaText: {
+    color: BG,
+    fontSize: 11,
+    fontWeight: '900',
   },
   kickerPill: {
     alignSelf: 'flex-start',
@@ -1263,6 +1541,111 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     margin: 18,
   },
+  swapExerciseButton: {
+  alignSelf: 'flex-start',
+  marginTop: 10,
+  borderRadius: 999,
+  borderWidth: 1,
+  borderColor: 'rgba(25, 230, 210, 0.38)',
+  backgroundColor: 'rgba(25, 230, 210, 0.08)',
+  paddingHorizontal: 12,
+  paddingVertical: 8,
+},
+swapExerciseText: {
+  color: CYAN,
+  fontSize: 12,
+  fontWeight: '900',
+},
+
+swapOverlay: {
+  flex: 1,
+  backgroundColor: 'rgba(2, 6, 23, 0.82)',
+  justifyContent: 'center',
+  padding: 18,
+},
+swapModal: {
+  backgroundColor: CARD,
+  borderRadius: 24,
+  borderWidth: 1,
+  borderColor: 'rgba(124, 255, 58, 0.26)',
+  padding: 16,
+  maxHeight: '86%',
+},
+swapKicker: {
+  color: CYAN,
+  fontSize: 11,
+  fontWeight: '900',
+  letterSpacing: 1,
+},
+swapTitle: {
+  color: TEXT,
+  fontSize: 24,
+  lineHeight: 30,
+  fontWeight: '900',
+  marginTop: 8,
+},
+swapSubtitle: {
+  color: MUTED,
+  fontSize: 13,
+  lineHeight: 19,
+  marginTop: 7,
+  marginBottom: 12,
+},
+swapEmpty: {
+  color: MUTED,
+  fontSize: 14,
+  lineHeight: 20,
+  marginTop: 10,
+},
+swapOption: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#06111D',
+  borderRadius: 16,
+  borderWidth: 1,
+  borderColor: 'rgba(148, 163, 184, 0.16)',
+  padding: 12,
+  marginBottom: 9,
+},
+swapOptionBody: {
+  flex: 1,
+},
+swapOptionTitle: {
+  color: TEXT,
+  fontSize: 15,
+  fontWeight: '900',
+},
+swapOptionMeta: {
+  color: '#E5E7EB',
+  fontSize: 12,
+  fontWeight: '800',
+  marginTop: 4,
+},
+swapOptionNote: {
+  color: MUTED,
+  fontSize: 12,
+  lineHeight: 17,
+  marginTop: 5,
+},
+swapArrow: {
+  color: NEON,
+  fontSize: 30,
+  fontWeight: '300',
+  marginLeft: 8,
+},
+swapCancelButton: {
+  marginTop: 8,
+  borderRadius: 999,
+  borderWidth: 1,
+  borderColor: 'rgba(148, 163, 184, 0.25)',
+  paddingVertical: 12,
+  alignItems: 'center',
+},
+swapCancelText: {
+  color: MUTED,
+  fontSize: 14,
+  fontWeight: '900',
+},
 });
 
 export default GymWorkoutDayScreen;

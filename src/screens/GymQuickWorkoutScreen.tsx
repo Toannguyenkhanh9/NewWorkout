@@ -11,6 +11,8 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {
   useFocusEffect,
@@ -30,6 +32,16 @@ import {
   QuickWorkoutTarget,
   saveGymEquipmentMode,
 } from '../services/gymAdvanced';
+
+import { gateWorkout } from '../ads/adGate';
+import { useSubscription } from '../iap/SubscriptionProvider';
+
+import {
+  translateEquipmentMode,
+  translateExerciseName,
+  translateExerciseNote,
+  translateQuickTarget,
+} from '../utils/gymI18n';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -56,7 +68,7 @@ const EQUIPMENTS: GymEquipmentMode[] = [
   'home',
 ];
 
-const targetLabel: Record<QuickWorkoutTarget, string> = {
+const targetFallback: Record<QuickWorkoutTarget, string> = {
   full_body: 'Full Body',
   chest: 'Chest',
   back: 'Back',
@@ -66,7 +78,7 @@ const targetLabel: Record<QuickWorkoutTarget, string> = {
   fat_burn: 'Fat Burn',
 };
 
-const equipmentLabel: Record<GymEquipmentMode, string> = {
+const equipmentFallback: Record<GymEquipmentMode, string> = {
   full_gym: 'Full gym',
   machines: 'Machines',
   dumbbell_only: 'Dumbbell only',
@@ -77,6 +89,8 @@ const equipmentLabel: Record<GymEquipmentMode, string> = {
 export const GymQuickWorkoutScreen: React.FC = () => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
+  const { isPremium } =
+    useSubscription?.() || { isPremium: false };
 
   const [target, setTarget] =
     useState<QuickWorkoutTarget>('full_body');
@@ -85,6 +99,7 @@ export const GymQuickWorkoutScreen: React.FC = () => {
     useState<GymEquipmentMode>('full_gym');
 
   const [profile, setProfile] = useState<UserGymProfile | null>(null);
+  const [startingWorkout, setStartingWorkout] = useState(false);
 
   const reload = useCallback(async () => {
     const [savedEquipment, savedProfile] = await Promise.all([
@@ -106,13 +121,64 @@ export const GymQuickWorkoutScreen: React.FC = () => {
     return buildQuickGymDay(target, equipment, profile);
   }, [target, equipment, profile]);
 
-  const startQuickWorkout = () => {
-    navigation.navigate('GymWorkoutDay', {
-      programId: 'quick-gym',
-      dayId: `${day.id}-${Date.now()}`,
-      plannedDay: day,
-      profile,
-    });
+  const startQuickWorkout = async () => {
+    if (startingWorkout) {
+      return;
+    }
+
+    try {
+      setStartingWorkout(true);
+
+      if (!isPremium) {
+        const rewardResult = await gateWorkout({
+          isPremium,
+          startTrialOnFirstUse: false,
+        });
+
+        if (rewardResult === 'closed') {
+          Alert.alert(
+            t('ads.rewardRequiredTitle', 'Watch the full ad'),
+            t(
+              'ads.need_full',
+              'You need to watch the entire ad to continue.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'not_ready') {
+          Alert.alert(
+            t('ads.not_ready_title', 'Ad not ready'),
+            t(
+              'ads.not_ready',
+              'Ad is loading. Please try again in a few seconds.',
+            ),
+          );
+          return;
+        }
+
+        if (rewardResult === 'error') {
+          Alert.alert(
+            t('ads.load_failed_title', 'Unable to load ad'),
+            t(
+              'ads.load_failed',
+              'Unable to load the ad. Please check your connection and try again.',
+            ),
+          );
+          return;
+        }
+      }
+
+      navigation.navigate('GymWorkoutDay', {
+        programId: 'quick-gym',
+        dayId: `${day.id}-${Date.now()}`,
+        plannedDay: day,
+        profile,
+        rewardedStartGranted: true,
+      });
+    } finally {
+      setStartingWorkout(false);
+    }
   };
 
   const selectEquipment = async (mode: GymEquipmentMode) => {
@@ -133,23 +199,29 @@ export const GymQuickWorkoutScreen: React.FC = () => {
           <View>
             <View style={styles.kickerPill}>
               <Text style={styles.kickerText}>
-                {t('gym.quickWorkoutKicker', 'QUICK WORKOUT')}
+                {t('gym.quickWorkoutKicker', {
+                  defaultValue: 'QUICK WORKOUT',
+                })}
               </Text>
             </View>
 
             <Text style={styles.title}>
-              {t('gym.quickWorkout', 'Quick workout')}
+              {t('gym.quickWorkout', {
+                defaultValue: 'Quick workout',
+              })}
             </Text>
 
             <Text style={styles.subtitle}>
-              {t(
-                'gym.quickWorkoutSubtitle',
-                'Create a fast gym session based on target muscle and available equipment.',
-              )}
+              {t('gym.quickWorkoutSubtitle', {
+                defaultValue:
+                  'Create a fast gym session based on target muscle and available equipment.',
+              })}
             </Text>
 
             <Text style={styles.sectionTitle}>
-              {t('gym.targetMuscle', 'Target muscle')}
+              {t('gym.targetMuscle', {
+                defaultValue: 'Target muscle',
+              })}
             </Text>
 
             <View style={styles.chips}>
@@ -172,7 +244,11 @@ export const GymQuickWorkoutScreen: React.FC = () => {
                         active && styles.chipTextActive,
                       ]}
                     >
-                      {targetLabel[item]}
+                      {translateQuickTarget(
+                        item,
+                        t,
+                        targetFallback[item],
+                      )}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -180,7 +256,9 @@ export const GymQuickWorkoutScreen: React.FC = () => {
             </View>
 
             <Text style={styles.sectionTitle}>
-              {t('gym.availableEquipment', 'Available equipment')}
+              {t('gym.availableEquipment', {
+                defaultValue: 'Available equipment',
+              })}
             </Text>
 
             <View style={styles.chips}>
@@ -203,7 +281,11 @@ export const GymQuickWorkoutScreen: React.FC = () => {
                         active && styles.chipTextActive,
                       ]}
                     >
-                      {equipmentLabel[item]}
+                      {translateEquipmentMode(
+                        item,
+                        t,
+                        equipmentFallback[item],
+                      )}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -212,27 +294,53 @@ export const GymQuickWorkoutScreen: React.FC = () => {
 
             <View style={styles.planCard}>
               <Text style={styles.planTitle}>
-                {day.title}
+                {t(`gym.quickPlanTitles.${target}`, {
+                  defaultValue: day.title,
+                })}
               </Text>
 
               <Text style={styles.planText}>
-                {day.durationMin} {t('workouts.min', 'min')} •{' '}
-                {day.exercises.length} {t('gym.exercises', 'exercises')}
+                {day.durationMin}{' '}
+                {t('workouts.min', { defaultValue: 'min' })} •{' '}
+                {day.exercises.length}{' '}
+                {t('gym.exercises', { defaultValue: 'exercises' })}
               </Text>
             </View>
 
             <TouchableOpacity
               activeOpacity={0.86}
-              style={styles.startButton}
+              style={[
+                styles.startButton,
+                startingWorkout && styles.buttonDisabled,
+              ]}
               onPress={startQuickWorkout}
+              disabled={startingWorkout}
             >
-              <Text style={styles.startButtonText}>
-                {t('gym.startQuickWorkout', 'Start quick workout')}
-              </Text>
+              {startingWorkout ? (
+                <View style={styles.startButtonRow}>
+                  <ActivityIndicator
+                    color={BG}
+                    style={styles.startButtonSpinner}
+                  />
+                  <Text style={styles.startButtonText}>
+                    {t('ads.loading', {
+                      defaultValue: 'Loading ad...',
+                    })}
+                  </Text>
+                </View>
+              ) : (
+                <Text style={styles.startButtonText}>
+                  {t('gym.startQuickWorkout', {
+                    defaultValue: 'Start quick workout',
+                  })}
+                </Text>
+              )}
             </TouchableOpacity>
 
             <Text style={styles.sectionTitle}>
-              {t('gym.exercisePreview', 'Exercise preview')}
+              {t('gym.exercisePreview', {
+                defaultValue: 'Exercise preview',
+              })}
             </Text>
           </View>
         }
@@ -246,15 +354,16 @@ export const GymQuickWorkoutScreen: React.FC = () => {
 
             <View style={styles.exerciseBody}>
               <Text style={styles.exerciseName}>
-                {item.name}
+                {translateExerciseName(item, t)}
               </Text>
 
               <Text style={styles.exerciseMeta}>
-                {item.sets} {t('gym.sets', 'sets')} × {item.reps}
+                {item.sets}{' '}
+                {t('gym.sets', { defaultValue: 'sets' })} × {item.reps}
               </Text>
 
               <Text style={styles.exerciseNote}>
-                {item.note}
+                {translateExerciseNote(item, t)}
               </Text>
             </View>
           </View>
@@ -363,6 +472,17 @@ const styles = StyleSheet.create({
     color: BG,
     fontSize: 15,
     fontWeight: '900',
+  },
+  startButtonRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startButtonSpinner: {
+    marginRight: 8,
+  },
+  buttonDisabled: {
+    opacity: 0.65,
   },
   exerciseCard: {
     flexDirection: 'row',

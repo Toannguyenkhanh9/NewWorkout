@@ -28,6 +28,12 @@ import {
 } from '../services/gymAdvanced';
 
 import { loadGymDaysPerWeek } from '../data/gymSmartPlan';
+import {
+  translateAchievementDesc,
+  translateAchievementTitle,
+  translateMuscleGroup,
+  translateRecoveryStatus,
+} from '../utils/gymI18n';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -180,7 +186,9 @@ export const GymInsightsScreen: React.FC = () => {
           </Text>
 
           <Text style={styles.volumeText}>
-            {t('gym.topMuscleGroup', 'Top muscle group')}: {recap?.topMuscleGroup || '-'}
+            {t('gym.topMuscleGroup', 'Top muscle group')}: {recap?.topMuscleGroup
+              ? translateMuscleGroup(recap.topMuscleGroup, t)
+              : '-'}
           </Text>
         </View>
 
@@ -193,7 +201,7 @@ export const GymInsightsScreen: React.FC = () => {
             <View key={item.muscleGroup} style={styles.recoveryRow}>
               <View style={styles.recoveryTop}>
                 <Text style={styles.recoveryName}>
-                  {item.muscleGroup}
+                  {translateMuscleGroup(item.muscleGroup, t)}
                 </Text>
 
                 <Text
@@ -202,7 +210,7 @@ export const GymInsightsScreen: React.FC = () => {
                     item.status === 'ready' && styles.recoveryReady,
                   ]}
                 >
-                  {item.status}
+                  {translateRecoveryStatus(item.status, t)}
                 </Text>
               </View>
 
@@ -245,11 +253,11 @@ export const GymInsightsScreen: React.FC = () => {
 
               <View style={styles.achievementBody}>
                 <Text style={styles.achievementTitle}>
-                  {item.title}
+                  {translateAchievementTitle(item.id, item.title, t)}
                 </Text>
 
                 <Text style={styles.achievementDesc}>
-                  {item.desc}
+                  {translateAchievementDesc(item.id, item.desc, t)}
                 </Text>
 
                 <Text style={styles.achievementProgress}>

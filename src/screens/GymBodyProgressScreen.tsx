@@ -192,18 +192,18 @@ const savePhoto = async (
           </Text>
 
           <View style={styles.inputRow}>
-            <Input label="Weight kg" value={weightKg} onChangeText={setWeightKg} />
-            <Input label="Chest cm" value={chestCm} onChangeText={setChestCm} />
+            <Input label={t('gym.measurements.weightKg', { defaultValue: 'Weight kg' })} value={weightKg} onChangeText={setWeightKg} />
+            <Input label={t('gym.measurements.chestCm', { defaultValue: 'Chest cm' })} value={chestCm} onChangeText={setChestCm} />
           </View>
 
           <View style={styles.inputRow}>
-            <Input label="Waist cm" value={waistCm} onChangeText={setWaistCm} />
-            <Input label="Hips cm" value={hipsCm} onChangeText={setHipsCm} />
+            <Input label={t('gym.measurements.waistCm', { defaultValue: 'Waist cm' })} value={waistCm} onChangeText={setWaistCm} />
+            <Input label={t('gym.measurements.hipsCm', { defaultValue: 'Hips cm' })} value={hipsCm} onChangeText={setHipsCm} />
           </View>
 
           <View style={styles.inputRow}>
-            <Input label="Thigh cm" value={thighCm} onChangeText={setThighCm} />
-            <Input label="Arm cm" value={armCm} onChangeText={setArmCm} />
+            <Input label={t('gym.measurements.thighCm', { defaultValue: 'Thigh cm' })} value={thighCm} onChangeText={setThighCm} />
+            <Input label={t('gym.measurements.armCm', { defaultValue: 'Arm cm' })} value={armCm} onChangeText={setArmCm} />
           </View>
 
           <TextInput

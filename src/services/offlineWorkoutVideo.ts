@@ -215,3 +215,12 @@ export const downloadWorkoutVideo = async (
 
   return filePath;
 };
+export const getGymExerciseOfflineKey = (
+  exerciseId: string,
+  demoUrl?: string | null,
+) => {
+  return getOfflineVideoKey(
+    'gym-exercise',
+    `${exerciseId}|${demoUrl || ''}`,
+  );
+};

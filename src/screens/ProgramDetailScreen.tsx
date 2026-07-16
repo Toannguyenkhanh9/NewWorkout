@@ -120,6 +120,7 @@ export const ProgramDetailScreen: React.FC = () => {
   const STORAGE_KEY = `program:${programId}:completed`;
 
   const [completedDays, setCompletedDays] = useState<Record<string, boolean>>({});
+  const [openingDayId, setOpeningDayId] = useState<string | null>(null);
 
   const days = useMemo(() => {
     return program ? generateProgramDays(program) : [];
@@ -225,66 +226,106 @@ title: t('program.weekTitle', {
     })();
   }, [program, isPremium, navigation, t]);
 
+  const goPremium = () => {
+    try {
+      navigation.getParent()?.navigate('Settings', {
+        screen: 'Premium',
+      });
+    } catch {
+      navigation.navigate('Premium');
+    }
+  };
+
   const onPressDay = async (day: WorkoutDay) => {
-    if (!program) return;
-    if (day.isRest) return;
-
-    const result = await gateWorkout({
-      isPremium,
-      startTrialOnFirstUse: true,
-    });
-
-    if (result === 'closed') {
-      toast.show(
-        t('ads.need_full', 'You need to watch the entire ad to continue'),
-      );
+    if (!program || day.isRest || openingDayId) {
       return;
     }
 
-    if (result === 'not_ready') {
-      toast.show(
-        t('ads.not_ready', 'Ad is loading, please try again in a few seconds'),
-      );
-      return;
-    }
+    try {
+      setOpeningDayId(day.id);
 
-    if (result === 'error') {
-      toast.show(t('ads.load_failed', 'Unable to load ad, please try again'));
-      return;
-    }
+      /**
+       * Không dùng trial cho quảng cáo.
+       * Mọi tài khoản Free đều phải xem hết rewarded mỗi lần mở bài tập.
+       * Premium được vào ngay.
+       */
+      if (!isPremium) {
+        const result = await gateWorkout({
+          isPremium: false,
+          startTrialOnFirstUse: false,
+        });
 
-    await markWorkoutActivity();
-    trackWorkoutTapAndMaybeAsk();
+        if (result === 'closed') {
+          toast.show(
+            t(
+              'ads.need_full',
+              'You need to watch the entire ad to continue',
+            ),
+          );
+          return;
+        }
 
-    const wasCompleted = !!completedDays[day.id];
-    const updated = {
-      ...completedDays,
-      [day.id]: true,
-    };
+        if (result === 'not_ready') {
+          toast.show(
+            t(
+              'ads.not_ready',
+              'Ad is loading, please try again in a few seconds',
+            ),
+          );
+          return;
+        }
 
-    setCompletedDays(updated);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(() => {});
+        if (result === 'error') {
+          toast.show(
+            t(
+              'ads.load_failed',
+              'Unable to load ad, please try again',
+            ),
+          );
+          return;
+        }
+      }
 
-    if (!wasCompleted) {
-      await markSessionCompleted(programId, day.id);
+      await markWorkoutActivity();
+      trackWorkoutTapAndMaybeAsk();
 
-      await addWorkoutHistory({
+      const wasCompleted = !!completedDays[day.id];
+      const updated = {
+        ...completedDays,
+        [day.id]: true,
+      };
+
+      setCompletedDays(updated);
+      AsyncStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(updated),
+      ).catch(() => {});
+
+      if (!wasCompleted) {
+        await markSessionCompleted(programId, day.id);
+
+        await addWorkoutHistory({
+          programId,
+          dayId: day.id,
+          workoutName:
+            day.name ||
+            `Day ${day.dayNumber || ''}`.trim(),
+          durationMin: (day as any).durationMin,
+        });
+      }
+
+      navigation.navigate('WorkoutWeb', {
         programId,
         dayId: day.id,
-        workoutName: day.name || `Day ${day.dayNumber || ''}`.trim(),
-        durationMin: (day as any).durationMin,
+        sessionKey: day.sessionKey,
+        videoUrl: day.webUrl ?? day.videoUrl,
+        name: day.name,
+        durationMinutes: day.durationMin || 25,
+        downloadVideos: day.downloadVideos || [],
       });
+    } finally {
+      setOpeningDayId(null);
     }
-
-navigation.navigate('WorkoutWeb', {
-  programId,
-  dayId: day.id,
-  sessionKey: day.sessionKey,
-  videoUrl: day.webUrl ?? day.videoUrl,
-  name: day.name,
-  durationMinutes: day.durationMin || 25,
-  downloadVideos: day.downloadVideos || [],
-});
   };
 
   if (!program) {
@@ -322,6 +363,40 @@ navigation.navigate('WorkoutWeb', {
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <View style={styles.header}>
+            {!isPremium ? (
+              <TouchableOpacity
+                activeOpacity={0.88}
+                style={styles.removeAdsBanner}
+                onPress={goPremium}
+              >
+                <View style={styles.removeAdsIconBox}>
+                  <Text style={styles.removeAdsIcon}>👑</Text>
+                </View>
+
+                <View style={styles.removeAdsBody}>
+                  <Text style={styles.removeAdsTitle}>
+                    {t(
+                      'premium.removeAds',
+                      'Remove ads',
+                    )}
+                  </Text>
+
+                  <Text style={styles.removeAdsText}>
+                    {t(
+                      'premium.removeAdsWorkoutNotice',
+                      'Free users watch a rewarded ad before every workout. Upgrade to Premium to start instantly without ads.',
+                    )}
+                  </Text>
+                </View>
+
+                <View style={styles.removeAdsCta}>
+                  <Text style={styles.removeAdsCtaText}>
+                    {t('premium.cta', 'Upgrade')}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+
             <View style={styles.kickerPill}>
 <Text style={styles.kickerText}>
   {program.premium
@@ -375,7 +450,11 @@ navigation.navigate('WorkoutWeb', {
           <DayRow
             day={item}
             completed={!!completedDays[item.id]}
-            onPress={() => onPressDay(item)}
+            onPress={() => {
+              if (!openingDayId) {
+                onPressDay(item);
+              }
+            }}
             t={t}
           />
         )}
@@ -417,6 +496,54 @@ const styles = StyleSheet.create({
 
   header: {
     marginBottom: 16,
+  },
+  removeAdsBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(250, 204, 21, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(250, 204, 21, 0.42)',
+    borderRadius: 18,
+    padding: 12,
+    marginBottom: 14,
+  },
+  removeAdsIconBox: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: 'rgba(250, 204, 21, 0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  removeAdsIcon: {
+    fontSize: 21,
+  },
+  removeAdsBody: {
+    flex: 1,
+  },
+  removeAdsTitle: {
+    color: '#FACC15',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  removeAdsText: {
+    color: '#E5E7EB',
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 3,
+  },
+  removeAdsCta: {
+    backgroundColor: NEON,
+    borderRadius: 999,
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    marginLeft: 10,
+  },
+  removeAdsCtaText: {
+    color: BG,
+    fontSize: 11,
+    fontWeight: '900',
   },
   kickerPill: {
     alignSelf: 'flex-start',
