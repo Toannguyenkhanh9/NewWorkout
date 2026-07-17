@@ -1,6 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  NativeModules,
+  Platform,
+} from 'react-native';
 import gymDisplayEn from './locales/gymDisplay.en';
 import gymDisplayVi from './locales/gymDisplay.vi';
 import gymDisplayEs from './locales/gymDisplay.es';
@@ -14615,19 +14619,275 @@ const resources = {
   },
 };
 
-i18n.use(initReactI18next).init({
-  lng: 'en',
-  fallbackLng: 'en',
-  resources,
-  interpolation: { escapeValue: false },
-});
+const SUPPORTED_LANGUAGES = [
+  'en',
+  'vi',
+  'es',
+  'fr',
+  'de',
+  'zh',
+  'ja',
+  'ko',
+  'ru',
+  'ar',
+  'hi',
+  'th',
+  'id',
+  'ms',
+  'fil',
+  'pt',
+] as const;
 
-(async () => {
+export type AppLanguage =
+  (typeof SUPPORTED_LANGUAGES)[number];
+
+const FALLBACK_LANGUAGE: AppLanguage =
+  'en';
+
+const isSupportedLanguage = (
+  language: string,
+): language is AppLanguage => {
+  return (
+    SUPPORTED_LANGUAGES as readonly string[]
+  ).includes(language);
+};
+
+export const normalizeLanguage = (
+  value?: string | null,
+): AppLanguage => {
+  if (!value) {
+    return FALLBACK_LANGUAGE;
+  }
+
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .replace(/_/g, '-');
+
+  /**
+   * Mã ngôn ngữ Android cũ.
+   */
+  if (
+    normalized === 'in' ||
+    normalized.startsWith('in-')
+  ) {
+    return 'id';
+  }
+
+  if (
+    normalized === 'tl' ||
+    normalized.startsWith('tl-')
+  ) {
+    return 'fil';
+  }
+
+  /**
+   * Dùng chung resource zh cho:
+   * zh-CN, zh-TW, zh-Hans, zh-Hant...
+   */
+  if (normalized.startsWith('zh')) {
+    return 'zh';
+  }
+
+  const languageCode =
+    normalized.split('-')[0];
+
+  return isSupportedLanguage(languageCode)
+    ? languageCode
+    : FALLBACK_LANGUAGE;
+};
+
+const readNativeDeviceLocale = (): string => {
   try {
-    const saved = await AsyncStorage.getItem(LANG_KEY);
-    if (saved) await i18n.changeLanguage(saved);
-  } catch {}
-})();
+    if (Platform.OS === 'ios') {
+      const settings =
+        NativeModules.SettingsManager
+          ?.settings;
 
-export { LANG_KEY };
+      return (
+        settings?.AppleLanguages?.[0] ||
+        settings?.AppleLocale ||
+        ''
+      );
+    }
+
+    if (Platform.OS === 'android') {
+      return (
+        NativeModules.I18nManager
+          ?.localeIdentifier ||
+        ''
+      );
+    }
+  } catch (error) {
+    console.log(
+      '[i18n] native locale error',
+      error,
+    );
+  }
+
+  return '';
+};
+
+const readIntlDeviceLocale = (): string => {
+  try {
+    return (
+      Intl.DateTimeFormat()
+        .resolvedOptions()
+        .locale || ''
+    );
+  } catch {
+    return '';
+  }
+};
+
+export const getDeviceLanguage =
+  (): AppLanguage => {
+    const nativeLocale =
+      readNativeDeviceLocale();
+
+    if (nativeLocale) {
+      return normalizeLanguage(
+        nativeLocale,
+      );
+    }
+
+    return normalizeLanguage(
+      readIntlDeviceLocale(),
+    );
+  };
+
+const deviceLanguage =
+  getDeviceLanguage();
+
+/**
+ * Khởi tạo ngay bằng ngôn ngữ máy.
+ * Nhờ đó lần mở app đầu tiên không luôn hiện tiếng Anh.
+ */
+i18n
+  .use(initReactI18next)
+  .init({
+    lng: deviceLanguage,
+    fallbackLng:
+      FALLBACK_LANGUAGE,
+    supportedLngs: [
+      ...SUPPORTED_LANGUAGES,
+    ],
+    load: 'languageOnly',
+    resources,
+    interpolation: {
+      escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
+    },
+  });
+
+/**
+ * Ngôn ngữ người dùng từng chọn trong Settings
+ * sẽ được ưu tiên hơn ngôn ngữ thiết bị.
+ */
+export const restoreAppLanguage =
+  async (): Promise<AppLanguage> => {
+    try {
+      const savedLanguage =
+        await AsyncStorage.getItem(
+          LANG_KEY,
+        );
+
+      const selectedLanguage =
+        savedLanguage
+          ? normalizeLanguage(
+              savedLanguage,
+            )
+          : deviceLanguage;
+
+      if (
+        i18n.resolvedLanguage !==
+          selectedLanguage &&
+        i18n.language !==
+          selectedLanguage
+      ) {
+        await i18n.changeLanguage(
+          selectedLanguage,
+        );
+      }
+
+      console.log(
+        '[i18n] resolved language',
+        {
+          nativeLocale:
+            readNativeDeviceLocale(),
+          intlLocale:
+            readIntlDeviceLocale(),
+          savedLanguage,
+          selectedLanguage,
+          currentLanguage:
+            i18n.resolvedLanguage ||
+            i18n.language,
+        },
+      );
+
+      return selectedLanguage;
+    } catch (error) {
+      console.log(
+        '[i18n] restore language error',
+        error,
+      );
+
+      await i18n.changeLanguage(
+        deviceLanguage,
+      );
+
+      return deviceLanguage;
+    }
+  };
+
+/**
+ * Dùng trong màn Settings khi người dùng chọn ngôn ngữ.
+ */
+export const setAppLanguage =
+  async (
+    language: string,
+  ): Promise<AppLanguage> => {
+    const normalized =
+      normalizeLanguage(language);
+
+    await AsyncStorage.setItem(
+      LANG_KEY,
+      normalized,
+    );
+
+    await i18n.changeLanguage(
+      normalized,
+    );
+
+    return normalized;
+  };
+
+/**
+ * Xóa lựa chọn thủ công và quay lại ngôn ngữ máy.
+ */
+export const useDeviceLanguage =
+  async (): Promise<AppLanguage> => {
+    await AsyncStorage.removeItem(
+      LANG_KEY,
+    );
+
+    const language =
+      getDeviceLanguage();
+
+    await i18n.changeLanguage(
+      language,
+    );
+
+    return language;
+  };
+
+void restoreAppLanguage();
+
+export {
+  LANG_KEY,
+  SUPPORTED_LANGUAGES,
+};
+
 export default i18n;

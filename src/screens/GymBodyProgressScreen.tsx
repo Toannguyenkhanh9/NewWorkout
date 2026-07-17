@@ -4,14 +4,18 @@ import React, {
   useState,
 } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  Image,
+  Linking,
+  PermissionsAndroid,
+  Platform,
   ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
-  Image,
-  Alert,
+  View,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -57,6 +61,7 @@ export const GymBodyProgressScreen: React.FC = () => {
   const [thighCm, setThighCm] = useState('');
   const [armCm, setArmCm] = useState('');
   const [note, setNote] = useState('');
+  const [photoBusy, setPhotoBusy] = useState(false);
 
   const reload = useCallback(async () => {
     const [nextMeasurements, nextPhotos] = await Promise.all([
@@ -111,36 +116,226 @@ export const GymBodyProgressScreen: React.FC = () => {
     setNote('');
   };
 
-const savePhoto = async (
-  source: 'camera' | 'library',
-) => {
-  const cameraOptions: CameraOptions = {
-    mediaType: 'photo',
-    quality: 0.8,
+  const openAppSettings = async () => {
+    try {
+      await Linking.openSettings();
+    } catch (error) {
+      console.log('[GymForge] open settings error', error);
+    }
   };
 
-  const libraryOptions: ImageLibraryOptions = {
-    mediaType: 'photo',
-    quality: 0.8,
-    selectionLimit: 1,
+  const requestCameraPermission = async (): Promise<boolean> => {
+    if (Platform.OS !== 'android') {
+      return true;
+    }
+
+    try {
+      const permission = PermissionsAndroid.PERMISSIONS.CAMERA;
+      const granted = await PermissionsAndroid.check(permission);
+
+      if (granted) {
+        return true;
+      }
+
+      const result = await PermissionsAndroid.request(permission, {
+        title: t('gym.cameraPermissionTitle', 'Camera permission'),
+        message: t(
+          'gym.cameraPermissionMessage',
+          'GymForge needs camera access so you can take progress photos.',
+        ),
+        buttonPositive: t('common.allow', 'Allow'),
+        buttonNegative: t('common.cancel', 'Cancel'),
+      });
+
+      if (result === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      }
+
+      if (result === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+        Alert.alert(
+          t('gym.cameraPermissionBlockedTitle', 'Camera permission blocked'),
+          t(
+            'gym.cameraPermissionBlockedText',
+            'Camera permission is disabled. Open app settings and allow Camera access.',
+          ),
+          [
+            {
+              text: t('common.cancel', 'Cancel'),
+              style: 'cancel',
+            },
+            {
+              text: t('common.openSettings', 'Open settings'),
+              onPress: openAppSettings,
+            },
+          ],
+        );
+
+        return false;
+      }
+
+      Alert.alert(
+        t('gym.cameraPermissionDeniedTitle', 'Camera permission denied'),
+        t(
+          'gym.cameraPermissionDeniedText',
+          'Allow Camera access to take progress photos.',
+        ),
+      );
+
+      return false;
+    } catch (error) {
+      console.log('[GymForge] camera permission error', error);
+
+      Alert.alert(
+        t('premium.errorTitle', 'Error'),
+        t(
+          'gym.cameraPermissionError',
+          'Unable to request camera permission.',
+        ),
+      );
+
+      return false;
+    }
   };
 
-  const result =
-    source === 'camera'
-      ? await launchCamera(cameraOptions)
-      : await launchImageLibrary(libraryOptions);
+  const showPickerError = (
+    errorCode?: string,
+    errorMessage?: string,
+  ) => {
+    console.log('[GymForge] image picker error', {
+      errorCode,
+      errorMessage,
+    });
 
-  const uri = result.assets?.[0]?.uri;
+    if (errorCode === 'camera_unavailable') {
+      Alert.alert(
+        t('gym.cameraUnavailableTitle', 'Camera unavailable'),
+        t(
+          'gym.cameraUnavailableText',
+          'No camera application is available on this device.',
+        ),
+      );
 
-  if (!uri) return;
+      return;
+    }
 
-  const next = await addProgressPhoto({
-    uri,
-    pose: 'front',
-  });
+    if (errorCode === 'permission') {
+      Alert.alert(
+        t('gym.cameraPermissionBlockedTitle', 'Camera permission blocked'),
+        t(
+          'gym.cameraPermissionBlockedText',
+          'Camera permission is disabled. Open app settings and allow Camera access.',
+        ),
+        [
+          {
+            text: t('common.cancel', 'Cancel'),
+            style: 'cancel',
+          },
+          {
+            text: t('common.openSettings', 'Open settings'),
+            onPress: openAppSettings,
+          },
+        ],
+      );
 
-  setPhotos(next);
-};
+      return;
+    }
+
+    Alert.alert(
+      t('premium.errorTitle', 'Error'),
+      errorMessage ||
+        t(
+          'gym.photoPickerError',
+          'Unable to open the camera or photo library.',
+        ),
+    );
+  };
+
+  const savePhoto = async (
+    source: 'camera' | 'library',
+  ) => {
+    if (photoBusy) {
+      return;
+    }
+
+    try {
+      setPhotoBusy(true);
+
+      if (source === 'camera') {
+        const granted = await requestCameraPermission();
+
+        if (!granted) {
+          return;
+        }
+      }
+
+      const cameraOptions: CameraOptions = {
+        mediaType: 'photo',
+        quality: 0.8,
+        cameraType: 'back',
+        saveToPhotos: false,
+      };
+
+      const libraryOptions: ImageLibraryOptions = {
+        mediaType: 'photo',
+        quality: 0.8,
+        selectionLimit: 1,
+      };
+
+      const result =
+        source === 'camera'
+          ? await launchCamera(cameraOptions)
+          : await launchImageLibrary(libraryOptions);
+
+      console.log('[GymForge] image picker result', result);
+
+      if (result.didCancel) {
+        return;
+      }
+
+      if (result.errorCode) {
+        showPickerError(
+          result.errorCode,
+          result.errorMessage,
+        );
+
+        return;
+      }
+
+      const uri = result.assets?.[0]?.uri;
+
+      if (!uri) {
+        Alert.alert(
+          t('premium.errorTitle', 'Error'),
+          t(
+            'gym.photoUriMissing',
+            'The selected photo could not be read.',
+          ),
+        );
+
+        return;
+      }
+
+      const next = await addProgressPhoto({
+        uri,
+        pose: 'front',
+      });
+
+      setPhotos(next);
+    } catch (error: any) {
+      console.log('[GymForge] save progress photo error', error);
+
+      Alert.alert(
+        t('premium.errorTitle', 'Error'),
+        error?.message ||
+          t(
+            'gym.photoSaveError',
+            'Unable to save the progress photo.',
+          ),
+      );
+    } finally {
+      setPhotoBusy(false);
+    }
+  };
 
   const latest = measurements[0];
   const first = measurements[measurements.length - 1];
@@ -192,18 +387,18 @@ const savePhoto = async (
           </Text>
 
           <View style={styles.inputRow}>
-            <Input label={t('gym.measurements.weightKg', { defaultValue: 'Weight kg' })} value={weightKg} onChangeText={setWeightKg} />
-            <Input label={t('gym.measurements.chestCm', { defaultValue: 'Chest cm' })} value={chestCm} onChangeText={setChestCm} />
+            <Input label="Weight kg" value={weightKg} onChangeText={setWeightKg} />
+            <Input label="Chest cm" value={chestCm} onChangeText={setChestCm} />
           </View>
 
           <View style={styles.inputRow}>
-            <Input label={t('gym.measurements.waistCm', { defaultValue: 'Waist cm' })} value={waistCm} onChangeText={setWaistCm} />
-            <Input label={t('gym.measurements.hipsCm', { defaultValue: 'Hips cm' })} value={hipsCm} onChangeText={setHipsCm} />
+            <Input label="Waist cm" value={waistCm} onChangeText={setWaistCm} />
+            <Input label="Hips cm" value={hipsCm} onChangeText={setHipsCm} />
           </View>
 
           <View style={styles.inputRow}>
-            <Input label={t('gym.measurements.thighCm', { defaultValue: 'Thigh cm' })} value={thighCm} onChangeText={setThighCm} />
-            <Input label={t('gym.measurements.armCm', { defaultValue: 'Arm cm' })} value={armCm} onChangeText={setArmCm} />
+            <Input label="Thigh cm" value={thighCm} onChangeText={setThighCm} />
+            <Input label="Arm cm" value={armCm} onChangeText={setArmCm} />
           </View>
 
           <TextInput
@@ -233,21 +428,37 @@ const savePhoto = async (
           <View style={styles.photoActions}>
             <TouchableOpacity
               activeOpacity={0.86}
-              style={styles.photoButton}
+              style={[
+                styles.photoButton,
+                photoBusy && styles.buttonDisabled,
+              ]}
               onPress={() => savePhoto('camera')}
+              disabled={photoBusy}
             >
-              <Text style={styles.photoButtonText}>
-                {t('gym.takePhoto', 'Take photo')}
-              </Text>
+              {photoBusy ? (
+                <ActivityIndicator
+                  size="small"
+                  color={NEON}
+                />
+              ) : (
+                <Text style={styles.photoButtonText}>
+                  📷 {t('gym.takePhoto', 'Take photo')}
+                </Text>
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity
               activeOpacity={0.86}
-              style={styles.photoButton}
+              style={[
+                styles.photoButton,
+                styles.photoButtonLast,
+                photoBusy && styles.buttonDisabled,
+              ]}
               onPress={() => savePhoto('library')}
+              disabled={photoBusy}
             >
               <Text style={styles.photoButtonText}>
-                {t('gym.choosePhoto', 'Choose photo')}
+                🖼️ {t('gym.choosePhoto', 'Choose photo')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -460,6 +671,12 @@ const styles = StyleSheet.create({
     color: NEON,
     fontSize: 13,
     fontWeight: '900',
+  },
+  photoButtonLast: {
+    marginRight: 0,
+  },
+  buttonDisabled: {
+    opacity: 0.55,
   },
   photoList: {
     marginTop: 14,

@@ -1,9 +1,10 @@
-// FILE: src/screens/OnboardingProfileScreen.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  ActivityIndicator,
+  ImageBackground,
   TextInput,
   TouchableOpacity,
   ScrollView,
@@ -15,6 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
+import i18n, { LANG_KEY } from '../i18n';
 
 type Gender = 'male' | 'female' | 'other';
 
@@ -39,17 +41,21 @@ export type UserProfile = {
 };
 
 const STORAGE_KEY = 'user:profile';
-const ONBOARD_DONE = 'onboarding:done';
+const ONBOARD_DONE = 'gymforge:onboarding:done';
 const BMI_KEY = 'user:bmi';
 const RECO_KEY = 'user:recommendation';
 
 const BG = '#06111D';
-const CARD = 'rgba(11, 22, 36, 0.96)';
-const CARD_2 = 'rgba(16, 28, 43, 0.96)';
+const CARD = 'rgba(11, 22, 36, 0.90)';
+const CARD_2 = 'rgba(16, 28, 43, 0.88)';
 const TEXT = '#F8FAFC';
 const MUTED = '#94A3B8';
 const NEON = '#7CFF3A';
 const CYAN = '#19E6D2';
+
+const ONBOARDING_BACKGROUND = require(
+  '../../assets/images/gym_home_bg.jpg',
+);
 
 export default function OnboardingProfileScreen({
   onDone,
@@ -57,6 +63,9 @@ export default function OnboardingProfileScreen({
   onDone?: () => void;
 }) {
   const { t } = useTranslation();
+
+  const [languageReady, setLanguageReady] =
+    useState(false);
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [data, setData] = useState<UserProfile>({
@@ -69,6 +78,47 @@ export default function OnboardingProfileScreen({
   const [bmiValue, setBmiValue] = useState<number | null>(null);
   const [bmiLabel, setBmiLabel] = useState<string>('');
   const [advice, setAdvice] = useState<string>('');
+
+  useEffect(() => {
+    let mounted = true;
+
+    const restoreLanguage = async () => {
+      try {
+        const savedLanguage =
+          await AsyncStorage.getItem(LANG_KEY);
+
+        if (
+          savedLanguage &&
+          i18n.language !== savedLanguage
+        ) {
+          await i18n.changeLanguage(
+            savedLanguage,
+          );
+        }
+
+        console.log(
+          '[GymForge] onboarding language',
+          i18n.resolvedLanguage ||
+            i18n.language,
+        );
+      } catch (error) {
+        console.log(
+          '[GymForge] restore language error',
+          error,
+        );
+      } finally {
+        if (mounted) {
+          setLanguageReady(true);
+        }
+      }
+    };
+
+    restoreLanguage();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const setField = <K extends keyof UserProfile>(k: K, v: UserProfile[K]) =>
     setData((p) => ({
@@ -192,20 +242,71 @@ export default function OnboardingProfileScreen({
     onDone?.();
   };
 
+  if (!languageReady) {
+    return (
+      <SafeAreaView style={s.safe}>
+        <ImageBackground
+          source={ONBOARDING_BACKGROUND}
+          resizeMode="cover"
+          style={s.background}
+          imageStyle={s.backgroundImage}
+        >
+          <View
+            pointerEvents="none"
+            style={s.backgroundOverlay}
+          />
+
+          <View style={s.languageLoading}>
+            <ActivityIndicator
+              size="large"
+              color={NEON}
+            />
+
+            <Text style={s.languageLoadingText}>
+              {t(
+                'UserProfile.loading',
+                'Loading…',
+              )}
+            </Text>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="light-content" backgroundColor={BG} />
+      <ImageBackground
+        source={ONBOARDING_BACKGROUND}
+        resizeMode="cover"
+        style={s.background}
+        imageStyle={s.backgroundImage}
+      >
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={BG}
+        />
 
-      <View pointerEvents="none" style={s.glowTop} />
-      <View pointerEvents="none" style={s.glowBottom} />
+        <View
+          pointerEvents="none"
+          style={s.backgroundOverlay}
+        />
 
-      <KeyboardAvoidingView
+        <View pointerEvents="none" style={s.glowTop} />
+        <View pointerEvents="none" style={s.glowBottom} />
+
+        <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
       >
         <View style={s.header}>
           <View style={s.kickerPill}>
-            <Text style={s.kickerText}>SETUP PROFILE</Text>
+            <Text style={s.kickerText}>
+              {t(
+                'UserProfile.title',
+                'User Profile',
+              ).toUpperCase()}
+            </Text>
           </View>
 
           <Text style={s.title}>
@@ -235,7 +336,10 @@ export default function OnboardingProfileScreen({
             {step === 1 ? (
               <View>
                 <Text style={s.stepTitle}>
-                  {t('onboard.stepBasic', 'Basic information')}
+                  {t(
+                    'UserProfile.title',
+                    'User Profile',
+                  )}
                 </Text>
 
                 <Label>{t('onboard.name')}</Label>
@@ -289,14 +393,23 @@ export default function OnboardingProfileScreen({
             {step === 2 ? (
               <View>
                 <Text style={s.stepTitle}>
-                  {t('onboard.stepBody', 'Body metrics')}
+                  {`${t(
+                    'UserProfile.height_label',
+                    'Height (cm)',
+                  )} • ${t(
+                    'UserProfile.weight_label',
+                    'Weight (kg)',
+                  )}`}
                 </Text>
 
                 <View style={s.row}>
                   <View style={s.col}>
                     <Label>{t('onboard.height')}</Label>
                     <Input
-                      placeholder="Eg: 170"
+                      placeholder={t(
+                        'UserProfile.height_ph',
+                        'e.g. 170',
+                      )}
                       keyboardType="number-pad"
                       value={data.heightCm ? String(data.heightCm) : ''}
                       onChangeText={(v) =>
@@ -311,7 +424,10 @@ export default function OnboardingProfileScreen({
                   <View style={s.col}>
                     <Label>{t('onboard.weight')}</Label>
                     <Input
-                      placeholder="Eg: 65.5"
+                      placeholder={t(
+                        'UserProfile.weight_ph',
+                        'e.g. 65.5',
+                      )}
                       keyboardType="decimal-pad"
                       value={data.weightKg ? String(data.weightKg) : ''}
                       onChangeText={(v) =>
@@ -359,7 +475,10 @@ export default function OnboardingProfileScreen({
             {step === 3 ? (
               <View>
                 <Text style={s.stepTitle}>
-                  {t('onboard.stepGoal', 'Choose your goal')}
+                  {t(
+                    'onboard.goal',
+                    'Current goal',
+                  )}
                 </Text>
 
                 <Label>{t('onboard.goal')}</Label>
@@ -483,7 +602,7 @@ export default function OnboardingProfileScreen({
             </Text>
 
             <Text style={s.resultBMI}>
-              BMI: {bmiValue ?? '—'} {bmiLabel ? `(${bmiLabel})` : ''}
+              {t('onboard.bmi', 'BMI')}: {bmiValue ?? '—'} {bmiLabel ? `(${bmiLabel})` : ''}
             </Text>
 
             <View style={s.adviceBox}>
@@ -501,7 +620,8 @@ export default function OnboardingProfileScreen({
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+        </Modal>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
@@ -608,6 +728,27 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: BG,
   },
+  background: {
+    flex: 1,
+  },
+  backgroundImage: {
+    opacity: 0.88,
+  },
+  backgroundOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(2, 8, 18, 0.30)',
+  },
+  languageLoading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  languageLoadingText: {
+    color: TEXT,
+    fontSize: 14,
+    fontWeight: '800',
+    marginTop: 12,
+  },
   glowTop: {
     position: 'absolute',
     top: -90,
@@ -615,7 +756,7 @@ const s = StyleSheet.create({
     width: 260,
     height: 260,
     borderRadius: 130,
-    backgroundColor: 'rgba(25, 230, 210, 0.22)',
+    backgroundColor: 'rgba(25, 230, 210, 0.14)',
   },
   glowBottom: {
     position: 'absolute',
@@ -624,7 +765,7 @@ const s = StyleSheet.create({
     width: 250,
     height: 250,
     borderRadius: 125,
-    backgroundColor: 'rgba(124, 255, 58, 0.12)',
+    backgroundColor: 'rgba(124, 255, 58, 0.08)',
   },
 
   header: {
@@ -653,12 +794,18 @@ const s = StyleSheet.create({
     fontSize: 34,
     lineHeight: 40,
     fontWeight: '900',
+    textShadowColor: 'rgba(0, 0, 0, 0.42)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
   },
   subtitle: {
-    color: '#D8E4F0',
+    color: '#E6EEF7',
     marginTop: 8,
     fontSize: 15,
     lineHeight: 22,
+    textShadowColor: 'rgba(0, 0, 0, 0.30)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 6,
   },
   steps: {
     flexDirection: 'row',
@@ -681,16 +828,16 @@ const s = StyleSheet.create({
     paddingBottom: 26,
   },
   formCard: {
-    backgroundColor: CARD,
+    backgroundColor: 'rgba(7, 17, 30, 0.60)',
     borderRadius: 24,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(124, 255, 58, 0.22)',
+    borderColor: 'rgba(25, 230, 210, 0.30)',
     shadowColor: '#00FFD1',
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.16,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 8 },
-    elevation: 4,
+    elevation: 8,
   },
   stepTitle: {
     color: TEXT,
@@ -712,7 +859,7 @@ const s = StyleSheet.create({
     lineHeight: 17,
   },
   input: {
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderRadius: 15,
     borderWidth: 1,
     borderColor: 'rgba(148, 163, 184, 0.18)',
@@ -733,7 +880,7 @@ const s = StyleSheet.create({
 
   segmentWrap: {
     flexDirection: 'row',
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderRadius: 15,
     padding: 3,
     borderWidth: 1,
@@ -762,7 +909,7 @@ const s = StyleSheet.create({
   switchRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderRadius: 16,
     padding: 13,
     borderWidth: 1,
@@ -804,7 +951,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 13,
     paddingVertical: 9,
     borderRadius: 999,
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderWidth: 1,
     borderColor: 'rgba(148, 163, 184, 0.18)',
   },
@@ -861,9 +1008,9 @@ const s = StyleSheet.create({
     paddingHorizontal: 18,
     paddingTop: 8,
     paddingBottom: 18,
-    backgroundColor: 'rgba(6, 17, 29, 0.98)',
+    backgroundColor: 'rgba(6, 17, 29, 0.52)',
     borderTopWidth: 1,
-    borderTopColor: 'rgba(148, 163, 184, 0.12)',
+    borderTopColor: 'rgba(25, 230, 210, 0.14)',
   },
   footBtn: {
     flex: 1,
@@ -877,11 +1024,11 @@ const s = StyleSheet.create({
     borderColor: NEON,
   },
   disabled: {
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderColor: 'rgba(148, 163, 184, 0.16)',
   },
   ghost: {
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderColor: 'rgba(25, 230, 210, 0.35)',
   },
   footTxt: {
@@ -903,7 +1050,7 @@ const s = StyleSheet.create({
   },
   resultCard: {
     width: '88%',
-    backgroundColor: CARD,
+    backgroundColor: 'rgba(7, 17, 30, 0.68)',
     borderRadius: 24,
     padding: 18,
     borderWidth: 1,
@@ -935,7 +1082,7 @@ const s = StyleSheet.create({
   },
   adviceBox: {
     marginTop: 12,
-    backgroundColor: CARD_2,
+    backgroundColor: 'rgba(10, 22, 38, 0.58)',
     borderRadius: 16,
     padding: 13,
     borderWidth: 1,

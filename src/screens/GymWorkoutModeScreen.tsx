@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -68,6 +69,13 @@ import {
   translateGymDayTitle,
   translateGymDynamicText,
 } from '../utils/gymI18n';
+import {
+  adjustSuggestedWeight,
+  buildGymWorkoutSummary,
+  getLastExercisePerformanceFromHistory,
+  GymReadiness,
+  LastExercisePerformance,
+} from '../services/gymRetention';
 
 const BG = '#06111D';
 const CARD = '#0B1624';
@@ -129,7 +137,12 @@ export const GymWorkoutModeScreen: React.FC = () => {
     dayId = 'day-1',
     plannedDay,
     profile,
+    daysPerWeek = 4,
+    readiness = null,
   } = route.params || {};
+
+  const readinessData =
+    readiness as GymReadiness | null;
 
   const day = plannedDay as SmartGymDay | undefined;
 
@@ -147,6 +160,9 @@ export const GymWorkoutModeScreen: React.FC = () => {
   const [restRemaining, setRestRemaining] = useState(0);
   const [suggestionText, setSuggestionText] = useState('');
   const [suggestionReason, setSuggestionReason] = useState('');
+  const [lastPerformance, setLastPerformance] =
+    useState<LastExercisePerformance>(null);
+  const sessionStartedAt = useRef(Date.now());
   const [exerciseRpeVisible, setExerciseRpeVisible] = useState(false);
   const [sessionRpeVisible, setSessionRpeVisible] = useState(false);
   const [finishing, setFinishing] = useState(false);
@@ -261,16 +277,41 @@ export const GymWorkoutModeScreen: React.FC = () => {
     const loadSuggestion = async () => {
       if (!exercise) return;
 
-      const history = await loadGymWorkoutHistory();
-      const result = getSuggestedWeightForExercise(history, exercise);
+      const history =
+        await loadGymWorkoutHistory();
+
+      const result =
+        getSuggestedWeightForExercise(
+          history,
+          exercise,
+        );
+
+      const previous =
+        getLastExercisePerformanceFromHistory(
+          history,
+          exercise.id,
+        );
 
       if (!mounted) return;
 
+      setLastPerformance(previous);
       setSuggestionText(result.text);
       setSuggestionReason(result.reason);
 
-      if (!currentSet?.weightKg && result.suggestedWeightKg) {
-        setWeightKg(result.suggestedWeightKg);
+      if (
+        !currentSet?.weightKg &&
+        result.suggestedWeightKg
+      ) {
+        const adjusted =
+          adjustSuggestedWeight(
+            result.suggestedWeightKg,
+            readinessData,
+          );
+
+        setWeightKg(
+          adjusted ||
+            result.suggestedWeightKg,
+        );
       }
     };
 
@@ -279,7 +320,11 @@ export const GymWorkoutModeScreen: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, [exercise?.id, currentSet?.weightKg]);
+  }, [
+    exercise?.id,
+    currentSet?.weightKg,
+    readinessData?.weightMultiplier,
+  ]);
 
   useEffect(() => {
     if (restRemaining <= 0) return;
@@ -321,6 +366,15 @@ export const GymWorkoutModeScreen: React.FC = () => {
 
   const isLastExercise =
     !!day && exerciseIndex + 1 >= day.exercises.length;
+
+  const effectiveRestSeconds =
+    Math.max(
+      30,
+      Math.round(
+        (exercise?.restSeconds || 60) *
+          (readinessData?.restMultiplier || 1),
+      ),
+    );
 
   const goNext = () => {
     if (!day || !exercise) return;
@@ -468,43 +522,40 @@ export const GymWorkoutModeScreen: React.FC = () => {
       const newRecords =
         await updatePersonalRecordsFromWorkout(historyEntry);
 
-      await appendGymWorkoutHistory({
+      const savedEntry = {
         ...historyEntry,
         personalRecords: newRecords,
-      });
+      };
 
-      if (newRecords.length > 0) {
-        Alert.alert(
-          t('gym.newPrTitle', 'New personal record!'),
-          newRecords
-            .slice(0, 3)
-            .map(
-              item =>
-                `${item.exerciseName}: ${item.weightKg}kg × ${item.reps}`,
-            )
-            .join('\n'),
-          [
-            {
-              text: t('common.ok', 'OK'),
-              onPress: () => navigation.goBack(),
-            },
-          ],
-        );
-        return;
-      }
+      await appendGymWorkoutHistory(
+        savedEntry,
+      );
 
-      Alert.alert(
-        t('program.completed', 'Completed'),
-        t(
-          'gym.workoutModeCompleted',
-          'Workout completed. Your progress has been saved.',
-        ),
-        [
-          {
-            text: t('common.ok', 'OK'),
-            onPress: () => navigation.goBack(),
-          },
-        ],
+      const summary =
+        await buildGymWorkoutSummary({
+          entry: savedEntry,
+          newRecords,
+          durationSec:
+            Math.max(
+              60,
+              Math.round(
+                (
+                  Date.now() -
+                  sessionStartedAt.current
+                ) / 1000,
+              ),
+            ),
+          targetDays:
+            daysPerWeek,
+          readiness:
+            readinessData,
+        });
+
+      navigation.replace(
+        'GymWorkoutSummary',
+        {
+          summary,
+        },
       );
     } finally {
       setFinishing(false);
@@ -535,7 +586,7 @@ export const GymWorkoutModeScreen: React.FC = () => {
       return;
     }
 
-    setRestRemaining(exercise.restSeconds);
+    setRestRemaining(effectiveRestSeconds);
     setSetIndex(prev => prev + 1);
   };
 
@@ -557,7 +608,7 @@ export const GymWorkoutModeScreen: React.FC = () => {
       return;
     }
 
-    setRestRemaining(exercise.restSeconds);
+    setRestRemaining(effectiveRestSeconds);
     setExerciseIndex(prev => prev + 1);
     setSetIndex(0);
   };
@@ -605,6 +656,32 @@ export const GymWorkoutModeScreen: React.FC = () => {
           />
         </View>
 
+        {readinessData ? (
+          <View style={styles.readinessCard}>
+            <Text style={styles.readinessKicker}>
+              {t(
+                'retention.readinessResult',
+                'Today’s readiness',
+              )}
+            </Text>
+
+            <Text style={styles.readinessTitle}>
+              {t(
+                `retention.readinessLevel.${readinessData.level}`,
+                readinessData.level,
+              )}{' '}
+              • {readinessData.score}/5
+            </Text>
+
+            <Text style={styles.readinessText}>
+              {t(
+                readinessData.messageKey,
+                'Follow today’s adjusted recommendation.',
+              )}
+            </Text>
+          </View>
+        ) : null}
+
         {restRemaining > 0 ? (
           <View style={styles.restBox}>
             <Text style={styles.restLabel}>
@@ -638,7 +715,7 @@ export const GymWorkoutModeScreen: React.FC = () => {
 
           <Text style={styles.exerciseMeta}>
             {t('gym.set', 'Set')} {setIndex + 1}/{exercise.sets} •{' '}
-            {exercise.reps} • {t('gym.rest', 'Rest')} {formatRest(exercise.restSeconds)}
+            {exercise.reps} • {t('gym.rest', 'Rest')} {formatRest(effectiveRestSeconds)}
           </Text>
 
           <Text style={styles.exerciseNote}>
@@ -759,6 +836,25 @@ export const GymWorkoutModeScreen: React.FC = () => {
           ) : null}
 
           <View style={styles.suggestionBox}>
+            <Text style={styles.previousLabel}>
+              {t(
+                'retention.lastTime',
+                'Last workout',
+              )}
+            </Text>
+
+            <Text style={styles.previousValue}>
+              {lastPerformance
+                ? `${lastPerformance.weightKg}kg × ${lastPerformance.reps} • ${lastPerformance.sets} ${t(
+                    'gym.sets',
+                    'sets',
+                  )}`
+                : t(
+                    'retention.noPreviousData',
+                    'No previous result yet.',
+                  )}
+            </Text>
+
             <Text style={styles.suggestionTitle}>
               {t('gym.suggestedWeight', 'Suggested weight')}
             </Text>
@@ -1105,6 +1201,48 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     marginTop: 5,
+  },
+  readinessCard: {
+    backgroundColor:
+      'rgba(25, 230, 210, 0.09)',
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor:
+      'rgba(25, 230, 210, 0.28)',
+    padding: 12,
+    marginBottom: 14,
+  },
+  readinessKicker: {
+    color: CYAN,
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+  },
+  readinessTitle: {
+    color: NEON,
+    fontSize: 15,
+    fontWeight: '900',
+    marginTop: 5,
+  },
+  readinessText: {
+    color: MUTED,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 5,
+  },
+  previousLabel: {
+    color: MUTED,
+    fontSize: 10,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.7,
+  },
+  previousValue: {
+    color: TEXT,
+    fontSize: 14,
+    fontWeight: '900',
+    marginTop: 4,
+    marginBottom: 12,
   },
   suggestionBox: {
     backgroundColor: '#06111D',

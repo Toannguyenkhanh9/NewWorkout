@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -61,6 +62,12 @@ import { gateWorkout } from '../ads/adGate';
 import { useSubscription } from '../iap/SubscriptionProvider';
 
 import GymRpeModal from '../components/GymRpeModal';
+import GymReadinessModal
+  from '../components/GymReadinessModal';
+import {
+  buildGymWorkoutSummary,
+  GymReadiness,
+} from '../services/gymRetention';
 import {
   translateExerciseName,
   translateExerciseNote,
@@ -631,6 +638,7 @@ export const GymWorkoutDayScreen: React.FC = () => {
     dayId = 'day-1',
     plannedDay,
     profile,
+    daysPerWeek = 4,
     rewardedStartGranted = false,
   } = route.params || {};
 
@@ -650,8 +658,10 @@ const [swapTarget, setSwapTarget] =
   });
 
   const [sessionRpeVisible, setSessionRpeVisible] = useState(false);
+  const [readinessVisible, setReadinessVisible] = useState(false);
   const [finishing, setFinishing] = useState(false);
   const [startingWorkout, setStartingWorkout] = useState(false);
+  const sessionStartedAt = useRef(Date.now());
 
   useFocusEffect(
     useCallback(() => {
@@ -676,12 +686,15 @@ useEffect(() => {
     completedCount === day.exercises.length &&
     day.exercises.length > 0;
 
-  const startWorkoutMode = async () => {
+  const continueStartWorkout = async (
+    readiness: GymReadiness,
+  ) => {
     if (startingWorkout) {
       return;
     }
 
     try {
+      setReadinessVisible(false);
       setStartingWorkout(true);
 
       if (!isPremium && !rewardedStartGranted) {
@@ -729,6 +742,8 @@ useEffect(() => {
         dayId,
         plannedDay: day,
         profile,
+        daysPerWeek,
+        readiness,
         rewardedStartGranted: true,
       });
     } finally {
@@ -736,14 +751,12 @@ useEffect(() => {
     }
   };
 
-  const goPremium = () => {
-    try {
-      navigation.getParent()?.navigate('Settings', {
-        screen: 'Premium',
-      });
-    } catch {
-      navigation.navigate('Premium');
+  const startWorkoutMode = () => {
+    if (startingWorkout) {
+      return;
     }
+
+    setReadinessVisible(true);
   };
 
   const onFinishDay = async () => {
@@ -820,34 +833,46 @@ const onSelectReplacementExercise = (
       const newRecords =
         await updatePersonalRecordsFromWorkout(historyEntry);
 
-      await appendGymWorkoutHistory({
+      const savedEntry = {
         ...historyEntry,
         personalRecords: newRecords,
-      });
+      };
 
-      const next = await loadGymDayProgress(programId, dayId);
+      await appendGymWorkoutHistory(
+        savedEntry,
+      );
+
+      const next =
+        await loadGymDayProgress(
+          programId,
+          dayId,
+        );
       setProgress(next);
 
-      if (newRecords.length > 0) {
-        Alert.alert(
-          t('gym.newPrTitle', 'New personal record!'),
-          newRecords
-            .slice(0, 3)
-            .map(
-              item =>
-                `${item.exerciseName}: ${item.weightKg}kg × ${item.reps}`,
-            )
-            .join('\n'),
-        );
-        return;
-      }
+      const summary =
+        await buildGymWorkoutSummary({
+          entry: savedEntry,
+          newRecords,
+          durationSec:
+            Math.max(
+              60,
+              Math.round(
+                (
+                  Date.now() -
+                  sessionStartedAt.current
+                ) / 1000,
+              ),
+            ),
+          targetDays:
+            daysPerWeek,
+          readiness: null,
+        });
 
-      Alert.alert(
-        t('program.completed', 'Completed'),
-        t(
-          'gym.dayCompletedMessage',
-          'Great job! This gym workout day has been completed.',
-        ),
+      navigation.navigate(
+        'GymWorkoutSummary',
+        {
+          summary,
+        },
       );
     } finally {
       setFinishing(false);
@@ -892,43 +917,6 @@ keyExtractor={(item, index) => `${item.id}-${index}`}
         )}
         ListHeaderComponent={
           <View style={styles.header}>
-            {!isPremium ? (
-              <TouchableOpacity
-                activeOpacity={0.88}
-                style={styles.removeAdsBanner}
-                onPress={goPremium}
-              >
-                <View style={styles.removeAdsIconBox}>
-                  <Text style={styles.removeAdsIcon}>👑</Text>
-                </View>
-
-                <View style={styles.removeAdsBody}>
-                  <Text style={styles.removeAdsTitle}>
-                    {t(
-                      'premium.removeAds',
-                      'Remove ads',
-                    )}
-                  </Text>
-
-                  <Text style={styles.removeAdsText}>
-                    {t(
-                      'premium.removeAdsWorkoutNotice',
-                      'Free users watch a rewarded ad before every workout. Upgrade to Premium to start instantly without ads.',
-                    )}
-                  </Text>
-                </View>
-
-                <View style={styles.removeAdsCta}>
-                  <Text style={styles.removeAdsCtaText}>
-                    {t(
-                      'premium.cta',
-                      'Upgrade',
-                    )}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ) : null}
-
             <View style={styles.kickerPill}>
               <Text style={styles.kickerText}>
                 {t('gym.workoutDay', 'WORKOUT DAY')}
@@ -1009,6 +997,14 @@ keyExtractor={(item, index) => `${item.id}-${index}`}
             </Text>
           </TouchableOpacity>
         }
+      />
+
+      <GymReadinessModal
+        visible={readinessVisible}
+        onClose={() =>
+          setReadinessVisible(false)
+        }
+        onContinue={continueStartWorkout}
       />
 
       <GymRpeModal
@@ -1103,54 +1099,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 14,
-  },
-  removeAdsBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(250, 204, 21, 0.12)',
-    borderWidth: 1,
-    borderColor: 'rgba(250, 204, 21, 0.42)',
-    borderRadius: 18,
-    padding: 12,
-    marginBottom: 14,
-  },
-  removeAdsIconBox: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: 'rgba(250, 204, 21, 0.16)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  removeAdsIcon: {
-    fontSize: 21,
-  },
-  removeAdsBody: {
-    flex: 1,
-  },
-  removeAdsTitle: {
-    color: '#FACC15',
-    fontSize: 14,
-    fontWeight: '900',
-  },
-  removeAdsText: {
-    color: '#E5E7EB',
-    fontSize: 12,
-    lineHeight: 17,
-    marginTop: 3,
-  },
-  removeAdsCta: {
-    backgroundColor: NEON,
-    borderRadius: 999,
-    paddingHorizontal: 11,
-    paddingVertical: 8,
-    marginLeft: 10,
-  },
-  removeAdsCtaText: {
-    color: BG,
-    fontSize: 11,
-    fontWeight: '900',
   },
   kickerPill: {
     alignSelf: 'flex-start',
