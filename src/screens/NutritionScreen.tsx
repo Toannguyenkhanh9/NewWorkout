@@ -1,4 +1,3 @@
-// FILE: src/screens/NutritionScreen.tsx
 import React, { useMemo, useState, useCallback } from 'react';
 import {
   View,
@@ -35,6 +34,7 @@ import {
 import { WaterReminderCard } from '../components/WaterReminderCard';
 import { markNutritionTipRead } from '../services/gamification';
 import { TodayMenuCard } from '../components/TodayMenuCard';
+import { DailyIntakeCard } from '../components/DailyIntakeCard';
 
 const PROFILE_KEY = 'user:profile';
 
@@ -497,11 +497,11 @@ const resetGoalEditor = async () => {
           >
             <View style={styles.heroImageOverlay} />
 
-            <View style={styles.stepBox}>
+            {/* <View style={styles.stepBox}>
               <Text style={styles.stepText}>
                 {t('nutrition.heroStep', '3')}
               </Text>
-            </View>
+            </View> */}
 
             <View style={styles.heroTextBlock}>
               <Text style={styles.heroTitle}>
@@ -589,6 +589,20 @@ const resetGoalEditor = async () => {
                   />
                 </View>
               </View>
+
+              <DailyIntakeCard
+                target={{
+                  calories:
+                    plan.calories,
+                  proteinG:
+                    plan.proteinG,
+                  carbsG:
+                    plan.carbsG,
+                  fatsG:
+                    plan.fatsG,
+                }}
+              />
+
               <WaterReminderCard
   targetLiters={plan.waterLiters}
   t={t as any}
@@ -845,13 +859,13 @@ heroSubtitle: {
   maxWidth: 335,
 },
 phoneMock: {
-  marginHorizontal: 18,
-  marginTop: -46,
+  marginHorizontal: 8,
+  marginTop: -180,
   borderRadius: 34,
   backgroundColor: 'rgba(3, 7, 18, 0.92)',
   borderWidth: 1,
   borderColor: 'rgba(255,255,255,0.10)',
-  paddingHorizontal: 14,
+  paddingHorizontal: 10,
   paddingTop: 18,
   paddingBottom: 12,
   shadowColor: '#000',
@@ -918,11 +932,11 @@ phoneMock: {
 
   goalRow: {
     flexDirection: 'row',
-    marginHorizontal: -5,
+    marginHorizontal: -3,
   },
   goalCard: {
     flex: 1,
-    marginHorizontal: 5,
+    marginHorizontal: 3,
     backgroundColor: 'rgba(8, 19, 33, 0.95)',
     borderRadius: 18,
     padding: 14,
@@ -1007,11 +1021,11 @@ phoneMock: {
   },
   mealGrid: {
     flexDirection: 'row',
-    marginHorizontal: -5,
+    marginHorizontal: -3,
   },
   mealCard: {
     flex: 1,
-    marginHorizontal: 5,
+    marginHorizontal: 3,
   },
   mealImage: {
     height: 84,

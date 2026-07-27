@@ -1,4 +1,3 @@
-// FILE: src/screens/MainScreen.tsx
 import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
@@ -615,7 +614,7 @@ const styles = StyleSheet.create({
     paddingBottom: 160,
   },
   container: {
-    paddingHorizontal: 18,
+    paddingHorizontal: 8,
     paddingTop: 12,
   },
 
@@ -658,20 +657,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
     marginTop: 8,
-    maxWidth: 330,
+    maxWidth: 360,
   },
 
   statRow: {
     flexDirection: 'row',
-    marginHorizontal: -5,
+    marginHorizontal: -3,
     marginBottom: 12,
   },
   miniStat: {
     flex: 1,
-    marginHorizontal: 5,
+    marginHorizontal: 3,
     backgroundColor: CARD,
     borderRadius: 18,
-    padding: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
     borderWidth: 1,
     borderColor: 'rgba(148, 163, 184, 0.16)',
   },
@@ -694,7 +694,8 @@ const styles = StyleSheet.create({
   healthCard: {
     backgroundColor: CARD,
     borderRadius: 22,
-    padding: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 16,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: 'rgba(124, 255, 58, 0.22)',
@@ -704,7 +705,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: CARD,
     borderRadius: 22,
-    padding: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 16,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: 'rgba(148, 163, 184, 0.16)',
@@ -712,7 +714,8 @@ const styles = StyleSheet.create({
   todayCard: {
     backgroundColor: CARD,
     borderRadius: 24,
-    padding: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 16,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: 'rgba(124, 255, 58, 0.32)',
@@ -720,7 +723,8 @@ const styles = StyleSheet.create({
   restCard: {
     backgroundColor: 'rgba(69, 40, 12, 0.88)',
     borderRadius: 22,
-    padding: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 16,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: 'rgba(245, 158, 11, 0.35)',

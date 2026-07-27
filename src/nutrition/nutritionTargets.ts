@@ -34,22 +34,26 @@ const cleanTargets = (
   return next;
 };
 
-export const loadNutritionTargets = async (): Promise<NutritionTargetOverrides> => {
-  try {
-    const raw = await AsyncStorage.getItem(NUTRITION_TARGET_KEY);
-    if (!raw) return {};
+export const loadNutritionTargets =
+  async (): Promise<NutritionTargetOverrides> => {
+    try {
+      const raw = await AsyncStorage.getItem(NUTRITION_TARGET_KEY);
+      if (!raw) return {};
 
-    return cleanTargets(JSON.parse(raw));
-  } catch {
-    return {};
-  }
-};
+      return cleanTargets(JSON.parse(raw));
+    } catch {
+      return {};
+    }
+  };
 
 export const saveNutritionTargets = async (
   targets: NutritionTargetOverrides,
 ): Promise<NutritionTargetOverrides> => {
   const clean = cleanTargets(targets);
-  await AsyncStorage.setItem(NUTRITION_TARGET_KEY, JSON.stringify(clean));
+  await AsyncStorage.setItem(
+    NUTRITION_TARGET_KEY,
+    JSON.stringify(clean),
+  );
   return clean;
 };
 

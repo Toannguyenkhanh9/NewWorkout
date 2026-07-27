@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import i18n from './i18n';
+import './i18n/mealScannerTranslations';
 
 import { MainScreen } from './screens/MainScreen';
 import { NutritionScreen } from './screens/NutritionScreen';
@@ -30,6 +31,9 @@ import { WorkoutScreen } from './screens/WorkoutScreen';
 import { WeightChartScreen } from './screens/WeightChartScreen';
 import { WorkoutHistoryScreen } from './screens/WorkoutHistoryScreen';
 import { AdvancedMealPlanScreen } from './screens/AdvancedMealPlanScreen';
+import MealScannerScreen from './screens/MealScannerScreen';
+import MealReviewScreen from './screens/MealReviewScreen';
+import MealLogScreen from './screens/MealLogScreen';
 
 import GymProgramListScreen from './screens/GymProgramListScreen';
 import GymProgramDetailScreen from './screens/GymProgramDetailScreen';
@@ -283,6 +287,39 @@ const NutritionStack: React.FC = () => {
         component={AdvancedMealPlanScreen}
         options={{
           title: t('nutrition.advancedMealPlan', 'Advanced meal plan'),
+        }}
+      />
+
+      <Stack.Screen
+        name="MealScanner"
+        component={MealScannerScreen}
+        options={{
+          title: t(
+            'mealScan.scannerTitle',
+            'Scan your meal',
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="MealReview"
+        component={MealReviewScreen}
+        options={{
+          title: t(
+            'mealScan.reviewTitle',
+            'Review meal',
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="MealLog"
+        component={MealLogScreen}
+        options={{
+          title: t(
+            'mealScan.logTitle',
+            'Food log',
+          ),
         }}
       />
 

@@ -17,6 +17,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import i18n, { LANG_KEY } from '../i18n';
+import {
+  markOnboardingCompleted,
+  USER_PROFILE_KEY,
+} from '../store/onboarding';
 
 type Gender = 'male' | 'female' | 'other';
 
@@ -40,8 +44,7 @@ export type UserProfile = {
   goal?: Goal;
 };
 
-const STORAGE_KEY = 'user:profile';
-const ONBOARD_DONE = 'gymforge:onboarding:done';
+const STORAGE_KEY = USER_PROFILE_KEY;
 const BMI_KEY = 'user:bmi';
 const RECO_KEY = 'user:recommendation';
 
@@ -229,17 +232,46 @@ export default function OnboardingProfileScreen({
         await AsyncStorage.setItem(BMI_KEY, String(bmi));
       }
 
-      await AsyncStorage.setItem(RECO_KEY, adv);
+      await AsyncStorage.setItem(
+        RECO_KEY,
+        adv,
+      );
+
+      await markOnboardingCompleted();
+
+      console.log(
+        '[GymForge] onboarding saved',
+        {
+          completed: true,
+        },
+      );
 
       setShowResult(true);
+    } catch (error) {
+      console.log(
+        '[GymForge] onboarding save error',
+        error,
+      );
     } finally {
       setSaving(false);
     }
   };
 
-  const finishAndEnterApp = async () => {
-    await AsyncStorage.setItem(ONBOARD_DONE, '1');
+  const finishAndEnterApp = () => {
+    /**
+     * Cờ hoàn tất đã được lưu trong save().
+     * Đóng popup và vào Home ngay, không chờ ghi storage lần nữa.
+     */
+    setShowResult(false);
     onDone?.();
+
+    void markOnboardingCompleted()
+      .catch(error => {
+        console.log(
+          '[GymForge] finish onboarding error',
+          error,
+        );
+      });
   };
 
   if (!languageReady) {
