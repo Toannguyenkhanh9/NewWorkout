@@ -12,6 +12,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { loadHistory } from '../weight/weightStore';
 import { useTranslation } from 'react-i18next';
 
+import '../i18n/weightTranslations';
+
 const BG = '#06111D';
 const CARD = 'rgba(11, 22, 36, 0.96)';
 const CARD_2 = 'rgba(16, 28, 43, 0.96)';
@@ -70,7 +72,12 @@ export const WeightChartScreen: React.FC = () => {
       >
         <View style={st.hero}>
           <View style={st.kickerPill}>
-            <Text style={st.kickerText}>WEIGHT TRACKING</Text>
+            <Text style={st.kickerText}>
+              {t(
+                'weight.chart_kicker',
+                'WEIGHT TRACKING',
+              )}
+            </Text>
           </View>
 
           <Text style={st.title}>
@@ -80,7 +87,7 @@ export const WeightChartScreen: React.FC = () => {
           <Text style={st.subtitle}>
             {t(
               'weight.chart_subtitle',
-              'Theo dõi cân nặng, xu hướng thay đổi và tiến độ cơ thể của bạn theo thời gian.',
+              'Track your weight, changes and body progress over time.',
             )}
           </Text>
         </View>
@@ -92,13 +99,16 @@ export const WeightChartScreen: React.FC = () => {
             </View>
 
             <Text style={st.emptyTitle}>
-              {t('weight.chart_empty_title', 'Chưa có dữ liệu cân nặng')}
+              {t(
+                'weight.chart_empty_title',
+                'No weight data yet',
+              )}
             </Text>
 
             <Text style={st.emptyText}>
               {t(
                 'weight.chart_empty',
-                'Sau khi bạn nhập cân nặng, biểu đồ tiến độ sẽ hiển thị tại đây.',
+                'After you log your weight, your progress chart will appear here.',
               )}
             </Text>
           </View>
@@ -149,7 +159,12 @@ export const WeightChartScreen: React.FC = () => {
                 </View>
 
                 <View style={st.liveBadge}>
-                  <Text style={st.liveBadgeText}>LIVE</Text>
+                  <Text style={st.liveBadgeText}>
+                    {t(
+                      'weight.live',
+                      'LIVE',
+                    )}
+                  </Text>
                 </View>
               </View>
 
