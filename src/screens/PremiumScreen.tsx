@@ -22,8 +22,6 @@ import {
 
 import {
   loadPremiumPlan,
-  markPremiumActive,
-  markPremiumPlusActive,
   type PremiumPlan,
 } from '../services/premiumAccess';
 
@@ -32,10 +30,13 @@ export const PremiumScreen: React.FC = () => {
 
   const {
     isPremium,
+    connected,
     loading,
     purchasing,
+    iapError,
     products,
     subscriptions,
+    reloadProducts,
     buyLifetime,
     buyMonthlySubscription,
     restorePurchases,
@@ -49,27 +50,40 @@ export const PremiumScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    reloadPlan();
-  }, [reloadPlan]);
-
-  useEffect(() => {
-    if (isPremium) {
-      markPremiumActive().then(reloadPlan).catch(() => {});
-    }
+    void reloadPlan();
   }, [isPremium, reloadPlan]);
+
+  const getItemId = useCallback((item: any) => {
+    return (
+      item?.productId ||
+      item?.id ||
+      item?.productIds?.[0] ||
+      ''
+    );
+  }, []);
 
   const findProduct = useCallback(
     (productId: string) => {
-      return products.find((p: any) => p.productId === productId) || null;
+      return (
+        products.find(
+          (product: any) =>
+            getItemId(product) === productId,
+        ) || null
+      );
     },
-    [products],
+    [getItemId, products],
   );
 
   const findSubscription = useCallback(
     (productId: string) => {
-      return subscriptions.find((s: any) => s.productId === productId) || null;
+      return (
+        subscriptions.find(
+          (subscription: any) =>
+            getItemId(subscription) === productId,
+        ) || null
+      );
     },
-    [subscriptions],
+    [getItemId, subscriptions],
   );
 
   const premiumLifetimeProduct = useMemo(() => {
@@ -88,34 +102,97 @@ export const PremiumScreen: React.FC = () => {
     return findSubscription(PREMIUM_PLUS_MONTHLY_SUB_ID);
   }, [findSubscription]);
 
-  const getSubPrice = useCallback((sub: any) => {
-    if (!sub) return '$--';
+  const getAndroidSubscriptionOffer = useCallback(
+    (subscription: any) => {
+      return (
+        subscription?.subscriptionOfferDetailsAndroid?.[0] ||
+        subscription?.subscriptionOfferDetails?.[0] ||
+        null
+      );
+    },
+    [],
+  );
 
-    if (sub.localizedPrice) return sub.localizedPrice;
-    if (sub.price) return sub.price;
+  const getSubPrice = useCallback(
+    (subscription: any) => {
+      if (!subscription) {
+        return t(
+          'premium.unavailable',
+          'Unavailable',
+        );
+      }
 
-    const androidPhase =
-      sub.subscriptionOfferDetails?.[0]?.pricingPhases
-        ?.pricingPhaseList?.[0]?.formattedPrice;
+      const phasePrice =
+        getAndroidSubscriptionOffer(subscription)
+          ?.pricingPhases
+          ?.pricingPhaseList?.[0]
+          ?.formattedPrice;
 
-    return androidPhase || '$--';
-  }, []);
+      return (
+        subscription.displayPrice ||
+        subscription.localizedPrice ||
+        phasePrice ||
+        (typeof subscription.price === 'string'
+          ? subscription.price
+          : '') ||
+        t(
+          'premium.unavailable',
+          'Unavailable',
+        )
+      );
+    },
+    [getAndroidSubscriptionOffer, t],
+  );
 
-  const getProductPrice = useCallback((product: any) => {
-    if (!product) return '$--';
+  const getProductPrice = useCallback(
+    (product: any) => {
+      if (!product) {
+        return t(
+          'premium.unavailable',
+          'Unavailable',
+        );
+      }
 
-    return product.localizedPrice || product.price || '$--';
-  }, []);
+      const androidPrice =
+        product?.oneTimePurchaseOfferDetailsAndroid
+          ?.formattedPrice ||
+        product?.oneTimePurchaseOfferDetails
+          ?.formattedPrice;
 
-  const getAndroidOfferToken = useCallback((sub: any) => {
-    if (Platform.OS !== 'android') return undefined;
+      return (
+        product.displayPrice ||
+        product.localizedPrice ||
+        androidPrice ||
+        (typeof product.price === 'string'
+          ? product.price
+          : '') ||
+        t(
+          'premium.unavailable',
+          'Unavailable',
+        )
+      );
+    },
+    [t],
+  );
 
-    return sub?.subscriptionOfferDetails?.[0]?.offerToken;
-  }, []);
+  const getAndroidOfferToken = useCallback(
+    (subscription: any) => {
+      if (Platform.OS !== 'android') {
+        return undefined;
+      }
+
+      return (
+        getAndroidSubscriptionOffer(subscription)
+          ?.offerToken ||
+        undefined
+      );
+    },
+    [getAndroidSubscriptionOffer],
+  );
 
   const onBuyPremiumMonthly = async () => {
     try {
-      if (!premiumMonthlySub?.productId) {
+      if (!getItemId(premiumMonthlySub)) {
         Alert.alert(
           t('premium.errorTitle', 'Purchase failed'),
           t(
@@ -127,17 +204,10 @@ export const PremiumScreen: React.FC = () => {
       }
 
       await buyMonthlySubscription(
-        premiumMonthlySub.productId,
+        getItemId(premiumMonthlySub),
         getAndroidOfferToken(premiumMonthlySub),
       );
 
-      await markPremiumActive();
-      await reloadPlan();
-
-      Alert.alert(
-        t('premium.restoreTitle', 'Premium'),
-        t('premium.restoreSuccess', 'Premium restored successfully.'),
-      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
@@ -148,7 +218,7 @@ export const PremiumScreen: React.FC = () => {
 
   const onBuyPremiumLifetime = async () => {
     try {
-      if (!premiumLifetimeProduct?.productId) {
+      if (!getItemId(premiumLifetimeProduct)) {
         Alert.alert(
           t('premium.errorTitle', 'Purchase failed'),
           t(
@@ -159,15 +229,8 @@ export const PremiumScreen: React.FC = () => {
         return;
       }
 
-      await buyLifetime(premiumLifetimeProduct.productId);
+      await buyLifetime(getItemId(premiumLifetimeProduct));
 
-      await markPremiumActive();
-      await reloadPlan();
-
-      Alert.alert(
-        t('premium.restoreTitle', 'Premium'),
-        t('premium.restoreSuccess', 'Premium restored successfully.'),
-      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
@@ -178,7 +241,7 @@ export const PremiumScreen: React.FC = () => {
 
   const onBuyPlusMonthly = async () => {
     try {
-      if (!plusMonthlySub?.productId) {
+      if (!getItemId(plusMonthlySub)) {
         Alert.alert(
           t('premium.errorTitle', 'Purchase failed'),
           t(
@@ -190,20 +253,10 @@ export const PremiumScreen: React.FC = () => {
       }
 
       await buyMonthlySubscription(
-        plusMonthlySub.productId,
+        getItemId(plusMonthlySub),
         getAndroidOfferToken(plusMonthlySub),
       );
 
-      await markPremiumPlusActive();
-      await reloadPlan();
-
-      Alert.alert(
-        t('premium.restoreTitle', 'Premium Plus'),
-        t(
-          'premium.plusSuccess',
-          'Premium Plus is active. Offline video download unlocked.',
-        ),
-      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
@@ -214,7 +267,7 @@ export const PremiumScreen: React.FC = () => {
 
   const onBuyPlusLifetime = async () => {
     try {
-      if (!plusLifetimeProduct?.productId) {
+      if (!getItemId(plusLifetimeProduct)) {
         Alert.alert(
           t('premium.errorTitle', 'Purchase failed'),
           t(
@@ -225,18 +278,8 @@ export const PremiumScreen: React.FC = () => {
         return;
       }
 
-      await buyLifetime(plusLifetimeProduct.productId);
+      await buyLifetime(getItemId(plusLifetimeProduct));
 
-      await markPremiumPlusActive();
-      await reloadPlan();
-
-      Alert.alert(
-        t('premium.restoreTitle', 'Premium Plus'),
-        t(
-          'premium.plusSuccess',
-          'Premium Plus is active. Offline video download unlocked.',
-        ),
-      );
     } catch (e: any) {
       Alert.alert(
         t('premium.errorTitle', 'Purchase failed'),
@@ -284,6 +327,41 @@ export const PremiumScreen: React.FC = () => {
       <Text style={styles.title}>
         {t('premium.title', 'Upgrade Premium')}
       </Text>
+
+      {!connected ? (
+        <View style={styles.storeStatusBox}>
+          <ActivityIndicator
+            color="#7CFF3A"
+          />
+
+          <Text style={styles.storeStatusText}>
+            {t(
+              'premium.connectingStore',
+              'Connecting to the store…',
+            )}
+          </Text>
+        </View>
+      ) : null}
+
+      {iapError ? (
+        <View style={styles.storeErrorBox}>
+          <Text style={styles.storeErrorText}>
+            {iapError}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => {
+              void reloadProducts();
+            }}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.retryText}>
+              {t('common.retry', 'Retry')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
 
       {activePlan !== 'none' ? (
         <View style={styles.activeBox}>
@@ -346,12 +424,12 @@ export const PremiumScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.button,
-              (loading || purchasing || isPremiumOnlyActive || isPlusActive) &&
+              (!connected || loading || purchasing || isPremiumOnlyActive || isPlusActive) &&
                 styles.buttonDisabled,
             ]}
             onPress={onBuyPremiumMonthly}
             disabled={
-              loading || purchasing || isPremiumOnlyActive || isPlusActive
+              !connected || loading || purchasing || isPremiumOnlyActive || isPlusActive
             }
             activeOpacity={0.85}
           >
@@ -375,12 +453,12 @@ export const PremiumScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.buttonSecondary,
-              (loading || purchasing || isPremiumOnlyActive || isPlusActive) &&
+              (!connected || loading || purchasing || isPremiumOnlyActive || isPlusActive) &&
                 styles.buttonDisabled,
             ]}
             onPress={onBuyPremiumLifetime}
             disabled={
-              loading || purchasing || isPremiumOnlyActive || isPlusActive
+              !connected || loading || purchasing || isPremiumOnlyActive || isPlusActive
             }
             activeOpacity={0.85}
           >
@@ -445,10 +523,10 @@ export const PremiumScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.plusButton,
-              (loading || purchasing || isPlusActive) && styles.buttonDisabled,
+              (!connected || loading || purchasing || isPlusActive) && styles.buttonDisabled,
             ]}
             onPress={onBuyPlusMonthly}
-            disabled={loading || purchasing || isPlusActive}
+            disabled={!connected || loading || purchasing || isPlusActive}
             activeOpacity={0.85}
           >
             {purchasing ? (
@@ -471,10 +549,10 @@ export const PremiumScreen: React.FC = () => {
           <TouchableOpacity
             style={[
               styles.plusButtonSecondary,
-              (loading || purchasing || isPlusActive) && styles.buttonDisabled,
+              (!connected || loading || purchasing || isPlusActive) && styles.buttonDisabled,
             ]}
             onPress={onBuyPlusLifetime}
-            disabled={loading || purchasing || isPlusActive}
+            disabled={!connected || loading || purchasing || isPlusActive}
             activeOpacity={0.85}
           >
             <Text style={styles.plusButtonSecondaryText}>
@@ -487,10 +565,10 @@ export const PremiumScreen: React.FC = () => {
       <TouchableOpacity
         style={[
           styles.restoreButton,
-          (loading || purchasing) && styles.buttonDisabled,
+          (!connected || loading || purchasing) && styles.buttonDisabled,
         ]}
         onPress={onRestore}
-        disabled={loading || purchasing}
+        disabled={!connected || loading || purchasing}
         activeOpacity={0.85}
       >
         <Text style={styles.restoreText}>
@@ -521,6 +599,48 @@ const styles = StyleSheet.create({
     color: '#D1D5DB',
     marginBottom: 6,
     lineHeight: 20,
+  },
+  storeStatusBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#111827',
+    borderWidth: 1,
+    borderColor: '#1F2937',
+    borderRadius: 14,
+    padding: 12,
+    marginBottom: 12,
+  },
+  storeStatusText: {
+    flex: 1,
+    marginLeft: 10,
+    color: '#D1D5DB',
+    fontSize: 12,
+  },
+  storeErrorBox: {
+    backgroundColor: 'rgba(239, 68, 68, 0.10)',
+    borderWidth: 1,
+    borderColor: 'rgba(239, 68, 68, 0.35)',
+    borderRadius: 14,
+    padding: 12,
+    marginBottom: 12,
+  },
+  storeErrorText: {
+    color: '#FCA5A5',
+    fontSize: 11,
+    lineHeight: 17,
+  },
+  retryButton: {
+    alignSelf: 'flex-start',
+    marginTop: 9,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+  },
+  retryText: {
+    color: '#111827',
+    fontSize: 11,
+    fontWeight: '900',
   },
   activeBox: {
     marginBottom: 14,

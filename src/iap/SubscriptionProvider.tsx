@@ -1,14 +1,20 @@
 // FILE: src/iap/SubscriptionProvider.tsx
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
-import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as RNIap from 'react-native-iap';
+import {
+  AppState,
+  InteractionManager,
+  Platform,
+} from 'react-native';
+import {useIAP} from 'react-native-iap';
 
 import {
   PREMIUM_LIFETIME_PRODUCT_ID,
@@ -27,13 +33,37 @@ import {
   PREMIUM_PLAN_KEY,
 } from '../services/premiumAccess';
 
-type IapItem = {
-  productId: string;
+import {
+  FORCE_PREMIUM_IN_DEBUG,
+  PREMIUM_ENABLED,
+} from '../config/features.example';
+
+export type IapItem = {
+  id?: string;
+  sku?: string;
+  productId?: string;
+  productIds?: string[];
+  productIdentifier?: string;
   title?: string;
   description?: string;
-  price?: string;
+  price?: string | number;
   localizedPrice?: string;
+  displayPrice?: string;
+  oneTimePurchaseOfferDetails?: {
+    formattedPrice?: string;
+  };
+  oneTimePurchaseOfferDetailsAndroid?: {
+    formattedPrice?: string;
+  };
   subscriptionOfferDetails?: Array<{
+    offerToken?: string;
+    pricingPhases?: {
+      pricingPhaseList?: Array<{
+        formattedPrice?: string;
+      }>;
+    };
+  }>;
+  subscriptionOfferDetailsAndroid?: Array<{
     offerToken?: string;
     pricingPhases?: {
       pricingPhaseList?: Array<{
@@ -43,12 +73,15 @@ type IapItem = {
   }>;
 };
 
-type CtxType = {
+type SubscriptionContextValue = {
   isPremium: boolean;
+  connected: boolean;
   loading: boolean;
   purchasing: boolean;
+  iapError: string | null;
   products: IapItem[];
   subscriptions: IapItem[];
+  reloadProducts: () => Promise<void>;
   buyLifetime: (sku?: string) => Promise<void>;
   buyMonthlySubscription: (
     sku?: string,
@@ -57,131 +90,154 @@ type CtxType = {
   restorePurchases: () => Promise<boolean>;
 };
 
-const SubscriptionContext = createContext<CtxType>({
-  isPremium: false,
-  loading: true,
-  purchasing: false,
-  products: [],
-  subscriptions: [],
-  buyLifetime: async () => {},
-  buyMonthlySubscription: async () => {},
-  restorePurchases: async () => false,
-});
-
-async function loadProducts(): Promise<IapItem[]> {
-  try {
-    const items = await (RNIap as any).getProducts({
-      skus: PREMIUM_PRODUCT_IDS,
-    });
-
-    return Array.isArray(items) ? items : [];
-  } catch (e) {
-    console.log('[iap] getProducts error', e);
-    return [];
-  }
-}
-
-async function loadSubscriptions(): Promise<IapItem[]> {
-  try {
-    const items = await (RNIap as any).getSubscriptions({
-      skus: PREMIUM_SUB_IDS,
-    });
-
-    return Array.isArray(items) ? items : [];
-  } catch (e) {
-    console.log('[iap] getSubscriptions error', e);
-    return [];
-  }
-}
-
-async function requestLifetimePurchase(sku: string) {
-  if (Platform.OS === 'android') {
-    return await (RNIap as any).requestPurchase({
-      skus: [sku],
-    });
-  }
-
-  return await (RNIap as any).requestPurchase({
-    sku,
+const SubscriptionContext =
+  createContext<SubscriptionContextValue>({
+    isPremium: false,
+    connected: false,
+    loading: true,
+    purchasing: false,
+    iapError: null,
+    products: [],
+    subscriptions: [],
+    reloadProducts: async () => {},
+    buyLifetime: async () => {},
+    buyMonthlySubscription: async () => {},
+    restorePurchases: async () => false,
   });
-}
 
-async function requestMonthlySubscription(
-  sku: string,
-  offerToken?: string,
-) {
-  if (Platform.OS === 'android') {
-    const payload: any = {
-      sku,
-    };
+const delay =
+  (
+    milliseconds:
+      number,
+  ) =>
+    new Promise<void>(
+      resolve => {
+        setTimeout(
+          resolve,
+          milliseconds,
+        );
+      },
+    );
 
-    if (offerToken) {
-      payload.subscriptionOffers = [
-        {
-          sku,
-          offerToken,
-        },
-      ];
+const getErrorMessage =
+  (
+    error:
+      unknown,
+  ) => {
+    if (
+      error instanceof Error
+    ) {
+      return error.message;
     }
 
-    return await (RNIap as any).requestSubscription(payload);
+    if (
+      error &&
+      typeof error ===
+        'object' &&
+      'message' in error
+    ) {
+      return String(
+        (
+          error as {
+            message?: unknown;
+          }
+        ).message ||
+          '',
+      );
+    }
+
+    return String(
+      error ||
+      '',
+    );
+  };
+
+const isCurrentActivityError =
+  (
+    error:
+      unknown,
+  ) =>
+    /current activity is not available/i
+      .test(
+        getErrorMessage(
+          error,
+        ),
+      );
+
+const normalizeItems = (
+  value: unknown,
+): IapItem[] => {
+  if (Array.isArray(value)) {
+    return value as IapItem[];
   }
 
-  return await (RNIap as any).requestSubscription({
-    sku,
-  });
-}
+  if (
+    value &&
+    typeof value === 'object'
+  ) {
+    const payload =
+      value as {
+        products?: unknown;
+        subscriptions?: unknown;
+        items?: unknown;
+        data?: unknown;
+      };
 
-async function finishPurchaseSafe(purchase: any) {
-  try {
-    await (RNIap as any).finishTransaction({
-      purchase,
-      isConsumable: false,
-    });
-  } catch (e) {
-    console.log('[iap] finishTransaction error', e);
+    const nested = [
+      payload.products,
+      payload.subscriptions,
+      payload.items,
+      payload.data,
+    ];
+
+    for (
+      const candidate of nested
+    ) {
+      if (
+        Array.isArray(
+          candidate,
+        )
+      ) {
+        return candidate as IapItem[];
+      }
+    }
   }
-}
 
-function isPremiumPurchase(productId?: string) {
-  return (
-    productId === PREMIUM_LIFETIME_PRODUCT_ID ||
-    productId === PREMIUM_MONTHLY_SUB_ID
-  );
-}
+  return [];
+};
 
-function isPremiumPlusPurchase(productId?: string) {
-  return (
-    productId === PREMIUM_PLUS_LIFETIME_PRODUCT_ID ||
-    productId === PREMIUM_PLUS_MONTHLY_SUB_ID
-  );
-}
+export const getIapProductId = (
+  item?: IapItem | null,
+) =>
+  item?.productId ||
+  item?.id ||
+  item?.sku ||
+  item?.productIdentifier ||
+  item?.productIds?.[0] ||
+  '';
+
+const isPremiumPurchase = (productId?: string) =>
+  productId === PREMIUM_LIFETIME_PRODUCT_ID ||
+  productId === PREMIUM_MONTHLY_SUB_ID;
+
+const isPremiumPlusPurchase = (productId?: string) =>
+  productId === PREMIUM_PLUS_LIFETIME_PRODUCT_ID ||
+  productId === PREMIUM_PLUS_MONTHLY_SUB_ID;
 
 async function applyPurchaseAccess(productId?: string) {
   if (isPremiumPlusPurchase(productId)) {
     await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
     await markPremiumPlusActive();
-
-    return {
-      isPremium: true,
-      isPlus: true,
-    };
+    return true;
   }
 
   if (isPremiumPurchase(productId)) {
     await AsyncStorage.setItem(PREMIUM_STATE_KEY, '1');
     await markPremiumActive();
-
-    return {
-      isPremium: true,
-      isPlus: false,
-    };
+    return true;
   }
 
-  return {
-    isPremium: false,
-    isPlus: false,
-  };
+  return false;
 }
 
 async function clearPremiumAccess() {
@@ -192,157 +248,1020 @@ async function clearPremiumAccess() {
 
 export const SubscriptionProvider: React.FC<{
   children: React.ReactNode;
-}> = ({ children }) => {
-  const [isPremium, setIsPremium] = useState(false);
-  const [loading, setLoading] = useState(true);
+}> = ({children}) => {
+  const [realIsPremium, setRealIsPremium] = useState(false);
+  const [loading, setLoading] = useState(
+    PREMIUM_ENABLED && !FORCE_PREMIUM_IN_DEBUG,
+  );
   const [purchasing, setPurchasing] = useState(false);
   const [products, setProducts] = useState<IapItem[]>([]);
-  const [subscriptions, setSubscriptions] = useState<IapItem[]>([]);
+  const [subscriptions, setSubscriptions] =
+    useState<IapItem[]>([]);
+  const [iapError, setIapError] =
+    useState<string | null>(null);
+
+  const mountedRef = useRef(true);
+  const loadingCatalogRef = useRef(false);
+  const catalogRef = useRef<IapItem[]>([]);
+  const catalogFinishTimerRef =
+    useRef<ReturnType<typeof setTimeout> | null>(
+      null,
+    );
+  const availablePurchasesRef = useRef<IapItem[]>([]);
+  const finishTransactionRef = useRef<any>(null);
+
+  const iap =
+    useIAP({
+    onPurchaseSuccess: async purchase => {
+      try {
+        console.log('[iap15] purchase success', purchase);
+
+        const productId = getIapProductId(purchase as any);
+        const activated = await applyPurchaseAccess(productId);
+
+        if (activated && mountedRef.current) {
+          setRealIsPremium(true);
+        }
+
+        if (typeof finishTransactionRef.current === 'function') {
+          await finishTransactionRef.current({
+            purchase,
+            isConsumable: false,
+          });
+        }
+      } catch (error) {
+        console.log('[iap15] purchase handler error', error);
+
+        if (mountedRef.current) {
+          setIapError(
+            error instanceof Error
+              ? error.message
+              : String(error),
+          );
+        }
+      } finally {
+        if (mountedRef.current) {
+          setPurchasing(false);
+        }
+      }
+    },
+
+    onPurchaseError: error => {
+      console.log('[iap15] purchase error', error);
+
+      if (mountedRef.current) {
+        setPurchasing(false);
+        setIapError(error?.message || String(error));
+      }
+    },
+  });
+
+  const connected =
+    Boolean(
+      (iap as any)
+        .connected,
+    );
+
+  const hookProducts =
+    (iap as any)
+      .products;
+
+  const hookSubscriptions =
+    (iap as any)
+      .subscriptions;
+
+  const availablePurchases =
+    (iap as any)
+      .availablePurchases;
+
+  const fetchProducts =
+    (iap as any)
+      .fetchProducts;
+
+  const requestPurchase =
+    (iap as any)
+      .requestPurchase;
+
+  const finishTransaction =
+    (iap as any)
+      .finishTransaction;
+
+  const getAvailablePurchases =
+    (iap as any)
+      .getAvailablePurchases;
 
   useEffect(() => {
-    let mounted = true;
-    let purchaseUpdateSub: any;
-    let purchaseErrorSub: any;
+    finishTransactionRef.current = finishTransaction;
+  }, [finishTransaction]);
 
-    const init = async () => {
-      try {
-        const cached = await AsyncStorage.getItem(PREMIUM_STATE_KEY);
-
-        if (mounted && cached === '1') {
-          setIsPremium(true);
+  const mergeCatalog =
+    useCallback(
+      (
+        incoming:
+          IapItem[],
+      ) => {
+        if (!incoming.length) {
+          return;
         }
 
-        await RNIap.initConnection();
+        const merged =
+          new Map<
+            string,
+            IapItem
+          >();
 
-        if (
-          Platform.OS === 'android' &&
-          typeof (RNIap as any)
-            .flushFailedPurchasesCachedAsPendingAndroid === 'function'
-        ) {
-          try {
-            await (RNIap as any).flushFailedPurchasesCachedAsPendingAndroid();
-          } catch (e) {
-            console.log('[iap] flush pending error', e);
-          }
-        }
+        catalogRef.current
+          .forEach(item => {
+            const productId =
+              getIapProductId(
+                item,
+              );
 
-        const [loadedProducts, loadedSubs] = await Promise.all([
-          loadProducts(),
-          loadSubscriptions(),
-        ]);
-
-        console.log('[iap] loaded products =', loadedProducts);
-        console.log('[iap] loaded subscriptions =', loadedSubs);
-
-        if (mounted) {
-          setProducts(loadedProducts);
-          setSubscriptions(loadedSubs);
-        }
-
-        purchaseUpdateSub = RNIap.purchaseUpdatedListener(
-          async (purchase: any) => {
-            try {
-              console.log('[iap] purchase updated', purchase);
-
-              const productId = purchase?.productId;
-
-              const result = await applyPurchaseAccess(productId);
-
-              if (result.isPremium && mounted) {
-                setIsPremium(true);
-              }
-
-              await finishPurchaseSafe(purchase);
-            } catch (e) {
-              console.log('[iap] purchaseUpdatedListener error', e);
-            } finally {
-              if (mounted) {
-                setPurchasing(false);
-              }
+            if (productId) {
+              merged.set(
+                productId,
+                item,
+              );
             }
-          },
-        );
+          });
 
-        purchaseErrorSub = RNIap.purchaseErrorListener((error: any) => {
-          console.log('[iap] purchase error listener', error);
+        incoming.forEach(item => {
+          const productId =
+            getIapProductId(
+              item,
+            );
 
-          if (mounted) {
-            setPurchasing(false);
+          if (productId) {
+            merged.set(
+              productId,
+              item,
+            );
           }
         });
 
-        await restoreOwnedPurchasesSilently(mounted, setIsPremium);
-      } catch (e) {
-        console.log('[iap] init error', e);
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    };
+        const catalog =
+          Array.from(
+            merged.values(),
+          );
 
-    init();
+        catalogRef.current =
+          catalog;
+
+        const productIds =
+          new Set<string>(
+            PREMIUM_PRODUCT_IDS,
+          );
+
+        const subscriptionIds =
+          new Set<string>(
+            PREMIUM_SUB_IDS,
+          );
+
+        const nextProducts =
+          catalog.filter(item =>
+            productIds.has(
+              getIapProductId(
+                item,
+              ),
+            ),
+          );
+
+        const nextSubscriptions =
+          catalog.filter(item =>
+            subscriptionIds.has(
+              getIapProductId(
+                item,
+              ),
+            ),
+          );
+
+        console.log(
+          '[iap15] merged catalog',
+          catalog,
+        );
+
+        console.log(
+          '[iap15] one-time products',
+          nextProducts,
+        );
+
+        console.log(
+          '[iap15] subscriptions',
+          nextSubscriptions,
+        );
+
+        if (
+          mountedRef.current
+        ) {
+          setProducts(
+            nextProducts,
+          );
+
+          setSubscriptions(
+            nextSubscriptions,
+          );
+
+          if (
+            nextProducts.length ||
+            nextSubscriptions.length
+          ) {
+            setIapError(
+              null,
+            );
+          }
+        }
+      },
+      [],
+    );
+
+  useEffect(() => {
+    const current =
+      normalizeItems(
+        hookProducts,
+      );
+
+    console.log(
+      '[iap15] hook products update',
+      current,
+    );
+
+    mergeCatalog(
+      current,
+    );
+  }, [
+    hookProducts,
+    mergeCatalog,
+  ]);
+
+  useEffect(() => {
+    const current =
+      normalizeItems(
+        hookSubscriptions,
+      );
+
+    console.log(
+      '[iap15] hook subscriptions update',
+      current,
+    );
+
+    mergeCatalog(
+      current,
+    );
+  }, [
+    hookSubscriptions,
+    mergeCatalog,
+  ]);
+
+  useEffect(() => {
+    availablePurchasesRef.current =
+      normalizeItems(availablePurchases);
+  }, [availablePurchases]);
+
+  useEffect(() => {
+    mountedRef.current = true;
 
     return () => {
-      mounted = false;
-      purchaseUpdateSub?.remove?.();
-      purchaseErrorSub?.remove?.();
-      RNIap.endConnection().catch(() => {});
+      mountedRef.current = false;
+
+      if (
+        catalogFinishTimerRef
+          .current
+      ) {
+        clearTimeout(
+          catalogFinishTimerRef
+            .current,
+        );
+
+        catalogFinishTimerRef
+          .current = null;
+      }
     };
   }, []);
 
-  const buyLifetime = async (
-    sku = PREMIUM_LIFETIME_PRODUCT_ID,
-  ) => {
-    try {
-      setPurchasing(true);
-      await requestLifetimePurchase(sku);
-    } catch (e) {
-      setPurchasing(false);
-      console.log('[iap] buyLifetime error', e);
-      throw e;
-    }
-  };
+  const isPremium = FORCE_PREMIUM_IN_DEBUG
+    ? true
+    : PREMIUM_ENABLED
+      ? realIsPremium
+      : false;
 
-  const buyMonthlySubscription = async (
-    sku = PREMIUM_MONTHLY_SUB_ID,
-    offerToken?: string,
-  ) => {
-    try {
-      setPurchasing(true);
-      await requestMonthlySubscription(sku, offerToken);
-    } catch (e) {
-      setPurchasing(false);
-      console.log('[iap] buyMonthlySubscription error', e);
-      throw e;
-    }
-  };
+  const applyRestoredPurchases = useCallback(
+    async (purchases: IapItem[]) => {
+      console.log(
+        '[iap15] available purchases',
+        purchases,
+      );
 
-  const restorePurchases = async () => {
-    return await restoreOwnedPurchasesSilently(
-      true,
-      setIsPremium,
-      true,
+      const plusPurchase =
+        purchases.find(purchase =>
+          isPremiumPlusPurchase(
+            getIapProductId(purchase),
+          ),
+        );
+
+      if (plusPurchase) {
+        await applyPurchaseAccess(
+          getIapProductId(plusPurchase),
+        );
+
+        if (mountedRef.current) {
+          setRealIsPremium(true);
+        }
+
+        return true;
+      }
+
+      const premiumPurchase =
+        purchases.find(purchase =>
+          isPremiumPurchase(
+            getIapProductId(purchase),
+          ),
+        );
+
+      if (premiumPurchase) {
+        await applyPurchaseAccess(
+          getIapProductId(premiumPurchase),
+        );
+
+        if (mountedRef.current) {
+          setRealIsPremium(true);
+        }
+
+        return true;
+      }
+
+      await clearPremiumAccess();
+
+      if (mountedRef.current) {
+        setRealIsPremium(false);
+      }
+
+      return false;
+    },
+    [],
+  );
+
+  const restorePurchases =
+    useCallback(
+      async () => {
+        if (
+          !PREMIUM_ENABLED ||
+          FORCE_PREMIUM_IN_DEBUG
+        ) {
+          return false;
+        }
+
+        try {
+          const getPurchases =
+            getAvailablePurchases as unknown as
+              () => Promise<unknown>;
+
+          const result =
+            await getPurchases();
+
+          const returnedPurchases =
+            normalizeItems(
+              result,
+            );
+
+          const purchases =
+            returnedPurchases.length
+              ? returnedPurchases
+              : availablePurchasesRef
+                  .current;
+
+          return await applyRestoredPurchases(
+            purchases,
+          );
+        } catch (error) {
+          console.log(
+            '[iap15] restore error',
+            error,
+          );
+
+          if (
+            mountedRef.current
+          ) {
+            setIapError(
+              error instanceof Error
+                ? error.message
+                : String(error),
+            );
+          }
+
+          return false;
+        }
+      },
+      [
+        applyRestoredPurchases,
+        getAvailablePurchases,
+      ],
     );
-  };
 
-  const value = useMemo(
+
+
+  const reloadProducts =
+    useCallback(
+      async () => {
+        if (
+          !PREMIUM_ENABLED ||
+          FORCE_PREMIUM_IN_DEBUG
+        ) {
+          catalogRef.current =
+            [];
+
+          setProducts([]);
+          setSubscriptions([]);
+          setLoading(false);
+          return;
+        }
+
+        if (
+          !connected ||
+          loadingCatalogRef
+            .current ||
+          typeof fetchProducts !==
+            'function'
+        ) {
+          return;
+        }
+
+        loadingCatalogRef.current =
+          true;
+
+        catalogRef.current =
+          [];
+
+        setProducts([]);
+        setSubscriptions([]);
+        setLoading(true);
+        setIapError(null);
+
+        if (
+          catalogFinishTimerRef
+            .current
+        ) {
+          clearTimeout(
+            catalogFinishTimerRef
+              .current,
+          );
+
+          catalogFinishTimerRef
+            .current = null;
+        }
+
+        const wait =
+          (
+            milliseconds:
+              number,
+          ) =>
+            new Promise<void>(
+              resolve => {
+                setTimeout(
+                  resolve,
+                  milliseconds,
+                );
+              },
+            );
+
+        const mergeCurrentHookState =
+          () => {
+            mergeCatalog(
+              normalizeItems(
+                hookProducts,
+              ),
+            );
+
+            mergeCatalog(
+              normalizeItems(
+                hookSubscriptions,
+              ),
+            );
+          };
+
+        const fetchCatalog =
+          fetchProducts as (
+            request: {
+              skus: string[];
+              type:
+                | 'in-app'
+                | 'subs';
+            },
+          ) => Promise<unknown>;
+
+        try {
+          console.log(
+            '[iap15] expected subscription ids',
+            PREMIUM_SUB_IDS,
+          );
+
+          console.log(
+            '[iap15] expected product ids',
+            PREMIUM_PRODUCT_IDS,
+          );
+
+          /**
+           * Tải subscription trước. Một số bản useIAP
+           * giữ subscription trong state riêng.
+           */
+          const subscriptionResult =
+            await fetchCatalog({
+              skus:
+                PREMIUM_SUB_IDS,
+              type:
+                'subs',
+            });
+
+          mergeCatalog(
+            normalizeItems(
+              subscriptionResult,
+            ),
+          );
+
+          await wait(450);
+          mergeCurrentHookState();
+
+          /**
+           * Nếu lần tải chung chưa trả subscription,
+           * thử từng ID riêng để tránh một SKU cấu hình
+           * sai làm khó kiểm tra cả nhóm.
+           */
+          const hasSubscription =
+            () =>
+              catalogRef.current
+                .some(item =>
+                  PREMIUM_SUB_IDS
+                    .includes(
+                      getIapProductId(
+                        item,
+                      ),
+                    ),
+                );
+
+          if (
+            !hasSubscription()
+          ) {
+            for (
+              const sku of
+              PREMIUM_SUB_IDS
+            ) {
+              console.log(
+                '[iap15] retry subscription sku',
+                sku,
+              );
+
+              const singleResult =
+                await fetchCatalog({
+                  skus: [
+                    sku,
+                  ],
+                  type:
+                    'subs',
+                });
+
+              mergeCatalog(
+                normalizeItems(
+                  singleResult,
+                ),
+              );
+
+              await wait(300);
+              mergeCurrentHookState();
+            }
+          }
+
+          /**
+           * Sau đó tải các sản phẩm lifetime.
+           */
+          const oneTimeResult =
+            await fetchCatalog({
+              skus:
+                PREMIUM_PRODUCT_IDS,
+              type:
+                'in-app',
+            });
+
+          mergeCatalog(
+            normalizeItems(
+              oneTimeResult,
+            ),
+          );
+
+          await wait(450);
+          mergeCurrentHookState();
+
+          catalogFinishTimerRef
+            .current =
+            setTimeout(
+              () => {
+                mergeCurrentHookState();
+
+                loadingCatalogRef
+                  .current =
+                  false;
+
+                if (
+                  mountedRef.current
+                ) {
+                  setLoading(
+                    false,
+                  );
+
+                  const receivedIds =
+                    catalogRef.current
+                      .map(item =>
+                        getIapProductId(
+                          item,
+                        ),
+                      )
+                      .filter(
+                        Boolean,
+                      );
+
+                  console.log(
+                    '[iap15] final catalog ids',
+                    receivedIds,
+                  );
+
+                  console.log(
+                    '[iap15] final catalog',
+                    catalogRef
+                      .current,
+                  );
+
+                  if (
+                    !receivedIds.some(
+                      id =>
+                        PREMIUM_SUB_IDS
+                          .includes(
+                            id,
+                          ),
+                    )
+                  ) {
+                    console.warn(
+                      '[iap15] no subscription returned by store',
+                      {
+                        expected:
+                          PREMIUM_SUB_IDS,
+                        received:
+                          receivedIds,
+                      },
+                    );
+                  }
+                }
+
+                void restorePurchases();
+              },
+              650,
+            );
+        } catch (error) {
+          console.log(
+            '[iap15] fetch products error',
+            error,
+          );
+
+          loadingCatalogRef.current =
+            false;
+
+          if (
+            mountedRef.current
+          ) {
+            setLoading(false);
+
+            setIapError(
+              error instanceof Error
+                ? error.message
+                : String(error),
+            );
+          }
+        }
+      },
+      [
+        connected,
+        fetchProducts,
+        hookProducts,
+        hookSubscriptions,
+        mergeCatalog,
+        restorePurchases,
+      ],
+    );
+
+
+  useEffect(() => {
+    if (!PREMIUM_ENABLED || FORCE_PREMIUM_IN_DEBUG) {
+      setLoading(false);
+      return;
+    }
+
+    AsyncStorage.getItem(PREMIUM_STATE_KEY)
+      .then(value => {
+        if (value === '1' && mountedRef.current) {
+          setRealIsPremium(true);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (
+      connected &&
+      PREMIUM_ENABLED &&
+      !FORCE_PREMIUM_IN_DEBUG
+    ) {
+      void reloadProducts();
+    }
+  }, [connected, reloadProducts]);
+
+  useEffect(() => {
+    if (
+      !PREMIUM_ENABLED ||
+      FORCE_PREMIUM_IN_DEBUG
+    ) {
+      return;
+    }
+
+    const current =
+      normalizeItems(
+        availablePurchases,
+      );
+
+    availablePurchasesRef
+      .current =
+      current;
+
+    if (
+      current.length
+    ) {
+      void applyRestoredPurchases(
+        current,
+      );
+    }
+  }, [
+    applyRestoredPurchases,
+    availablePurchases,
+  ]);
+
+  const waitForForegroundActivity =
+    useCallback(
+      async () => {
+        if (
+          Platform.OS !==
+          'android'
+        ) {
+          return;
+        }
+
+        if (
+          AppState.currentState !==
+          'active'
+        ) {
+          await new Promise<void>(
+            resolve => {
+              let finished =
+                false;
+
+              const finish =
+                () => {
+                  if (finished) {
+                    return;
+                  }
+
+                  finished =
+                    true;
+
+                  subscription
+                    .remove();
+
+                  clearTimeout(
+                    timeout,
+                  );
+
+                  resolve();
+                };
+
+              const subscription =
+                AppState
+                  .addEventListener(
+                    'change',
+                    state => {
+                      if (
+                        state ===
+                        'active'
+                      ) {
+                        finish();
+                      }
+                    },
+                  );
+
+              const timeout =
+                setTimeout(
+                  finish,
+                  2500,
+                );
+            },
+          );
+        }
+
+        await new Promise<void>(
+          resolve => {
+            InteractionManager
+              .runAfterInteractions(
+                () => {
+                  setTimeout(
+                    resolve,
+                    300,
+                  );
+                },
+              );
+          },
+        );
+      },
+      [],
+    );
+
+  const requestPurchaseWithActivityRetry =
+    useCallback(
+      async (
+        payload:
+          unknown,
+      ) => {
+        if (
+          typeof requestPurchase !==
+          'function'
+        ) {
+          throw new Error(
+            'IAP purchase function is not available.',
+          );
+        }
+
+        await waitForForegroundActivity();
+
+        try {
+          return await (
+            requestPurchase as any
+          )(
+            payload,
+          );
+        } catch (error) {
+          if (
+            Platform.OS !==
+              'android' ||
+            !isCurrentActivityError(
+              error,
+            )
+          ) {
+            throw error;
+          }
+
+          console.log(
+            '[iap15] Android activity unavailable, retrying purchase once',
+          );
+
+          if (
+            mountedRef.current
+          ) {
+            setIapError(
+              null,
+            );
+
+            setPurchasing(
+              true,
+            );
+          }
+
+          await delay(
+            800,
+          );
+
+          await waitForForegroundActivity();
+
+          return await (
+            requestPurchase as any
+          )(
+            payload,
+          );
+        }
+      },
+      [
+        requestPurchase,
+        waitForForegroundActivity,
+      ],
+    );
+
+  const buyLifetime = useCallback(
+    async (sku = PREMIUM_LIFETIME_PRODUCT_ID) => {
+      if (!PREMIUM_ENABLED || FORCE_PREMIUM_IN_DEBUG) {
+        return;
+      }
+
+      if (!connected) {
+        throw new Error('Store connection is not ready.');
+      }
+
+      try {
+        setPurchasing(true);
+        setIapError(null);
+
+        await requestPurchaseWithActivityRetry({
+          request: {
+            apple: {
+              sku,
+            },
+            google: {
+              skus: [
+                sku,
+              ],
+            },
+          },
+          type: 'in-app',
+        });
+      } catch (error) {
+        setPurchasing(false);
+        throw error;
+      }
+    },
+    [
+      connected,
+      requestPurchaseWithActivityRetry,
+    ],
+  );
+
+  const buyMonthlySubscription = useCallback(
+    async (
+      sku = PREMIUM_MONTHLY_SUB_ID,
+      offerToken?: string,
+    ) => {
+      if (!PREMIUM_ENABLED || FORCE_PREMIUM_IN_DEBUG) {
+        return;
+      }
+
+      if (!connected) {
+        throw new Error('Store connection is not ready.');
+      }
+
+      try {
+        setPurchasing(true);
+        setIapError(null);
+
+        await requestPurchaseWithActivityRetry({
+          request: {
+            apple: {
+              sku,
+            },
+            google: {
+              skus: [
+                sku,
+              ],
+              ...(offerToken
+                ? {
+                    subscriptionOffers: [
+                      {
+                        sku,
+                        offerToken,
+                      },
+                    ],
+                  }
+                : {}),
+            },
+          },
+          type: 'subs',
+        });
+      } catch (error) {
+        setPurchasing(false);
+        throw error;
+      }
+    },
+    [
+      connected,
+      requestPurchaseWithActivityRetry,
+    ],
+  );
+
+  const value = useMemo<SubscriptionContextValue>(
     () => ({
       isPremium,
+      connected: Boolean(connected),
       loading,
       purchasing,
+      iapError,
       products,
       subscriptions,
+      reloadProducts,
       buyLifetime,
       buyMonthlySubscription,
       restorePurchases,
     }),
     [
       isPremium,
+      connected,
       loading,
       purchasing,
+      iapError,
       products,
       subscriptions,
+      reloadProducts,
+      buyLifetime,
+      buyMonthlySubscription,
+      restorePurchases,
     ],
   );
 
@@ -352,57 +1271,6 @@ export const SubscriptionProvider: React.FC<{
     </SubscriptionContext.Provider>
   );
 };
-
-async function restoreOwnedPurchasesSilently(
-  mounted: boolean,
-  setIsPremium: (v: boolean) => void,
-  _forceReturn = false,
-): Promise<boolean> {
-  try {
-    const purchases = await RNIap.getAvailablePurchases();
-
-    console.log('[iap] restore purchases =', purchases);
-
-    const plusPurchase = purchases.find((p: any) =>
-      isPremiumPlusPurchase(p.productId),
-    );
-
-    if (plusPurchase) {
-      await applyPurchaseAccess(plusPurchase.productId);
-
-      if (mounted) {
-        setIsPremium(true);
-      }
-
-      return true;
-    }
-
-    const premiumPurchase = purchases.find((p: any) =>
-      isPremiumPurchase(p.productId),
-    );
-
-    if (premiumPurchase) {
-      await applyPurchaseAccess(premiumPurchase.productId);
-
-      if (mounted) {
-        setIsPremium(true);
-      }
-
-      return true;
-    }
-
-    await clearPremiumAccess();
-
-    if (mounted) {
-      setIsPremium(false);
-    }
-
-    return false;
-  } catch (e) {
-    console.log('[iap] restore error', e);
-    return false;
-  }
-}
 
 export const useSubscription = () =>
   useContext(SubscriptionContext);
